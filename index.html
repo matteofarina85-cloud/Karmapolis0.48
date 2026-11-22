@@ -56,7 +56,7 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #wanted{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(66px + env(safe-area-inset-bottom,0px));z-index:4;background:var(--paper);border:2.5px solid var(--line);border-radius:999px;padding:3px 12px;font-size:18px;box-shadow:3px 3px 0 var(--line)}
 #sta{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(208px + env(safe-area-inset-bottom,0px));z-index:3;display:flex;gap:6px;align-items:center;background:var(--paper);border:2.5px solid var(--line);border-radius:999px;padding:3px 10px;box-shadow:3px 3px 0 var(--line);pointer-events:none}
 #sta .sbar{position:relative;width:130px;height:11px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}#staFill{height:100%;width:100%;background:#3fa66b;transition:width .15s}#staCap{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(45deg,#9a9aa3 0 4px,#c9c9d0 4px 8px)}
-@media (orientation:landscape) and (max-height:520px){#sta{bottom:calc(158px + env(safe-area-inset-bottom,0px));padding:1px 8px}#sta .sbar{width:90px;height:9px}}
+@media (orientation:landscape) and (max-height:520px){#sta{bottom:auto;left:auto;top:calc(34px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));padding:1px 8px}#sta .sbar{width:90px;height:9px}.top [aria-label="Ora del giorno"]{display:none!important}} /* in orizzontale la stamina va in alto a destra (sotto gli fps) e i pulsanti giorno/notte spariscono: niente più riquadri accavallati */
 #greyHud{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(172px + env(safe-area-inset-bottom,0px));z-index:3;background:var(--paper);border:2.5px solid var(--line);border-radius:999px;padding:4px 12px;font-size:14px;box-shadow:3px 3px 0 var(--line)}
 .tools{display:grid!important;grid-template-columns:repeat(3,auto);gap:6px}.tools button{padding:6px 10px;font-size:17px}
 #fps{position:fixed;right:max(10px,env(safe-area-inset-right,0px));top:calc(48px + env(safe-area-inset-top,0px));z-index:6;font:600 11px var(--body);color:#2a2233;background:rgba(255,250,240,.75);border-radius:999px;padding:2px 8px;pointer-events:none}
@@ -151,13 +151,8 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 <div id="taxiMenu" hidden role="dialog" aria-label="Scegli dove andare in taxi"><div class="card"><h3 id="taxiHead">🚕 Dove ti porto?</h3><div id="taxiList"></div><button id="taxiNo" class="ghost" type="button">Scendo qui</button></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goText"></p><button id="restart" type="button">Ricomincia</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.48</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.50</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
-  <div class="card seg" role="group" aria-label="Ora del giorno">
-    <button class="ghost" data-t="giorno" aria-pressed="true" type="button">Giorno</button>
-    <button class="ghost" data-t="tramonto" aria-pressed="false" type="button">Tramonto</button>
-    <button class="ghost" data-t="notte" aria-pressed="false" type="button">Notte</button>
-  </div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
 <div id="joy" aria-label="Joystick di movimento"><div id="knob"></div></div>
@@ -2160,7 +2155,7 @@ function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } i
   if(player.safeT>0) player.safeT-=dt;
   if(player.mode!=='foot'||player.taxi||player.ko>0||player.arrestT>0) updateStamina(dt,'ride');
   if(player.arrestT>0 && !player.taxi) updateArrest(dt); else if(player.taxi) updateTaxiRide(dt); else if(player.ko>0) updatePlayerKO(dt); else if(player.mode==='foot') updatePlayer(dt); else updateRider(dt);
-  TT+=dt; updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); } updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
+  TT+=dt; updateDayCycle(dt); updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); } updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
 
 // ======================= 🏠 CASA = IL MENU DEL GIOCO (alla GTA): giri per casa e ogni oggetto è una voce =======================
 // TV = tutorial · tapis roulant = minigioco del cardio (stamina più lunga) · armadio = vestiti · doccia e letto = stamina · garage = pieno di benzina · porta = esci a giocare
@@ -2441,15 +2436,22 @@ const PRESET={
   notte:{bg:0x1c2450,sun:[-0.3,0.75,-0.5],sc:0x9fb6ff,si:0.6,hs:0x5a6cb0,hg:0x1a2036,hi:0.55,fog:0x1c2450,deep:0x0d1a44,sh:0x22507e,night:1}
 };
 let night=0; const sunDir=new THREE.Vector3();
-function setTime(name){ const p=PRESET[name]; scene.background=new THREE.Color(p.bg); scene.fog.color.set(p.fog); wU.uFog.value.set(p.fog);
+// ciclo automatico del giorno: il paese ha il suo orario (≈9 minuti per un giorno intero), passaggi sfumati
+const _ca=new THREE.Color(), _cb=new THREE.Color();
+function mixPreset(A,B,k){ const o={}; for(const key in A){ const a=A[key], b=B[key]; if(Array.isArray(a)) o[key]=a.map((v,i)=>v+(b[i]-v)*k); else if(key==='si'||key==='hi'||key==='night') o[key]=a+(b-a)*k; else o[key]=_ca.set(a).lerp(_cb.set(b),k).getHex(); } return o; }
+function applyPreset(p){ scene.background=new THREE.Color(p.bg); scene.fog.color.set(p.fog); wU.uFog.value.set(p.fog);
   wU.uDeep.value.set(p.deep); wU.uShallow.value.set(p.sh); wU.uSpark.value=1-p.night*0.6; wU.uSunCol.value.set(p.sc);
   sunDir.set(...p.sun).normalize(); wU.uSun.value.copy(sunDir); sun.color.set(p.sc); sun.intensity=p.si;
   hemi.color.set(p.hs); hemi.groundColor.set(p.hg); hemi.intensity=p.hi; RIM.uRimCol.value.set(p.sc).multiplyScalar(p.night>0.9?0.35:0.6);
   winMat.color.set(p.night>0.5?0xffc96b:p.night>0.2?0xffb070:0x9ccfe8); bulbMat.color.set(p.night>0.2?0xfff0c0:0xe8e4da); glowMat.opacity=p.night>0.2?0.55*p.night+0.1:0;
-  night=p.night; document.body.style.background='#'+new THREE.Color(p.bg).getHexString();
-  document.querySelectorAll('[data-t]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.t===name))); }
-document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>setTime(b.dataset.t));
-setTime('giorno');
+  night=p.night; document.body.style.background='#'+new THREE.Color(p.bg).getHexString(); }
+function setTime(name){ applyPreset(PRESET[name]); }
+// [durata in secondi, da, a]: giorno lungo, tramonto, notte, alba
+const DAY=[[240,'giorno','giorno'],[40,'giorno','tramonto'],[30,'tramonto','tramonto'],[40,'tramonto','notte'],[90,'notte','notte'],[40,'notte','tramonto'],[20,'tramonto','tramonto'],[40,'tramonto','giorno']];
+const DAY_LEN=DAY.reduce((s,d)=>s+d[0],0); let dayT=20, dayAcc=1;
+function updateDayCycle(dt){ dayT=(dayT+dt)%DAY_LEN; dayAcc+=dt; if(dayAcc<0.25) return; dayAcc=0; let t=dayT;
+  for(const [d,a,b] of DAY){ if(t<d){ const k=t/d, e=k*k*(3-2*k); applyPreset(a===b?PRESET[a]:mixPreset(PRESET[a],PRESET[b],e)); return; } t-=d; } }
+setTime('giorno'); // poi il ciclo del giorno va avanti da solo
 
 // ---------- ciclo ----------
 function resize(){ const w=innerWidth,h=innerHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
