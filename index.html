@@ -163,7 +163,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.56</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.57</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -693,13 +693,14 @@ const LOOKS=[
   {name:'Lo Studente',look:{skin:0xf6d2b4,hair:0xb0763a,glasses:true},o:{skin:0xf6d2b4,top:0xf0c43a,pants:0x55606e,shoes:0x2a2233,shorts:true,cap:true,capCol:0x2f7de1}},
   {name:'Il Nonno',look:{skin:0xe8b894,hair:0x9a9a9a,beard:true,glasses:true},o:{skin:0xe8b894,top:0x6b5a4a,pants:0x2a2a33,shoes:0x2a2233}}];
 let lookI=0;
-function dressPlayer(i){ const L=LOOKS[i], c=chars.xbot, B=bones(c); dress(c.model,L.o);
+// look pronti (Cambia look) + il personaggio fatto con l'editor (salvato sul dispositivo come codice)
+function initLooksAv(){ if(LOOKS[0].av) return; LOOKS[0].av={...AVC_DEF}; LOOKS[1].av={...AVC_DEF,sex:'f',skin:4,hair:7,hairCol:1,beard:0,lashes:1,blush:1,eyes:3,top:0,topCol:6,bottom:0,bottomCol:12,shoesCol:13}; LOOKS[2].av={...AVC_DEF,skin:0,hair:0,hairCol:4,beard:0,glasses:1,glassCol:15,hat:1,hatCol:7,top:0,topCol:3,bottom:1,bottomCol:14,shoesCol:15,freckles:1}; LOOKS[3].av={...AVC_DEF,hair:0,hairCol:8,beard:2,beardCol:8,glasses:1,glassCol:15,top:1,topCol:13,bottom:0,bottomCol:15,shoesCol:15,shape:2}; }
+let PLAYER_AV=null;
+function dressPlayer(i){ initLooksAv(); if(PLAYER_AV===null){ PLAYER_AV=false; try{ const k=localStorage.getItem('karmapolis_avatar'); if(k) PLAYER_AV=avDecode(k); }catch(e){} } const cfg=(i==='custom'||(i==null&&PLAYER_AV))?PLAYER_AV:LOOKS[i%LOOKS.length].av, o={...avOutfit(cfg),bag:i===0}; const c=chars.xbot, B=bones(c); avBody(c.model,cfg); dress(c.model,o);
   if(c.head){ c.head.parent.remove(c.head); } if(c.extras) c.extras.forEach(x=>x.parent&&x.parent.remove(x));
   const ws={}; for(const k of ['idle','walk','run']){ ws[k]=c.A[k].getEffectiveWeight(); c.A[k].setEffectiveWeight(k==='idle'?1:0); } const t0=c.A.idle.time; c.A.idle.time=0; c.mixer.update(0); holder.updateMatrixWorld(true);
-  const head=new THREE.Mesh(headGeo(L.look),toon({vertexColors:true})); head.castShadow=true; withOutline(head,0.008);
-  const hp=B.Head.getWorldPosition(new THREE.Vector3()); hp.y+=0.075; const nq=B.Neck.getWorldQuaternion(new THREE.Quaternion()), gq=holder.getWorldQuaternion(new THREE.Quaternion()), ns=B.Neck.getWorldScale(new THREE.Vector3());
-  B.Neck.add(head); head.position.copy(B.Neck.worldToLocal(hp)); head.quaternion.copy(nq.invert().multiply(gq)); head.scale.setScalar(1.15/ns.x); c.head=head;
-  const before=new Set(); B.Spine2&&B.Spine2.children.forEach(x=>before.add(x)); addAccessories({head,bones:B},{...L.o,bald:L.look.bald}); c.extras=[...(B.Spine2?B.Spine2.children:[])].filter(x=>!before.has(x));
+  const head=mountHead(B,holder,cfg); c.head=head; c.cfg=cfg;
+  const before=new Set([...(B.Spine2?B.Spine2.children:[]),...(B.Hips?B.Hips.children:[])]); addAccessories({head,bones:B},{...o,cap:false}); addSkirt(B,o); addHood(B,o); c.extras=[...(B.Spine2?B.Spine2.children:[]),...(B.Hips?B.Hips.children:[])].filter(x=>!before.has(x)&&!x.isBone);
   c.A.idle.time=t0; for(const k of ['idle','walk','run']) c.A[k].setEffectiveWeight(ws[k]); c.headless=true; }
 document.getElementById('swap').onclick=()=>{ lookI=(lookI+1)%LOOKS.length; dressPlayer(lookI); copMsgT=2; msg.innerHTML='👕 Nuovo look: <b>'+LOOKS[lookI].name+'</b>'; };
 // fumetto con emoji sopra la testa, così il gesto si capisce anche da lontano
@@ -1251,6 +1252,191 @@ function headGeo(L){ const parts=[]; const sk=new THREE.Color(L.skin), hc=new TH
   if(L.beard) m(new THREE.SphereGeometry(0.165,20,10,Math.PI/2-1.35,2.7,Math.PI*0.62,Math.PI*0.3),L.beardCol??hc,[0,0,0],[1.01,1.12,1.03]);
   if(L.glasses) for(const s of [1,-1]) m(new THREE.TorusGeometry(0.036,0.006,6,16),0x2a2233,[0.057*s,0.012,0.168],[1,0.85,1]);
   return mergeGeometries(parts); }
+
+// ======================= 🧑 AVATAR DI KARMAPOLIS (25/11/2026): teste nuove in stile "avatar da console" (proporzioni vere, testa un po' grande, occhi espressivi), tutto disegnato da codice =======================
+// Un personaggio è una scheda di scelte (AVC) che si può scrivere come codice di testo: lo stesso codice ricrea sempre lo stesso personaggio (così Teo può costruire Anthony con l'editor e mandarmi il codice).
+const AV={
+  skin:[0xfbe0c8,0xf3cfae,0xe8b894,0xd9a27a,0xc98e66,0xa86e45,0x8a5636,0x6e4528,0x4f3120],
+  hairCol:[0x1c1714,0x3b2a20,0x5a3a24,0x8a5a32,0xb0763a,0xd9b26a,0xe8d39a,0xa33a26,0x9a9a9a,0xe8e4da,0x3a5fd6,0xe05a9a],
+  eyeCol:[0x5a3a24,0x2e6b3a,0x2f6fc0,0x6a8a9a,0x8a6a2a,0x2a2233],
+  clothCol:[0xe0483e,0xff6a4d,0xf0a030,0xf0c43a,0x3fa66b,0x2f9a8a,0x5bc0d6,0x2f7de1,0x1f3a7a,0x8c5fd6,0xff8fb1,0xf6efe2,0xc9b58f,0x7a4e34,0x55606e,0x2a2233],
+  shape:['ovale','tondo','squadrato','a cuore'],
+  eyes:['tondi','a mandorla','allegri','grandi','assonnati'],
+  brows:['naturali','folte','sottili','arcuate','dritte'],
+  nose:['piccolo','tondo','dritto','largo'],
+  mouth:['sorriso','sorriso aperto','neutro','smorfia','fischietto'],
+  hair:['corto','ciuffo','riga di lato','rasato','riccio','cresta','caschetto','lungo','coda','chignon','treccine','calvo'],
+  beard:['nessuna','tre giorni','corta','lunga','pizzetto','baffi','baffi e pizzetto'],
+  hat:['nessuno','cappellino','cappellino al contrario','berretto di lana','cappello','pescatore'],
+  glasses:['nessuno','tondi','squadrati','da sole','da vista sottili']};
+// valori di partenza (il "Seminatore" di Teo: testa rasata e barba)
+const AVC_DEF={sex:'m',skin:2,shape:0,eyes:0,eyeCol:0,brows:0,nose:0,mouth:0,freckles:0,blush:0,lashes:0,hair:3,hairCol:1,beard:2,beardCol:1,hat:0,hatCol:7,glasses:0,glassCol:15,earrings:0,
+  top:0,topCol:1,bottom:0,bottomCol:8,shoes:0,shoesCol:11,height:1,build:1};
+const AVKEYS=Object.keys(AVC_DEF);
+const avEncode=c=>'KP1-'+AVKEYS.map(k=>k==='sex'?(c.sex==='f'?'f':'m'):(c[k]??AVC_DEF[k]).toString(36)).join('');
+function avDecode(s){ const c={...AVC_DEF}; if(!s||!s.startsWith('KP1-')) return c; const b=s.slice(4); AVKEYS.forEach((k,i)=>{ const ch=b[i]; if(ch===undefined) return; c[k]=k==='sex'?(ch==='f'?'f':'m'):parseInt(ch,36)||0; }); return c; }
+const hex=n=>'#'+new THREE.Color(n).getHexString();
+// ---- il viso è un disegno su un guscio sottile davanti alla testa (occhi, sopracciglia, bocca, lentiggini): leggero e nitido
+const FACE_PHI=[Math.PI/2-1.25,2.5], FACE_TH=[0.25*Math.PI,1.73];
+function faceTexture(c){ const cv=document.createElement('canvas'); cv.width=336; cv.height=256; const g=cv.getContext('2d'); g.translate(40,0); g.lineCap='round'; g.lineJoin='round'; /* 336 px = 2,5 radianti intorno al viso: il centro del viso è x=128 */
+  const ink='#2a2233', hc=new THREE.Color(AV.hairCol[c.hairCol]), browCol=hex(hc.clone().multiplyScalar(c.hairCol>=8?0.75:0.85).getHex()), ey=104, ex=46, mouthY=182;
+  // guance e lentiggini
+  if(c.blush){ g.fillStyle='rgba(255,110,110,0.28)'; for(const s of [-1,1]){ g.beginPath(); g.ellipse(128+s*64,150,20,12,0,0,7); g.fill(); } }
+  if(c.freckles){ g.fillStyle='rgba(120,70,40,0.45)'; for(const s of [-1,1]) for(let i=0;i<7;i++){ const a=i*2.4; g.beginPath(); g.arc(128+s*(56+Math.cos(a)*14),140+Math.sin(a)*8,2.2,0,7); g.fill(); } }
+  // barba di tre giorni disegnata
+  if(AV.beard[c.beard]==='tre giorni'){ const bc=new THREE.Color(AV.hairCol[c.beardCol]); g.fillStyle='rgba('+[bc.r,bc.g,bc.b].map(v=>Math.round(v*255)).join(',')+',0.35)'; g.beginPath(); g.moveTo(40,150); g.quadraticCurveTo(128,140,216,150); g.lineTo(206,206); g.quadraticCurveTo(128,262,50,206); g.closePath(); g.fill(); g.fillStyle='rgba(0,0,0,0)'; }
+  // barba e baffi disegnati sul viso (bordo scuro come il resto del cartone)
+  { const BT=AV.beard[c.beard], bc=new THREE.Color(AV.hairCol[c.beardCol]), bcol=hex(bc.getHex()), bdk=hex(bc.clone().multiplyScalar(0.6).getHex());
+    const chin=BT==='lunga'?252:236, full=BT==='corta'||BT==='lunga';
+    if(full){ g.fillStyle=bcol; g.strokeStyle=bdk; g.lineWidth=3; g.beginPath(); g.moveTo(-30,96); g.lineTo(-22,150); g.quadraticCurveTo(10,chin-10,128,chin); g.quadraticCurveTo(246,chin-10,278,150); g.lineTo(286,96); g.lineTo(262,100); g.quadraticCurveTo(236,152,192,160);
+      g.quadraticCurveTo(128,150,64,160); g.quadraticCurveTo(20,152,-6,100); g.closePath(); g.fill(); g.stroke();
+      g.save(); g.globalCompositeOperation='destination-out'; g.beginPath(); g.ellipse(128,mouthY+4,27,15,0,0,7); g.fill(); g.restore(); g.beginPath(); g.ellipse(128,mouthY+4,27,15,0,0,7); g.stroke(); }
+    if(BT==='pizzetto'||BT==='baffi e pizzetto'){ g.fillStyle=bcol; g.strokeStyle=bdk; g.lineWidth=3; g.beginPath(); g.moveTo(112,mouthY+16); g.quadraticCurveTo(128,mouthY+12,144,mouthY+16); g.quadraticCurveTo(140,mouthY+44,128,mouthY+48); g.quadraticCurveTo(116,mouthY+44,112,mouthY+16); g.fill(); g.stroke(); }
+    if(full||BT==='baffi'||BT==='baffi e pizzetto'){ g.fillStyle=bcol; g.strokeStyle=bdk; g.lineWidth=3; for(const s of [-1,1]){ g.beginPath(); g.moveTo(128,mouthY-14); g.quadraticCurveTo(128+s*18,mouthY-20,128+s*32,mouthY-4); g.quadraticCurveTo(128+s*20,mouthY-6,128,mouthY-6); g.closePath(); g.fill(); g.stroke(); } } }
+  // occhi
+  const shape=AV.eyes[c.eyes], ic=hex(AV.eyeCol[c.eyeCol]);
+  for(const s of [-1,1]){ const x=128+s*ex; let rx=15, ry=17; if(shape==='a mandorla'){ rx=17; ry=12; } if(shape==='grandi'){ rx=18; ry=21; } if(shape==='assonnati'){ ry=13; }
+    g.fillStyle='#fffaf4'; g.strokeStyle=ink; g.lineWidth=3.5; g.beginPath(); g.ellipse(x,ey,rx,ry,0,0,7); g.fill();
+    g.save(); g.clip(); g.fillStyle=ic; g.beginPath(); g.ellipse(x+s*-1,ey+2,rx*0.62,ry*0.7,0,0,7); g.fill(); g.fillStyle=ink; g.beginPath(); g.ellipse(x+s*-1,ey+3,rx*0.3,ry*0.36,0,0,7); g.fill();
+    g.fillStyle='#ffffff'; g.beginPath(); g.arc(x+s*-1+4,ey-4,3.6,0,7); g.fill();
+    if(shape==='assonnati'){ g.fillStyle=hex(AV.skin[c.skin]); g.fillRect(x-rx,ey-ry,rx*2,ry*0.75); }
+    if(shape==='allegri'){ g.fillStyle=hex(AV.skin[c.skin]); g.beginPath(); g.ellipse(x,ey+ry*1.25,rx*1.3,ry*0.75,0,0,7); g.fill(); }
+    g.restore(); g.beginPath(); g.ellipse(x,ey,rx,ry,0,Math.PI*1.05,Math.PI*1.95); g.lineWidth=4.5; g.stroke(); // palpebra superiore più marcata
+    if(shape==='assonnati'){ g.beginPath(); g.moveTo(x-rx,ey-ry*0.25); g.lineTo(x+rx,ey-ry*0.25); g.lineWidth=3.5; g.stroke(); }
+    if(c.lashes){ g.lineWidth=3; for(const k of [-0.7,-0.35,0]){ const a=Math.PI*1.5+s*(0.55+k*-0.6); const px=x+Math.cos(a)*rx, py=ey+Math.sin(a)*ry; g.beginPath(); g.moveTo(px,py); g.lineTo(px+s*6+Math.cos(a)*3,py-6); g.stroke(); } } }
+  // sopracciglia
+  const bt=AV.brows[c.brows]; g.strokeStyle=browCol; for(const s of [-1,1]){ const x=128+s*ex; g.lineWidth=bt==='folte'?9:bt==='sottili'?3.5:6.5; g.beginPath();
+    if(bt==='arcuate'){ g.moveTo(x-s*16,ey-24); g.quadraticCurveTo(x+s*2,ey-40,x+s*18,ey-27); } else if(bt==='dritte'){ g.moveTo(x-s*16,ey-28); g.lineTo(x+s*17,ey-30); } else { g.moveTo(x-s*15,ey-25); g.quadraticCurveTo(x,ey-34,x+s*17,ey-28); } g.stroke(); }
+  // bocca
+  const mt=AV.mouth[c.mouth]; g.strokeStyle=ink; g.lineWidth=4.5; g.beginPath();
+  if(mt==='sorriso'){ g.moveTo(108,mouthY); g.quadraticCurveTo(128,mouthY+16,148,mouthY); g.stroke(); }
+  else if(mt==='sorriso aperto'){ g.fillStyle='#6b1f2a'; g.moveTo(106,mouthY-3); g.quadraticCurveTo(128,mouthY+26,150,mouthY-3); g.closePath(); g.fill(); g.stroke(); g.save(); g.clip(); g.fillStyle='#fffaf4'; g.fillRect(100,mouthY-4,56,8); g.fillStyle='#e06070'; g.beginPath(); g.ellipse(128,mouthY+16,11,6,0,0,7); g.fill(); g.restore(); }
+  else if(mt==='neutro'){ g.moveTo(113,mouthY+3); g.lineTo(143,mouthY+3); g.stroke(); }
+  else if(mt==='smorfia'){ g.moveTo(110,mouthY+5); g.quadraticCurveTo(128,mouthY+9,146,mouthY-4); g.stroke(); }
+  else { g.lineWidth=4; g.fillStyle='#6b1f2a'; g.beginPath(); g.ellipse(128,mouthY+4,6,7,0,0,7); g.fill(); g.stroke(); }
+  if(c.sex==='f' && mt!=='sorriso aperto' && mt!=='fischietto'){ g.strokeStyle='rgba(200,70,90,0.55)'; g.lineWidth=2.5; g.beginPath(); g.moveTo(112,mouthY+7); g.quadraticCurveTo(128,mouthY+17,144,mouthY+7); g.stroke(); }
+  const t=new THREE.CanvasTexture(cv); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t; }
+// i visi uguali condividono la stessa texture (tanti passanti, poca memoria: importante su iPhone)
+const FACEMATS={}; const AVMAT=toon({vertexColors:true});
+function faceMat(c){ const k=['sex','skin','eyes','eyeCol','brows','mouth','freckles','blush','lashes','hairCol','beard','beardCol'].map(x=>c[x]).join('.'); return FACEMATS[k]||(FACEMATS[k]=toon({map:faceTexture(c),transparent:true,alphaTest:0.02,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2})); }
+// ---- geometria della testa (pelle, orecchie, naso, capelli, barba, cappello, occhiali) unita a colori per vertice
+function avHead(c){ const grp=new THREE.Group(), skin=[], hair=[], extra=[]; const sk=new THREE.Color(AV.skin[c.skin]), hc=new THREE.Color(AV.hairCol[c.hairCol]), bc=new THREE.Color(AV.hairCol[c.beardCol]);
+  const put=(arr,geo,col,pos,scl=[1,1,1],rot=[0,0,0])=>{ if(!geo.index){ const n=geo.attributes.position.count; geo.setIndex([...Array(n).keys()]); } for(const k of Object.keys(geo.attributes)) if(!['position','normal'].includes(k)) geo.deleteAttribute(k);
+    geo.applyMatrix4(new THREE.Matrix4().compose(new THREE.Vector3(...pos),new THREE.Quaternion().setFromEuler(new THREE.Euler(...rot)),new THREE.Vector3(...scl)));
+    const n=geo.attributes.position.count, cc=new THREE.Color(col), a=new Float32Array(n*3); for(let i=0;i<n;i++) a.set([cc.r,cc.g,cc.b],i*3); geo.setAttribute('color',new THREE.BufferAttribute(a,3)); arr.push(geo); };
+  const S=new THREE.SphereGeometry(1,18,12), f=c.sex==='f', shp=AV.shape[c.shape];
+  const sx=shp==='tondo'?1.04:shp==='squadrato'?1.02:f?0.96:1, sy=shp==='tondo'?1.0:1.08, R=0.16;
+  put(skin,S.clone(),sk,[0,0,0],[R*sx,R*sy,R*1.02]); // cranio
+  const jw=shp==='squadrato'?0.95:shp==='a cuore'?0.72:f?0.8:0.88, jy=shp==='a cuore'?0.66:0.74;
+  put(skin,S.clone(),sk,[0,-0.052,0],[R*jw,R*jy,R*0.85]); // mascella e mento
+  for(const s of [-1,1]) put(skin,S.clone(),sk.clone().multiplyScalar(0.96),[s*R*sx*0.97,-0.012,-0.005],[0.026,0.045,0.034]); // orecchie
+  const nt=AV.nose[c.nose], ns=nt==='tondo'?[0.026,0.024,0.026]:nt==='dritto'?[0.018,0.03,0.03]:nt==='largo'?[0.032,0.022,0.024]:[0.018,0.018,0.02];
+  put(skin,S.clone(),sk.clone().multiplyScalar(0.97),[0,-0.03,R*1.0],ns);
+  // capelli
+  const H=AV.hair[c.hair], cap=(r,th,phiS=0,phiL=Math.PI*2)=>new THREE.SphereGeometry(r,18,8,phiS,phiL,0,th);
+  const hatOn=AV.hat[c.hat]!=='nessuno';
+  if(H==='rasato') put(hair,cap(R*1.028,Math.PI*0.5),hc.clone().lerp(sk,0.62),[0,0.004,-0.004],[sx,sy*1.02,1.03],[-0.35,0,0]);
+  else if(H!=='calvo'){
+    const top=()=>put(hair,cap(R*1.06,Math.PI*0.52),hc,[0,0.006,-0.01],[sx,sy*1.04,1.06],[-0.38,0,0]);
+    const back=()=>put(hair,cap(R*1.05,Math.PI*0.62),hc,[0,0,-0.012],[sx,sy,1.04],[-1.25,0,0]);
+    if(H==='corto'){ top(); back(); }
+    else if(H==='ciuffo'){ top(); back(); if(!hatOn) put(hair,S.clone(),hc,[0.02,0.14,0.08],[0.1,0.055,0.075],[0.5,0,-0.2]); }
+    else if(H==='riga di lato'){ top(); back(); put(hair,S.clone(),hc,[0.05,0.115,0.07],[0.1,0.05,0.09],[0.3,0,-0.45]); }
+    else if(H==='riccio'){ back(); for(let i=0;i<16;i++){ const a=i*2.399, rr=0.05+0.08*Math.sqrt(i/16); put(hair,S.clone(),hc,[Math.cos(a)*rr*1.1,0.13-rr*0.3,Math.sin(a)*rr-0.02],[0.055,0.05,0.055]); } }
+    else if(H==='cresta'){ put(hair,cap(R*1.015,Math.PI*0.5),hc.clone().lerp(sk,0.5),[0,0.004,-0.004],[sx,sy*1.02,1.03],[-0.35,0,0]); for(let i=0;i<5;i++) put(hair,new THREE.ConeGeometry(0.028,0.09,6),hc,[0,0.17-Math.abs(i-1.5)*0.006,0.07-i*0.045],[1,1,1],[-0.3-i*0.25,0,0]); }
+    else if(H==='caschetto'){ top(); put(hair,new THREE.SphereGeometry(R*1.1,18,10,-Math.PI/2-Math.PI*0.74,Math.PI*1.48,0,Math.PI*0.68),hc,[0,-0.005,-0.012],[sx,sy,1.04]); }
+    else if(H==='lungo'){ top(); put(hair,new THREE.SphereGeometry(R*1.1,18,10,-Math.PI/2-Math.PI*0.7,Math.PI*1.4,0,Math.PI*0.7),hc,[0,-0.005,-0.012],[sx,sy,1.04]); put(hair,new THREE.CapsuleGeometry(0.12,0.16,4,12),hc,[0,-0.16,-0.075],[1.25,1,0.5]); }
+    else if(H==='coda'){ top(); back(); put(hair,new THREE.CapsuleGeometry(0.045,0.16,4,10),hc,[0,-0.02,-0.2],[1,1,1],[0.5,0,0]); put(hair,S.clone(),hc,[0,0.05,-0.17],[0.045,0.04,0.04]); }
+    else if(H==='chignon'){ top(); back(); if(!hatOn) put(hair,S.clone(),hc,[0,0.17,-0.1],[0.07,0.065,0.07]); }
+    else if(H==='treccine'){ top(); back(); for(const s of [-1,1]) for(let i=0;i<4;i++) put(hair,S.clone(),hc,[s*0.12,-0.06-i*0.05,-0.06],[0.032,0.03,0.032]); } }
+  // barba
+  const B=AV.beard[c.beard];
+  if(B==='lunga') put(hair,S.clone(),bc,[0,-0.16,0.08],[0.075,0.07,0.06]);
+  // cappelli
+  const HT=AV.hat[c.hat], htc=new THREE.Color(AV.clothCol[c.hatCol]);
+  if(HT==='cappellino'||HT==='cappellino al contrario'){ const r=HT==='cappellino'?0:Math.PI; put(extra,cap(R*1.11,Math.PI*0.5),htc,[0,0.012,-0.004],[sx,0.85,1.05],[-0.22,0,0]); put(extra,new THREE.CylinderGeometry(0.13,0.13,0.014,20,1,false,-Math.PI/2,Math.PI),htc.clone().multiplyScalar(0.85),[Math.sin(r)*0.1,0.05,Math.cos(r)*0.1],[1,1,1.05],[0.08*Math.cos(r),r,0]); put(extra,S.clone(),htc,[0,0.165,-0.01],[0.015,0.01,0.015]); }
+  else if(HT==='berretto di lana'){ put(extra,cap(R*1.12,Math.PI*0.55),htc,[0,0.02,-0.01],[sx,1.0,1.06],[-0.3,0,0]); put(extra,new THREE.TorusGeometry(R*1.07,0.02,8,28),htc.clone().multiplyScalar(0.85),[0,0.05,0.005],[sx,1,1.02],[Math.PI/2-0.3,0,0]); put(extra,S.clone(),0xfffaf0,[0,0.2,-0.05],[0.03,0.03,0.03]); }
+  else if(HT==='cappello'){ put(extra,new THREE.CylinderGeometry(0.12,0.14,0.11,24),htc,[0,0.17,-0.01]); put(extra,new THREE.CylinderGeometry(0.25,0.25,0.012,28),htc,[0,0.12,-0.01],[1,1,1],[-0.08,0,0]); put(extra,new THREE.CylinderGeometry(0.142,0.142,0.03,24),0x2a2233,[0,0.135,-0.01]); }
+  else if(HT==='pescatore'){ put(extra,cap(R*1.12,Math.PI*0.5),htc,[0,0.025,-0.006],[sx,0.95,1.05],[-0.15,0,0]); put(extra,new THREE.CylinderGeometry(0.17,0.24,0.06,24,1,true),htc.clone().multiplyScalar(0.9),[0,0.05,0],[1,1,1],[-0.1,0,0]); }
+  // occhiali
+  const GL=AV.glasses[c.glasses], gc=new THREE.Color(AV.clothCol[c.glassCol]);
+  if(GL!=='nessuno'){ const thin=GL==='da vista sottili', sun=GL==='da sole';
+    for(const s of [-1,1]){ const z=R*0.99+0.012, x=s*0.048, y=0.0;
+      if(GL==='squadrati'||sun) put(extra,new THREE.TorusGeometry(0.037,0.0065,4,4),sun?0x2a2233:gc,[x,y,z],[1.15,0.85,1],[0,0,Math.PI/4]); else put(extra,new THREE.TorusGeometry(0.036,thin?0.0035:0.006,6,18),gc,[x,y,z],[1,0.9,1]);
+      if(sun) put(extra,new THREE.CircleGeometry(0.036,4),0x1c1a26,[x,y,z-0.002],[1.15,0.85,1],[0,0,Math.PI/4]);
+      put(extra,new THREE.BoxGeometry(0.005,0.005,0.12),sun?0x2a2233:gc,[s*R*sx*0.9,y+0.005,z-0.065],[1,1,1],[0,s*0.25,0]); }
+    put(extra,new THREE.BoxGeometry(0.03,0.005,0.005),sun?0x2a2233:gc,[0,0.006,R*0.99+0.016]); }
+  if(c.earrings) for(const s of [-1,1]) put(extra,S.clone(),0xf0c43a,[s*R*sx*0.98,-0.06,0.0],[0.011,0.011,0.011]);
+  const m=new THREE.Mesh(mergeGeometries([...skin,...hair,...extra]),AVMAT); m.castShadow=true; withOutline(m,0.006); grp.add(m);
+  // guscio del viso: segue la forma del cranio, sopra la pelle
+  const fg=new THREE.SphereGeometry(R*1.008,22,14,FACE_PHI[0],FACE_PHI[1],FACE_TH[0],FACE_TH[1]); fg.scale(sx,sy,1.02);
+  const fm=new THREE.Mesh(fg,faceMat(c)); fm.renderOrder=2; grp.add(fm);
+  grp.userData.cfg={...c}; return grp; }
+
+// ---- il corpo: colori dei vestiti per parte del corpo (maglia, maniche, pantaloni o gonna, scarpe)
+AV.top=['maglietta','maglia a maniche lunghe','canottiera','felpa'];
+AV.bottom=['pantaloni','pantaloncini','gonna','gonna lunga'];
+function avOutfit(c){ const T=AV.top[c.top], Bt=AV.bottom[c.bottom]; return {skin:AV.skin[c.skin],top:AV.clothCol[c.topCol],pants:AV.clothCol[c.bottomCol],shoes:AV.clothCol[c.shoesCol],
+  short:T==='maglietta'||T==='canottiera',tank:T==='canottiera',hood:T==='felpa',shorts:Bt==='pantaloncini'||Bt==='gonna',skirt:Bt==='gonna'?'corta':Bt==='gonna lunga'?'lunga':null,cap:false,bag:false}; }
+// numeri pseudo-casuali ripetibili (lo stesso passante è sempre uguale)
+function avRand(seed){ let s=Math.abs(Math.floor(seed*9301+49297))%233280||1; return ()=>(s=(s*9301+49297)%233280)/233280; }
+function avRandom(seed){ const r=avRand(seed), pick=n=>Math.floor(r()*n), f=r()<0.5; const c={...AVC_DEF,sex:f?'f':'m',skin:pick(AV.skin.length),shape:pick(4),eyes:pick(AV.eyes.length),eyeCol:pick(AV.eyeCol.length),brows:pick(AV.brows.length),nose:pick(4),mouth:[0,0,0,1,2,3][pick(6)],
+  freckles:r()<0.15?1:0,blush:f&&r()<0.4?1:0,lashes:f?1:0,hairCol:r()<0.08?8+pick(2):pick(8),hat:r()<0.18?1+pick(5):0,hatCol:pick(AV.clothCol.length),glasses:r()<0.2?1+pick(4):0,glassCol:[15,13,9,7][pick(4)],earrings:f&&r()<0.5?1:0,
+  top:pick(4),topCol:pick(AV.clothCol.length),bottom:f?pick(4):pick(2),bottomCol:[8,14,15,12,13,7,0][pick(7)],shoesCol:[11,15,13,0,4][pick(5)]};
+  c.hair=f?[1,4,6,7,7,8,9,10,2][pick(9)]:[0,0,1,2,3,3,4,5,11][pick(9)]; c.beard=f?0:[0,0,0,1,2,2,3,4,5,6][pick(10)]; c.beardCol=c.hairCol; if(c.hat && [6,7,8,9].includes(c.hair)===false && r()<0.5) c.hat=0; return c; }
+const nearestIdx=(arr,col)=>{ const a=new THREE.Color(col); let b=0,bd=9; arr.forEach((x,i)=>{ const c=new THREE.Color(x), d=(c.r-a.r)**2+(c.g-a.g)**2+(c.b-a.b)**2; if(d<bd){ bd=d; b=i; } }); return b; };
+// i personaggi già esistenti (agenti, meccanici…) descritti alla vecchia maniera diventano avatar
+function lookToAv(look,o,seed){ const c=avRandom(seed); c.sex=look.long?'f':'m'; c.lashes=c.sex==='f'?1:0; c.blush=0; c.earrings=0; c.skin=nearestIdx(AV.skin,look.skin); c.hairCol=nearestIdx(AV.hairCol,look.hair===look.skin?0x3b2a20:look.hair); c.beardCol=c.hairCol;
+  c.hair=look.hair===look.skin||look.bald?3:look.long?7:[0,1,2][Math.floor(seed)%3]; c.beard=look.beard?2:0; c.glasses=look.glasses?1:0; c.glassCol=15;
+  if(o){ c.topCol=nearestIdx(AV.clothCol,o.top); c.bottomCol=nearestIdx(AV.clothCol,o.pants); c.shoesCol=nearestIdx(AV.clothCol,o.shoes); c.top=o.short?0:1; c.bottom=o.shorts?1:0; c.hat=o.cap?1:0; if(o.capCol) c.hatCol=nearestIdx(AV.clothCol,o.capCol); }
+  else c.hat=0; return c; }
+// monta la testa sul collo del manichino (in posa di riposo, così resta dritta)
+function mountHead(bones,root,cfg){ const head=avHead(cfg); const hp=bones.Head.getWorldPosition(new THREE.Vector3()); hp.y+=0.075; const nq=bones.Neck.getWorldQuaternion(new THREE.Quaternion()), gq=root.getWorldQuaternion(new THREE.Quaternion()), ns=bones.Neck.getWorldScale(new THREE.Vector3()); hp.y+=0.02;
+  bones.Neck.add(head); head.position.copy(bones.Neck.worldToLocal(hp)); head.quaternion.copy(nq.invert().multiply(gq)); head.scale.setScalar(1.32/ns.x); return head; }
+// gonna: un tronco di cono appeso al bacino
+function addSkirt(bones,o){ if(!o.skirt||!bones.Hips) return null; const B=bones.Hips, s=B.getWorldScale(new THREE.Vector3()).x, long=o.skirt==='lunga';
+  const m=new THREE.Mesh(new THREE.CylinderGeometry(0.15,long?0.3:0.24,long?0.7:0.36,20,1,true),toon({color:o.pants,side:THREE.DoubleSide})); m.scale.setScalar(1/s); m.position.set(0,(long?-0.3:-0.1)/s,0.01/s); withOutline(m,0.008); B.add(m); return m; }
+// cappuccio della felpa
+function addHood(bones,o){ if(!o.hood||!bones.Spine2) return null; const B=bones.Spine2, s=B.getWorldScale(new THREE.Vector3()).x;
+  const m=new THREE.Mesh(new THREE.TorusGeometry(0.11,0.045,8,20,Math.PI*1.3),toon({color:o.top})); m.scale.setScalar(1/s); m.rotation.set(Math.PI/2+0.35,0,Math.PI*0.85); m.position.set(0,0.2/s,-0.06/s); withOutline(m,0.008); B.add(m); return m; }
+// ---- 🧍 IL CORPO NUOVO (25/11/2026): liscio, da avatar, costruito da codice sopra lo scheletro Mixamo (stesse animazioni di prima).
+// Ogni pezzo (busto, braccia, gambe, mani a manopola, scarpe) segue un osso; colori dei vestiti per parte del corpo. Uomo e donna cambiano solo le proporzioni.
+AV.build=['magro','normale','robusto']; AV.height=['bassa','media','alta'];
+function avBody(model,cfg){ let sm=null; model.traverse(o=>{ if(o.isSkinnedMesh && !sm && !o.userData.avBody) sm=o; });
+  const old=[]; model.traverse(o=>{ if(o.isSkinnedMesh) old.push(o); }); const sk=sm?sm.skeleton:(old[0]&&old[0].skeleton); if(!sk) return null; const parent=(sm||old[0]).parent, bindM=(sm||old[0]).bindMatrix.clone();
+  for(const o of old) o.parent&&o.parent.remove(o);
+  const idx={}; sk.bones.forEach((b,i)=>idx[b.name.replace(/mixamorig:?/,'')]=i); const BP=n=>new THREE.Vector3().setFromMatrixPosition(new THREE.Matrix4().copy(sk.boneInverses[idx[n]]).invert());
+  const f=cfg.sex==='f', bk=[0.86,1,1.2][cfg.build??1], parts=[]; const up=new THREE.Vector3(0,1,0);
+  const add=(geo,bone,part,pos,scl=[1,1,1],quat)=>{ if(!geo.index){ const n=geo.attributes.position.count; geo.setIndex([...Array(n).keys()]); } for(const k of Object.keys(geo.attributes)) if(!['position','normal'].includes(k)) geo.deleteAttribute(k);
+    geo.applyMatrix4(new THREE.Matrix4().compose(pos,quat||new THREE.Quaternion(),new THREE.Vector3(...scl))); const n=geo.attributes.position.count, si=new Float32Array(n*4), sw=new Float32Array(n*4), pa=new Float32Array(n);
+    for(let i=0;i<n;i++){ si[i*4]=idx[bone]; sw[i*4]=1; pa[i]=part; } geo.setAttribute('skinIndex',new THREE.BufferAttribute(si,4)); geo.setAttribute('skinWeight',new THREE.BufferAttribute(sw,4)); geo.setAttribute('part',new THREE.BufferAttribute(pa,1)); parts.push(geo); };
+  const ell=(bone,part,c,r)=>add(new THREE.SphereGeometry(1,12,9),bone,part,c,r);
+  const limb=(bone,part,a,b,r0,r1,ext=0)=>{ const d=new THREE.Vector3().subVectors(b,a), L=d.length(); const g=new THREE.CylinderGeometry(r1,r0,L+ext,9,1,true); const q=new THREE.Quaternion().setFromUnitVectors(up,d.clone().normalize()); add(g,bone,part,a.clone().addScaledVector(d,0.5),[1,1,1],q);
+    add(new THREE.SphereGeometry(r0,9,7),bone,part,a.clone()); add(new THREE.SphereGeometry(r1,9,7),bone,part,b.clone()); };
+  const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+  // busto (vestiti: 0 maglia), bacino (5 pantaloni/gonna)
+  ell('Hips',5,V(0,0.235,0.02),[(f?0.205:0.19)*bk,0.13,(f?0.15:0.14)*bk]);
+  { const P=f?[[0.001,0.29],[0.15,0.3],[0.148,0.36],[0.142,0.43],[0.158,0.52],[0.18,0.6],[0.185,0.67],[0.165,0.73],[0.1,0.79],[0.001,0.8]]:[[0.001,0.29],[0.165,0.3],[0.172,0.38],[0.182,0.47],[0.205,0.56],[0.23,0.64],[0.225,0.71],[0.18,0.76],[0.11,0.8],[0.001,0.81]];
+    const g=new THREE.LatheGeometry(P.map(([r,y])=>new THREE.Vector2(r*bk,y)),16); g.scale(1,1,(f?0.72:0.66)*(cfg.build===2?1.1:1)); add(g,'Spine1',0,V(0,0,0.005)); } // busto liscio, un pezzo solo
+  if(f) for(const s of [-1,1]) ell('Spine2',0,V(s*0.062,0.6,0.07),[0.062*bk,0.058,0.06]);
+  limb('Neck',4,BP('Neck').add(V(0,-0.02,0)),BP('Head').add(V(0,0.03,0)),f?0.055:0.065,f?0.05:0.06);
+  for(const S of ['Left','Right']){ const sg=S==='Left'?1:-1;
+    // spalle e braccia (1 manica, 2 avambraccio, 3 mano)
+    ell(S+'Shoulder',1,BP(S+'Arm').add(V(-sg*0.01,0,0)),[(f?0.07:0.088)*bk,(f?0.07:0.085)*bk,(f?0.07:0.085)*bk]);
+    limb(S+'Arm',1,BP(S+'Arm'),BP(S+'ForeArm'),(f?0.055:0.066)*bk,(f?0.047:0.056)*bk);
+    limb(S+'ForeArm',2,BP(S+'ForeArm'),BP(S+'Hand'),(f?0.045:0.054)*bk,(f?0.036:0.044)*bk);
+    const h0=BP(S+'Hand'), h1=BP(S+'HandMiddle4'), hc=h0.clone().lerp(h1,0.38), hs=f?0.85:1; ell(S+'Hand',3,hc,[0.105*hs,0.036*hs,0.058*hs]); // mano a manopola
+    const t0=BP(S+'HandThumb1'), t1=BP(S+'HandThumb4'); limb(S+'Hand',3,t0,t0.clone().lerp(t1,0.8),0.022*hs,0.018*hs);
+    // gambe (6 coscia, 7 polpaccio, 8 scarpa)
+    limb(S+'UpLeg',6,BP(S+'UpLeg').add(V(0,-0.02,0)),BP(S+'Leg'),(f?0.1:0.098)*bk,(f?0.07:0.072)*bk);
+    limb(S+'Leg',7,BP(S+'Leg'),BP(S+'Foot'),(f?0.066:0.07)*bk,(f?0.045:0.05)*bk);
+    const fo=BP(S+'Foot'), te=BP(S+'Toe_End'); ell(S+'Foot',8,V(fo.x,te.y+0.045,(fo.z+te.z)/2+0.01),[f?0.058:0.065,0.055,f?0.13:0.14]); }
+  const geo=mergeGeometries(parts); geo.applyMatrix4(new THREE.Matrix4().copy(bindM).invert());
+  const mesh=new THREE.SkinnedMesh(geo,AVMAT); mesh.userData.avBody=true; mesh.frustumCulled=false; mesh.castShadow=true; parent.add(mesh); mesh.bind(sk,bindM);
+  const ol=new THREE.SkinnedMesh(geo,outlineMat(0.012)); ol.userData.avBody=true; ol.frustumCulled=false; parent.add(ol); ol.bind(sk,bindM);
+  model.scale.multiplyScalar([0.93,1,1.06][cfg.height??1]/(model.userData.hs||1)); model.userData.hs=[0.93,1,1.06][cfg.height??1];
+  return mesh; }
+
 const SKINS=[0xf6d2b4,0xe8b894,0xc98e66,0xa0673f,0x6e4528], HAIRS=[0x1c1714,0x3b2a20,0x6b4428,0xb0763a,0xd9b26a,0x9a9a9a], SHIRTS=[0xe0483e,0x3fa66b,0xf0c43a,0x8c5fd6,0x2f7de1,0xff8fb1,0xf6efe2,0x2a2233];
 function pedLoop(b){ const o=SW+1.6; const x0=b.x0-SW+o, x1=b.x1+SW-o, z0=b.z0-SW+o, z1=b.z1+SW-o; return [[x0,z0],[x1,z0],[x1,z1],[x0,z1]]; }
 // un "abitante" animato: manichino alleggerito + testa cartone montata dritta sul collo
@@ -1269,7 +1455,7 @@ const TOPS=[0xe0483e,0x3fa66b,0xf0c43a,0x8c5fd6,0x2f7de1,0xff8fb1,0xf6efe2,0x2a2
 const PANTS=[0x2f4f86,0x3d5f9e,0x2a2a33,0xc9b58f,0x6b5a4a,0x55606e,0x8a4a3a];
 const SHOES=[0xf6f2ea,0x2a2233,0x7a4e34,0xe0483e,0x3fa66b];
 function outfitCols(o){ const C=c=>new THREE.Color(c); const skin=C(o.skin);
-  return [C(o.top),C(o.top).multiplyScalar(0.95),o.short?skin.clone():C(o.top).multiplyScalar(0.92),skin.clone(),skin.clone(),C(o.pants),C(o.pants),o.shorts?skin.clone():C(o.pants).multiplyScalar(0.94),C(o.shoes)]; }
+  return [C(o.top),o.tank?skin.clone():C(o.top).multiplyScalar(0.95),o.short?skin.clone():C(o.top).multiplyScalar(0.92),skin.clone(),skin.clone(),C(o.pants),o.skirt?skin.clone():C(o.pants),o.shorts||o.skirt?skin.clone():C(o.pants).multiplyScalar(0.94),C(o.shoes)]; }
 function randOutfit(i,skin){ const r=k=>Math.floor(hash(i*7.3+k,i*1.9-k)*1000); return {skin,top:TOPS[r(1)%TOPS.length],pants:PANTS[r(2)%PANTS.length],shoes:SHOES[r(3)%SHOES.length],short:r(4)%3===0,shorts:r(5)%5===0,cap:r(6)%6===0,bag:r(7)%5===0,capCol:TOPS[r(8)%TOPS.length]}; }
 function dress(model,o){ const cols=outfitCols(o); const mats=[];
   model.traverse(x=>{ if(!x.isSkinnedMesh || x.material.side===THREE.BackSide) return; addParts(x); const joints=/Joints/i.test(x.material.name||''); x.material=outfitMat(joints?cols.map(c=>c.clone()):cols,joints?0.82:1); mats.push(x.material); });
@@ -1279,17 +1465,16 @@ const capGeo=(()=>{ const a=new THREE.SphereGeometry(0.175,16,8,0,Math.PI*2,0,Ma
 function addAccessories(h,o){ if(o.cap && !o.bald){ const c=new THREE.Mesh(capGeo,toon({color:o.capCol})); c.position.set(0,0.07,-0.005); c.rotation.x=-0.12; withOutline(c,0.006); h.head.add(c); }
   if(o.bag && h.bones.Spine2){ const B=h.bones.Spine2, s=B.getWorldScale(new THREE.Vector3()).x; const bag=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.36,0.14),toon({color:[0x3a6ea5,0xc0543a,0x4a8a4a,0x2a2233][Math.floor(Math.random()*4)]})); bag.scale.setScalar(1/s); bag.position.set(0,0.02/s,-0.17/s); withOutline(bag,0.01); B.add(bag); } }
 
-function makeHuman(look,outfit,joint,extra){ const src=chars.xlo; const model=SkeletonUtils.clone(src.model); model.visible=true;
+let HUMAN_N=0;
+function makeHuman(look,outfit,joint,extra){ const cfg=look.av||lookToAv(look,outfit,(++HUMAN_N)*13.7); if(look.av) outfit=avOutfit(cfg); const src=chars.xlo; const model=SkeletonUtils.clone(src.model); model.visible=true; avBody(model,cfg);
   dress(model,outfit);
   const g=new THREE.Group(); g.add(model); scene.add(g);
   const mixer=new THREE.AnimationMixer(model); const A={}; for(const k of ['idle','walk','run']){ A[k]=mixer.clipAction(src.clips[k]); A[k].play(); A[k].setEffectiveWeight(k==='idle'?1:0); }
   const bones={}; model.traverse(o=>{ if(o.isBone) bones[o.name.replace('mixamorig','').replace(':','')]=o; });
   mixer.update(0); g.updateMatrixWorld(true); // posa di riposo: la testa si monta dritta (prima si montava a metà passo e restava storta)
-  const head=new THREE.Mesh(headGeo(look),toon({vertexColors:true})); head.castShadow=true; withOutline(head,0.008);
-  const hp=bones.Head.getWorldPosition(new THREE.Vector3()); hp.y+=0.075; const nq=bones.Neck.getWorldQuaternion(new THREE.Quaternion()), gq=g.getWorldQuaternion(new THREE.Quaternion()); const ns=bones.Neck.getWorldScale(new THREE.Vector3());
-  bones.Neck.add(head); head.position.copy(bones.Neck.worldToLocal(hp)); head.quaternion.copy(nq.invert().multiply(gq)); head.scale.setScalar(1.15/ns.x);
+  const head=mountHead(bones,g,cfg); addSkirt(bones,outfit); addHood(bones,outfit);
   const outl=[], skins=[]; model.traverse(o=>{ if(o.isSkinnedMesh){ if(o.material.side===THREE.BackSide) outl.push(o); else skins.push(o); } });
-  const H={g,mixer,A,bones,head,outl,skins,w:{idle:1,walk:0,run:0}}; addAccessories(H,{...outfit,bald:look.hair===look.skin});
+  const H={g,mixer,A,bones,head,outl,skins,cfg,w:{idle:1,walk:0,run:0}}; addAccessories(H,{...outfit,cap:false});
   if(extra) extra(head,bones);
   return H; }
 // ---------- ANIMAZIONI MIXAMO scaricate da Teo (21/11): umori, gesti, reazioni ----------
@@ -1314,7 +1499,7 @@ function animHuman(h,speed,dt,vis){ const tw={idle:speed<0.3?1:0,run:THREE.MathU
   if(vis!==false){ h.fr=(h.fr||0)+1; h.acc=(h.acc||0)+dt; if(h.fr%(h.lod||1)===0){ h.mixer.update(h.acc); h.acc=0; h.bones.Head.scale.setScalar(0.001); } } } // i lontani si animano a scatti più radi: non si nota, ma il processore respira
 function spawnPeds(n){ const B=BLOCKS.filter(b=>!(b.i===2&&b.j===0));
   for(let i=0;i<n;i++){ const bald=i%5===3; const look={skin:SKINS[i%SKINS.length],hair:bald?SKINS[i%SKINS.length]:HAIRS[(i*3)%HAIRS.length],long:i%3===1,beard:i%4===2,glasses:i%5===1};
-    const h=makeHuman(look,randOutfit(i,look.skin)); h.A.walk.time=Math.random()*1.5;
+    const av=avRandom(i+1); av.hat=av.hat&&i%3?av.hat:0; const h=makeHuman({av},null); h.A.walk.time=Math.random()*1.5;
     const blk=B[i%B.length], path=pedLoop(blk), dir=i%2?1:-1, seg=Math.floor(Math.random()*4);
     PEDS.push({...h,blk,path,dir,seg,t:Math.random(),x:0,z:0,px:null,pz:null,yaw:0,offT:0,speed:1.3}); } }
 // scappano SOLO se un veicolo sta davvero puntando verso di loro (non se passi a piedi o se il traffico resta in strada)
