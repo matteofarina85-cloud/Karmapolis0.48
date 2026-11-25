@@ -101,6 +101,7 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #over .card{max-width:380px;text-align:center} #over h2{font-family:var(--display);font-size:28px;margin:4px 0 8px} #over p{margin:0 0 14px}
 [hidden]{display:none!important}
 #avEd{position:fixed;right:max(10px,env(safe-area-inset-right,0px));top:calc(8px + env(safe-area-inset-top,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));width:min(390px,50vw);z-index:14;display:flex;flex-direction:column;background:var(--paper);border:2.5px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);overflow:hidden}
+body.editing .hud,body.editing #joy,body.editing #sta,body.editing #homeCard,body.editing .right{display:none!important}
 #avEd .edTabs{display:flex;flex-wrap:wrap;gap:4px;padding:8px 8px 6px;border-bottom:2px solid #e8dfcf}#avEd .edTabs button{padding:4px 9px;font-size:13px;background:#fff;color:var(--ink);box-shadow:none}#avEd .edTabs button.on{background:#ffd84d}
 #avEd .edBody{flex:1;overflow:auto;padding:6px 10px}#avEd .edRow{display:flex;align-items:center;gap:6px;margin:6px 0}#avEd .edRow>span{flex:0 0 92px;font:600 13px var(--display)}#avEd .edRow b{flex:1;text-align:center;font:600 13px var(--body)}
 #avEd .edRow button{padding:2px 10px;font-size:14px;box-shadow:none}#avEd .sw{display:flex;flex-wrap:wrap;gap:4px;flex:1}#avEd .sw button{width:24px;height:24px;padding:0;border-radius:50%;border:2px solid var(--line)}#avEd .sw button.on{outline:3px solid #ffd84d;outline-offset:1px}
@@ -170,7 +171,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.58</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.58b</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -290,7 +291,7 @@ const _edV=new THREE.Vector3(); const controls={target:new THREE.Vector3(),look:
   fk:0,focusT:0,focusDur:0,focusZoom:0.12,focus:new THREE.Vector3(),userT:9,dt:1/60,ready:false,z:0.66,
   // 🏠 IN CASA: telecamera da dietro le spalle (alla GTA), che non entra nei muri
   tps(dt){ const px=player.pos.x, pz=player.pos.z, py=player.pos.y; this.userT+=dt;
-    if(HOME.editor){ const a=HOME.edA, face=HOME.edFace, d=face?1.25:2.9, hy=(chars[cur]&&chars[cur].head)?chars[cur].head.getWorldPosition(_edV).y-py:1.7, fx=-Math.sin(a), fz=-Math.cos(a), rx=-fz, rz=fx, off=(innerWidth>700?0.36:0.42)*d*0.62;
+    if(HOME.editor){ const a=HOME.edA, face=HOME.edFace, d=face?(innerHeight<520?1.5:1.25):(innerHeight<520?3.9:2.9), hy=(chars[cur]&&chars[cur].head)?chars[cur].head.getWorldPosition(_edV).y-py:1.7, fx=-Math.sin(a), fz=-Math.cos(a), rx=-fz, rz=fx, off=(innerWidth>700?0.36:0.42)*d*0.62;
       const cam=new THREE.Vector3(px+Math.sin(a)*d+rx*off,py+(face?hy+0.05:1.25),pz+Math.cos(a)*d+rz*off); camera.position.lerp(cam,Math.min(1,dt*6)); this.look.set(px+rx*off,py+(face?hy:0.95),pz+rz*off); camera.lookAt(this.look);
       if(Math.abs(camera.fov-45)>0.1){ camera.fov=45; camera.updateProjectionMatrix(); } sun.target.position.set(px,0,pz); sun.position.copy(sun.target.position).addScaledVector(sunDir,80); return; }
     if(typeof T!=='undefined' && T.on){ this.azT=player.yaw-Math.PI*0.42; } // tapis roulant: inquadratura di tre quarti
@@ -2791,8 +2792,8 @@ edBody.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) 
 function openEditor(){ HOME.busy=true; HOME.editor=true; HOME.edFace=false; initLooksAv(); ED.cfg={...(PLAYER_AV||LOOKS[lookI%LOOKS.length].av)}; ED.tab=0; ED.showCode=false;
   // la telecamera si mette dove c'è più spazio libero davanti al personaggio
   let best=0, bd=-1; for(let i=0;i<16;i++){ const a=i/16*Math.PI*2; let d=3.2; for(let s=0.3;s<=3.2;s+=0.1){ const x=player.pos.x+Math.sin(a)*s, z=player.pos.z+Math.cos(a)*s; if(BOXES.some(b=>(b.h??8)>1.2&&x>b.x0-0.25&&x<b.x1+0.25&&z>b.z0-0.25&&z<b.z1+0.25)){ d=s; break; } } if(d>bd){ bd=d; best=a; } }
-  HOME.edA=best; player.yaw=best; holder.rotation.set(0,best,0); player.moveTo=null; player.speed=0; document.getElementById('titleCard').style.visibility='hidden'; homeCard.hidden=true; edEl.hidden=false; edRender(); dressPlayer(ED.cfg); if(bubOn){ holder.remove(bubOn); bubOn=null; } }
-function closeEditor(save){ edEl.hidden=true; HOME.editor=false; HOME.busy=false; document.getElementById('titleCard').style.visibility=''; controls.ready=false;
+  HOME.edA=best; player.yaw=best; holder.rotation.set(0,best,0); player.moveTo=null; player.speed=0; document.getElementById('titleCard').style.visibility='hidden'; homeCard.hidden=true; edEl.hidden=false; document.body.classList.add('editing'); edRender(); dressPlayer(ED.cfg); if(bubOn){ holder.remove(bubOn); bubOn=null; } }
+function closeEditor(save){ edEl.hidden=true; document.body.classList.remove('editing'); HOME.editor=false; HOME.busy=false; document.getElementById('titleCard').style.visibility=''; controls.ready=false;
   if(save){ PLAYER_AV={...ED.cfg}; try{ localStorage.setItem('karmapolis_avatar',avEncode(PLAYER_AV)); }catch(e){} dressPlayer('custom'); copMsgT=3; msg.innerHTML='👕 <b>Personaggio salvato!</b> Lo ritrovi anche la prossima volta.'; }
   else dressPlayer('auto'); }
 document.getElementById('edOk').onclick=()=>closeEditor(true); document.getElementById('edNo').onclick=()=>closeEditor(false);
