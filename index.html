@@ -189,7 +189,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.74.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.75.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -202,7 +202,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
   <div class="card seg" id="towCard" hidden><button id="towBtn" type="button">🚛 Carro attrezzi</button></div>
   <div class="card seg" id="homeCard" hidden><button id="homeBtn" type="button">🏠</button></div>
   <div class="card seg" id="buyCard" hidden><button id="buyBtn" type="button">🍬 Compra caramelle</button></div>
-  <div class="card seg" id="anthCard" hidden><button id="anthBtn" type="button">💪 Proteine da Anthony · 40</button></div>
+  <div class="card seg" id="anthCard" hidden><button id="anthBtn" type="button">💪 Proteine da Antony · 40</button></div>
   <div class="card seg" id="taxiCard" hidden><button id="taxiBtn" type="button">😗 Fischia al taxi</button><button id="taxiOut" class="ghost" type="button" hidden>🚪 Scendi</button></div>
   <div class="card seg" id="shopCard" hidden><button id="shopBtn" type="button" style="background:#2f7de1;color:#fff">🔧 Ripara</button><button id="shopOut" class="ghost" type="button" hidden>🚗 Esci</button></div>
   <div class="card seg" id="actCard" hidden><button id="act" type="button">Sali</button></div>
@@ -428,6 +428,7 @@ const piazzaTex=canvasTex(256,256,(g,w,h)=>{ g.fillStyle='#e6d6b8'; g.fillRect(0
   g.fillStyle=['#ddc9a6','#e9dbc0','#d6c09a'][i%3]; g.strokeStyle='#c4ad87'; g.lineWidth=1.5; g.beginPath(); g.ellipse(x,y,r,r*0.8,Math.random()*3,0,Math.PI*2); g.fill(); g.stroke(); } });
 const grassTex=canvasTex(128,128,(g,w,h)=>{ g.fillStyle='#74c055'; g.fillRect(0,0,w,h); speck(g,w,h,'#68b14b',500,3); speck(g,w,h,'#82ca60',300,2); speck(g,w,h,'#5ea545',120,2); });
 const sandTex=canvasTex(128,128,(g,w,h)=>{ g.fillStyle='#f2d9a2'; g.fillRect(0,0,w,h); speck(g,w,h,'#e8cd92',400,2); speck(g,w,h,'#f8e4b8',200,2); });
+const cobbleTex=canvasTex(128,128,(g,w,h)=>{ g.fillStyle='#8d8578'; g.fillRect(0,0,w,h); for(let y=0;y<4;y++) for(let x=0;x<4;x++){ g.fillStyle=['#a39a8c','#978e80','#aca395'][(x+y*3)%3]; g.beginPath(); g.ellipse(x*32+16+(y%2)*8-4,y*32+16,13,12,0,0,7); g.fill(); } });
 const flat=(w,d,tex,x,y,z,rep,mat)=>{ const g=new THREE.PlaneGeometry(w,d); g.rotateX(-Math.PI/2); const t=tex.clone(); t.needsUpdate=true; if(rep) t.repeat.set(...rep);
   const m=new THREE.Mesh(g,mat||toon({map:t})); m.position.set(x,y,z); m.receiveShadow=true; scene.add(m); return m; };
 
@@ -490,19 +491,23 @@ function house(cx,cz,w,d,yaw,floors,opts={}){ // facciata verso +Z locale ruotat
     P('wins',new THREE.BoxGeometry(sw*0.35,1.4,0.08),-sw*0.28,1.1,d/2+0.03,0xffffff); P('wins',new THREE.BoxGeometry(sw*0.35,1.4,0.08),sw*0.28,1.1,d/2+0.03,0xffffff); }
   const [wx,wz]=loc(cx,cz,yaw,0,0); const hw=Math.abs(Math.cos(yaw))>0.5?w/2:d/2, hd=Math.abs(Math.cos(yaw))>0.5?d/2:w/2;
   BOXES.push({x0:wx-hw,x1:wx+hw,z0:wz-hd,z1:wz+hd,h:H+0.15+d*0.45}); }
+const ALLEY_W=2.6, ALLEYS=[]; // 🏘️ vicoletti (v0.75.0): uno per isolato, da nord a sud, passa nel cortile
 const SHOPCOL=[0xe0483e,0x3fa66b,0x2f7de1,0xf0a030,0x8c5fd6];
-function fillSide(ax,az,bx,bz,yaw,shopRow){ // fila di case dal punto A al punto B (lungo il bordo), facciate verso l'esterno
-  const L=Math.hypot(bx-ax,bz-az), ux=(bx-ax)/L, uz=(bz-az)/L; let s=0.4;
-  while(s<L-5){ const w=Math.min(6.5+rnd()*3.5,L-s-0.4); if(w<5) break; const d=7.5+rnd()*1.5, m=s+w/2;
+function fillSide(ax,az,bx,bz,yaw,shopRow,gap){ // fila di case dal punto A al punto B (lungo il bordo), facciate verso l'esterno; gap = vicoletto a metà
+  const L=Math.hypot(bx-ax,bz-az), ux=(bx-ax)/L, uz=(bz-az)/L; let s=0.4; const g0=gap?L/2-ALLEY_W/2:1e9, g1=gap?L/2+ALLEY_W/2:1e9;
+  while(s<L-5){ if(s>=g0-0.1&&s<g1){ s=g1+0.05; continue; } let w=Math.min(6.5+rnd()*3.5,L-s-0.4); if(s<g0 && s+w>g0-0.05) w=g0-0.05-s; if(w<4){ if(s<g0){ s=g1+0.05; continue; } break; } const d=7.5+rnd()*1.5, m=s+w/2;
     const [ox,oz]=loc(0,0,yaw,0,-d/2-0.05); house(ax+ux*m+ox,az+uz*m+oz,w,d,yaw,1+Math.floor(rnd()*3),{shop:shopRow&&rnd()<0.7,shopCol:SHOPCOL[Math.floor(rnd()*5)]}); s+=w+0.08; } }
 for(const b of BLOCKS){ const ip=b.i===1&&b.j===1, park=b.i===2&&b.j===0; if(ip||park) continue;
   const m=SIDE, x0=b.x0+m, x1=b.x1-m, z0=b.z0+m, z1=b.z1-m, nearP=Math.abs(b.i-1)+Math.abs(b.j-1)===1, sea=b.j===2;
-  fillSide(x0,z1,x1,z1,0,nearP||sea);           // lato sud (facciate verso +Z)
-  fillSide(x1,z0,x0,z0,Math.PI,nearP);          // lato nord
+  fillSide(x0,z1,x1,z1,0,nearP||sea,true);           // lato sud (facciate verso +Z), con il vicoletto a metà
+  fillSide(x1,z0,x0,z0,Math.PI,nearP,true);          // lato nord, idem
+  { const ax=(x0+x1)/2; ALLEYS.push({x:ax,z0:b.z0,z1:b.z1}); // pavimento di ciottoli scuri dal marciapiede nord a quello sud
+    flat(ALLEY_W,b.z1-b.z0-1.2,cobbleTex,ax,0.2,(b.z0+b.z1)/2,[1,(b.z1-b.z0)/2.6]);
+    for(const zz of [z0+3.5,z1-3.5]){ put('lamps',new THREE.BoxGeometry(0.06,0.06,0.5),mat4(ax+ALLEY_W/2-0.25,2.9,zz),0x2f4a3a); put('bulbs',new THREE.SphereGeometry(0.09,8,6),mat4(ax+ALLEY_W/2-0.5,2.8,zz),0xffffff); } } // lucine appese ai muri
   fillSide(x1,z1-9.5,x1,z0+9.5,Math.PI/2,nearP); // lato est
   fillSide(x0,z0+9.5,x0,z1-9.5,-Math.PI/2,nearP);// lato ovest
   // cortile interno con un albero
-  const cx=(b.x0+b.x1)/2, cz=(b.z0+b.z1)/2; flat(Math.max(2,b.x1-b.x0-24),Math.max(2,b.z1-b.z0-24),grassTex,cx,0.19,cz,[3,3]); tree(cx,cz,0.15,1.1); }
+  const cx=(b.x0+b.x1)/2, cz=(b.z0+b.z1)/2; flat(Math.max(2,b.x1-b.x0-24),Math.max(2,b.z1-b.z0-24),grassTex,cx+2.2,0.19,cz,[3,3]); tree(cx+3.2,cz,0.15,1.1); } // (prato e albero spostati di lato: in mezzo passa il vicoletto)
 
 // ---------- alberi, cespugli e fiori ----------
 function tree(x,z,y=0,s=1){ put('trunks',trunkGeo,mat4(x,y+1.1*s,z,1,0,s,2.2*s,s),0x8a5a3c,BARK); const c=GREENS[Math.floor(rnd()*GREENS.length)];
@@ -3158,10 +3163,10 @@ document.getElementById('helpBtn').onclick=()=>document.body.classList.toggle('s
 // Resta in un posto al massimo 1 minuto, poi cambia lampione (quando non lo stai guardando da vicino). Vende proteine: 1 minuto di scatto infinito,
 // e per quel minuto la barra verde della stamina brilla. Aspetto: codice fatto da Teo con l'editor.
 const ANTH={code:'KP1-m220000000001280d1f01d0f0f2208650130',price:40,stay:60,h:null,t:0,spot:-1,boost:0,
-  spots:[...VX.flatMap(vx=>{ const a=[]; for(let z=-56;z<=50;z+=14){ if(HZ.some(h=>Math.abs(h-z)<8)) continue; a.push([vx+SW+0.5-0.34,z,-Math.PI/2]); } return a; })]}; // schiena contro il lampione, guarda la strada
+  spots:[...ALLEYS.flatMap(a=>[[a.x-ALLEY_W/2+0.45,a.z1-SIDE-4,Math.PI/2],[a.x+ALLEY_W/2-0.45,a.z0+SIDE+4,-Math.PI/2]]), /* nei vicoletti, appoggiato al muro */ ...VX.flatMap(vx=>{ const a=[]; for(let z=-56;z<=50;z+=14){ if(HZ.some(h=>Math.abs(h-z)<8)) continue; a.push([vx+SW+0.5-0.34,z,-Math.PI/2]); } return a; })]}; // schiena contro il lampione, guarda la strada
 function anthSpot(){ let i, n=0; do{ i=Math.floor(Math.random()*ANTH.spots.length); n++; } while(n<20 && (i===ANTH.spot || Math.hypot(ANTH.spots[i][0]-player.pos.x,ANTH.spots[i][1]-player.pos.z)<25)); ANTH.spot=i; const [x,z,y]=ANTH.spots[i]; ANTH.h.g.position.set(x,0.15,z); ANTH.h.g.rotation.y=y; ANTH.t=0; }
 function initAnthony(){ if(ANTH.h) return; const h=makeHuman({av:avDecode(ANTH.code)},null); ANTH.h=h; h.anthony=true;
-  const tag=canvasTex(256,64,(g)=>{ g.fillStyle='rgba(255,250,240,.92)'; g.beginPath(); g.roundRect(4,8,248,48,24); g.fill(); g.strokeStyle='#2a2233'; g.lineWidth=4; g.stroke(); g.fillStyle='#2a2233'; g.font='bold 30px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('💪 Anthony',128,33); });
+  const tag=canvasTex(256,64,(g)=>{ g.fillStyle='rgba(255,250,240,.92)'; g.beginPath(); g.roundRect(4,8,248,48,24); g.fill(); g.strokeStyle='#2a2233'; g.lineWidth=4; g.stroke(); g.fillStyle='#2a2233'; g.font='bold 30px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('💪 Antony',128,33); });
   const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tag,depthTest:false,transparent:true})); sp.scale.set(1.3,0.33,1); sp.position.y=2.25; sp.renderOrder=5; h.g.add(sp); ANTH.tag=sp; anthSpot(); }
 // posa appoggiata: schiena un po' indietro, braccia incrociate, piede destro contro il palo
 function anthPose(h){ const B=h.bones, g=h.g; g.updateMatrixWorld(true); const f=new V3(Math.sin(g.rotation.y),0,Math.cos(g.rotation.y)), r=new V3(-f.z,0,f.x); // r = la sua destra
@@ -3172,8 +3177,8 @@ function anthPose(h){ const B=h.bones, g=h.g; g.updateMatrixWorld(true); const f
   if(B.RightUpLeg&&B.RightLeg&&B.RightFoot){ aimW(B.RightUpLeg,B.RightLeg,down.clone().addScaledVector(f,0.35).addScaledVector(r,0.05).normalize(),1); aimW(B.RightLeg,B.RightFoot,down.clone().addScaledVector(f,-0.9).normalize(),1); }
   if(B.LeftUpLeg&&B.LeftLeg){ aimW(B.LeftUpLeg,B.LeftLeg,down.clone().addScaledVector(f,0.12).normalize(),1); } }
 const anthCard=document.getElementById('anthCard');
-document.getElementById('anthBtn').onclick=()=>{ copMsgT=4; if(ANTH.boost>0){ msg.innerHTML='💪 Anthony: "Piano, campione! Una alla volta."'; return; }
-  if(G.karma<ANTH.price){ msg.innerHTML='💪 Anthony: "Le proteine costano <b>'+ANTH.price+' karma</b>, torna quando hai fatto del bene."'; return; }
+document.getElementById('anthBtn').onclick=()=>{ copMsgT=4; if(ANTH.boost>0){ msg.innerHTML='💪 Antony: "Piano, campione! Una alla volta."'; return; }
+  if(G.karma<ANTH.price){ msg.innerHTML='💪 Antony: "Le proteine costano <b>'+ANTH.price+' karma</b>, torna quando hai fatto del bene."'; return; }
   G.karma-=ANTH.price; floatText('-'+ANTH.price,player.pos.x,player.pos.z); ANTH.boost=60; player.tired=false; player.sta=staCap(); sfx('buy');
   msg.innerHTML='💪 <b>Proteine!</b> Per 1 minuto puoi scattare quanto vuoi: la barra brilla.'; };
 function updateAnthony(dt){ if(!UM.ready || !G.started) return; if(!ANTH.h) initAnthony(); const h=ANTH.h; if(!h) return;
