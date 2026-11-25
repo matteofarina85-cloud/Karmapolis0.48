@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.69.1</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.69.2</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -1336,20 +1336,17 @@ function faceTexture(c){ const cv=document.createElement('canvas'); cv.width=336
   // occhi (25/11 sera, Teo: "il viso non mi piace"): niente cerchio scuro intorno (sembrava un paio d'occhiali), iride grande alla "avatar", due riflessi, solo la palpebra di sopra marcata
   const shape=AV.eyes[c.eyes], icol=new THREE.Color(AV.eyeCol[c.eyeCol]), ic=hex(icol.getHex()), icD=hex(icol.clone().multiplyScalar(0.55).getHex()), icL=hex(icol.clone().lerp(new THREE.Color(0xffffff),0.35).getHex()), skinD=hex(new THREE.Color(AV.skin[c.skin]).multiplyScalar(0.78).getHex());
   for(const s of [-1,1]){ const x=128+s*ex; let rx=17.5, ry=19.5; if(shape==='a mandorla'){ rx=19; ry=14.5; } if(shape==='grandi'){ rx=20.5; ry=23; } if(shape==='assonnati'){ ry=14; } if(shape==='allegri'){ ry=16.5; }
-    g.save(); g.beginPath(); g.ellipse(x,ey,rx,ry,0,0,7); g.clip();
-    g.fillStyle='#fbf8f2'; g.fillRect(x-rx,ey-ry,rx*2,ry*2);
-    const ir=Math.min(rx,ry)*0.78, iy=ey+ry*0.08, gr=g.createRadialGradient(x,iy+ir*0.35,ir*0.2,x,iy,ir); gr.addColorStop(0,icL); gr.addColorStop(0.7,ic); gr.addColorStop(1,icD);
-    g.fillStyle=gr; g.beginPath(); g.arc(x,iy,ir,0,7); g.fill(); g.fillStyle='#1a1420'; g.beginPath(); g.arc(x,iy,ir*0.45,0,7); g.fill();
-    g.fillStyle='rgba(255,255,255,0.95)'; g.beginPath(); g.arc(x-ir*0.32,iy-ir*0.38,ir*0.28,0,7); g.fill(); g.beginPath(); g.arc(x+ir*0.35,iy+ir*0.3,ir*0.12,0,7); g.fill();
-    g.fillStyle='rgba(60,40,50,0.18)'; g.fillRect(x-rx,ey-ry,rx*2,ry*0.45); // ombra della palpebra
-    if(shape==='assonnati'){ g.fillStyle=hex(AV.skin[c.skin]); g.fillRect(x-rx,ey-ry,rx*2,ry*0.7); }
-    if(shape==='allegri'){ g.fillStyle=hex(AV.skin[c.skin]); g.beginPath(); g.ellipse(x,ey+ry*1.35,rx*1.4,ry*0.8,0,0,7); g.fill(); }
+    // 25/11 sera bis: niente sclera bianca né riga intorno (da lontano faceva l'effetto lente/occhiali): occhio pieno, scuro e colorato, con riflesso
+    const ew=rx*0.72, eh=ry*0.82;
+    g.save(); g.beginPath(); g.ellipse(x,ey,ew,eh,0,0,7); g.clip();
+    const gr=g.createRadialGradient(x,ey+eh*0.35,eh*0.15,x,ey,eh*1.05); gr.addColorStop(0,icL); gr.addColorStop(0.55,ic); gr.addColorStop(1,'#1a1420');
+    g.fillStyle=gr; g.fillRect(x-ew,ey-eh,ew*2,eh*2);
+    g.fillStyle='#1a1420'; g.beginPath(); g.ellipse(x,ey+eh*0.05,ew*0.48,eh*0.5,0,0,7); g.fill();
+    if(shape==='assonnati'){ g.fillStyle=hex(AV.skin[c.skin]); g.fillRect(x-ew,ey-eh,ew*2,eh*0.75); }
+    if(shape==='allegri'){ g.fillStyle=hex(AV.skin[c.skin]); g.beginPath(); g.ellipse(x,ey+eh*1.45,ew*1.5,eh*0.85,0,0,7); g.fill(); }
     g.restore();
-    // palpebra di sopra (la "riga" dell'occhio) e piega leggera
-    g.strokeStyle='#2a2233'; g.lineWidth=c.lashes?5:4; g.beginPath(); g.ellipse(x,ey,rx+0.5,ry+0.5,0,Math.PI*1.08,Math.PI*1.92); g.stroke();
-    g.strokeStyle=skinD; g.lineWidth=2; g.beginPath(); g.ellipse(x,ey-3,rx+1,ry+3,0,Math.PI*1.2,Math.PI*1.8); g.stroke();
-    if(shape==='assonnati'){ g.strokeStyle='#2a2233'; g.lineWidth=3.5; g.beginPath(); g.moveTo(x-rx,ey-ry*0.4+3); g.quadraticCurveTo(x,ey-ry*0.55+3,x+rx,ey-ry*0.4+3); g.stroke(); }
-    if(c.lashes){ g.strokeStyle='#2a2233'; g.lineWidth=2.8; for(const k of [0.15,0.45]){ const a=Math.PI*1.5+s*(0.6+k); const px=x+Math.cos(a)*(rx+0.5), py=ey+Math.sin(a)*(ry+0.5); g.beginPath(); g.moveTo(px,py); g.lineTo(px+s*5,py-4); g.stroke(); } } }
+    g.fillStyle='rgba(255,255,255,0.95)'; g.beginPath(); g.arc(x-ew*0.3,ey-eh*0.32,ew*0.3,0,7); g.fill(); g.beginPath(); g.arc(x+ew*0.32,ey+eh*0.3,ew*0.13,0,7); g.fill();
+    if(c.lashes){ g.strokeStyle='#1a1420'; g.lineWidth=3; g.lineCap='round'; for(const k of [0.2,0.55]){ const a=Math.PI*1.5+s*(0.55+k); const px=x+Math.cos(a)*ew, py=ey+Math.sin(a)*eh; g.beginPath(); g.moveTo(px,py); g.lineTo(px+s*6,py-5); g.stroke(); } } }
   // sopracciglia
   const bt=AV.brows[c.brows]; g.strokeStyle=browCol; for(const s of [-1,1]){ const x=128+s*ex; g.lineWidth=bt==='folte'?9:bt==='sottili'?3.5:6.5; g.beginPath();
     if(bt==='arcuate'){ g.moveTo(x-s*17,ey-29); g.quadraticCurveTo(x+s*2,ey-45,x+s*19,ey-32); } else if(bt==='dritte'){ g.moveTo(x-s*17,ey-33); g.lineTo(x+s*18,ey-35); } else { g.moveTo(x-s*16,ey-30); g.quadraticCurveTo(x,ey-39,x+s*18,ey-33); } g.stroke(); }
@@ -1431,7 +1428,7 @@ function avOutfit(c){ const T=AV.top[c.top], Bt=AV.bottom[c.bottom]; return {ski
 // numeri pseudo-casuali ripetibili (lo stesso passante è sempre uguale)
 function avRand(seed){ let s=Math.abs(Math.floor(seed*9301+49297))%233280||1; return ()=>(s=(s*9301+49297)%233280)/233280; }
 function avRandom(seed){ const r=avRand(seed), pick=n=>Math.floor(r()*n), f=r()<0.5; const c={...AVC_DEF,sex:f?'f':'m',skin:pick(AV.skin.length),shape:pick(4),eyes:pick(AV.eyes.length),eyeCol:pick(AV.eyeCol.length),brows:pick(AV.brows.length),nose:pick(4),mouth:[0,0,0,1,2,3][pick(6)],
-  freckles:r()<0.15?1:0,blush:f&&r()<0.4?1:0,lashes:f?1:0,hairCol:r()<0.08?8+pick(2):pick(8),hat:r()<0.18?1+pick(5):0,hatCol:pick(AV.clothCol.length),glasses:r()<0.2?1+pick(4):0,glassCol:[15,13,9,7][pick(4)],earrings:f&&r()<0.5?1:0,
+  freckles:r()<0.15?1:0,blush:f&&r()<0.4?1:0,lashes:f?1:0,hairCol:r()<0.08?8+pick(2):pick(8),hat:r()<0.18?1+pick(5):0,hatCol:pick(AV.clothCol.length),glasses:r()<0.07?1+pick(4):0,glassCol:[15,13,9,7][pick(4)],earrings:f&&r()<0.5?1:0,
   top:pick(4),topCol:pick(AV.clothCol.length),bottom:f?pick(4):pick(2),bottomCol:[8,14,15,12,13,7,0][pick(7)],shoesCol:[11,15,13,0,4][pick(5)]};
   c.hair=f?[1,4,6,7,7,8,9,10,2][pick(9)]:[0,0,1,2,3,3,4,5,11][pick(9)]; c.beard=f?0:[0,0,0,1,2,2,3,4,5,6][pick(10)]; c.beardCol=c.hairCol; if(c.hat && [6,7,8,9].includes(c.hair)===false && r()<0.5) c.hat=0; return c; }
 const nearestIdx=(arr,col)=>{ const a=new THREE.Color(col); let b=0,bd=9; arr.forEach((x,i)=>{ const c=new THREE.Color(x), d=(c.r-a.r)**2+(c.g-a.g)**2+(c.b-a.b)**2; if(d<bd){ bd=d; b=i; } }); return b; };
