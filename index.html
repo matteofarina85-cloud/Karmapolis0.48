@@ -54,6 +54,7 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #hp .bar{width:140px;height:12px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
 #wanted{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(66px + env(safe-area-inset-bottom,0px));z-index:4;background:var(--paper);border:2.5px solid var(--line);border-radius:999px;padding:3px 12px;font-size:18px;box-shadow:3px 3px 0 var(--line)}
 #sta{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(208px + env(safe-area-inset-bottom,0px));z-index:3;display:flex;gap:6px;align-items:center;background:var(--paper);border:2.5px solid var(--line);border-radius:999px;padding:3px 10px;box-shadow:3px 3px 0 var(--line);pointer-events:none}
+#sta.boost #staFill{background:linear-gradient(90deg,#7dffb0,#3fe08a,#b6ffd6);box-shadow:0 0 10px #5dffa0;animation:staGlow .6s ease-in-out infinite alternate}@keyframes staGlow{from{filter:brightness(1)}to{filter:brightness(1.45)}}#sta.boost{box-shadow:0 0 14px #5dffa0}
 #sta .sbar{position:relative;width:130px;height:11px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}#staFill{height:100%;width:100%;background:#3fa66b;transition:width .15s}#staCap{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(45deg,#9a9aa3 0 4px,#c9c9d0 4px 8px)}
 @media (orientation:landscape) and (max-height:520px){#sta{bottom:auto;left:auto;top:calc(34px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));padding:1px 8px}#sta .sbar{width:90px;height:9px}.top [aria-label="Ora del giorno"]{display:none!important}} /* in orizzontale la stamina va in alto a destra (sotto gli fps) e i pulsanti giorno/notte spariscono: niente più riquadri accavallati */
 #greyHud{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(172px + env(safe-area-inset-bottom,0px));z-index:3;background:var(--paper);border:2.5px solid var(--line);border-radius:999px;padding:4px 12px;font-size:14px;box-shadow:3px 3px 0 var(--line)}
@@ -188,7 +189,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.73.1</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.74.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -201,6 +202,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
   <div class="card seg" id="towCard" hidden><button id="towBtn" type="button">🚛 Carro attrezzi</button></div>
   <div class="card seg" id="homeCard" hidden><button id="homeBtn" type="button">🏠</button></div>
   <div class="card seg" id="buyCard" hidden><button id="buyBtn" type="button">🍬 Compra caramelle</button></div>
+  <div class="card seg" id="anthCard" hidden><button id="anthBtn" type="button">💪 Proteine da Anthony · 40</button></div>
   <div class="card seg" id="taxiCard" hidden><button id="taxiBtn" type="button">😗 Fischia al taxi</button><button id="taxiOut" class="ghost" type="button" hidden>🚪 Scendi</button></div>
   <div class="card seg" id="shopCard" hidden><button id="shopBtn" type="button" style="background:#2f7de1;color:#fff">🔧 Ripara</button><button id="shopOut" class="ghost" type="button" hidden>🚗 Esci</button></div>
   <div class="card seg" id="actCard" hidden><button id="act" type="button">Sali</button></div>
@@ -2752,6 +2754,7 @@ function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } i
   if(player.veh) controls.extra=THREE.MathUtils.damp(controls.extra||0,Math.min(34,Math.abs(player.veh.speed)*0.75),2,dt); else controls.extra=THREE.MathUtils.damp(controls.extra||0,0,2,dt);
   updatePolice(dt,clock.elapsedTime); updateShop(dt);
   if(player.safeT>0) player.safeT-=dt;
+  try{ updateAnthony(dt); }catch(e){ console.warn('Anthony',e); }
   if(player.mode!=='foot'||player.taxi||player.ko>0||player.arrestT>0) updateStamina(dt,'ride');
   if(player.arrestT>0 && !player.taxi) updateArrest(dt); else if(player.taxi) updateTaxiRide(dt); else if(player.ko>0) updatePlayerKO(dt); else if(player.mode==='foot') updatePlayer(dt); else updateRider(dt);
   TT+=dt; updateWeather(dt); updateDayCycle(dt); updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); } updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
@@ -3146,9 +3149,40 @@ let FPS_CAP=60;
 const PORTRAIT_MQ=matchMedia('(orientation:portrait) and (pointer:coarse)');
 document.getElementById('rotFull').onclick=()=>document.getElementById('full').click();
 // i pulsanti d'azione (Sali, Usa, Compra, TV, letto…) quando compaiono fanno "boing" e un'onda gialla, poi ogni tanto un piccolo richiamo
-{ const BOING=['homeCard','actCard','useCard','buyCard','taxiCard','towCard','shopCard','talkCard','radioCard']; const mo=new MutationObserver(ms=>{ for(const m of ms){ const el=m.target; if(m.attributeName==='hidden' && !el.hidden){ el.classList.remove('boing'); void el.offsetWidth; el.classList.add('boing'); } } });
+{ const BOING=['anthCard','homeCard','actCard','useCard','buyCard','taxiCard','towCard','shopCard','talkCard','radioCard']; const mo=new MutationObserver(ms=>{ for(const m of ms){ const el=m.target; if(m.attributeName==='hidden' && !el.hidden){ el.classList.remove('boing'); void el.offsetWidth; el.classList.add('boing'); } } });
   for(const id of BOING){ const el=document.getElementById(id); if(el) mo.observe(el,{attributes:true,attributeFilter:['hidden']}); } }
 document.getElementById('helpBtn').onclick=()=>document.body.classList.toggle('showHelp');
+
+// ======================= 💪 ANTHONY "lo spacciatore delle proteine" (v0.74.0, 26/11/2026) =======================
+// Anthony (collega di Teo, d'accordo a stare nel gioco col suo nome) è appoggiato a un lampione: braccia incrociate e un piede contro il palo.
+// Resta in un posto al massimo 1 minuto, poi cambia lampione (quando non lo stai guardando da vicino). Vende proteine: 1 minuto di scatto infinito,
+// e per quel minuto la barra verde della stamina brilla. Aspetto: codice fatto da Teo con l'editor.
+const ANTH={code:'KP1-m220000000001280d1f01d0f0f2208650130',price:40,stay:60,h:null,t:0,spot:-1,boost:0,
+  spots:[...VX.flatMap(vx=>{ const a=[]; for(let z=-56;z<=50;z+=14){ if(HZ.some(h=>Math.abs(h-z)<8)) continue; a.push([vx+SW+0.5-0.34,z,-Math.PI/2]); } return a; })]}; // schiena contro il lampione, guarda la strada
+function anthSpot(){ let i, n=0; do{ i=Math.floor(Math.random()*ANTH.spots.length); n++; } while(n<20 && (i===ANTH.spot || Math.hypot(ANTH.spots[i][0]-player.pos.x,ANTH.spots[i][1]-player.pos.z)<25)); ANTH.spot=i; const [x,z,y]=ANTH.spots[i]; ANTH.h.g.position.set(x,0.15,z); ANTH.h.g.rotation.y=y; ANTH.t=0; }
+function initAnthony(){ if(ANTH.h) return; const h=makeHuman({av:avDecode(ANTH.code)},null); ANTH.h=h; h.anthony=true;
+  const tag=canvasTex(256,64,(g)=>{ g.fillStyle='rgba(255,250,240,.92)'; g.beginPath(); g.roundRect(4,8,248,48,24); g.fill(); g.strokeStyle='#2a2233'; g.lineWidth=4; g.stroke(); g.fillStyle='#2a2233'; g.font='bold 30px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('💪 Anthony',128,33); });
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tag,depthTest:false,transparent:true})); sp.scale.set(1.3,0.33,1); sp.position.y=2.25; sp.renderOrder=5; h.g.add(sp); ANTH.tag=sp; anthSpot(); }
+// posa appoggiata: schiena un po' indietro, braccia incrociate, piede destro contro il palo
+function anthPose(h){ const B=h.bones, g=h.g; g.updateMatrixWorld(true); const f=new V3(Math.sin(g.rotation.y),0,Math.cos(g.rotation.y)), r=new V3(-f.z,0,f.x); // r = la sua destra
+  if(B.Spine){ B.Spine.rotation.x-=0.12; B.Spine.updateWorldMatrix(false,true); }
+  const down=new V3(0,-1,0);
+  if(B.RightArm&&B.RightForeArm&&B.RightHand){ aimW(B.RightArm,B.RightForeArm,down.clone().addScaledVector(f,0.55).addScaledVector(r,0.05).normalize(),1); aimW(B.RightForeArm,B.RightHand,r.clone().multiplyScalar(-1).addScaledVector(f,0.35).addScaledVector(down,-0.15).normalize(),1); }
+  if(B.LeftArm&&B.LeftForeArm&&B.LeftHand){ aimW(B.LeftArm,B.LeftForeArm,down.clone().addScaledVector(f,0.6).addScaledVector(r,-0.05).normalize(),1); aimW(B.LeftForeArm,B.LeftHand,r.clone().addScaledVector(f,0.45).addScaledVector(down,-0.05).normalize(),1); }
+  if(B.RightUpLeg&&B.RightLeg&&B.RightFoot){ aimW(B.RightUpLeg,B.RightLeg,down.clone().addScaledVector(f,0.35).addScaledVector(r,0.05).normalize(),1); aimW(B.RightLeg,B.RightFoot,down.clone().addScaledVector(f,-0.9).normalize(),1); }
+  if(B.LeftUpLeg&&B.LeftLeg){ aimW(B.LeftUpLeg,B.LeftLeg,down.clone().addScaledVector(f,0.12).normalize(),1); } }
+const anthCard=document.getElementById('anthCard');
+document.getElementById('anthBtn').onclick=()=>{ copMsgT=4; if(ANTH.boost>0){ msg.innerHTML='💪 Anthony: "Piano, campione! Una alla volta."'; return; }
+  if(G.karma<ANTH.price){ msg.innerHTML='💪 Anthony: "Le proteine costano <b>'+ANTH.price+' karma</b>, torna quando hai fatto del bene."'; return; }
+  G.karma-=ANTH.price; floatText('-'+ANTH.price,player.pos.x,player.pos.z); ANTH.boost=60; player.tired=false; player.sta=staCap(); sfx('buy');
+  msg.innerHTML='💪 <b>Proteine!</b> Per 1 minuto puoi scattare quanto vuoi: la barra brilla.'; };
+function updateAnthony(dt){ if(!UM.ready || !G.started) return; if(!ANTH.h) initAnthony(); const h=ANTH.h; if(!h) return;
+  const d=Math.hypot(h.g.position.x-player.pos.x,h.g.position.z-player.pos.z); ANTH.t+=dt;
+  if(ANTH.t>ANTH.stay && d>18) anthSpot(); // si sposta dopo un minuto, ma non sotto i tuoi occhi
+  h.g.visible=d<90; if(h.g.visible){ for(const k of ['idle','walk','run']) h.A[k].setEffectiveWeight(k==='idle'?1:0); h.mixer.update(dt); anthPose(h); }
+  const at=d<3.2 && !player.veh && !player.taxi && !(player.ko>0) && !HOME.active; if(anthCard.hidden===at) anthCard.hidden=!at;
+  if(at && h.g.visible){ const tgt=Math.atan2(player.pos.x-h.g.position.x,player.pos.z-h.g.position.z); if(h.bones.Head){ const dy=((tgt-h.g.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI; h.bones.Head.rotation.y+=THREE.MathUtils.clamp(dy,-0.9,0.9); } }
+  if(ANTH.boost>0){ ANTH.boost-=dt; player.sta=staCap(); player.tired=false; staEl.classList.add('boost'); if(ANTH.boost<=0){ staEl.classList.remove('boost'); copMsgT=3; msg.innerHTML='💪 L\'effetto delle proteine è finito.'; } } }
 function loop(ts){ if(ts!==undefined && !window.__pause && ts-lastTs<1000/FPS_CAP-1.2){ requestAnimationFrame(loop); return; } if(ts!==undefined) lastTs=ts;
   const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime; try{ pollPad(dt); }catch(e){} wU.uTime.value=t; wU.uCam.value.copy(camera.position);
   updateLife(t); if(window.__ready && !PORTRAIT_MQ.matches) updateWorld(dt); // in verticale sul telefono il gioco resta in pausa
