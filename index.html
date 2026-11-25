@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.70.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.70.1</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -1482,8 +1482,13 @@ function qHead(c){ const grp=new THREE.Group(), S=c.sex==='f'?'Female':'Male';
   const H=(S==='Male'?QHAIR_M:QHAIR_F)[c.hair]; const hatOn=c.hat>0;
   if(H && !(hatOn && /Buzzed|SimpleParted/.test(H))) add(H,hairMat(hc),true);
   if(c.beard>0 && S==='Male') add('Hair_Beard',hairMat(bc),true);
-  const ex=avHead({...c,_extraOnly:true}); if(ex.children.length) grp.add(ex);
-  grp.userData.cfg={...c}; return grp; }
+  const ex=avHead({...c,_extraOnly:true,glasses:0}); if(ex.children.length) grp.add(ex); // cappelli e orecchini
+  // occhiali: le teste vecchie avevano gli occhi più avanti; qui gli occhi sono a z≈0.11 (gli occhiali erano a 0.17 e galleggiavano davanti al viso)
+  if(c.glasses>0){ const gl=avHead({...c,_extraOnly:true,hat:0,earrings:0}); gl.position.set(0,0.012,-0.037); grp.add(gl); }
+  // proporzioni (Teo: "proporziona bene la testa col corpo"): le teste vecchie erano grandi apposta; queste sono realistiche → più piccole, appoggiate sul collo
+  const k=QH_SCALE; grp.scale.setScalar(k); grp.position.set(0,-(1-k)*0.17,-0.012); // (dentro un gruppo: mountHead sovrascrive scala e posizione del gruppo esterno)
+  const out=new THREE.Group(); out.add(grp); out.userData.cfg={...c}; return out; }
+const QH_SCALE=0.8;
 // monta la testa sul collo del manichino (in posa di riposo, così resta dritta)
 function mountHead(bones,root,cfg){ const head=avHead(cfg); const hp=bones.Head.getWorldPosition(new THREE.Vector3()); hp.y+=0.075; const nq=bones.Neck.getWorldQuaternion(new THREE.Quaternion()), gq=root.getWorldQuaternion(new THREE.Quaternion()), ns=bones.Neck.getWorldScale(new THREE.Vector3()); hp.y+=0.02;
   bones.Neck.add(head); head.position.copy(bones.Neck.worldToLocal(hp)); head.quaternion.copy(nq.invert().multiply(gq)); head.scale.setScalar(1.32/ns.x); return head; }
