@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.69.2</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.69.3</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -1339,9 +1339,9 @@ function faceTexture(c){ const cv=document.createElement('canvas'); cv.width=336
     // 25/11 sera bis: niente sclera bianca né riga intorno (da lontano faceva l'effetto lente/occhiali): occhio pieno, scuro e colorato, con riflesso
     const ew=rx*0.72, eh=ry*0.82;
     g.save(); g.beginPath(); g.ellipse(x,ey,ew,eh,0,0,7); g.clip();
-    const gr=g.createRadialGradient(x,ey+eh*0.35,eh*0.15,x,ey,eh*1.05); gr.addColorStop(0,icL); gr.addColorStop(0.55,ic); gr.addColorStop(1,'#1a1420');
+    const gr=g.createRadialGradient(x,ey+eh*0.35,eh*0.15,x,ey,eh*1.05); gr.addColorStop(0,icL); gr.addColorStop(1,ic); /* bordo dell'occhio NON scuro: da lontano diventava un anello nero (occhiaie) */
     g.fillStyle=gr; g.fillRect(x-ew,ey-eh,ew*2,eh*2);
-    g.fillStyle='#1a1420'; g.beginPath(); g.ellipse(x,ey+eh*0.05,ew*0.48,eh*0.5,0,0,7); g.fill();
+    g.fillStyle='#1a1420'; g.beginPath(); g.ellipse(x,ey+eh*0.05,ew*0.42,eh*0.44,0,0,7); g.fill();
     if(shape==='assonnati'){ g.fillStyle=hex(AV.skin[c.skin]); g.fillRect(x-ew,ey-eh,ew*2,eh*0.75); }
     if(shape==='allegri'){ g.fillStyle=hex(AV.skin[c.skin]); g.beginPath(); g.ellipse(x,ey+eh*1.45,ew*1.5,eh*0.85,0,0,7); g.fill(); }
     g.restore();
@@ -1362,10 +1362,10 @@ function faceTexture(c){ const cv=document.createElement('canvas'); cv.width=336
   else if(mt==='smorfia'){ g.moveTo(110,mouthY+5); g.quadraticCurveTo(128,mouthY+9,146,mouthY-4); g.stroke(); }
   else { g.lineWidth=4; g.fillStyle='#6b1f2a'; g.beginPath(); g.ellipse(128,mouthY+4,6,7,0,0,7); g.fill(); g.stroke(); }
   if(c.sex==='f' && mt!=='sorriso aperto' && mt!=='fischietto'){ g.strokeStyle='rgba(200,70,90,0.55)'; g.lineWidth=2.5; g.beginPath(); g.moveTo(112,mouthY+7); g.quadraticCurveTo(128,mouthY+17,144,mouthY+7); g.stroke(); }
-  const t=new THREE.CanvasTexture(cv); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t; }
+  const t=new THREE.CanvasTexture(cv); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; t.premultiplyAlpha=true; /* 25/11: senza questo, da lontano il trasparente (nero) si mescolava ai bordi degli occhi = occhiaie nere */ return t; }
 // i visi uguali condividono la stessa texture (tanti passanti, poca memoria: importante su iPhone)
 const FACEMATS={}; const AVMAT=toon({vertexColors:true});
-function faceMat(c){ const k=['sex','skin','eyes','eyeCol','brows','mouth','freckles','blush','lashes','hairCol','beard','beardCol'].map(x=>c[x]).join('.'); return FACEMATS[k]||(FACEMATS[k]=toon({map:faceTexture(c),transparent:true,alphaTest:0.02,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2})); }
+function faceMat(c){ const k=['sex','skin','eyes','eyeCol','brows','mouth','freckles','blush','lashes','hairCol','beard','beardCol'].map(x=>c[x]).join('.'); return FACEMATS[k]||(FACEMATS[k]=toon({map:faceTexture(c),transparent:true,premultipliedAlpha:true,alphaTest:0.02,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2})); }
 // ---- geometria della testa (pelle, orecchie, naso, capelli, barba, cappello, occhiali) unita a colori per vertice
 function avHead(c){ const grp=new THREE.Group(), skin=[], hair=[], extra=[]; const sk=new THREE.Color(AV.skin[c.skin]), hc=new THREE.Color(AV.hairCol[c.hairCol]), bc=new THREE.Color(AV.hairCol[c.beardCol]);
   const put=(arr,geo,col,pos,scl=[1,1,1],rot=[0,0,0])=>{ if(!geo.index){ const n=geo.attributes.position.count; geo.setIndex([...Array(n).keys()]); } for(const k of Object.keys(geo.attributes)) if(!['position','normal'].includes(k)) geo.deleteAttribute(k);
