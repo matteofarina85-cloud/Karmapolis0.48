@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.70.1</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.70.2</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -1290,7 +1290,7 @@ function headGeo(L){ const parts=[]; const sk=new THREE.Color(L.skin), hc=new TH
   if(L.hair!=='none' && !L.bald){ m(cap(0.172,Math.PI*0.5),hc,[0,0.01,-0.008],[1,1.12,1.04],[-0.32,0,0]); m(cap(0.168,Math.PI*0.62),hc,[0,0,-0.02],[1,1.1,1],[-1.2,0,0]);
     if(L.long) m(new THREE.CapsuleGeometry(0.13,0.2,4,10),hc,[0,-0.14,-0.07],[1.15,1,0.55]); }
   if(L.beard) m(new THREE.SphereGeometry(0.165,20,10,Math.PI/2-1.35,2.7,Math.PI*0.62,Math.PI*0.3),L.beardCol??hc,[0,0,0],[1.01,1.12,1.03]);
-  if(L.glasses) for(const s of [1,-1]) m(new THREE.TorusGeometry(0.036,0.006,6,16),0x2a2233,[0.057*s,0.012,0.168],[1,0.85,1]);
+  if(false && L.glasses) for(const s of [1,-1]) m(new THREE.TorusGeometry(0.036,0.006,6,16),0x2a2233,[0.057*s,0.012,0.168],[1,0.85,1]);
   return mergeGeometries(parts); }
 
 // ======================= 🧑 AVATAR DI KARMAPOLIS (25/11/2026): teste nuove in stile "avatar da console" (proporzioni vere, testa un po' grande, occhi espressivi), tutto disegnato da codice =======================
@@ -1439,13 +1439,13 @@ function avOutfit(c){ const T=AV.top[c.top], Bt=AV.bottom[c.bottom]; return {ski
 // numeri pseudo-casuali ripetibili (lo stesso passante è sempre uguale)
 function avRand(seed){ let s=Math.abs(Math.floor(seed*9301+49297))%233280||1; return ()=>(s=(s*9301+49297)%233280)/233280; }
 function avRandom(seed){ const r=avRand(seed), pick=n=>Math.floor(r()*n), f=r()<0.5; const c={...AVC_DEF,sex:f?'f':'m',skin:pick(AV.skin.length),shape:pick(4),eyes:pick(AV.eyes.length),eyeCol:pick(AV.eyeCol.length),brows:pick(AV.brows.length),nose:pick(4),mouth:[0,0,0,1,2,3][pick(6)],
-  freckles:r()<0.15?1:0,blush:f&&r()<0.4?1:0,lashes:f?1:0,hairCol:r()<0.08?8+pick(2):pick(8),hat:r()<0.18?1+pick(5):0,hatCol:pick(AV.clothCol.length),glasses:r()<0.07?1+pick(4):0,glassCol:[15,13,9,7][pick(4)],earrings:f&&r()<0.5?1:0,
+  freckles:r()<0.15?1:0,blush:f&&r()<0.4?1:0,lashes:f?1:0,hairCol:r()<0.08?8+pick(2):pick(8),hat:r()<0.18?1+pick(5):0,hatCol:pick(AV.clothCol.length),glasses:0,glassCol:[15,13,9,7][pick(4)],earrings:f&&r()<0.5?1:0,
   top:pick(4),topCol:pick(AV.clothCol.length),bottom:f?pick(4):pick(2),bottomCol:[8,14,15,12,13,7,0][pick(7)],shoesCol:[11,15,13,0,4][pick(5)]};
   c.hair=f?[1,4,6,7,7,8,9,10,2][pick(9)]:[0,0,1,2,3,3,4,5,11][pick(9)]; c.beard=f?0:[0,0,0,1,2,2,3,4,5,6][pick(10)]; c.beardCol=c.hairCol; if(c.hat && [6,7,8,9].includes(c.hair)===false && r()<0.5) c.hat=0; return c; }
 const nearestIdx=(arr,col)=>{ const a=new THREE.Color(col); let b=0,bd=9; arr.forEach((x,i)=>{ const c=new THREE.Color(x), d=(c.r-a.r)**2+(c.g-a.g)**2+(c.b-a.b)**2; if(d<bd){ bd=d; b=i; } }); return b; };
 // i personaggi già esistenti (agenti, meccanici…) descritti alla vecchia maniera diventano avatar
 function lookToAv(look,o,seed){ const c=avRandom(seed); c.sex=look.long?'f':'m'; c.lashes=c.sex==='f'?1:0; c.blush=0; c.earrings=0; c.skin=nearestIdx(AV.skin,look.skin); c.hairCol=nearestIdx(AV.hairCol,look.hair===look.skin?0x3b2a20:look.hair); c.beardCol=c.hairCol;
-  c.hair=look.hair===look.skin||look.bald?3:look.long?7:[0,1,2][Math.floor(seed)%3]; c.beard=look.beard?2:0; c.glasses=look.glasses?1:0; c.glassCol=15;
+  c.hair=look.hair===look.skin||look.bald?3:look.long?7:[0,1,2][Math.floor(seed)%3]; c.beard=look.beard?2:0; c.glasses=0; c.glassCol=15;
   if(o){ c.topCol=nearestIdx(AV.clothCol,o.top); c.bottomCol=nearestIdx(AV.clothCol,o.pants); c.shoesCol=nearestIdx(AV.clothCol,o.shoes); c.top=o.short?0:1; c.bottom=o.shorts?1:0; c.hat=o.cap?1:0; if(o.capCol) c.hatCol=nearestIdx(AV.clothCol,o.capCol); }
   else c.hat=0; return c; }
 // ======================= 🙂 TESTE VERE (v0.70.0, 25/11/2026) =======================
@@ -1484,7 +1484,7 @@ function qHead(c){ const grp=new THREE.Group(), S=c.sex==='f'?'Female':'Male';
   if(c.beard>0 && S==='Male') add('Hair_Beard',hairMat(bc),true);
   const ex=avHead({...c,_extraOnly:true,glasses:0}); if(ex.children.length) grp.add(ex); // cappelli e orecchini
   // occhiali: le teste vecchie avevano gli occhi più avanti; qui gli occhi sono a z≈0.11 (gli occhiali erano a 0.17 e galleggiavano davanti al viso)
-  if(c.glasses>0){ const gl=avHead({...c,_extraOnly:true,hat:0,earrings:0}); gl.position.set(0,0.012,-0.037); grp.add(gl); }
+  // occhiali: tolti del tutto (Teo, 25/11 sera: "toglili quegli occhiali")
   // proporzioni (Teo: "proporziona bene la testa col corpo"): le teste vecchie erano grandi apposta; queste sono realistiche → più piccole, appoggiate sul collo
   const k=QH_SCALE; grp.scale.setScalar(k); grp.position.set(0,-(1-k)*0.17,-0.012); // (dentro un gruppo: mountHead sovrascrive scala e posizione del gruppo esterno)
   const out=new THREE.Group(); out.add(grp); out.userData.cfg={...c}; return out; }
@@ -2932,7 +2932,7 @@ const ED_TABS=[['🧍 Corpo',[['sex','Sesso',['Uomo','Donna']],['skin','Pelle','
   ['🙂 Viso',[['shape','Forma',AV.shape],['eyes','Occhi',AV.eyes],['eyeCol','Colore occhi','eyeCol'],['brows','Sopracciglia',AV.brows],['nose','Naso',AV.nose],['mouth','Bocca',AV.mouth],['lashes','Ciglia',['no','sì']],['freckles','Lentiggini',['no','sì']],['blush','Guance rosa',['no','sì']]]],
   ['💇 Capelli',[['hair','Taglio',AV.hair],['hairCol','Colore','hairCol']]],
   ['🧔 Barba',[['beard','Barba',AV.beard],['beardCol','Colore','hairCol']]],
-  ['🧢 Accessori',[['hat','Cappello',AV.hat],['hatCol','Colore','clothCol'],['glasses','Occhiali',AV.glasses],['glassCol','Colore','clothCol'],['earrings','Orecchini',['no','sì']]]],
+  ['🧢 Accessori',[['hat','Cappello',AV.hat],['hatCol','Colore','clothCol'],['earrings','Orecchini',['no','sì']]]],
   ['👕 Vestiti',[['top','Sopra',AV.top],['topCol','Colore','clothCol'],['bottom','Sotto',AV.bottom],['bottomCol','Colore','clothCol'],['shoesCol','Scarpe','clothCol']]]];
 const edEl=document.getElementById('avEd'), edTabs=document.getElementById('edTabs'), edBody=document.getElementById('edBody');
 // v0.70: con le teste vere i tagli e la barba disponibili sono quelli del pacchetto
