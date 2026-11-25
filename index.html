@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.69.4</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.70.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -1377,7 +1377,7 @@ function faceTexture(c){ const cv=document.createElement('canvas'); cv.width=336
 const FACEMATS={}; const AVMAT=toon({vertexColors:true});
 function faceMat(c){ const k=['sex','skin','eyes','eyeCol','brows','mouth','freckles','blush','lashes','hairCol','beard','beardCol'].map(x=>c[x]).join('.'); return FACEMATS[k]||(FACEMATS[k]=toon({map:faceTexture(c),transparent:true,alphaTest:0.02,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2})); }
 // ---- geometria della testa (pelle, orecchie, naso, capelli, barba, cappello, occhiali) unita a colori per vertice
-function avHead(c){ const grp=new THREE.Group(), skin=[], hair=[], extra=[]; const sk=new THREE.Color(AV.skin[c.skin]), hc=new THREE.Color(AV.hairCol[c.hairCol]), bc=new THREE.Color(AV.hairCol[c.beardCol]);
+function avHead(c){ if(QH.ready && !c._extraOnly) return qHead(c); const grp=new THREE.Group(), skin=[], hair=[], extra=[]; const sk=new THREE.Color(AV.skin[c.skin]), hc=new THREE.Color(AV.hairCol[c.hairCol]), bc=new THREE.Color(AV.hairCol[c.beardCol]);
   const put=(arr,geo,col,pos,scl=[1,1,1],rot=[0,0,0])=>{ if(!geo.index){ const n=geo.attributes.position.count; geo.setIndex([...Array(n).keys()]); } for(const k of Object.keys(geo.attributes)) if(!['position','normal'].includes(k)) geo.deleteAttribute(k);
     geo.applyMatrix4(new THREE.Matrix4().compose(new THREE.Vector3(...pos),new THREE.Quaternion().setFromEuler(new THREE.Euler(...rot)),new THREE.Vector3(...scl)));
     const n=geo.attributes.position.count, cc=new THREE.Color(col), a=new Float32Array(n*3); for(let i=0;i<n;i++) a.set([cc.r,cc.g,cc.b],i*3); geo.setAttribute('color',new THREE.BufferAttribute(a,3)); arr.push(geo); };
@@ -1424,6 +1424,7 @@ function avHead(c){ const grp=new THREE.Group(), skin=[], hair=[], extra=[]; con
       put(extra,new THREE.BoxGeometry(0.005,0.005,0.1),sun?0x2a2233:gc,[s*0.088,y+0.005,z-0.05],[1,1,1],[0,-s*0.55,0]); }
     put(extra,new THREE.BoxGeometry(0.03,0.005,0.005),sun?0x2a2233:gc,[0,0.006,R*0.99+0.016]); }
   if(c.earrings) for(const s of [-1,1]) put(extra,S.clone(),0xf0c43a,[s*R*sx*0.98,-0.06,0.0],[0.011,0.011,0.011]);
+  if(c._extraOnly){ if(extra.length){ const m=new THREE.Mesh(mergeGeometries(extra),AVMAT); m.castShadow=true; withOutline(m,0.006); grp.add(m); } return grp; }
   const m=new THREE.Mesh(mergeGeometries([...skin,...hair,...extra]),AVMAT); m.castShadow=true; withOutline(m,0.006); grp.add(m);
   // guscio del viso: segue la forma del cranio, sopra la pelle
   const fg=new THREE.SphereGeometry(R*1.008,22,14,FACE_PHI[0],FACE_PHI[1],FACE_TH[0],FACE_TH[1]); fg.scale(sx,sy,1.02);
@@ -1447,6 +1448,42 @@ function lookToAv(look,o,seed){ const c=avRandom(seed); c.sex=look.long?'f':'m';
   c.hair=look.hair===look.skin||look.bald?3:look.long?7:[0,1,2][Math.floor(seed)%3]; c.beard=look.beard?2:0; c.glasses=look.glasses?1:0; c.glassCol=15;
   if(o){ c.topCol=nearestIdx(AV.clothCol,o.top); c.bottomCol=nearestIdx(AV.clothCol,o.pants); c.shoesCol=nearestIdx(AV.clothCol,o.shoes); c.top=o.short?0:1; c.bottom=o.shorts?1:0; c.hat=o.cap?1:0; if(o.capCol) c.hatCol=nearestIdx(AV.clothCol,o.capCol); }
   else c.hat=0; return c; }
+// ======================= 🙂 TESTE VERE (v0.70.0, 25/11/2026) =======================
+// Teo: "questi visi non mi piacciono, ste occhiaie non vanno via" → teste modellate dal pacchetto gratuito "Universal Base Characters" di Quaternius (licenza CC0).
+// Dal pacchetto ho preso solo la testa (pelle, occhi, ciglia), i capelli, la barba e le sopracciglia, già messe nella misura delle nostre teste:
+// il corpo resta il nostro (vestiti, animazioni Mixamo). Cappelli, occhiali e orecchini sono quelli di prima, appoggiati sopra.
+// La pelle del pacchetto ha un solo colore: lo "sposto" verso la carnagione scelta moltiplicando per (carnagione / colore medio del disegno).
+const QH={ready:false,geos:{},tex:{},mats:{}};
+const QHAIR_M=['Hair_SimpleParted','Hair_SimpleParted','Hair_SimpleParted','Hair_Buzzed','Hair_Buzzed','Hair_SimpleParted','Hair_Long','Hair_Long','Hair_Long','Hair_Buns','Hair_Buns',null];
+const QHAIR_F=['Hair_Long','Hair_Long','Hair_Long','Hair_BuzzedFemale','Hair_Buns','Hair_BuzzedFemale','Hair_Long','Hair_Long','Hair_Long','Hair_Buns','Hair_Buns',null];
+// nell'editor: tagli che esistono davvero nelle teste nuove (indice → valore salvato nel codice del personaggio, compatibile con i codici vecchi)
+const QHAIR_ED={m:[['corti con la riga',2],['rasati',3],['lunghi',7],['chignon',9],['calvo',11]],f:[['lunghi',7],['chignon',9],['rasati',3],['calvo',11]]};
+const qHairOf=(c,i)=>(c.sex==='f'?QHAIR_F:QHAIR_M)[i];
+async function qhLoad(base){ const get=async f=>{ let r=await fetch(base+f); if(!r.ok) r=await fetch(base.replace('assets/','')+f); if(!r.ok) throw new Error('manca '+f); return r; };
+  const [j,b]=await Promise.all([get('teste.json').then(r=>r.json()),get('teste.bin').then(r=>r.arrayBuffer())]);
+  for(const p of j.parts){ const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(b,p.pos[0],p.pos[1]),3)); g.setAttribute('normal',new THREE.BufferAttribute(new Int8Array(b,p.nor[0],p.nor[1]),3,true));
+    g.setAttribute('uv',new THREE.BufferAttribute(new Float32Array(b,p.uv[0],p.uv[1]),2)); g.setIndex(new THREE.BufferAttribute(new Uint16Array(b,p.ind[0],p.ind[1]),1)); g.computeBoundingSphere();
+    (QH.geos[p.sex+'|'+p.kind]=QH.geos[p.sex+'|'+p.kind]||[]).push({g,tex:p.tex,alpha:p.alpha}); }
+  const L=new THREE.TextureLoader(), tl=(f,srgb=true)=>new Promise(res=>L.load(base+f,t=>{ t.flipY=false; if(srgb) t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; t.needsUpdate=true; res(t); },undefined,()=>res(null)));
+  const files=new Set(['pelle_Male.jpg','pelle_Female.jpg','T_Eye_Brown.png',...j.parts.filter(p=>p.tex).map(p=>p.tex)]);
+  await Promise.all([...files].map(async f=>{ QH.tex[f]=await tl(f); }));
+  QH.tex['pelle_Male_n.jpg']=await tl('pelle_Male_n.jpg',false); QH.tex['pelle_Female_n.jpg']=await tl('pelle_Female_n.jpg',false);
+  QH.avg={Male:new THREE.Color().setRGB(...j.tex.avg_Male.map(v=>v/255),THREE.SRGBColorSpace),Female:new THREE.Color().setRGB(...j.tex.avg_Female.map(v=>v/255),THREE.SRGBColorSpace)};
+  if(!QH.tex['pelle_Male.jpg']||!QH.tex['pelle_Female.jpg']) throw new Error('texture della pelle mancanti'); QH.ready=true; }
+function qMat(key,mk){ return QH.mats[key]||(QH.mats[key]=mk()); }
+function qHead(c){ const grp=new THREE.Group(), S=c.sex==='f'?'Female':'Male';
+  const add=(kind,mat,shadow)=>{ for(const e of (QH.geos[S+'|'+kind]||[])){ const m=new THREE.Mesh(e.g,typeof mat==='function'?mat(e):mat); m.castShadow=!!shadow; grp.add(m); } };
+  const tone=new THREE.Color(AV.skin[c.skin]), avg=QH.avg[S];
+  add('skin',qMat('pelle|'+S+'|'+c.skin,()=>toon({map:QH.tex['pelle_'+S+'.jpg'],normalMap:QH.tex['pelle_'+S+'_n.jpg']||null,color:new THREE.Color(tone.r/avg.r,tone.g/avg.g,tone.b/avg.b)})),true);
+  add('eyes',qMat('occhi',()=>toon({map:QH.tex['T_Eye_Brown.png']})));
+  const hairMat=(col,dark=1)=>e=>qMat('pelo|'+e.tex+'|'+col+'|'+dark,()=>toon({map:QH.tex[e.tex],color:new THREE.Color(col).multiplyScalar(dark),alphaTest:e.alpha||0.3,side:THREE.DoubleSide}));
+  const hc=AV.hairCol[c.hairCol], bc=AV.hairCol[c.beardCol??c.hairCol];
+  add('lash',hairMat(0x2a1e18)); add(S==='Male'?'Eyebrows_Regular':'Eyebrows_Female',hairMat(hc,0.75));
+  const H=(S==='Male'?QHAIR_M:QHAIR_F)[c.hair]; const hatOn=c.hat>0;
+  if(H && !(hatOn && /Buzzed|SimpleParted/.test(H))) add(H,hairMat(hc),true);
+  if(c.beard>0 && S==='Male') add('Hair_Beard',hairMat(bc),true);
+  const ex=avHead({...c,_extraOnly:true}); if(ex.children.length) grp.add(ex);
+  grp.userData.cfg={...c}; return grp; }
 // monta la testa sul collo del manichino (in posa di riposo, così resta dritta)
 function mountHead(bones,root,cfg){ const head=avHead(cfg); const hp=bones.Head.getWorldPosition(new THREE.Vector3()); hp.y+=0.075; const nq=bones.Neck.getWorldQuaternion(new THREE.Quaternion()), gq=root.getWorldQuaternion(new THREE.Quaternion()), ns=bones.Neck.getWorldScale(new THREE.Vector3()); hp.y+=0.02;
   bones.Neck.add(head); head.position.copy(bones.Neck.worldToLocal(hp)); head.quaternion.copy(nq.invert().multiply(gq)); head.scale.setScalar(1.32/ns.x); return head; }
@@ -2893,10 +2930,13 @@ const ED_TABS=[['🧍 Corpo',[['sex','Sesso',['Uomo','Donna']],['skin','Pelle','
   ['🧢 Accessori',[['hat','Cappello',AV.hat],['hatCol','Colore','clothCol'],['glasses','Occhiali',AV.glasses],['glassCol','Colore','clothCol'],['earrings','Orecchini',['no','sì']]]],
   ['👕 Vestiti',[['top','Sopra',AV.top],['topCol','Colore','clothCol'],['bottom','Sotto',AV.bottom],['bottomCol','Colore','clothCol'],['shoesCol','Scarpe','clothCol']]]];
 const edEl=document.getElementById('avEd'), edTabs=document.getElementById('edTabs'), edBody=document.getElementById('edBody');
-function edVal(k){ return k==='sex'?(ED.cfg.sex==='f'?1:0):ED.cfg[k]; }
-function edSet(k,v){ if(k==='sex'){ ED.cfg.sex=v?'f':'m'; ED.cfg.lashes=v?1:0; if(v) ED.cfg.beard=0; } else ED.cfg[k]=v; dressPlayer(ED.cfg); if(ED.mode==='mirror') playerLayer(1); edRender(); }
+// v0.70: con le teste vere i tagli e la barba disponibili sono quelli del pacchetto
+function edRows(t){ return ED_TABS[t][1].map(r=>{ if(!QH.ready) return r; if(r[0]==='hair') return [r[0],r[1],QHAIR_ED[ED.cfg.sex==='f'?'f':'m'].map(x=>x[0])]; if(r[0]==='beard') return [r[0],r[1],['nessuna','barba']]; return r; }); }
+function edVal(k){ if(QH.ready && k==='hair'){ const L=QHAIR_ED[ED.cfg.sex==='f'?'f':'m'], st=qHairOf(ED.cfg,ED.cfg.hair); const i=L.findIndex(x=>qHairOf(ED.cfg,x[1])===st); return i<0?0:i; } if(QH.ready && k==='beard') return ED.cfg.beard>0?1:0;
+  return k==='sex'?(ED.cfg.sex==='f'?1:0):ED.cfg[k]; }
+function edSet(k,v){ if(QH.ready && k==='hair') v=QHAIR_ED[ED.cfg.sex==='f'?'f':'m'][v][1]; if(QH.ready && k==='beard') v=v?2:0; if(k==='sex'){ ED.cfg.sex=v?'f':'m'; ED.cfg.lashes=v?1:0; if(v) ED.cfg.beard=0; } else ED.cfg[k]=v; dressPlayer(ED.cfg); if(ED.mode==='mirror') playerLayer(1); edRender(); }
 function edRender(){ edTabs.innerHTML=ED_TABS.map((t,i)=>(ED.tabs||[0,1,2,3,4,5]).includes(i)?'<button type="button" data-tab="'+i+'" class="'+(i===ED.tab?'on':'')+'">'+t[0]+'</button>':'').join('');
-  edBody.innerHTML=ED_TABS[ED.tab][1].map(([k,lab,opt])=>{ if(typeof opt==='string'){ const pal=AV[opt]; return '<div class="edRow"><span>'+lab+'</span><div class="sw">'+pal.map((c,i)=>'<button type="button" aria-label="'+lab+' '+(i+1)+'" data-k="'+k+'" data-v="'+i+'" class="'+(edVal(k)===i?'on':'')+'" style="background:#'+new THREE.Color(c).getHexString()+'"></button>').join('')+'</div></div>'; }
+  edBody.innerHTML=edRows(ED.tab).map(([k,lab,opt])=>{ if(typeof opt==='string'){ const pal=AV[opt]; return '<div class="edRow"><span>'+lab+'</span><div class="sw">'+pal.map((c,i)=>'<button type="button" aria-label="'+lab+' '+(i+1)+'" data-k="'+k+'" data-v="'+i+'" class="'+(edVal(k)===i?'on':'')+'" style="background:#'+new THREE.Color(c).getHexString()+'"></button>').join('')+'</div></div>'; }
     return '<div class="edRow"><span>'+lab+'</span><button type="button" class="ghost" data-k="'+k+'" data-d="-1">◀</button><b>'+opt[edVal(k)%opt.length]+'</b><button type="button" class="ghost" data-k="'+k+'" data-d="1">▶</button></div>'; }).join('')+(ED.showCode?'<textarea id="edCodeTxt" rows="2">'+avEncode(ED.cfg)+'</textarea><div class="edRow"><button type="button" id="edCopy">📋 Copia</button><button type="button" id="edPaste" class="ghost">📥 Usa questo codice</button></div><p style="font-size:12px;margin:2px 0">Mandami questo codice: ricreo il personaggio identico (per esempio Anthony).</p>':''); }
 edTabs.addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b) return; ED.tab=+b.dataset.tab; ED.showCode=false; edRender(); });
 edBody.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
@@ -2907,7 +2947,7 @@ edBody.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) 
 // se il personaggio è finito dentro un mobile (letto, armadio…), lo sposto nel punto libero più vicino
 function unstick(){ const p=player.pos; if(free(p.x,p.z)) return; for(let r=0.2;r<=2.4;r+=0.2) for(let a=0;a<Math.PI*2;a+=Math.PI/8){ const x=p.x+Math.cos(a)*r, z=p.z+Math.sin(a)*r; if(free(x,z)){ p.x=x; p.z=z; holder.position.copy(p); return; } } }
 function playerLayer(l){ holder.traverse(o=>o.layers.set(l)); }
-function openEditor(mode='mirror'){ HOME.busy=true; HOME.editor=true; HOME.edFace=false; ED.mode=mode; ED.tabs=mode==='mirror'?[0,1,2,3]:[4,5]; initLooksAv(); ED.cfg={...(PLAYER_AV||LOOKS[lookI%LOOKS.length].av)}; ED.tab=ED.tabs[0]; ED.showCode=false;
+function openEditor(mode='mirror'){ HOME.busy=true; HOME.editor=true; HOME.edFace=false; ED.mode=mode; ED.tabs=mode==='mirror'?(QH.ready?[0,2,3]:[0,1,2,3]):[4,5]; initLooksAv(); ED.cfg={...(PLAYER_AV||LOOKS[lookI%LOOKS.length].av)}; ED.tab=ED.tabs[0]; ED.showCode=false;
   if(mode==='mirror'){ const [sx,sz]=HP(-7.95,-3.05); player.pos.set(sx,0,sz); player.yaw=-Math.PI/2; /* al centro dello specchio, tra specchio e letto (il letto inizia più in là) */ /* davanti allo specchio, fuori dal letto */ holder.position.copy(player.pos); holder.rotation.set(0,player.yaw,0); player.moveTo=null; player.speed=0; document.getElementById('titleCard').style.visibility='hidden'; homeCard.hidden=true; edEl.hidden=false; document.body.classList.add('editing'); edRender(); dressPlayer(ED.cfg); playerLayer(1); if(bubOn){ holder.remove(bubOn); bubOn=null; } return; }
   // la telecamera si mette dove c'è più spazio libero davanti al personaggio
   let best=0, bd=-1; for(let i=0;i<16;i++){ const a=i/16*Math.PI*2; let d=3.2; for(let s=0.3;s<=3.2;s+=0.1){ const x=player.pos.x+Math.sin(a)*s, z=player.pos.z+Math.cos(a)*s; if(BOXES.some(b=>(b.h??8)>1.2&&x>b.x0-0.25&&x<b.x1+0.25&&z>b.z0-0.25&&z<b.z1+0.25)){ d=s; break; } } if(d>bd){ bd=d; best=a; } }
@@ -3027,7 +3067,7 @@ function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; f
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
 window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
 window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…');
-Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'})]).then(()=>{
+Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e))]).then(()=>{
   buildSmart(-31.4,-66.6,0); for(const [x,z,y] of [[-15.2,-12.5,-Math.PI/2],[15.2,12.5,Math.PI/2],[-37,PROM.z0+1.2,Math.PI],[24.8,-46,-Math.PI/2],[-50,24.8,Math.PI]]) buildKick(x,z,y); /* sul bordo del marciapiede, col manubrio verso la strada */
   for(const v of veh){ v.home={x:v.x,z:v.z,yaw:v.yaw}; if(v.paint) for(const p of v.paint) p.orig=p.base.clone(); if(v.name==='auto' && v.group) addHeadlights(v.group,2.7,1.5,0.62); }
   player.pos.set(-12,0.15,PZ.z1-4); player.yaw=Math.PI*0.75; useChar('xbot'); holder.position.copy(player.pos); holder.rotation.y=player.yaw; dressPlayer(0);
