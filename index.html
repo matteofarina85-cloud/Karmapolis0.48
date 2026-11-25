@@ -171,7 +171,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.62</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.63</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -319,7 +319,7 @@ const _edV=new THREE.Vector3(); const controls={target:new THREE.Vector3(),look:
     this.target.set(px,py,pz);
     // inquadratura del momento: entra in 0,4 s, resta, esce piano
     this.focusT=Math.max(0,this.focusT-dt); this.fk=THREE.MathUtils.damp(this.fk,this.focusT>0?1:0,this.focusT>0?5:2.2,dt);
-    const zBase=Math.min(1,this.zoom+(v?Math.min(0.22,Math.abs(v.speed)*0.006):0)); // in velocità si allarga la vista
+    this.vz=THREE.MathUtils.damp(this.vz||0,v?Math.min(0.34,Math.abs(v.speed)*0.013):0,1.6,dt); const zBase=Math.min(1,this.zoom+this.vz); // più vai veloce, più la telecamera si allontana (morbida, senza scatti)
     this.z=THREE.MathUtils.lerp(zBase,this.focusZoom,this.fk); const z=this.z;
     const D=THREE.MathUtils.lerp(6.5,92,z*z), el=THREE.MathUtils.lerp(0.3,0.96,Math.min(1,z*1.7));
     // da vicino la telecamera si mette alle spalle (come prima); da lontano resta ferma a 45° e la giri tu
@@ -327,8 +327,12 @@ const _edV=new THREE.Vector3(); const controls={target:new THREE.Vector3(),look:
     const sp=v?Math.abs(v.speed):player.speed; if(close>0.01 && sp>0.6 && this.userT>1.2){ const head=(v?v.yaw+(v.speed<-1?Math.PI:0):player.yaw)+Math.PI; const d=Math.atan2(Math.sin(head-this.azT),Math.cos(head-this.azT)); this.azT+=d*Math.min(1,dt*2.6*close); }
     this.occT=(this.occT||0)-dt; this.occCD=(this.occCD||0)-dt; if(this.occT<=0 && this.occCD<=0 && this.userT>2.5 && close<0.5){ this.occT=0.2; const hidden=a=>occluded(px,py,pz,a,D,el);
       if(hidden(this.azT)){ this.occN=(this.occN||0)+1; if(this.occN>=6){ this.occN=0; /* gira ESATTAMENTE dalla parte opposta (mezzo giro); solo se anche di là c'è un palazzo prova di lato */ for(const off of [Math.PI,Math.PI/2,-Math.PI/2]){ if(!hidden(this.azT+off)){ this.azT+=off; this.occCD=5; break; } } } } else this.occN=0; }
+    // in auto, dall'alto: la telecamera si gira piano alle spalle dell'auto quando vai dritto (se sterzi forte col joystick resta ferma, così la guida "a direzione" non gira in tondo)
+    if(v && close<=0.01 && sp>5 && this.userT>2){ const inp=readInput(); if(inp.kb||inp.m<0.12||Math.abs(inp.x)<0.35*inp.m){ const head=v.yaw+(v.speed<-1?Math.PI:0)+Math.PI; const d=Math.atan2(Math.sin(head-this.azT),Math.cos(head-this.azT)); this.azT+=d*Math.min(1,dt*0.75); } }
     const da=Math.atan2(Math.sin(this.azT-this.az),Math.cos(this.azT-this.az)); this.az+=da*Math.min(1,dt*(this.userT<0.3?8:2.2));
-    const lt=new THREE.Vector3(px,py+THREE.MathUtils.lerp(1.2,0.5,z),pz).lerp(this.focus,this.fk*0.6); if(!this.ready){ this.look.copy(lt); this.ready=true; } else this.look.lerp(lt,Math.min(1,dt*8));
+    // guarda un po' avanti, dove sta andando l'auto (più veloce = più avanti)
+    if(!this.ahead) this.ahead=new THREE.Vector3(); const ak=v?THREE.MathUtils.clamp(v.speed*0.55,-5,13):0; this.ahead.x=THREE.MathUtils.damp(this.ahead.x,v?Math.sin(v.yaw)*ak:0,2.2,dt); this.ahead.z=THREE.MathUtils.damp(this.ahead.z,v?Math.cos(v.yaw)*ak:0,2.2,dt);
+    const lt=new THREE.Vector3(px+this.ahead.x,py+THREE.MathUtils.lerp(1.2,0.5,z),pz+this.ahead.z).lerp(this.focus,this.fk*0.6); if(!this.ready){ this.look.copy(lt); this.ready=true; } else this.look.lerp(lt,Math.min(1,dt*(v?14:8)));
     const c=Math.cos(el)*D; camera.position.set(this.look.x+Math.sin(this.az)*c,this.look.y+Math.sin(el)*D,this.look.z+Math.cos(this.az)*c);
     if(close>0.5){ for(let s=0.3;s<=1.0001;s+=0.1){ const x=this.look.x+Math.sin(this.az)*c*s, zz=this.look.z+Math.cos(this.az)*c*s; if(hitBox(x,zz,0.3)||OBST.some(o=>o.r<1.5&&(o.x-x)**2+(o.z-zz)**2<(o.r+1.6)**2)){ camera.position.set(this.look.x+Math.sin(this.az)*c*(s-0.1),this.look.y+Math.sin(el)*D*Math.max(0.6,s),this.look.z+Math.cos(this.az)*c*(s-0.1)); break; } } }
     camera.lookAt(this.look);
@@ -817,8 +821,8 @@ function updateVehicle(v,dt,inp){
   v.accel=THREE.MathUtils.damp(v.accel,(ns-v.speed)/dt,10,dt); v.speed=ns;
   const smax=v.steerMax/(1+Math.abs(v.speed)*v.steerFade); const pull=inp&&Math.abs(v.speed)>1?(v.pull||0)*0.4*dmg/100:0; v.steer=THREE.MathUtils.damp(v.steer,THREE.MathUtils.clamp(st+pull,-1,1)*smax,7,dt);
   v.yawRate=v.speed*Math.tan(v.steer)/v.wb;
-  if(v===player.veh && W.wet>0.05){ const g=1-0.38*W.wet; v.yawRate*=g; if(thr<-0.05 && v.speed>0.3) v.speed+=v.brake*0.35*W.wet*(-thr)*dt; /* sul bagnato si sterza e si frena peggio */
-    if(!(v.aqua>0) && Math.abs(v.speed)>(v.bike?6:9) && onPuddle(v.x,v.z)){ v.aqua=0.55+Math.random()*0.35; v.aquaYaw=(Math.random()<0.5?-1:1)*(0.6+Math.random()*0.8); copMsgT=2; msg.innerHTML='💦 <b>Aquaplaning!</b> Sulle pozzanghere l\'auto galleggia: rallenta quando piove.'; }
+  if(v===player.veh && W.wet>0.05){ const g=1-0.45*W.wet; v.yawRate*=g; if(thr<-0.05 && v.speed>0.3) v.speed+=v.brake*0.35*W.wet*(-thr)*dt; /* sul bagnato si sterza e si frena peggio */
+    if(!(v.aqua>0) && Math.abs(v.speed)>(v.bike?5.5:8) && onPuddle(v.x,v.z)){ v.aqua=0.8+Math.random()*0.4; v.aquaYaw=(Math.random()<0.5?-1:1)*(0.9+Math.random()*0.9); sfx('hit'); copMsgT=2; msg.innerHTML='💦 <b>Aquaplaning!</b> Sulle pozzanghere l\'auto galleggia: rallenta quando piove.'; }
     if(v.aqua>0){ v.aqua-=dt; v.yawRate=v.aquaYaw*Math.min(1,Math.abs(v.speed)/10); } }
   const ny=v.yaw+v.yawRate*dt, nx=v.x+Math.sin(ny)*v.speed*dt, nz=v.z+Math.cos(ny)*v.speed*dt;
   if(Math.abs(v.speed)>0.001){ let ok=vehFree(v,nx,nz,ny); if(!ok && v===player.veh){ const p0=vehPen(v,v.x,v.z,v.yaw); if(p0>0.01 && vehPen(v,nx,nz,ny)<=p0+0.0005 && !TRAFFIC.some(c=>vehCircles(v,nx,nz,ny).some(([px,pz,r])=>inVeh(c,px,pz,r)))) ok=true; } /* incastrato: si può uscire */ if(ok){ v.x=nx; v.z=nz; v.yaw=ny; } else { const imp=Math.abs(v.speed), dir=Math.sign(v.speed); v.pv+=dir*Math.min(3,imp)*0.6; v.speed*=-0.25; crash(v,imp,dir); } }
