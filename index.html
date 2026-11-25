@@ -100,6 +100,12 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #over{position:fixed;inset:0;display:grid;place-items:center;background:rgba(20,15,40,.55);z-index:6;padding:16px}
 #over .card{max-width:380px;text-align:center} #over h2{font-family:var(--display);font-size:28px;margin:4px 0 8px} #over p{margin:0 0 14px}
 [hidden]{display:none!important}
+#avEd{position:fixed;right:max(10px,env(safe-area-inset-right,0px));top:calc(8px + env(safe-area-inset-top,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));width:min(390px,50vw);z-index:14;display:flex;flex-direction:column;background:var(--paper);border:2.5px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);overflow:hidden}
+#avEd .edTabs{display:flex;flex-wrap:wrap;gap:4px;padding:8px 8px 6px;border-bottom:2px solid #e8dfcf}#avEd .edTabs button{padding:4px 9px;font-size:13px;background:#fff;color:var(--ink);box-shadow:none}#avEd .edTabs button.on{background:#ffd84d}
+#avEd .edBody{flex:1;overflow:auto;padding:6px 10px}#avEd .edRow{display:flex;align-items:center;gap:6px;margin:6px 0}#avEd .edRow>span{flex:0 0 92px;font:600 13px var(--display)}#avEd .edRow b{flex:1;text-align:center;font:600 13px var(--body)}
+#avEd .edRow button{padding:2px 10px;font-size:14px;box-shadow:none}#avEd .sw{display:flex;flex-wrap:wrap;gap:4px;flex:1}#avEd .sw button{width:24px;height:24px;padding:0;border-radius:50%;border:2px solid var(--line)}#avEd .sw button.on{outline:3px solid #ffd84d;outline-offset:1px}
+#avEd .edFoot{display:flex;flex-wrap:wrap;gap:5px;padding:8px;border-top:2px solid #e8dfcf}#avEd .edFoot button{font-size:13px;padding:5px 10px}#avEd textarea{width:100%;font:12px monospace;margin-top:6px}
+@media (max-height:520px){#avEd .edRow{margin:3px 0}#avEd .edRow>span{flex-basis:78px;font-size:12px}#avEd .sw button{width:20px;height:20px}#avEd .edTabs button{font-size:12px;padding:3px 7px}}
 body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opacity:.75}body.gp #c_joke::after{content:' X';font-size:10px;opacity:.75}body.gp #c_listen::after{content:' Y';font-size:10px;opacity:.75}body.gp #c_breathe::after{content:' B';font-size:10px;opacity:.75}body.gp #c_truth::after{content:' RB';font-size:10px;opacity:.75}body.gp #act::after,body.gp #use::after,body.gp #homeBtn::after,body.gp #buyBtn::after,body.gp #taxiBtn::after,body.gp #shopBtn::after,body.gp #towBtn::after{content:' Ⓐ';opacity:.8}
 .gpsel{outline:4px solid #ffd84d!important;outline-offset:2px}
 #alarm{position:fixed;left:50%;top:38%;z-index:40;pointer-events:none;transform:translate(-50%,-50%);background:var(--paper);border:3px solid var(--line);border-radius:22px;box-shadow:5px 5px 0 var(--line);padding:12px 22px;text-align:center;font:700 30px var(--display);color:var(--ink);white-space:nowrap;opacity:0}
@@ -160,10 +166,11 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="treadUI" hidden><div class="card"><div id="tInfo"></div><div class="hrbar"><div id="tZone"></div><div id="tMark"></div></div><div class="tbtn"><button id="tMinus" class="ghost" type="button">− Piano</button><button id="tPlus" type="button">+ Veloce</button><button id="tStop" class="ghost" type="button">Smetti</button></div></div></div>
 <div id="shopMenu" hidden role="dialog" aria-label="Compra caramelle"><div class="card"><h3 id="shopHead">🍬 Quante ne vuoi comprare?</h3><div id="shopList"></div><button id="shopNo" class="ghost" type="button">No, grazie</button></div></div>
 <div id="taxiMenu" hidden role="dialog" aria-label="Scegli dove andare in taxi"><div class="card"><h3 id="taxiHead">🚕 Dove ti porto?</h3><div id="taxiList"></div><button id="taxiNo" class="ghost" type="button">Scendo qui</button></div></div>
+<div id="avEd" hidden><div class="edTabs" id="edTabs"></div><div class="edBody" id="edBody"></div><div class="edFoot"><button id="edRotL" class="ghost" type="button">⟲</button><button id="edRotR" class="ghost" type="button">⟳</button><button id="edZoom" class="ghost" type="button">🔍 Viso</button><button id="edRand" class="ghost" type="button">🎲 Casuale</button><button id="edCode" class="ghost" type="button">📋 Codice</button><button id="edOk" type="button">✔ Fatto</button><button id="edNo" class="ghost" type="button">✕</button></div></div>
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.57</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.58</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -279,10 +286,13 @@ const sun=new THREE.DirectionalLight(0xffffff,2); sun.castShadow=true; sun.shado
 Object.assign(sun.shadow.camera,{left:-34,right:34,top:34,bottom:-34,near:1,far:220}); sun.shadow.bias=-0.0006; sun.shadow.normalBias=0.05; scene.add(sun,sun.target);
 // ---------- TELECAMERA ISOMETRICA "che respira": dall'alto per vedere il Grigio, zoom fino quasi alla terza persona,
 // e nei momenti importanti (caramella, panchina, campane…) si avvicina da sola per farti vedere la scena, poi torna su ----------
-const controls={target:new THREE.Vector3(),look:new THREE.Vector3(),az:Math.PI/4,azT:Math.PI/4,zoom:LOW?0.62:0.66,extra:0,dist:60,addEventListener(){},
+const _edV=new THREE.Vector3(); const controls={target:new THREE.Vector3(),look:new THREE.Vector3(),az:Math.PI/4,azT:Math.PI/4,zoom:LOW?0.62:0.66,extra:0,dist:60,addEventListener(){},
   fk:0,focusT:0,focusDur:0,focusZoom:0.12,focus:new THREE.Vector3(),userT:9,dt:1/60,ready:false,z:0.66,
   // 🏠 IN CASA: telecamera da dietro le spalle (alla GTA), che non entra nei muri
   tps(dt){ const px=player.pos.x, pz=player.pos.z, py=player.pos.y; this.userT+=dt;
+    if(HOME.editor){ const a=HOME.edA, face=HOME.edFace, d=face?1.25:2.9, hy=(chars[cur]&&chars[cur].head)?chars[cur].head.getWorldPosition(_edV).y-py:1.7, fx=-Math.sin(a), fz=-Math.cos(a), rx=-fz, rz=fx, off=(innerWidth>700?0.36:0.42)*d*0.62;
+      const cam=new THREE.Vector3(px+Math.sin(a)*d+rx*off,py+(face?hy+0.05:1.25),pz+Math.cos(a)*d+rz*off); camera.position.lerp(cam,Math.min(1,dt*6)); this.look.set(px+rx*off,py+(face?hy:0.95),pz+rz*off); camera.lookAt(this.look);
+      if(Math.abs(camera.fov-45)>0.1){ camera.fov=45; camera.updateProjectionMatrix(); } sun.target.position.set(px,0,pz); sun.position.copy(sun.target.position).addScaledVector(sunDir,80); return; }
     if(typeof T!=='undefined' && T.on){ this.azT=player.yaw-Math.PI*0.42; } // tapis roulant: inquadratura di tre quarti
     else if(player.speed>0.6 && this.userT>1.0){ const head=player.yaw+Math.PI, d=Math.atan2(Math.sin(head-this.azT),Math.cos(head-this.azT)); this.azT+=d*Math.min(1,dt*2.2); }
     const da=Math.atan2(Math.sin(this.azT-this.az),Math.cos(this.azT-this.az)); this.az+=da*Math.min(1,dt*(this.userT<0.3?10:5));
@@ -696,7 +706,7 @@ let lookI=0;
 // look pronti (Cambia look) + il personaggio fatto con l'editor (salvato sul dispositivo come codice)
 function initLooksAv(){ if(LOOKS[0].av) return; LOOKS[0].av={...AVC_DEF}; LOOKS[1].av={...AVC_DEF,sex:'f',skin:4,hair:7,hairCol:1,beard:0,lashes:1,blush:1,eyes:3,top:0,topCol:6,bottom:0,bottomCol:12,shoesCol:13}; LOOKS[2].av={...AVC_DEF,skin:0,hair:0,hairCol:4,beard:0,glasses:1,glassCol:15,hat:1,hatCol:7,top:0,topCol:3,bottom:1,bottomCol:14,shoesCol:15,freckles:1}; LOOKS[3].av={...AVC_DEF,hair:0,hairCol:8,beard:2,beardCol:8,glasses:1,glassCol:15,top:1,topCol:13,bottom:0,bottomCol:15,shoesCol:15,shape:2}; }
 let PLAYER_AV=null;
-function dressPlayer(i){ initLooksAv(); if(PLAYER_AV===null){ PLAYER_AV=false; try{ const k=localStorage.getItem('karmapolis_avatar'); if(k) PLAYER_AV=avDecode(k); }catch(e){} } const cfg=(i==='custom'||(i==null&&PLAYER_AV))?PLAYER_AV:LOOKS[i%LOOKS.length].av, o={...avOutfit(cfg),bag:i===0}; const c=chars.xbot, B=bones(c); avBody(c.model,cfg); dress(c.model,o);
+function dressPlayer(i){ initLooksAv(); if(PLAYER_AV===null){ PLAYER_AV=false; try{ const k=localStorage.getItem('karmapolis_avatar'); if(k) PLAYER_AV=avDecode(k); }catch(e){} } if(i==='auto') i=PLAYER_AV?'custom':(typeof HOME!=='undefined'?HOME.look:0); const cfg=typeof i==='object'?i:(i==='custom'&&PLAYER_AV)?PLAYER_AV:LOOKS[(+i||0)%LOOKS.length].av, o={...avOutfit(cfg),bag:i===0}; const c=chars.xbot, B=bones(c); avBody(c.model,cfg); dress(c.model,o);
   if(c.head){ c.head.parent.remove(c.head); } if(c.extras) c.extras.forEach(x=>x.parent&&x.parent.remove(x));
   const ws={}; for(const k of ['idle','walk','run']){ ws[k]=c.A[k].getEffectiveWeight(); c.A[k].setEffectiveWeight(k==='idle'?1:0); } const t0=c.A.idle.time; c.A.idle.time=0; c.mixer.update(0); holder.updateMatrixWorld(true);
   const head=mountHead(B,holder,cfg); c.head=head; c.cfg=cfg;
@@ -742,7 +752,7 @@ addEventListener('keyup',e=>{ keys[e.code]=false; });
 // in auto: RT gas, LT freno/retromarcia, levetta sinistra sterzo · Start = 🏠 casa · nei menu: croce per scegliere, A conferma, B chiude
 const PAD={on:false,x:0,y:0,drive:null,prev:[],sel:-1};
 const DZ=v=>Math.abs(v)<0.18?0:(v-Math.sign(v)*0.18)/0.82;
-const OVERLAYS=['copMenu','over','exitMenu','shopMenu','taxiMenu','tvUI','pcUI','treadUI'];
+const OVERLAYS=['avEd','copMenu','over','exitMenu','shopMenu','taxiMenu','tvUI','pcUI','treadUI'];
 function padMenuButtons(){ for(const id of OVERLAYS){ const o=document.getElementById(id); if(o && !o.hidden) return [...o.querySelectorAll('button,a.btnlink')].filter(b=>!b.disabled && !b.hidden && b.offsetParent!==null); } return null; }
 function pollPad(dt){ const gps=navigator.getGamepads?navigator.getGamepads():[]; let g=null; for(const p of gps) if(p&&p.connected){ g=p; break; } if(!g){ if(PAD.on){ PAD.on=false; document.body.classList.remove('gp'); } PAD.x=PAD.y=0; PAD.drive=null; return; }
   const B=i=>!!(g.buttons[i]&&g.buttons[i].pressed), V=i=>g.buttons[i]?g.buttons[i].value:0, hit=i=>B(i)&&!PAD.prev[i];
@@ -1364,7 +1374,7 @@ function avHead(c){ const grp=new THREE.Group(), skin=[], hair=[], extra=[]; con
     for(const s of [-1,1]){ const z=R*0.99+0.012, x=s*0.048, y=0.0;
       if(GL==='squadrati'||sun) put(extra,new THREE.TorusGeometry(0.037,0.0065,4,4),sun?0x2a2233:gc,[x,y,z],[1.15,0.85,1],[0,0,Math.PI/4]); else put(extra,new THREE.TorusGeometry(0.036,thin?0.0035:0.006,6,18),gc,[x,y,z],[1,0.9,1]);
       if(sun) put(extra,new THREE.CircleGeometry(0.036,4),0x1c1a26,[x,y,z-0.002],[1.15,0.85,1],[0,0,Math.PI/4]);
-      put(extra,new THREE.BoxGeometry(0.005,0.005,0.12),sun?0x2a2233:gc,[s*R*sx*0.9,y+0.005,z-0.065],[1,1,1],[0,s*0.25,0]); }
+      put(extra,new THREE.BoxGeometry(0.005,0.005,0.1),sun?0x2a2233:gc,[s*0.088,y+0.005,z-0.05],[1,1,1],[0,-s*0.55,0]); }
     put(extra,new THREE.BoxGeometry(0.03,0.005,0.005),sun?0x2a2233:gc,[0,0.006,R*0.99+0.016]); }
   if(c.earrings) for(const s of [-1,1]) put(extra,S.clone(),0xf0c43a,[s*R*sx*0.98,-0.06,0.0],[0.011,0.011,0.011]);
   const m=new THREE.Mesh(mergeGeometries([...skin,...hair,...extra]),AVMAT); m.castShadow=true; withOutline(m,0.006); grp.add(m);
@@ -1405,7 +1415,10 @@ AV.build=['magro','normale','robusto']; AV.height=['bassa','media','alta'];
 function avBody(model,cfg){ let sm=null; model.traverse(o=>{ if(o.isSkinnedMesh && !sm && !o.userData.avBody) sm=o; });
   const old=[]; model.traverse(o=>{ if(o.isSkinnedMesh) old.push(o); }); const sk=sm?sm.skeleton:(old[0]&&old[0].skeleton); if(!sk) return null; const parent=(sm||old[0]).parent, bindM=(sm||old[0]).bindMatrix.clone();
   for(const o of old) o.parent&&o.parent.remove(o);
-  const idx={}; sk.bones.forEach((b,i)=>idx[b.name.replace(/mixamorig:?/,'')]=i); const BP=n=>new THREE.Vector3().setFromMatrixPosition(new THREE.Matrix4().copy(sk.boneInverses[idx[n]]).invert());
+  const idx={}; sk.bones.forEach((b,i)=>idx[b.name.replace(/mixamorig:?/,'')]=i); const BPa=n=>new THREE.Vector3().setFromMatrixPosition(new THREE.Matrix4().copy(sk.boneInverses[idx[n]]).invert());
+  // tutto si disegna nelle misure del manichino leggero (spazio "canonico") e alla fine si adatta allo scheletro vero (il personaggio del giocatore ha altre misure)
+  const HC=new THREE.Vector3(0,0.277,0.021), HA=BPa('Hips'), SC=(BPa('HeadTop_End').y-BPa('LeftFoot').y)/1.916;
+  const BP=n=>BPa(n).sub(HA).divideScalar(SC).add(HC);
   const f=cfg.sex==='f', bk=[0.86,1,1.2][cfg.build??1], parts=[]; const up=new THREE.Vector3(0,1,0);
   const add=(geo,bone,part,pos,scl=[1,1,1],quat)=>{ if(!geo.index){ const n=geo.attributes.position.count; geo.setIndex([...Array(n).keys()]); } for(const k of Object.keys(geo.attributes)) if(!['position','normal'].includes(k)) geo.deleteAttribute(k);
     geo.applyMatrix4(new THREE.Matrix4().compose(pos,quat||new THREE.Quaternion(),new THREE.Vector3(...scl))); const n=geo.attributes.position.count, si=new Float32Array(n*4), sw=new Float32Array(n*4), pa=new Float32Array(n);
@@ -1418,7 +1431,6 @@ function avBody(model,cfg){ let sm=null; model.traverse(o=>{ if(o.isSkinnedMesh 
   ell('Hips',5,V(0,0.235,0.02),[(f?0.205:0.19)*bk,0.13,(f?0.15:0.14)*bk]);
   { const P=f?[[0.001,0.29],[0.15,0.3],[0.148,0.36],[0.142,0.43],[0.158,0.52],[0.18,0.6],[0.185,0.67],[0.165,0.73],[0.1,0.79],[0.001,0.8]]:[[0.001,0.29],[0.165,0.3],[0.172,0.38],[0.182,0.47],[0.205,0.56],[0.23,0.64],[0.225,0.71],[0.18,0.76],[0.11,0.8],[0.001,0.81]];
     const g=new THREE.LatheGeometry(P.map(([r,y])=>new THREE.Vector2(r*bk,y)),16); g.scale(1,1,(f?0.72:0.66)*(cfg.build===2?1.1:1)); add(g,'Spine1',0,V(0,0,0.005)); } // busto liscio, un pezzo solo
-  if(f) for(const s of [-1,1]) ell('Spine2',0,V(s*0.062,0.6,0.07),[0.062*bk,0.058,0.06]);
   limb('Neck',4,BP('Neck').add(V(0,-0.02,0)),BP('Head').add(V(0,0.03,0)),f?0.055:0.065,f?0.05:0.06);
   for(const S of ['Left','Right']){ const sg=S==='Left'?1:-1;
     // spalle e braccia (1 manica, 2 avambraccio, 3 mano)
@@ -1431,7 +1443,7 @@ function avBody(model,cfg){ let sm=null; model.traverse(o=>{ if(o.isSkinnedMesh 
     limb(S+'UpLeg',6,BP(S+'UpLeg').add(V(0,-0.02,0)),BP(S+'Leg'),(f?0.1:0.098)*bk,(f?0.07:0.072)*bk);
     limb(S+'Leg',7,BP(S+'Leg'),BP(S+'Foot'),(f?0.066:0.07)*bk,(f?0.045:0.05)*bk);
     const fo=BP(S+'Foot'), te=BP(S+'Toe_End'); ell(S+'Foot',8,V(fo.x,te.y+0.045,(fo.z+te.z)/2+0.01),[f?0.058:0.065,0.055,f?0.13:0.14]); }
-  const geo=mergeGeometries(parts); geo.applyMatrix4(new THREE.Matrix4().copy(bindM).invert());
+  const geo=mergeGeometries(parts); geo.translate(-HC.x,-HC.y,-HC.z); geo.scale(SC,SC,SC); geo.translate(HA.x,HA.y,HA.z); geo.applyMatrix4(new THREE.Matrix4().copy(bindM).invert());
   const mesh=new THREE.SkinnedMesh(geo,AVMAT); mesh.userData.avBody=true; mesh.frustumCulled=false; mesh.castShadow=true; parent.add(mesh); mesh.bind(sk,bindM);
   const ol=new THREE.SkinnedMesh(geo,outlineMat(0.012)); ol.userData.avBody=true; ol.frustumCulled=false; parent.add(ol); ol.bind(sk,bindM);
   model.scale.multiplyScalar([0.93,1,1.06][cfg.height??1]/(model.userData.hs||1)); model.userData.hs=[0.93,1,1.06][cfg.height??1];
@@ -2640,7 +2652,7 @@ const HP=(x,z)=>[HX+x,HZ0+z];
 let homeCar=null;
 function makeHomeCar(){ const car=veh.find(v=>!v.bike); if(!car) return; homeCar=car.group.clone(true); const [x,z]=HP(11,-0.5); homeCar.position.set(x,0,z); homeCar.rotation.set(0,0,0); scene.add(homeCar); HOME.carBox={x0:x-0.85,x1:x+0.85,z0:z-1.4,z1:z+1.4,h:1.5}; BOXES.push(HOME.carBox); }
 // punti interattivi
-const HSPOTS=[{id:'tv',x:2,z:-3.3,r:2.3,label:'📺 Guarda il tutorial'},{id:'tread',x:5.2,z:1.6,r:1.6,label:'🏃 Allenati sul tapis roulant'},{id:'wardrobe',x:-7.7,z:-1.6,r:1.6,label:'👕 Cambia vestiti'},
+const HSPOTS=[{id:'tv',x:2,z:-3.3,r:2.3,label:'📺 Guarda il tutorial'},{id:'tread',x:5.2,z:1.6,r:1.6,label:'🏃 Allenati sul tapis roulant'},{id:'wardrobe',x:-7.7,z:-1.6,r:1.6,label:'👕 Crea il tuo personaggio'},
   {id:'shower',x:-7.6,z:4.2,r:1.7,label:'🚿 Fatti una doccia'},{id:'bed',x:-5,z:-3.2,r:1.8,label:'🛏️ Dormi'},{id:'car',x:9.2,z:-0.5,r:2.0,label:'⛽ Vai a fare benzina'},{id:'door',x:0,z:5,r:1.6,label:'🚪 Esci a giocare'},{id:'gdoor',x:11,z:4.6,r:1.8,label:'🚗 Esci dal garage'}];
 const homeCard=document.getElementById('homeCard'), homeBtn=document.getElementById('homeBtn');
 function nearSpot(){ let b=null, bd=1e9; for(const s of HSPOTS){ const [x,z]=HP(s.x,s.z), d=Math.hypot(x-player.pos.x,z-player.pos.z); if(d<s.r&&d<bd){ bd=d; b=s; } } return b; }
@@ -2756,7 +2768,40 @@ document.getElementById('exCar').onclick=()=>{ if(HOME.fuel<=0) return; exitMenu
 document.getElementById('exNo').onclick=()=>{ exitMenu.hidden=true; HOME.busy=false; };
 
 // --- ARMADIO
-function changeClothes(){ lookI=(lookI+1)%LOOKS.length; dressPlayer(lookI); say('👕'); saveHome(); copMsgT=2.5; msg.innerHTML='👕 Nuovo look: <b>'+LOOKS[lookI].name+'</b>. (Nel gioco vero qui ci sarà l\'editor completo e i vestiti comprati coi crediti karma.)'; }
+// ======================= 👕 EDITOR DEL PERSONAGGIO (davanti all'armadio) =======================
+const ED={cfg:null,tab:0};
+const ED_TABS=[['🧍 Corpo',[['sex','Sesso',['Uomo','Donna']],['skin','Pelle','skin'],['height','Altezza',AV.height],['build','Corporatura',AV.build]]],
+  ['🙂 Viso',[['shape','Forma',AV.shape],['eyes','Occhi',AV.eyes],['eyeCol','Colore occhi','eyeCol'],['brows','Sopracciglia',AV.brows],['nose','Naso',AV.nose],['mouth','Bocca',AV.mouth],['lashes','Ciglia',['no','sì']],['freckles','Lentiggini',['no','sì']],['blush','Guance rosa',['no','sì']]]],
+  ['💇 Capelli',[['hair','Taglio',AV.hair],['hairCol','Colore','hairCol']]],
+  ['🧔 Barba',[['beard','Barba',AV.beard],['beardCol','Colore','hairCol']]],
+  ['🧢 Accessori',[['hat','Cappello',AV.hat],['hatCol','Colore','clothCol'],['glasses','Occhiali',AV.glasses],['glassCol','Colore','clothCol'],['earrings','Orecchini',['no','sì']]]],
+  ['👕 Vestiti',[['top','Sopra',AV.top],['topCol','Colore','clothCol'],['bottom','Sotto',AV.bottom],['bottomCol','Colore','clothCol'],['shoesCol','Scarpe','clothCol']]]];
+const edEl=document.getElementById('avEd'), edTabs=document.getElementById('edTabs'), edBody=document.getElementById('edBody');
+function edVal(k){ return k==='sex'?(ED.cfg.sex==='f'?1:0):ED.cfg[k]; }
+function edSet(k,v){ if(k==='sex'){ ED.cfg.sex=v?'f':'m'; ED.cfg.lashes=v?1:0; if(v) ED.cfg.beard=0; } else ED.cfg[k]=v; dressPlayer(ED.cfg); edRender(); }
+function edRender(){ edTabs.innerHTML=ED_TABS.map((t,i)=>'<button type="button" data-tab="'+i+'" class="'+(i===ED.tab?'on':'')+'">'+t[0]+'</button>').join('');
+  edBody.innerHTML=ED_TABS[ED.tab][1].map(([k,lab,opt])=>{ if(typeof opt==='string'){ const pal=AV[opt]; return '<div class="edRow"><span>'+lab+'</span><div class="sw">'+pal.map((c,i)=>'<button type="button" aria-label="'+lab+' '+(i+1)+'" data-k="'+k+'" data-v="'+i+'" class="'+(edVal(k)===i?'on':'')+'" style="background:#'+new THREE.Color(c).getHexString()+'"></button>').join('')+'</div></div>'; }
+    return '<div class="edRow"><span>'+lab+'</span><button type="button" class="ghost" data-k="'+k+'" data-d="-1">◀</button><b>'+opt[edVal(k)%opt.length]+'</b><button type="button" class="ghost" data-k="'+k+'" data-d="1">▶</button></div>'; }).join('')+(ED.showCode?'<textarea id="edCodeTxt" rows="2">'+avEncode(ED.cfg)+'</textarea><div class="edRow"><button type="button" id="edCopy">📋 Copia</button><button type="button" id="edPaste" class="ghost">📥 Usa questo codice</button></div><p style="font-size:12px;margin:2px 0">Mandami questo codice: ricreo il personaggio identico (per esempio Anthony).</p>':''); }
+edTabs.addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b) return; ED.tab=+b.dataset.tab; ED.showCode=false; edRender(); });
+edBody.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
+  if(b.id==='edCopy'){ const t=document.getElementById('edCodeTxt'); try{ navigator.clipboard.writeText(t.value); }catch(_){ t.select(); document.execCommand&&document.execCommand('copy'); } b.textContent='✔ Copiato!'; return; }
+  if(b.id==='edPaste'){ const v=document.getElementById('edCodeTxt').value.trim(); if(v.startsWith('KP1-')){ ED.cfg=avDecode(v); dressPlayer(ED.cfg); edRender(); } return; }
+  const k=b.dataset.k; if(!k) return; if(b.dataset.v!==undefined) return edSet(k,+b.dataset.v);
+  const row=ED_TABS[ED.tab][1].find(r=>r[0]===k), n=row[2].length; edSet(k,(edVal(k)+(+b.dataset.d)+n)%n); });
+function openEditor(){ HOME.busy=true; HOME.editor=true; HOME.edFace=false; initLooksAv(); ED.cfg={...(PLAYER_AV||LOOKS[lookI%LOOKS.length].av)}; ED.tab=0; ED.showCode=false;
+  // la telecamera si mette dove c'è più spazio libero davanti al personaggio
+  let best=0, bd=-1; for(let i=0;i<16;i++){ const a=i/16*Math.PI*2; let d=3.2; for(let s=0.3;s<=3.2;s+=0.1){ const x=player.pos.x+Math.sin(a)*s, z=player.pos.z+Math.cos(a)*s; if(BOXES.some(b=>(b.h??8)>1.2&&x>b.x0-0.25&&x<b.x1+0.25&&z>b.z0-0.25&&z<b.z1+0.25)){ d=s; break; } } if(d>bd){ bd=d; best=a; } }
+  HOME.edA=best; player.yaw=best; holder.rotation.set(0,best,0); player.moveTo=null; player.speed=0; document.getElementById('titleCard').style.visibility='hidden'; homeCard.hidden=true; edEl.hidden=false; edRender(); dressPlayer(ED.cfg); if(bubOn){ holder.remove(bubOn); bubOn=null; } }
+function closeEditor(save){ edEl.hidden=true; HOME.editor=false; HOME.busy=false; document.getElementById('titleCard').style.visibility=''; controls.ready=false;
+  if(save){ PLAYER_AV={...ED.cfg}; try{ localStorage.setItem('karmapolis_avatar',avEncode(PLAYER_AV)); }catch(e){} dressPlayer('custom'); copMsgT=3; msg.innerHTML='👕 <b>Personaggio salvato!</b> Lo ritrovi anche la prossima volta.'; }
+  else dressPlayer('auto'); }
+document.getElementById('edOk').onclick=()=>closeEditor(true); document.getElementById('edNo').onclick=()=>closeEditor(false);
+document.getElementById('edRotL').onclick=()=>{ player.yaw-=0.6; holder.rotation.y=player.yaw; }; document.getElementById('edRotR').onclick=()=>{ player.yaw+=0.6; holder.rotation.y=player.yaw; };
+document.getElementById('edZoom').onclick=e=>{ HOME.edFace=!HOME.edFace; e.target.textContent=HOME.edFace?'🧍 Corpo':'🔍 Viso'; };
+document.getElementById('edRand').onclick=()=>{ ED.cfg=avRandom(Math.random()*1e5); dressPlayer(ED.cfg); edRender(); };
+document.getElementById('edCode').onclick=()=>{ ED.showCode=!ED.showCode; edRender(); if(ED.showCode) edBody.scrollTop=edBody.scrollHeight; };
+function changeClothes(){ openEditor(); }
+function changeClothes_old(){ lookI=(lookI+1)%LOOKS.length; dressPlayer(lookI); say('👕'); saveHome(); copMsgT=2.5; msg.innerHTML='👕 Nuovo look: <b>'+LOOKS[lookI].name+'</b>. (Nel gioco vero qui ci sarà l\'editor completo e i vestiti comprati coi crediti karma.)'; }
 // --- DOCCIA: gocce che scendono e stamina al massimo
 const showerDrops=[]; { const dm=new THREE.SpriteMaterial({map:dropTex,color:0xdff6ff,transparent:true,depthWrite:false}); for(let i=0;i<40;i++){ const s=new THREE.Sprite(dm); s.scale.setScalar(0.1); s.visible=false; scene.add(s); showerDrops.push(s); } }
 function takeShower(){ HOME.busy=true; const [x,z]=HP(-8.1,4.9); player.pos.set(x,0,z); player.yaw=Math.PI/2; holder.position.copy(player.pos); holder.rotation.y=player.yaw; HOME.showerT=4; camFocus(x,z,4,0.18); copMsgT=4; msg.innerHTML='🚿 Acqua calda… che meraviglia.'; }
@@ -2801,7 +2846,7 @@ function updateTread(dt){ const c=chars[cur]; T.t+=dt;
 function endTread(fell){ const gain=Math.round(T.pts*(fell?0.5:1)); T.on=false; HOME.cardio+=gain; HOME.busy=false; treadUI.hidden=true; controls.focusT=0; holder.rotation.set(0,player.yaw,0); holder.position.y=0; const [x,z]=HP(5.2,1.4); player.pos.set(x,0,z); holder.position.copy(player.pos);
   player.sta=Math.max(0,player.sta-20); saveHome(); copMsgT=5; msg.innerHTML=(fell?'😅 Caduto! Metà punti: ':'💪 <b>Allenamento finito!</b> ')+'cardio <b>+'+gain+'</b> (totale '+HOME.cardio+') → in partita il fiato dura <b>+'+staBonus()+'%</b>.'; }
 // --- giro del mondo in casa
-function updateHome(dt){ if(T.on){ updateTread(dt); } else if(HOME.fuelPhase!==undefined){ updateFuel(dt); } else if(!HOME.busy || HOME.showerT>0){ if(!(HOME.showerT>0)) updatePlayer(dt); else { const c=chars[cur]; if(c){ c.mixer.update(dt); if(c.headless) bones(c).Head.scale.setScalar(0.001); } } }
+function updateHome(dt){ if(HOME.editor){ const c=chars[cur]; if(c){ for(const k of ['idle','walk','run']){ c.w[k]=k==='idle'?1:0; c.A[k].setEffectiveWeight(c.w[k]); } c.mixer.update(dt); } holder.position.copy(player.pos); holder.rotation.y=player.yaw; return; } if(T.on){ updateTread(dt); } else if(HOME.fuelPhase!==undefined){ updateFuel(dt); } else if(!HOME.busy || HOME.showerT>0){ if(!(HOME.showerT>0)) updatePlayer(dt); else { const c=chars[cur]; if(c){ c.mixer.update(dt); if(c.headless) bones(c).Head.scale.setScalar(0.001); } } }
   updateShower(dt); updateDoor(dt); updateHomeUI(); updateClickFx(dt); updateFloats(dt); updateAudio(dt);
   if(copMsgT>0) copMsgT-=dt; }
 
@@ -2865,7 +2910,7 @@ Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{ye
   if(POLIZIA){ spawnCop(-30,(PROM.z0+PROM.z1)/2,Math.PI/2); spawnCop(VX[3]+SW+2.6,-40,0); }
   if(ARMI) for(const k of ['xbot'].filter(k=>chars[k])){ const B={}; chars[k].model.traverse(o=>{ if(o.isBone) B[o.name.replace('mixamorig','').replace(':','')]=o; }); attachGun(B); }
   if(!LOW) document.getElementById('howto').innerHTML='WASD o frecce per muoverti. Vicino all\'auto o allo scooter premi <b>E</b>. In guida: <b>↑ gas, ↓ freno e retromarcia, ← → sterzo</b>. Rotellina per lo zoom, ↻ ruota la vista. Trascina col mouse per girare la visuale. Officina 🔧 e carrozzeria 🎨 fuori paese, lato ovest. <b>Karmapolis:</b> vicino a un passante <b>C</b> caramella, <b>1</b> battuta (nervosi), <b>2</b> ascolta (solitari), <b>3</b> respira (ansiosi), <b>4</b> la verità (pettegoli), <b>Q</b> provoca; <b>R</b> usa campane, fontana e panchine. Clic per andare, <b>doppio clic per lo scatto</b> (consuma stamina ⚡).';
-  window.__stage&&window.__stage('preparo casa e paese'); const l=document.getElementById('load'); l.style.opacity=0; setTimeout(()=>l.remove(),600); window.__ready=true; makeHomeCar(); G.karma=HOME.karma||0; dressPlayer(lookI=HOME.look%LOOKS.length); goHome(true); setTimeout(()=>window.__bootOk&&window.__bootOk(),4000); })
+  window.__stage&&window.__stage('preparo casa e paese'); const l=document.getElementById('load'); l.style.opacity=0; setTimeout(()=>l.remove(),600); window.__ready=true; makeHomeCar(); G.karma=HOME.karma||0; lookI=HOME.look%LOOKS.length; dressPlayer('auto'); goHome(true); setTimeout(()=>window.__bootOk&&window.__bootOk(),4000); })
   .catch(e=>{ document.getElementById('load').textContent='Errore nel caricamento: '+e.message; console.error(e); });
 loop();
 
