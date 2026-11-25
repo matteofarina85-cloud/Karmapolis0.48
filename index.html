@@ -100,6 +100,10 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #over{position:fixed;inset:0;display:grid;place-items:center;background:rgba(20,15,40,.55);z-index:6;padding:16px}
 #over .card{max-width:380px;text-align:center} #over h2{font-family:var(--display);font-size:28px;margin:4px 0 8px} #over p{margin:0 0 14px}
 [hidden]{display:none!important}
+@keyframes boing{0%{transform:scale(.3) translateY(14px);opacity:0}45%{transform:scale(1.2) translateY(-6px);opacity:1}62%{transform:scale(.9)}78%{transform:scale(1.06) translateY(-2px)}100%{transform:scale(1)}}
+@keyframes glowRing{0%{box-shadow:0 0 0 0 rgba(255,216,77,.95),2px 2px 0 var(--line)}100%{box-shadow:0 0 0 14px rgba(255,216,77,0),2px 2px 0 var(--line)}}
+@keyframes nudge{0%,86%,100%{transform:scale(1)}90%{transform:scale(1.08) rotate(-2deg)}95%{transform:scale(1.04) rotate(2deg)}}
+.boing{animation:boing .55s cubic-bezier(.3,1.5,.5,1) both}.boing button{animation:glowRing .9s ease-out .25s 2,nudge 3s ease-in-out 1.2s infinite}
 /* 🖥️ PC (mouse e tastiera): niente levetta a schermo e HUD tutto ai bordi, così il centro resta libero */
 #helpBtn{display:none}
 @media (hover:hover) and (pointer:fine){
@@ -184,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.66</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.67</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -1315,7 +1319,7 @@ const hex=n=>'#'+new THREE.Color(n).getHexString();
 // ---- il viso è un disegno su un guscio sottile davanti alla testa (occhi, sopracciglia, bocca, lentiggini): leggero e nitido
 const FACE_PHI=[Math.PI/2-1.25,2.5], FACE_TH=[0.25*Math.PI,1.73];
 function faceTexture(c){ const cv=document.createElement('canvas'); cv.width=336; cv.height=256; const g=cv.getContext('2d'); g.translate(40,0); g.lineCap='round'; g.lineJoin='round'; /* 336 px = 2,5 radianti intorno al viso: il centro del viso è x=128 */
-  const ink='#2a2233', hc=new THREE.Color(AV.hairCol[c.hairCol]), browCol=hex(hc.clone().multiplyScalar(c.hairCol>=8?0.75:0.85).getHex()), ey=104, ex=46, mouthY=182;
+  const ink='#2a2233', hc=new THREE.Color(AV.hairCol[c.hairCol]), browCol=hex(hc.clone().multiplyScalar(c.hairCol>=8?0.75:0.85).getHex()), ey=106, ex=50, mouthY=184;
   // guance e lentiggini
   if(c.blush){ g.fillStyle='rgba(255,110,110,0.28)'; for(const s of [-1,1]){ g.beginPath(); g.ellipse(128+s*64,150,20,12,0,0,7); g.fill(); } }
   if(c.freckles){ g.fillStyle='rgba(120,70,40,0.45)'; for(const s of [-1,1]) for(let i=0;i<7;i++){ const a=i*2.4; g.beginPath(); g.arc(128+s*(56+Math.cos(a)*14),140+Math.sin(a)*8,2.2,0,7); g.fill(); } }
@@ -1329,23 +1333,33 @@ function faceTexture(c){ const cv=document.createElement('canvas'); cv.width=336
       g.save(); g.globalCompositeOperation='destination-out'; g.beginPath(); g.ellipse(128,mouthY+4,27,15,0,0,7); g.fill(); g.restore(); g.beginPath(); g.ellipse(128,mouthY+4,27,15,0,0,7); g.stroke(); }
     if(BT==='pizzetto'||BT==='baffi e pizzetto'){ g.fillStyle=bcol; g.strokeStyle=bdk; g.lineWidth=3; g.beginPath(); g.moveTo(112,mouthY+16); g.quadraticCurveTo(128,mouthY+12,144,mouthY+16); g.quadraticCurveTo(140,mouthY+44,128,mouthY+48); g.quadraticCurveTo(116,mouthY+44,112,mouthY+16); g.fill(); g.stroke(); }
     if(full||BT==='baffi'||BT==='baffi e pizzetto'){ g.fillStyle=bcol; g.strokeStyle=bdk; g.lineWidth=3; for(const s of [-1,1]){ g.beginPath(); g.moveTo(128,mouthY-14); g.quadraticCurveTo(128+s*18,mouthY-20,128+s*32,mouthY-4); g.quadraticCurveTo(128+s*20,mouthY-6,128,mouthY-6); g.closePath(); g.fill(); g.stroke(); } } }
-  // occhi
-  const shape=AV.eyes[c.eyes], ic=hex(AV.eyeCol[c.eyeCol]);
-  for(const s of [-1,1]){ const x=128+s*ex; let rx=15, ry=17; if(shape==='a mandorla'){ rx=17; ry=12; } if(shape==='grandi'){ rx=18; ry=21; } if(shape==='assonnati'){ ry=13; }
-    g.fillStyle='#fffaf4'; g.strokeStyle=ink; g.lineWidth=3.5; g.beginPath(); g.ellipse(x,ey,rx,ry,0,0,7); g.fill();
-    g.save(); g.clip(); g.fillStyle=ic; g.beginPath(); g.ellipse(x+s*-1,ey+2,rx*0.62,ry*0.7,0,0,7); g.fill(); g.fillStyle=ink; g.beginPath(); g.ellipse(x+s*-1,ey+3,rx*0.3,ry*0.36,0,0,7); g.fill();
-    g.fillStyle='#ffffff'; g.beginPath(); g.arc(x+s*-1+4,ey-4,3.6,0,7); g.fill();
-    if(shape==='assonnati'){ g.fillStyle=hex(AV.skin[c.skin]); g.fillRect(x-rx,ey-ry,rx*2,ry*0.75); }
-    if(shape==='allegri'){ g.fillStyle=hex(AV.skin[c.skin]); g.beginPath(); g.ellipse(x,ey+ry*1.25,rx*1.3,ry*0.75,0,0,7); g.fill(); }
-    g.restore(); g.beginPath(); g.ellipse(x,ey,rx,ry,0,Math.PI*1.05,Math.PI*1.95); g.lineWidth=4.5; g.stroke(); // palpebra superiore più marcata
-    if(shape==='assonnati'){ g.beginPath(); g.moveTo(x-rx,ey-ry*0.25); g.lineTo(x+rx,ey-ry*0.25); g.lineWidth=3.5; g.stroke(); }
-    if(c.lashes){ g.lineWidth=3; for(const k of [-0.7,-0.35,0]){ const a=Math.PI*1.5+s*(0.55+k*-0.6); const px=x+Math.cos(a)*rx, py=ey+Math.sin(a)*ry; g.beginPath(); g.moveTo(px,py); g.lineTo(px+s*6+Math.cos(a)*3,py-6); g.stroke(); } } }
+  // occhi (25/11 sera, Teo: "il viso non mi piace"): niente cerchio scuro intorno (sembrava un paio d'occhiali), iride grande alla "avatar", due riflessi, solo la palpebra di sopra marcata
+  const shape=AV.eyes[c.eyes], icol=new THREE.Color(AV.eyeCol[c.eyeCol]), ic=hex(icol.getHex()), icD=hex(icol.clone().multiplyScalar(0.55).getHex()), icL=hex(icol.clone().lerp(new THREE.Color(0xffffff),0.35).getHex()), skinD=hex(new THREE.Color(AV.skin[c.skin]).multiplyScalar(0.78).getHex());
+  for(const s of [-1,1]){ const x=128+s*ex; let rx=17.5, ry=19.5; if(shape==='a mandorla'){ rx=19; ry=14.5; } if(shape==='grandi'){ rx=20.5; ry=23; } if(shape==='assonnati'){ ry=14; } if(shape==='allegri'){ ry=16.5; }
+    g.save(); g.beginPath(); g.ellipse(x,ey,rx,ry,0,0,7); g.clip();
+    g.fillStyle='#fbf8f2'; g.fillRect(x-rx,ey-ry,rx*2,ry*2);
+    const ir=Math.min(rx,ry)*0.78, iy=ey+ry*0.08, gr=g.createRadialGradient(x,iy+ir*0.35,ir*0.2,x,iy,ir); gr.addColorStop(0,icL); gr.addColorStop(0.7,ic); gr.addColorStop(1,icD);
+    g.fillStyle=gr; g.beginPath(); g.arc(x,iy,ir,0,7); g.fill(); g.fillStyle='#1a1420'; g.beginPath(); g.arc(x,iy,ir*0.45,0,7); g.fill();
+    g.fillStyle='rgba(255,255,255,0.95)'; g.beginPath(); g.arc(x-ir*0.32,iy-ir*0.38,ir*0.28,0,7); g.fill(); g.beginPath(); g.arc(x+ir*0.35,iy+ir*0.3,ir*0.12,0,7); g.fill();
+    g.fillStyle='rgba(60,40,50,0.18)'; g.fillRect(x-rx,ey-ry,rx*2,ry*0.45); // ombra della palpebra
+    if(shape==='assonnati'){ g.fillStyle=hex(AV.skin[c.skin]); g.fillRect(x-rx,ey-ry,rx*2,ry*0.7); }
+    if(shape==='allegri'){ g.fillStyle=hex(AV.skin[c.skin]); g.beginPath(); g.ellipse(x,ey+ry*1.35,rx*1.4,ry*0.8,0,0,7); g.fill(); }
+    g.restore();
+    // palpebra di sopra (la "riga" dell'occhio) e piega leggera
+    g.strokeStyle='#2a2233'; g.lineWidth=c.lashes?5:4; g.beginPath(); g.ellipse(x,ey,rx+0.5,ry+0.5,0,Math.PI*1.08,Math.PI*1.92); g.stroke();
+    g.strokeStyle=skinD; g.lineWidth=2; g.beginPath(); g.ellipse(x,ey-3,rx+1,ry+3,0,Math.PI*1.2,Math.PI*1.8); g.stroke();
+    if(shape==='assonnati'){ g.strokeStyle='#2a2233'; g.lineWidth=3.5; g.beginPath(); g.moveTo(x-rx,ey-ry*0.4+3); g.quadraticCurveTo(x,ey-ry*0.55+3,x+rx,ey-ry*0.4+3); g.stroke(); }
+    if(c.lashes){ g.strokeStyle='#2a2233'; g.lineWidth=2.8; for(const k of [0.15,0.45]){ const a=Math.PI*1.5+s*(0.6+k); const px=x+Math.cos(a)*(rx+0.5), py=ey+Math.sin(a)*(ry+0.5); g.beginPath(); g.moveTo(px,py); g.lineTo(px+s*5,py-4); g.stroke(); } } }
   // sopracciglia
   const bt=AV.brows[c.brows]; g.strokeStyle=browCol; for(const s of [-1,1]){ const x=128+s*ex; g.lineWidth=bt==='folte'?9:bt==='sottili'?3.5:6.5; g.beginPath();
-    if(bt==='arcuate'){ g.moveTo(x-s*16,ey-24); g.quadraticCurveTo(x+s*2,ey-40,x+s*18,ey-27); } else if(bt==='dritte'){ g.moveTo(x-s*16,ey-28); g.lineTo(x+s*17,ey-30); } else { g.moveTo(x-s*15,ey-25); g.quadraticCurveTo(x,ey-34,x+s*17,ey-28); } g.stroke(); }
+    if(bt==='arcuate'){ g.moveTo(x-s*17,ey-29); g.quadraticCurveTo(x+s*2,ey-45,x+s*19,ey-32); } else if(bt==='dritte'){ g.moveTo(x-s*17,ey-33); g.lineTo(x+s*18,ey-35); } else { g.moveTo(x-s*16,ey-30); g.quadraticCurveTo(x,ey-39,x+s*18,ey-33); } g.stroke(); }
+  { const nt=AV.nose[c.nose], nw=nt==='largo'?15:nt==='tondo'?12:nt==='dritto'?8:9, nh=nt==='dritto'?22:16, sk2=new THREE.Color(AV.skin[c.skin]); // naso disegnato: ombra morbida sotto e di lato, luce sulla punta
+    g.fillStyle='rgba('+[sk2.r,sk2.g,sk2.b].map(v=>Math.round(v*255*0.72)).join(',')+',0.55)'; g.beginPath(); g.ellipse(128,150,nw,5.5,0,0,Math.PI); g.fill();
+    g.strokeStyle='rgba('+[sk2.r,sk2.g,sk2.b].map(v=>Math.round(v*255*0.62)).join(',')+',0.7)'; g.lineWidth=2.4; g.beginPath(); g.moveTo(128+nw*0.35,150-nh); g.quadraticCurveTo(128+nw*0.6,146,128+nw*0.25,151); g.stroke();
+    g.fillStyle='rgba(255,255,255,0.28)'; g.beginPath(); g.ellipse(128-2,144,4,3,0,0,7); g.fill(); }
   // bocca
   const mt=AV.mouth[c.mouth]; g.strokeStyle=ink; g.lineWidth=4.5; g.beginPath();
-  if(mt==='sorriso'){ g.moveTo(108,mouthY); g.quadraticCurveTo(128,mouthY+16,148,mouthY); g.stroke(); }
+  if(mt==='sorriso'){ g.lineWidth=4; g.moveTo(112,mouthY+1); g.quadraticCurveTo(128,mouthY+13,144,mouthY+1); g.stroke(); }
   else if(mt==='sorriso aperto'){ g.fillStyle='#6b1f2a'; g.moveTo(106,mouthY-3); g.quadraticCurveTo(128,mouthY+26,150,mouthY-3); g.closePath(); g.fill(); g.stroke(); g.save(); g.clip(); g.fillStyle='#fffaf4'; g.fillRect(100,mouthY-4,56,8); g.fillStyle='#e06070'; g.beginPath(); g.ellipse(128,mouthY+16,11,6,0,0,7); g.fill(); g.restore(); }
   else if(mt==='neutro'){ g.moveTo(113,mouthY+3); g.lineTo(143,mouthY+3); g.stroke(); }
   else if(mt==='smorfia'){ g.moveTo(110,mouthY+5); g.quadraticCurveTo(128,mouthY+9,146,mouthY-4); g.stroke(); }
@@ -1366,8 +1380,8 @@ function avHead(c){ const grp=new THREE.Group(), skin=[], hair=[], extra=[]; con
   const jw=shp==='squadrato'?0.95:shp==='a cuore'?0.72:f?0.8:0.88, jy=shp==='a cuore'?0.66:0.74;
   put(skin,S.clone(),sk,[0,-0.052,0],[R*jw,R*jy,R*0.85]); // mascella e mento
   for(const s of [-1,1]) put(skin,S.clone(),sk.clone().multiplyScalar(0.96),[s*R*sx*0.97,-0.012,-0.005],[0.026,0.045,0.034]); // orecchie
-  const nt=AV.nose[c.nose], ns=nt==='tondo'?[0.026,0.024,0.026]:nt==='dritto'?[0.018,0.03,0.03]:nt==='largo'?[0.032,0.022,0.024]:[0.018,0.018,0.02];
-  put(skin,S.clone(),sk.clone().multiplyScalar(0.97),[0,-0.03,R*1.0],ns);
+  const nt=AV.nose[c.nose], ns=nt==='tondo'?[0.019,0.016,0.011]:nt==='dritto'?[0.012,0.022,0.012]:nt==='largo'?[0.024,0.015,0.01]:[0.014,0.013,0.008];
+  
   // capelli
   const H=AV.hair[c.hair], cap=(r,th,phiS=0,phiL=Math.PI*2)=>new THREE.SphereGeometry(r,18,8,phiS,phiL,0,th);
   const hatOn=AV.hat[c.hat]!=='nessuno';
@@ -2690,7 +2704,7 @@ const HP=(x,z)=>[HX+x,HZ0+z];
   for(const s of [-1,1]){ A(box(0.5,0.55,0.45),-6.5+s*1.4,0.28,-5.45,0x8a5a3c); A(cyl(0.05,0.08,0.3,10),-6.5+s*1.4,0.7,-5.45,0x2e2a33); A(cyl(0.18,0.12,0.2,12,true),-6.5+s*1.4,0.92,-5.45,0xffd84d); } // comodini e abat-jour
   A(box(0.7,2.2,1.6),-8.6,1.1,-1.6,0x7a4e34); B(-8.6,-1.6,0.7,1.6,H); A(box(0.02,2.0,0.02),-8.24,1.1,-1.6,0x3a2a20); for(const s of [-1,1]) A(box(0.03,0.22,0.04),-8.23,1.1,-1.6+s*0.12,0xc9ccd2); // armadio
   A(box(0.08,2.12,1.12),-8.92,1.1,-3.05,0x8a5a3c); B(-8.85,-3.05,0.2,1.15,H); // 🪞 specchio a figura intera: cornice
-  { const [mx,mz]=HP(-8.82,-3.05); const R=new Reflector(new THREE.PlaneGeometry(0.96,1.96),{clipBias:0.003,textureWidth:LOW?320:640,textureHeight:LOW?640:1280,color:0xc8d4d8}); R.position.set(mx,1.1,mz); R.rotation.y=Math.PI/2; scene.add(R); MIRROR.R=R; MIRROR.x=mx; MIRROR.z=mz;
+  { const [mx,mz]=HP(-8.82,-3.05); const R=new Reflector(new THREE.PlaneGeometry(0.96,1.96),{clipBias:0.003,textureWidth:LOW?512:1024,textureHeight:LOW?1024:2048,color:0xc8d4d8}); R.position.set(mx,1.1,mz); R.rotation.y=Math.PI/2; scene.add(R); MIRROR.R=R; MIRROR.x=mx; MIRROR.z=mz;
     if(R.camera) R.camera.layers.enableAll(); R.visible=false; }
   { const r=new THREE.Mesh(new THREE.PlaneGeometry(2.4,1.4),toon({map:canvasTex(128,64,(g)=>{ g.fillStyle='#b5d96a'; g.fillRect(0,0,128,64); g.fillStyle='#8fbf4a'; for(let i=0;i<128;i+=16) g.fillRect(i,0,8,64); })})); r.rotation.x=-Math.PI/2; const [x,z]=HP(-6.2,-1.9); r.position.set(x,0.042,z); scene.add(r); }
   A(box(0.3,0.08,0.12),-5.2,0.08,-2.4,0xff8fb1); A(box(0.3,0.08,0.12),-4.9,0.08,-2.3,0xff8fb1); A(cyl(0.22,0.2,0.45,14,true),-3.6,0.23,-0.6,0xd9c8a0); // pantofole e cesto
@@ -2982,6 +2996,9 @@ const clock=new THREE.Clock(); let lastTs=-1e9, frameN=0, fAcc=0, fN=0, settle=0
 let FPS_CAP=60;
 const PORTRAIT_MQ=matchMedia('(orientation:portrait) and (pointer:coarse)');
 document.getElementById('rotFull').onclick=()=>document.getElementById('full').click();
+// i pulsanti d'azione (Sali, Usa, Compra, TV, letto…) quando compaiono fanno "boing" e un'onda gialla, poi ogni tanto un piccolo richiamo
+{ const BOING=['homeCard','actCard','useCard','buyCard','taxiCard','towCard','shopCard','talkCard','radioCard']; const mo=new MutationObserver(ms=>{ for(const m of ms){ const el=m.target; if(m.attributeName==='hidden' && !el.hidden){ el.classList.remove('boing'); void el.offsetWidth; el.classList.add('boing'); } } });
+  for(const id of BOING){ const el=document.getElementById(id); if(el) mo.observe(el,{attributes:true,attributeFilter:['hidden']}); } }
 document.getElementById('helpBtn').onclick=()=>document.body.classList.toggle('showHelp');
 function loop(ts){ if(ts!==undefined && !window.__pause && ts-lastTs<1000/FPS_CAP-1.2){ requestAnimationFrame(loop); return; } if(ts!==undefined) lastTs=ts;
   const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime; try{ pollPad(dt); }catch(e){} wU.uTime.value=t; wU.uCam.value.copy(camera.position);
