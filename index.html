@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.72.9</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.73.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -1311,10 +1311,10 @@ const AV={
   glasses:['nessuno','tondi','squadrati','da sole','da vista sottili']};
 // valori di partenza (il "Seminatore" di Teo: testa rasata e barba)
 const AVC_DEF={sex:'m',skin:2,shape:0,eyes:0,eyeCol:0,brows:0,nose:0,mouth:0,freckles:0,blush:0,lashes:0,hair:3,hairCol:1,beard:2,beardCol:1,hat:0,hatCol:7,glasses:0,glassCol:15,earrings:0,
-  top:0,topCol:1,bottom:0,bottomCol:8,shoes:0,shoesCol:11,height:1,build:1,um:0,hd:0,bd:0,lg:0,ft:0,top2:3};
+  top:0,topCol:1,bottom:0,bottomCol:8,shoes:0,shoesCol:11,height:1,build:1,um:0,hd:0,bd:0,lg:0,ft:0,top2:3,tat:0,tatCol:0};
 const AVKEYS=Object.keys(AVC_DEF);
-const avEncode=c=>'KP1-'+AVKEYS.map(k=>k==='sex'?(c.sex==='f'?'f':'m'):(c[k]??AVC_DEF[k]).toString(36)).join('');
-function avDecode(s){ const c={...AVC_DEF}; if(!s||!s.startsWith('KP1-')) return c; const b=s.slice(4); AVKEYS.forEach((k,i)=>{ const ch=b[i]; if(ch===undefined) return; c[k]=k==='sex'?(ch==='f'?'f':'m'):parseInt(ch,36)||0; }); return c; }
+const avEncode=c=>'KP1-'+AVKEYS.map(k=>k==='sex'?(c.sex==='f'?'f':'m'):((v=>v<0?'z':(v%36).toString(36))(c[k]??AVC_DEF[k]))).join(''); // 'z' = scelta automatica (es. scarpe abbinate)
+function avDecode(s){ const c={...AVC_DEF}; if(!s||!s.startsWith('KP1-')) return c; const b=s.slice(4); AVKEYS.forEach((k,i)=>{ const ch=b[i]; if(ch===undefined) return; c[k]=k==='sex'?(ch==='f'?'f':'m'):ch==='z'?-1:parseInt(ch,36)||0; }); return c; }
 const hex=n=>'#'+new THREE.Color(n).getHexString();
 // ---- il viso è un disegno su un guscio sottile davanti alla testa (occhi, sopracciglia, bocca, lentiggini): leggero e nitido
 const FACE_PHI=[Math.PI/2-1.25,2.5], FACE_TH=[0.25*Math.PI,1.73];
@@ -1441,7 +1441,7 @@ function avRand(seed){ let s=Math.abs(Math.floor(seed*9301+49297))%233280||1; re
 function avRandom(seed){ const r=avRand(seed), pick=n=>Math.floor(r()*n), f=r()<0.5; const c={...AVC_DEF,sex:f?'f':'m',skin:pick(AV.skin.length),shape:pick(4),eyes:pick(AV.eyes.length),eyeCol:pick(AV.eyeCol.length),brows:pick(AV.brows.length),nose:pick(4),mouth:[0,0,0,1,2,3][pick(6)],
   freckles:r()<0.15?1:0,blush:f&&r()<0.4?1:0,lashes:f?1:0,hairCol:r()<0.08?8+pick(2):pick(8),hat:r()<0.18?1+pick(5):0,hatCol:pick(AV.clothCol.length),glasses:0,glassCol:[15,13,9,7][pick(4)],earrings:f&&r()<0.5?1:0,
   top:pick(4),topCol:pick(AV.clothCol.length),bottom:f?pick(4):pick(2),bottomCol:[8,14,15,12,13,7,0][pick(7)],shoesCol:[11,15,13,0,4][pick(5)]};
-  c.hair=f?[1,4,6,7,7,8,9,10,2][pick(9)]:[0,0,1,2,3,3,4,5,11][pick(9)]; c.beard=f?0:[0,0,0,1,2,2,3,4,5,6][pick(10)]; c.beardCol=c.hairCol; if(c.hat && [6,7,8,9].includes(c.hair)===false && r()<0.5) c.hat=0; c.um=pick(24); c.hd=pick(24); c.bd=pick(24); c.lg=pick(24); c.ft=-1; c.top2=pick(AV.clothCol.length); return c; }
+  c.hair=f?[1,4,6,7,7,8,9,10,2][pick(9)]:[0,0,1,2,3,3,4,5,11][pick(9)]; c.beard=f?0:[0,0,0,1,2,2,3,4,5,6][pick(10)]; c.beardCol=c.hairCol; if(c.hat && [6,7,8,9].includes(c.hair)===false && r()<0.5) c.hat=0; c.um=pick(24); c.hd=pick(24); c.bd=pick(24); c.lg=pick(24); c.tat=r()<0.15?1+pick(5):0; c.tatCol=pick(4); c.ft=-1; c.top2=pick(AV.clothCol.length); return c; }
 const nearestIdx=(arr,col)=>{ const a=new THREE.Color(col); let b=0,bd=9; arr.forEach((x,i)=>{ const c=new THREE.Color(x), d=(c.r-a.r)**2+(c.g-a.g)**2+(c.b-a.b)**2; if(d<bd){ bd=d; b=i; } }); return b; };
 // i personaggi già esistenti (agenti, meccanici…) descritti alla vecchia maniera diventano avatar
 function lookToAv(look,o,seed){ const c=avRandom(seed); c.sex=look.long?'f':'m'; c.lashes=c.sex==='f'?1:0; c.blush=0; c.earrings=0; c.skin=nearestIdx(AV.skin,look.skin); c.hairCol=nearestIdx(AV.hairCol,look.hair===look.skin?0x3b2a20:look.hair); c.beardCol=c.hairCol;
@@ -1507,7 +1507,8 @@ async function umLoad(base){ const get=async f=>{ const r=await fetch(base+f); i
     P.roles=m.mats.map(x=>UMMAT_ROLE(x.name)); const cloth=P.roles.map((r,i)=>r==='cloth'?i:-1).filter(i=>i>=0).sort((x,y)=>cnt[y]-cnt[x]); if(cloth[0]!==undefined) P.roles[cloth[0]]='c1'; if(cloth[1]!==undefined) P.roles[cloth[1]]='c2';
     UM.parts[m.sex][m.kind].push(P); }
   UM.ready=true; }
-const UM_NAMES={Casual_2:'Casual',Casual_Hoodie:'Felpa',Suit:'Elegante',Worker:'Operaio',Farmer:'Contadino',Beach:'Spiaggia',Punk:'Punk',Adventurer:'Avventura',Casual:'Casual',Formal:'Vestito',Medieval:'Treccia',Soldier:'Sportiva',Witch:'Stivali'};
+const UM_NAMES={Casual_2:'Casual',Casual_Hoodie:'Felpa',Suit:'Elegante',Worker:'Operaio',Farmer:'Contadino',Beach:'Spiaggia',Punk:'Punk',Adventurer:'Avventura',Adventurer_Long:'Avventura capelli lunghi',Casual:'Casual',Formal:'Vestito',Medieval:'Treccia',Soldier:'Sportiva',Witch:'Stivali'};
+AV.tattoo=['nessuno','braccio destro','braccio sinistro','entrambe le braccia','collo','braccia e collo']; AV.tatCol=[0x1c2230,0x2a3f6e,0x5a1f24,0x23452e];
 const UMKEY={Head:'hd',Body:'bd',Legs:'lg',Feet:'ft'};
 function umPart(c,kind){ const L=UM.parts[c.sex==='f'?'f':'m'][kind]; let i=c[UMKEY[kind]]|0;
   if(kind==='Feet' && i<0){ const lg=umPart(c,'Legs'); const j=L.findIndex(p=>p.name===lg.name); i=j<0?0:j; } // scarpe "abbinate" ai pantaloni (niente gambe scoperte)
@@ -1554,8 +1555,17 @@ function umBody(model,cfg){ let ref=model.userData.umRef;
           x=W[0]+u*sg; y=W[1]+v; x=W[0]+(x-W[0])*f; y=W[1]+(y-W[1])*f; z=W[2]+(z-W[2])*f; }
         pos[(o+i)*3]=x*k+off.x; pos[(o+i)*3+1]=y*k+off.y; pos[(o+i)*3+2]=z*k+off.z; } nor.set(P.nor,o*3); for(let i=0;i<P.n*4;i++) si[o*4+i]=map[P.si[i]]; sw.set(P.sw,o*4); for(let i=0;i<P.ind.length;i++) ind[oi+i]=P.ind[i]+o; o+=P.n; oi+=P.ind.length; }
     geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(pos,3)); geo.setAttribute('normal',new THREE.BufferAttribute(nor,3,true)); geo.setAttribute('skinIndex',new THREE.BufferAttribute(si,4)); geo.setAttribute('skinWeight',new THREE.BufferAttribute(sw,4,true)); geo.setIndex(new THREE.BufferAttribute(ind,1)); geo.computeBoundingSphere(); UM.geo[gk]=geo; }
-  const ck=gk+'|'+[cfg.skin,cfg.hairCol,cfg.eyeCol,cfg.topCol,cfg.top2,cfg.bottomCol,cfg.shoesCol].join('.'); let colA=UM.cols[ck];
-  if(!colA){ const a=new Float32Array(geo.attributes.position.count*3); let o=0; for(const P of PARTS){ const cl=umColor(P,cfg); for(let i=0;i<P.n;i++){ const cc=cl[P.part[i]]; a[(o+i)*3]=cc.r; a[(o+i)*3+1]=cc.g; a[(o+i)*3+2]=cc.b; } o+=P.n; } colA=UM.cols[ck]=new THREE.BufferAttribute(a,3); }
+  const ck=gk+'|'+[cfg.skin,cfg.hairCol,cfg.eyeCol,cfg.topCol,cfg.top2,cfg.bottomCol,cfg.shoesCol,cfg.tat,cfg.tatCol].join('.'); let colA=UM.cols[ck];
+  if(!colA){ const a=new Float32Array(geo.attributes.position.count*3); let o=0; const TT=AV.tattoo[cfg.tat|0], ink=new THREE.Color(AV.tatCol[cfg.tatCol|0]);
+    const MX=n=>UM.mix.indexOf(n), RA=[MX('RightArm'),MX('RightForeArm')], LA=[MX('LeftArm'),MX('LeftForeArm')], NK=[MX('Neck'),MX('Spine2')];
+    for(const P of PARTS){ const cl=umColor(P,cfg); for(let i=0;i<P.n;i++){ let cc=cl[P.part[i]];
+        // tatuaggi (Teo): motivo tribale a fasce ondulate disegnato sulla pelle
+        if(TT!=='nessuno' && (P.roles[P.part[i]]==='skin'||P.roles[P.part[i]]==='skin2')){ const b=P.si[i*4], x=P.pos[i*3], y=P.pos[i*3+1], z=P.pos[i*3+2];
+          const onR=RA.includes(b), onL=LA.includes(b), onN=NK.includes(b)&&y>1.38;
+          const want=(TT==='braccio destro'&&onR)||(TT==='braccio sinistro'&&onL)||(TT==='entrambe le braccia'&&(onR||onL))||(TT==='collo'&&onN)||(TT==='braccia e collo'&&(onR||onL||onN));
+          if(want){ const al=onN?y*1.6:Math.abs(x), an=onN?Math.atan2(x,z):Math.atan2(y-1.43,z-0.07); const v=Math.sin(al*24+Math.sin(an*3)*1.6)+0.5*Math.sin(an*2+al*11);
+            if(v>0.35 && (onN || Math.abs(x)<0.52)) cc=ink; } }
+        a[(o+i)*3]=cc.r; a[(o+i)*3+1]=cc.g; a[(o+i)*3+2]=cc.b; } o+=P.n; } colA=UM.cols[ck]=new THREE.BufferAttribute(a,3); }
   const g2=new THREE.BufferGeometry(); for(const a of ['position','normal','skinIndex','skinWeight']) g2.setAttribute(a,geo.attributes[a]); g2.setIndex(geo.index); g2.boundingSphere=geo.boundingSphere; g2.setAttribute('color',colA);
   const mk=(mat)=>{ const m=new THREE.SkinnedMesh(g2,mat); m.position.copy(ref.pos); m.quaternion.copy(ref.quat); m.scale.copy(ref.scl); m.userData.um=true; m.frustumCulled=false; ref.parent.add(m); m.bind(sk,ref.bind); return m; };
   // cappelli (e orecchini) di prima, appoggiati sulla testa del modello: agganciati all'osso della testa
@@ -3019,7 +3029,7 @@ const edEl=document.getElementById('avEd'), edTabs=document.getElementById('edTa
 // v0.70: con le teste vere i tagli e la barba disponibili sono quelli del pacchetto
 function edRows(t){ if(UM.ready){ const sx=ED.cfg.sex; if(t===0) return ED_TABS[0][1];
     if(t===1) return [['hd','Viso e capelli',umList(sx,'Head')],['hairCol','Colore capelli','hairCol'],['eyeCol','Colore occhi','eyeCol']];
-    if(t===4) return [['hat','Cappello',AV.hat],['hatCol','Colore cappello','clothCol'],['earrings','Orecchini',['no','sì']]];
+    if(t===4) return [['hat','Cappello',AV.hat],['hatCol','Colore cappello','clothCol'],['earrings','Orecchini',['no','sì']],['tat','Tatuaggi',AV.tattoo],['tatCol','Colore tatuaggi','tatCol']];
     if(t===5) return [['bd','Sopra',umList(sx,'Body')],['topCol','Colore','clothCol'],['top2','Secondo colore','clothCol'],['lg','Sotto',umList(sx,'Legs')],['bottomCol','Colore','clothCol'],['ft','Scarpe',umList(sx,'Feet')],['shoesCol','Colore','clothCol']]; }
   return ED_TABS[t][1].map(r=>{ if(!QH.ready) return r; if(r[0]==='hair') return [r[0],r[1],QHAIR_ED[ED.cfg.sex==='f'?'f':'m'].map(x=>x[0])]; if(r[0]==='beard') return [r[0],r[1],['nessuna','barba']]; return r; }); }
 function edVal(k){ if(UM.ready && k==='ft' && (ED.cfg.ft|0)<0){ const L=UM.parts[ED.cfg.sex==='f'?'f':'m'].Feet; return Math.max(0,L.indexOf(umPart(ED.cfg,'Feet'))); } if(UM.ready && ['hd','bd','lg','ft'].includes(k)){ const n=UM.parts[ED.cfg.sex==='f'?'f':'m'][{hd:'Head',bd:'Body',lg:'Legs',ft:'Feet'}[k]].length; return ((ED.cfg[k]|0)%n+n)%n; } if(UM.ready && k==='top2' && ED.cfg.top2==null) return ED.cfg.topCol; if(QH.ready && k==='hair'){ const L=QHAIR_ED[ED.cfg.sex==='f'?'f':'m'], st=qHairOf(ED.cfg,ED.cfg.hair); const i=L.findIndex(x=>qHairOf(ED.cfg,x[1])===st); return i<0?0:i; } if(QH.ready && k==='beard') return ED.cfg.beard>0?1:0;
