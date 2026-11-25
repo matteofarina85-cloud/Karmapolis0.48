@@ -171,7 +171,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.60</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.61</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -2510,8 +2510,17 @@ function where(x,z){ if(HOME.active) return; let p='il paese'; if(x>PZ.x0-SW&&x<
   if(p!==lastPlace && !player.veh){ lastPlace=p; msg.innerHTML='Sei <b>'+({'il paese':'in paese','la piazza':'in piazza','il parco':'nel parco','il lungomare':'sul lungomare','la campagna':'in campagna'}[p]||p)+'</b>.'; } }
 
 // ⛶ schermo intero e orizzontale (sui telefoni Android; se il browser non lo permette, basta girare il telefono)
-document.getElementById('full').onclick=async()=>{ try{ if(!document.fullscreenElement){ await document.documentElement.requestFullscreen({navigationUI:'hide'}); try{ await screen.orientation.lock('landscape'); }catch(e){} } else { try{ screen.orientation.unlock(); }catch(e){} await document.exitFullscreen(); } }
-  catch(e){ copMsgT=3; msg.innerHTML='📱 Qui lo schermo intero non è permesso: gira il telefono in <b>orizzontale</b>, il gioco si adatta da solo.'; } };
+// ⛶ schermo intero. Su iPhone Safari NON permette lo schermo intero alle pagine web (solo ai video): l'unico modo è aggiungere il gioco alla schermata Home, che lo apre a tutto schermo come un'app
+const isStandalone=()=>navigator.standalone===true||matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: standalone)').matches;
+function iosHomeGuide(){ let o=document.getElementById('iosGuide'); if(!o){ o=document.createElement('div'); o.id='iosGuide'; o.className='menuov'; o.style.zIndex=210;
+    o.innerHTML='<div class="card"><h3>📱 Schermo intero su iPhone<small>Safari non permette lo schermo intero alle pagine: si installa il gioco come un\'app (gratis, 10 secondi).</small></h3><ol style="margin:4px 0 12px 18px;padding:0;font-size:14.5px;line-height:1.6"><li>Tocca <b>Condividi</b> <span style="font-size:18px">⬆️</span> (in basso, o in alto a destra)</li><li>Scegli <b>Aggiungi alla schermata Home</b> ➕</li><li>Tocca <b>Aggiungi</b>, poi apri <b>Karmapolis</b> dall\'icona: si gioca a tutto schermo, senza barre di Safari</li></ol><button type="button" id="iosGuideOk">Ho capito</button></div>';
+    document.body.appendChild(o); o.querySelector('#iosGuideOk').onclick=()=>{ o.hidden=true; }; } o.hidden=false; }
+document.getElementById('full').onclick=async()=>{ const el=document.documentElement, req=el.requestFullscreen||el.webkitRequestFullscreen, fsEl=document.fullscreenElement||document.webkitFullscreenElement;
+  if(fsEl){ try{ screen.orientation&&screen.orientation.unlock(); }catch(e){} (document.exitFullscreen||document.webkitExitFullscreen).call(document); return; }
+  if(req){ try{ await req.call(el,{navigationUI:'hide'}); try{ await screen.orientation.lock('landscape'); }catch(e){} return; }catch(e){} }
+  if(IOS){ iosHomeGuide(); return; }
+  copMsgT=3; msg.innerHTML='📱 Qui lo schermo intero non è permesso: gira il telefono in <b>orizzontale</b>, il gioco si adatta da solo.'; };
+if(isStandalone()){ document.getElementById('full').hidden=true; const rf=document.getElementById('rotFull'); if(rf) rf.hidden=true; } // aperto dall'icona: è già a tutto schermo
 // ---------- mondo: aggiornamento ad ogni fotogramma ----------
 function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } if(gameOver) return; const raw=readInput();
   // PC (tastiera): guida classica, su = gas, giù = freno/retro, destra/sinistra = sterzo · telefono (joystick): guida "a direzione"
