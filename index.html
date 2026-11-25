@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.72.6</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.72.7</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -3033,7 +3033,7 @@ edBody.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) 
   if(b.id==='edCopy'){ const t=document.getElementById('edCodeTxt'); try{ navigator.clipboard.writeText(t.value); }catch(_){ t.select(); document.execCommand&&document.execCommand('copy'); } b.textContent='✔ Copiato!'; return; }
   if(b.id==='edPaste'){ const v=document.getElementById('edCodeTxt').value.trim(); if(v.startsWith('KP1-')){ ED.cfg=avDecode(v); dressPlayer(ED.cfg); if(ED.mode==='mirror') playerLayer(1); edRender(); } return; }
   const k=b.dataset.k; if(!k) return; if(b.dataset.v!==undefined) return edSet(k,+b.dataset.v);
-  const row=ED_TABS[ED.tab][1].find(r=>r[0]===k), n=row[2].length; edSet(k,(edVal(k)+(+b.dataset.d)+n)%n); });
+  const row=edRows(ED.tab).find(r=>r[0]===k); if(!row) return; const n=Array.isArray(row[2])?row[2].length:AV[row[2]].length; edSet(k,(edVal(k)+(+b.dataset.d)+n)%n); });
 // se il personaggio è finito dentro un mobile (letto, armadio…), lo sposto nel punto libero più vicino
 function unstick(){ const p=player.pos; if(free(p.x,p.z)) return; for(let r=0.2;r<=2.4;r+=0.2) for(let a=0;a<Math.PI*2;a+=Math.PI/8){ const x=p.x+Math.cos(a)*r, z=p.z+Math.sin(a)*r; if(free(x,z)){ p.x=x; p.z=z; holder.position.copy(p); return; } } }
 function playerLayer(l){ holder.traverse(o=>o.layers.set(l)); }
