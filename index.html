@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.73.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.73.1</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -1497,7 +1497,7 @@ const QH_SCALE=0.8;
 // Colori: pelle, capelli e due colori dei vestiti si cambiano per ogni persona (un colore per vertice: un solo disegno per persona, leggero).
 const UM={ready:false,parts:{m:{Head:[],Body:[],Legs:[],Feet:[]},f:{Head:[],Body:[],Legs:[],Feet:[]}},geo:{},cols:{}};
 const UMMAT_ROLE=n=>/^Skin_Darker/.test(n)?'skin2':/^Skin/.test(n)?'skin':/Eyebrow|Moustache/.test(n)?'brow':/Hair/.test(n)?'hair':/^Eye$/.test(n)?'eye':'cloth';
-async function umLoad(base){ const get=async f=>{ const r=await fetch(base+f); if(!r.ok) throw new Error('manca '+f); return r; };
+async function umLoad(base){ const get=async f=>{ const r=await fetch(base+f+'?v='+encodeURIComponent((document.getElementById('devTitle')||{}).textContent||Date.now()),{cache:'no-cache'}); /* file nuovi a ogni versione (il browser teneva quelli vecchi) */ if(!r.ok) throw new Error('manca '+f); return r; };
   const [j,b]=await Promise.all([get('gente.json').then(r=>r.json()),get('gente.bin').then(r=>r.arrayBuffer())]);
   UM.mix=j.mix; UM.rigs=j.rigs;
   for(const m of j.parts){ const P={sex:m.sex,kind:m.kind,name:m.name,n:m.n,mats:m.mats};
