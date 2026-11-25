@@ -171,7 +171,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.61</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.62</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -817,6 +817,9 @@ function updateVehicle(v,dt,inp){
   v.accel=THREE.MathUtils.damp(v.accel,(ns-v.speed)/dt,10,dt); v.speed=ns;
   const smax=v.steerMax/(1+Math.abs(v.speed)*v.steerFade); const pull=inp&&Math.abs(v.speed)>1?(v.pull||0)*0.4*dmg/100:0; v.steer=THREE.MathUtils.damp(v.steer,THREE.MathUtils.clamp(st+pull,-1,1)*smax,7,dt);
   v.yawRate=v.speed*Math.tan(v.steer)/v.wb;
+  if(v===player.veh && W.wet>0.05){ const g=1-0.38*W.wet; v.yawRate*=g; if(thr<-0.05 && v.speed>0.3) v.speed+=v.brake*0.35*W.wet*(-thr)*dt; /* sul bagnato si sterza e si frena peggio */
+    if(!(v.aqua>0) && Math.abs(v.speed)>(v.bike?6:9) && onPuddle(v.x,v.z)){ v.aqua=0.55+Math.random()*0.35; v.aquaYaw=(Math.random()<0.5?-1:1)*(0.6+Math.random()*0.8); copMsgT=2; msg.innerHTML='💦 <b>Aquaplaning!</b> Sulle pozzanghere l\'auto galleggia: rallenta quando piove.'; }
+    if(v.aqua>0){ v.aqua-=dt; v.yawRate=v.aquaYaw*Math.min(1,Math.abs(v.speed)/10); } }
   const ny=v.yaw+v.yawRate*dt, nx=v.x+Math.sin(ny)*v.speed*dt, nz=v.z+Math.cos(ny)*v.speed*dt;
   if(Math.abs(v.speed)>0.001){ let ok=vehFree(v,nx,nz,ny); if(!ok && v===player.veh){ const p0=vehPen(v,v.x,v.z,v.yaw); if(p0>0.01 && vehPen(v,nx,nz,ny)<=p0+0.0005 && !TRAFFIC.some(c=>vehCircles(v,nx,nz,ny).some(([px,pz,r])=>inVeh(c,px,pz,r)))) ok=true; } /* incastrato: si può uscire */ if(ok){ v.x=nx; v.z=nz; v.yaw=ny; } else { const imp=Math.abs(v.speed), dir=Math.sign(v.speed); v.pv+=dir*Math.min(3,imp)*0.6; v.speed*=-0.25; crash(v,imp,dir); } }
   // appoggio delle ruote sul terreno
@@ -1673,7 +1676,7 @@ player.hp=100; let gameOver=false, copMsgT=0;
 const hpBox=document.getElementById('hp'), hpFill=document.getElementById('hpFill'), shootCard=document.getElementById('shootCard');
 function hurt(n,why){ player.hp=Math.max(0,player.hp-n); if(player.hp<=0) endGame('💥 Colpito!','Gli agenti hanno risposto al fuoco. Nel gioco vero, qui si riparte dall\'ultimo checkpoint.'); }
 function endGame(title,text,stars){ if(gameOver) return; gameOver=true; document.getElementById('goTitle').textContent=title; document.getElementById('goText').textContent=text; document.getElementById('goStars').textContent=stars==null?'':'⭐'.repeat(stars)+'☆'.repeat(3-stars); document.getElementById('goNext').hidden=!(stars>0); document.getElementById('over').hidden=false; if(typeof musicTense==='function') musicTense(0); sirenUpdate(false,0); engineStop(); }
-document.getElementById('restart').onclick=()=>{ copMenu.hidden=true; setTimeout(syncCar,0); for(const k of Object.keys(G.ch)){ G.ch[k]=CH_MAX; G.chT[k]=0; } player.sta=staCap(); player.tired=false; player.focusPed=null; player.arrestT=0; for(const p of PEDS) p.cross=null; G.stat.warned=0; VICTIMS.length=0; for(const c of TRAFFIC){ c.mission=null; if(c.kind==='ambulanza') c.route=null; } for(const p of PEDS) if(p.gone||p.hosp){ p.gone=false; p.hosp=false; p.ko=0; p.fly=null; p.g.visible=true; p.g.rotation.set(0,p.yaw,0); if(p.stars) p.stars.visible=false; p.px=null; } player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,0,0); if(player.taxi) leaveTaxi(); taxiHailed=null; G.started=false; setupLevel(); for(const z of ZONES) z.timer=null; tgtZone=null; TGT=null; G.candies=CANDY_START; fountT=0; player.listen=null; if(radioOn) setRadio(false); for(const p of PEDS){ p.goto=null; p.actClip=null; p.owner=null; } for(const p of PEDS){ p.act=null; p.iconOverride=null; } for(const c of [...POLICE]) if(c.extra) removeCop(c); WANT.level=0; for(const p of PEDS){ if(p.ko>0){ p.ko=0; p.g.rotation.set(0,p.yaw,0); if(p.stars) p.stars.visible=false; } } if(player.veh){ const v=player.veh; v.speed=0; exit(); } player.pos.set(-12,0.15,PZ.z1-4); player.hp=100; WANT.aggro=false; holder.position.copy(player.pos);
+document.getElementById('restart').onclick=()=>{ copMenu.hidden=true; setTimeout(syncCar,0); for(const k of Object.keys(G.ch)){ G.ch[k]=CH_MAX; G.chT[k]=0; } player.sta=staCap(); player.tired=false; player.focusPed=null; player.arrestT=0; for(const p of PEDS) p.cross=null; G.stat.warned=0; VICTIMS.length=0; for(const c of TRAFFIC){ c.mission=null; if(c.kind==='ambulanza') c.route=null; } for(const p of PEDS) if(p.gone||p.hosp){ p.gone=false; p.hosp=false; p.ko=0; p.fly=null; p.g.visible=true; p.g.rotation.set(0,p.yaw,0); if(p.stars) p.stars.visible=false; p.px=null; } player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,0,0); if(player.taxi) leaveTaxi(); taxiHailed=null; G.started=false; setupLevel(); W.rain=0; W.wet=0; W.sad=0; W.next=0; W.phase='off'; W.warn=0; for(const z of ZONES) z.timer=null; tgtZone=null; TGT=null; G.candies=CANDY_START; fountT=0; player.listen=null; if(radioOn) setRadio(false); for(const p of PEDS){ p.goto=null; p.actClip=null; p.owner=null; } for(const p of PEDS){ p.act=null; p.iconOverride=null; } for(const c of [...POLICE]) if(c.extra) removeCop(c); WANT.level=0; for(const p of PEDS){ if(p.ko>0){ p.ko=0; p.g.rotation.set(0,p.yaw,0); if(p.stars) p.stars.visible=false; } } if(player.veh){ const v=player.veh; v.speed=0; exit(); } player.pos.set(-12,0.15,PZ.z1-4); player.hp=100; WANT.aggro=false; holder.position.copy(player.pos);
   for(const c of POLICE){ c.state='parked'; c.x=c.home.x; c.z=c.home.z; c.yaw=c.home.yaw; c.speed=0; c.hp=10; c.off.state='in'; c.off.g.visible=false; c.off.hp=3; c.off.g.rotation.set(0,0,0); place(c); c.red.color.set(0x661111); c.blue.color.set(0x112266); c.glowR.material.opacity=0; }
   for(const v of veh){ repair(v); if(v.home){ v.x=v.home.x; v.z=v.home.z; v.yaw=v.home.yaw; } v.speed=0; v.steer=0; v.accel=0; v.thr=0; v.lastG=null; v.paintI=undefined;
     if(v.paint) for(const p of v.paint){ if(p.orig) p.base.copy(p.orig); p.m.color.copy(p.base); } updateVehicle(v,0.016,null); }
@@ -1915,7 +1918,7 @@ function infect(p,k,amt){ if(p.good>0||p.immune) return; const ki=KI[k]; if(p.ki
   p.exp[ki]+=amt*SUSC[p.trait][ki]; if(p.exp[ki]>=1){ p.kind=k; p.lvl=0.55; p.exp=[0,0,0,0]; } }
 function cleanAround(x,z,a){ const c0=gCell(x,z); for(const f of GF) for(const n of [c0,c0-1,c0+1,c0-GN,c0+GN]) if(n>=0&&n<f.length) f[n]=Math.max(0,f[n]-a); }
 function makeGood(p,gen){ const was=p.kind; if(gen===0) cleanAround(p.x,p.z,0.35); p.kind=null; p.lvl=0; p.exp=[0,0,0,0]; p.gen=gen; p.good=Math.max(p.good,30*LC.good*Math.pow(0.65,gen)); return was; }
-function pedPace(p){ if(p.good>0) return 1.45; switch(p.kind){ case 'nervo': return 1.9; case 'soli': return 0.75; case 'ansia': return 3.3; case 'gossip': return 1.15; } return 1.3; }
+function pedPace(p){ if(W.sad>0 && !p.kind) return 0.8; if(p.good>0) return 1.45; switch(p.kind){ case 'nervo': return 1.9; case 'soli': return 0.75; case 'ansia': return 3.3; case 'gossip': return 1.15; } return 1.3; }
 function flipDir(p){ const n=p.path.length; p.seg=(p.seg+p.dir+n)%n; p.dir=-p.dir; p.t=1-p.t; }
 function startAct(p,type,t,face,other){ const L=ACTCLIP[type]; const avail=L?L.filter(n=>EXA[n]):[]; p.actClip=avail.length?avail[Math.floor(Math.random()*avail.length)]:null;
   if(p.actClip && type==='startle') t=Math.max(t,1.6); p.act={type,t,face,other,t0:t}; }
@@ -1961,7 +1964,6 @@ function nearMiss(p,t){ if(p.reactCD>0 || p.act || p.ko>0 || p.fly) return; p.re
 function seedGrigio(){ for(const f of GF) f.fill(0); PEDS.forEach((p,i)=>{ initMood(p,i); }); const ks=KINDS.filter(k=>KIND_OK(k.id)).sort(()=>Math.random()-0.5).slice(0,2); const ps=PEDS.filter(p=>ACT[gCell(p.x,p.z)]).sort(()=>Math.random()-0.5);
   ks.forEach((k,i)=>{ const p=ps[i]; if(!p) return; p.kind=k.id; p.lvl=1; GF[KI[k.id]][gCell(p.x,p.z)]=0.5; }); if(ks.length===1){ const p=ps[1]; if(p){ p.kind=ks[0].id; p.lvl=1; } } G.time=0; G.levelT=LC.time; G.lvKarma=0; G.seedT=LC.seedEvery; G.announced=false; announceLevel(); G.eventT=35+Math.random()*20; G.started=true; G.win=false; }
 const EVENTS=[
-  {k:'soli',  txt:'☔ <b>Inizia a piovere.</b> Le vie si svuotano: sale la solitudine.'},
   {k:'nervo', txt:'📺 <b>Il Milan ha perso.</b> Nervosismo nell\'aria…'},
   {k:'gossip',txt:'📰 <b>Gira una voce in paese…</b> Il pettegolezzo corre.'},
   {k:'ansia', txt:'📱 <b>Notifica a tutti: \"sciopero domani\".</b> Sale l\'ansia.'},
@@ -1974,10 +1976,11 @@ function updateGrigio(dt){ if(gameOver) return; if(!G.started) seedGrigio(); G.t
     if(p.kind==='ansia' && !p.act && Math.random()<dt*0.06) startAct(p,'phone',2.5,null);
     if(p.kind==='soli' && !p.act && Math.random()<dt*0.05) startAct(p,'sad',5,null);
     if(p.kind==='ansia' && !p.act && Math.random()<dt*0.04) startAct(p,'look',3,null);
-    if(p.good>0 && !p.act && Math.random()<dt*0.05) startAct(p,'dance',4,null);
+    if(p.good>0 && !p.act && Math.random()<dt*0.05 && !(W.sad>0)) startAct(p,'dance',4,null);
+    if(W.sad>0 && !p.act && !p.kind && Math.random()<dt*0.08) startAct(p,'sad',3,null);
     for(let j=i+1;j<PEDS.length;j++){ const q=PEDS[j]; if(q.ko>0||q.fly||q.goto) continue; const d=Math.hypot(p.x-q.x,p.z-q.z); if(d>3.2) continue;
       for(const [a,b] of [[p,q],[q,p]]){
-        if(a.good>0 && b.kind){ b.lvl-=dt*0.7*LC.good; if(b.lvl<=0){ makeGood(b,Math.min(3,a.gen+1)); b.owner=a.owner; if(a.owner==='me') addKarma(2,b.x,b.z); if(!b.act) startAct(b,'wave',1.8,a); } }
+        if(a.good>0 && b.kind && !(W.sad>0)){ b.lvl-=dt*0.7*LC.good; if(b.lvl<=0){ makeGood(b,Math.min(3,a.gen+1)); b.owner=a.owner; if(a.owner==='me') addKarma(2,b.x,b.z); if(!b.act) startAct(b,'wave',1.8,a); } }
         if(a.kind==='ansia' && a.lvl>0.3) infect(b,'ansia',dt*0.5); }
       if(d<2.2 && !p.act && !q.act && p.reactCD<=0 && q.reactCD<=0){
         if((p.kind==='nervo'||q.kind==='nervo') && p.kind!=='soli' && q.kind!=='soli' && !(p.good>0||q.good>0)){ startAct(p,'argue',3.5,q,q); startAct(q,'argue',3.5,p,p); p.reactCD=q.reactCD=8; }
@@ -2024,7 +2027,7 @@ function endAct(p){ const A=p.act; p.act=null; p.actClip=null; p.iconOverride=nu
   if(A.type==='argue' && A.other){ infect(A.other,'nervo',0.45); for(const q of PEDS) if(q!==p && q!==A.other && Math.hypot(q.x-p.x,q.z-p.z)<6) infect(q,'nervo',0.25); }
   if(A.type==='talk' && A.other && p.kind==='gossip') infect(A.other,'gossip',0.7); }
 function pedIcon(p){ if(p.ko>0||p.fly){ setIcon(p,null); return; } let e=null;
-  if(p.iconOverride) e=p.iconOverride; else if(p.good>0) e='✨'; else if(p.kind && (p.act || Math.sin(G.time*0.9+p.ph)>0.55 || (!player.veh && Math.hypot(p.x-player.pos.x,p.z-player.pos.z)<9))) e=KINDS[KI[p.kind]].icon; else if(p.act && p.act.type==='startle') e='❕';
+  if(p.iconOverride) e=p.iconOverride; else if(W.sad>0 && !p.kind && Math.sin(G.time*0.9+p.ph)>0.6) e='☔'; else if(p.good>0) e='✨'; else if(p.kind && (p.act || Math.sin(G.time*0.9+p.ph)>0.55 || (!player.veh && Math.hypot(p.x-player.pos.x,p.z-player.pos.z)<9))) e=KINDS[KI[p.kind]].icon; else if(p.act && p.act.type==='startle') e='❕';
   setIcon(p,e); }
 
 // ---------- TU, IL SEMINATORE: la cura giusta per ogni male, caramelle contate, punti karma ----------
@@ -2522,6 +2525,37 @@ document.getElementById('full').onclick=async()=>{ const el=document.documentEle
   copMsgT=3; msg.innerHTML='📱 Qui lo schermo intero non è permesso: gira il telefono in <b>orizzontale</b>, il gioco si adatta da solo.'; };
 if(isStandalone()){ document.getElementById('full').hidden=true; const rf=document.getElementById('rotFull'); if(rf) rf.hidden=true; } // aperto dall'icona: è già a tutto schermo
 // ---------- mondo: aggiornamento ad ogni fotogramma ----------
+// ======================= 🌧️ PIOGGIA (idea di Anthony, 25/11/2026) =======================
+// meno aderenza (e aquaplaning sulle pozzanghere), per 30 secondi tutta la città diventa triste (il bene non si passa), e quando smette il focolaio si è spostato
+const RAIN_N=LOW?700:2600, PUD_N=LOW?18:42;
+const rainGeo=(()=>{ const g=new THREE.BufferGeometry(), p=new Float32Array(RAIN_N*6), top=new Float32Array(RAIN_N*2); const r=avRand(77); for(let i=0;i<RAIN_N;i++){ const x=(r()-0.5)*50, y=r()*26, z=(r()-0.5)*50; p.set([x,y,z,x+0.05,y-0.7,z+0.02],i*6); top[i*2]=top[i*2+1]=y; } g.setAttribute('position',new THREE.BufferAttribute(p,3)); g.setAttribute('top',new THREE.BufferAttribute(top,1)); g.boundingSphere=new THREE.Sphere(new THREE.Vector3(),1e5); return g; })();
+const rainMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{uT:{value:0},uC:{value:new THREE.Vector3()},uA:{value:0}},
+  vertexShader:'attribute float top; uniform float uT; uniform vec3 uC; void main(){ vec3 p=position; float y=mod(top-uT*17.0,26.0)+(position.y-top); p.x+=uC.x; p.z+=uC.z; p.y=y+uC.y-6.0; gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0); }',
+  fragmentShader:'uniform float uA; void main(){ gl_FragColor=vec4(0.78,0.86,0.95,uA); }'});
+const rainLines=new THREE.LineSegments(rainGeo,rainMat); rainLines.frustumCulled=false; rainLines.visible=false; rainLines.renderOrder=20; scene.add(rainLines);
+// pozzanghere: tutte in un solo oggetto (un disegno solo), crescono quando piove e si asciugano piano
+const PUDS=[]; { const r=avRand(31); let tries=0; while(PUDS.length<PUD_N && tries++<4000){ const x=(r()-0.5)*124, z=(r()-0.5)*116-4; if(ROAD.dist(x,z)<ROAD_W-0.8 && x>-64&&x<64&&z>-64&&z<52) PUDS.push({x,z,r:0.9+r()*1.6,s:r()*0.6+0.7,a:r()*6}); } }
+const pudTex=canvasTex(64,64,(g)=>{ const gr=g.createRadialGradient(32,32,4,32,32,31); gr.addColorStop(0,'rgba(62,80,100,0.8)'); gr.addColorStop(0.55,'rgba(85,108,130,0.75)'); gr.addColorStop(0.82,'rgba(150,175,198,0.8)'); gr.addColorStop(0.92,'rgba(200,220,235,0.7)'); gr.addColorStop(1,'rgba(120,150,175,0)'); g.fillStyle=gr; g.fillRect(0,0,64,64); });
+pudTex.wrapS=pudTex.wrapT=THREE.ClampToEdgeWrapping;
+const pudMesh=new THREE.InstancedMesh((()=>{ const g=new THREE.CircleGeometry(1,22); g.rotateX(-Math.PI/2); const p=g.attributes.position; for(let i=0;i<p.count;i++){ const a=Math.atan2(p.getZ(i),p.getX(i)); const k=1+0.18*Math.sin(a*3)+0.1*Math.sin(a*5+1); p.setX(i,p.getX(i)*k); p.setZ(i,p.getZ(i)*k*0.7); } return g; })(),
+  new THREE.MeshBasicMaterial({map:pudTex,transparent:true,opacity:0,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-3}),PUDS.length); pudMesh.renderOrder=2; pudMesh.visible=false; scene.add(pudMesh);
+function updatePuddles(){ const m=new THREE.Matrix4(), q=new THREE.Quaternion(); PUDS.forEach((p,i)=>{ const sc=p.r*(0.25+0.75*W.wet); q.setFromAxisAngle(new THREE.Vector3(0,1,0),p.a); m.compose(new THREE.Vector3(p.x,0.06,p.z),q,new THREE.Vector3(sc,1,sc*p.s)); pudMesh.setMatrixAt(i,m); }); pudMesh.instanceMatrix.needsUpdate=true; pudMesh.material.opacity=Math.min(1,W.wet*1.4); pudMesh.visible=W.wet>0.02; }
+function onPuddle(x,z){ if(W.wet<0.35) return false; for(const p of PUDS){ const r=p.r*(0.25+0.75*W.wet)*0.85; if((p.x-x)**2+(p.z-z)**2<r*r) return true; } return false; }
+function rainSound(on){ if(!AUD.ready) return; if(!W.snd){ const s=AC.createBufferSource(); s.buffer=AUD.white; s.loop=true; const f=AC.createBiquadFilter(); f.type='lowpass'; f.frequency.value=1600; const g=AC.createGain(); g.gain.value=0; s.connect(f); f.connect(g); g.connect(AUD.amb); s.start(); W.snd=g; } W.snd.gain.setTargetAtTime(on?0.09*W.rain:0,AC.currentTime,0.6); }
+function thunder(){ if(!AUD.ready||!soundOn) return; const t=AC.currentTime+0.05, s=AC.createBufferSource(); s.buffer=AUD.white; const f=AC.createBiquadFilter(); f.type='lowpass'; f.frequency.value=180; const g=AC.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.5,t+0.15); g.gain.exponentialRampToValueAtTime(0.001,t+2.6); s.connect(f); f.connect(g); g.connect(AUD.master); s.start(t,Math.random()); s.stop(t+2.8); }
+function rainShiftFocus(){ if(!TGT||!TGT.zone) return false; const q=TGT.zone, others=ACTZ.filter(o=>o!==q); if(!others.length) return false; const o=others[Math.floor(Math.random()*others.length)];
+  for(let k=0;k<4;k++){ let tot=0; for(const c of q.cells){ const a=GF[k][c]*0.8; GF[k][c]-=a; tot+=a; } if(tot>0){ const per=tot/(o.cells.length||1)*1.1; for(const c of o.cells) GF[k][c]=Math.min(1,GF[k][c]+per*(0.6+Math.random()*0.8)); } }
+  q.timer=null; tgtZone=null; TGT=null; tgtT=0; return o; }
+function updateWeather(dt){ if(!G.started||gameOver) return; W.t+=dt;
+  if(!W.next) W.next=LC.n<=1?140+Math.random()*60:70+Math.random()*50;
+  if(W.phase==='off'){ W.next-=dt; if(W.next<=6 && !W.warn){ W.warn=1; copMsgT=4; msg.innerHTML='🌩️ <b>Nuvoloni in arrivo…</b> Sta per piovere: tra poco la città si intristisce e le strade diventano scivolose.'; thunder(); }
+    if(W.next<=0){ W.phase='rain'; W.t=0; W.sad=30; W.warn=0; copMsgT=5; msg.innerHTML='🌧️ <b>Piove!</b> Per 30 secondi tutti sono tristi e il bene non si passa. In auto: frena prima e occhio alle pozzanghere 💦'; thunder(); } }
+  else { if(W.t<34) W.rain=Math.min(1,W.rain+dt/4); else W.rain=Math.max(0,W.rain-dt/5);
+    if(W.t>40 && W.rain<=0){ W.phase='off'; W.next=(LC.n<=1?999:LC.n<=3?110:80)+Math.random()*50; const o=rainShiftFocus(); copMsgT=5; msg.innerHTML=o?'🌦️ <b>Ha smesso di piovere…</b> ma il focolaio si è spostato '+o.at+'! Guarda la bussola.':'🌦️ <b>Ha smesso di piovere.</b> Il sole torna, e anche il buon umore.'; } }
+  if(W.sad>0) W.sad-=dt;
+  W.wet=W.rain>0.3?Math.min(1,W.wet+dt/18):Math.max(0,W.wet-dt/45);
+  rainLines.visible=W.rain>0.02; if(rainLines.visible){ rainMat.uniforms.uT.value=W.t; rainMat.uniforms.uA.value=0.38*W.rain; rainMat.uniforms.uC.value.set(controls.look.x,controls.look.y,controls.look.z); }
+  W.acc=(W.acc||0)+dt; if(W.acc>0.25){ W.acc=0; updatePuddles(); dayAcc=1; } rainSound(W.rain>0.02&&soundOn); }
 function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } if(gameOver) return; const raw=readInput();
   // PC (tastiera): guida classica, su = gas, giù = freno/retro, destra/sinistra = sterzo · telefono (joystick): guida "a direzione"
   for(const v of veh){ let inp=null; if(player.veh===v){ const cd=(raw.kb||raw.m>=0.12)?(player.moveTo=null):clickDrive(v); if(cd){ inp=cd; } else if(raw.kb){ v.thr=-raw.ky; inp={x:raw.kx,y:raw.ky,m:1}; } else if(raw.m<0.12){ v.thr=0; inp={x:0,y:0,m:0}; } else if(controls.z>0.35 && !SHOP.G) inp=isoDriveInput(v,raw); else { v.thr=-raw.y; inp={x:raw.x,y:raw.y,m:raw.m}; } } updateVehicle(v,dt,inp); }
@@ -2531,7 +2565,7 @@ function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } i
   if(player.safeT>0) player.safeT-=dt;
   if(player.mode!=='foot'||player.taxi||player.ko>0||player.arrestT>0) updateStamina(dt,'ride');
   if(player.arrestT>0 && !player.taxi) updateArrest(dt); else if(player.taxi) updateTaxiRide(dt); else if(player.ko>0) updatePlayerKO(dt); else if(player.mode==='foot') updatePlayer(dt); else updateRider(dt);
-  TT+=dt; updateDayCycle(dt); updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); } updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
+  TT+=dt; updateWeather(dt); updateDayCycle(dt); updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); } updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
 
 // ======================= 🏠 CASA = IL MENU DEL GIOCO (alla GTA): giri per casa e ogni oggetto è una voce =======================
 // TV = tutorial · tapis roulant = minigioco del cardio (stamina più lunga) · armadio = vestiti · doccia e letto = stamina · garage = pieno di benzina · porta = esci a giocare
@@ -2884,6 +2918,7 @@ const PRESET={
   tramonto:{bg:0xffb98a,sun:[-0.8,0.35,0.4],sc:0xffb070,si:1.8,hs:0xffb48a,hg:0x4a3a5a,hi:0.85,fog:0xf7a57c,deep:0x31508f,sh:0xf09a7c,night:0.3},
   notte:{bg:0x1c2450,sun:[-0.3,0.75,-0.5],sc:0x9fb6ff,si:0.6,hs:0x5a6cb0,hg:0x1a2036,hi:0.55,fog:0x1c2450,deep:0x0d1a44,sh:0x22507e,night:1}
 };
+const W={rain:0,wet:0,sad:0,next:0,phase:'off',t:0,warn:0,snd:null}; // 🌧️ meteo (idea di Anthony, 25/11)
 let night=0; const sunDir=new THREE.Vector3();
 // ciclo automatico del giorno: il paese ha il suo orario (≈9 minuti per un giorno intero), passaggi sfumati
 const _ca=new THREE.Color(), _cb=new THREE.Color();
@@ -2895,6 +2930,7 @@ function applyPreset(p){ scene.background=new THREE.Color(p.bg); scene.fog.color
   winMat.color.set(p.night>0.5?0xffc96b:p.night>0.2?0xffb070:0x9ccfe8); bulbMat.color.set(p.night>0.2?0xfff0c0:0xe8e4da); glowMat.opacity=p.night>0.2?0.55*p.night+0.1:0;
   LEAFMAT.emissive.setRGB(0.07,0.15,0.13).multiplyScalar(p.night); /* luce lunare sulle chiome */
   updateHeadlights(p.night);
+  if(W.rain>0.01){ const rk=W.rain; sun.intensity*=1-0.55*rk; hemi.intensity*=1-0.18*rk; const gc=new THREE.Color(0x7d8592); scene.fog.color.lerp(gc,0.6*rk); wU.uFog.value.lerp(gc,0.6*rk); scene.background=scene.background.clone().lerp(gc,0.65*rk); }
   night=p.night; document.body.style.background='#'+new THREE.Color(p.bg).getHexString(); }
 function setTime(name){ applyPreset(PRESET[name]); }
 // [durata in secondi, da, a]: giorno lungo, tramonto, notte, alba
