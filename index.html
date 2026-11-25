@@ -100,6 +100,19 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #over{position:fixed;inset:0;display:grid;place-items:center;background:rgba(20,15,40,.55);z-index:6;padding:16px}
 #over .card{max-width:380px;text-align:center} #over h2{font-family:var(--display);font-size:28px;margin:4px 0 8px} #over p{margin:0 0 14px}
 [hidden]{display:none!important}
+/* 🖥️ PC (mouse e tastiera): niente levetta a schermo e HUD tutto ai bordi, così il centro resta libero */
+#helpBtn{display:none}
+@media (hover:hover) and (pointer:fine){
+  #joy{display:none!important}
+  #helpBtn{display:inline-block;padding:2px 9px;font-size:12px;margin-left:6px;box-shadow:none;vertical-align:middle}
+  #titleCard{padding:5px 10px;max-width:420px}#titleCard h1{font-size:16px;display:inline-block;margin:0;vertical-align:middle}
+  body:not(.showHelp) #howto{display:none}body.showHelp #howto{display:block;margin-top:6px}
+  .top .row{max-width:440px;flex-direction:column;gap:6px}
+  #msg{max-width:420px;font-size:13.5px;padding:6px 11px}
+  #greyHud{bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+  #sta{bottom:calc(54px + env(safe-area-inset-bottom,0px))}
+  .right{flex-direction:row;flex-wrap:wrap-reverse;justify-content:flex-end;align-items:flex-end;max-width:52vw;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+}
 #avEd{position:fixed;right:max(10px,env(safe-area-inset-right,0px));top:calc(8px + env(safe-area-inset-top,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));width:min(390px,50vw);z-index:14;display:flex;flex-direction:column;background:var(--paper);border:2.5px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);overflow:hidden}
 body.editing .hud,body.editing #joy,body.editing #sta,body.editing #homeCard,body.editing .right{display:none!important}
 #avEd .edTabs{display:flex;flex-wrap:wrap;gap:4px;padding:8px 8px 6px;border-bottom:2px solid #e8dfcf}#avEd .edTabs button{padding:4px 9px;font-size:13px;background:#fff;color:var(--ink);box-shadow:none}#avEd .edTabs button.on{background:#ffd84d}
@@ -171,7 +184,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.65</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.66</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -2969,6 +2982,7 @@ const clock=new THREE.Clock(); let lastTs=-1e9, frameN=0, fAcc=0, fN=0, settle=0
 let FPS_CAP=60;
 const PORTRAIT_MQ=matchMedia('(orientation:portrait) and (pointer:coarse)');
 document.getElementById('rotFull').onclick=()=>document.getElementById('full').click();
+document.getElementById('helpBtn').onclick=()=>document.body.classList.toggle('showHelp');
 function loop(ts){ if(ts!==undefined && !window.__pause && ts-lastTs<1000/FPS_CAP-1.2){ requestAnimationFrame(loop); return; } if(ts!==undefined) lastTs=ts;
   const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime; try{ pollPad(dt); }catch(e){} wU.uTime.value=t; wU.uCam.value.copy(camera.position);
   updateLife(t); if(window.__ready && !PORTRAIT_MQ.matches) updateWorld(dt); // in verticale sul telefono il gioco resta in pausa
