@@ -171,7 +171,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.64</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.65</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -825,7 +825,7 @@ function updateVehicle(v,dt,inp){
     if(!(v.aqua>0) && Math.abs(v.speed)>(v.bike?5.5:8) && onPuddle(v.x,v.z)){ v.aqua=0.8+Math.random()*0.4; v.aquaYaw=(Math.random()<0.5?-1:1)*(0.9+Math.random()*0.9); sfx('hit'); copMsgT=2; msg.innerHTML='💦 <b>Aquaplaning!</b> Sulle pozzanghere l\'auto galleggia: rallenta quando piove.'; }
     if(v.aqua>0){ v.aqua-=dt; v.yawRate=v.aquaYaw*Math.min(1,Math.abs(v.speed)/10); } }
   const ny=v.yaw+v.yawRate*dt, nx=v.x+Math.sin(ny)*v.speed*dt, nz=v.z+Math.cos(ny)*v.speed*dt;
-  if(Math.abs(v.speed)>0.001){ let ok=vehFree(v,nx,nz,ny); if(!ok && v===player.veh){ const p0=vehPen(v,v.x,v.z,v.yaw); if(p0>0.01 && vehPen(v,nx,nz,ny)<=p0+0.0005 && !TRAFFIC.some(c=>vehCircles(v,nx,nz,ny).some(([px,pz,r])=>inVeh(c,px,pz,r)))) ok=true; } /* incastrato: si può uscire */ if(ok){ v.x=nx; v.z=nz; v.yaw=ny; } else { const imp=Math.abs(v.speed), dir=Math.sign(v.speed); v.pv+=dir*Math.min(3,imp)*0.6; v.speed*=-0.25; crash(v,imp,dir); } }
+  if(Math.abs(v.speed)>0.001){ let ok=vehFree(v,nx,nz,ny); if(!ok && v===player.veh){ const p0=vehPen(v,v.x,v.z,v.yaw); if(p0>0.01 && vehPen(v,nx,nz,ny)<=p0+0.0005 && !TRAFFIC.some(c=>vehCircles(v,nx,nz,ny).some(([px,pz,r])=>inVeh(c,px,pz,r)))) ok=true; } /* incastrato: si può uscire */ if(ok){ v.x=nx; v.z=nz; v.yaw=ny; } else { const imp=Math.abs(v.speed), dir=Math.sign(v.speed); v.pv+=dir*Math.min(3,imp)*0.6; v.speed*=-0.25; crash(v,imp,dir); if(v===player.veh) copRam(v,nx,nz,ny,imp); } }
   // appoggio delle ruote sul terreno
   const H=v.contacts.map(([cx,cz])=>{ const [x,z]=toW(v,cx,cz); return height(x,z); });
   const hf=(H[0]+H[1])/2, hr=(H[2]+H[3])/2, hl=(H[0]+H[2])/2, hrt=(H[1]+H[3])/2, gy=(hf+hr)/2;
@@ -1138,7 +1138,7 @@ function motoGeo(col,jacket,helmet){ const parts=[];
 function addLightbar(m,y,z,colA,colB){ const a=new THREE.MeshBasicMaterial({color:0x551010}), b=new THREE.MeshBasicMaterial({color:0x112255}); const la=new THREE.Mesh(new THREE.BoxGeometry(0.45,0.14,0.3),a), lb=new THREE.Mesh(new THREE.BoxGeometry(0.45,0.14,0.3),b);
   la.position.set(-0.28,y,z); lb.position.set(0.28,y,z); m.add(la,lb); return {a,b,colA,colB}; }
 const VCOL=[0x2f7de1,0xffd84d,0xf6f2ea,0x3fa66b,0xe0483e,0x8c5fd6,0xf0a030,0x5bc0d6,0x9aa0a8,0xff8fb1,0x2a2a33,0x7a4e34,0xb5d96a,0xc0c6cc];
-const FLEET=['berlina','taxi','suv','moto','wagon','ambulanza','camion','sportiva','polizia','furgone','taxi','moto','bus','berlina','suv','polizia','citycar','sportiva','wagon','taxi','moto','citycar','camion','berlina'];
+const FLEET=['berlina','taxi','suv','moto','wagon','ambulanza','camion','sportiva','polizia','furgone','taxi','moto','bus','berlina','suv','wagon','citycar','sportiva','wagon','taxi','moto','citycar','camion','berlina'];
 // ---------- 💡 FARI: di notte i veicoli accendono fari, fanali rossi e un fascio di luce finto sull'asfalto (niente luci vere: leggerissimo) ----------
 const BEAM_TEX=canvasTex(64,128,(g)=>{ const gr=g.createLinearGradient(0,128,0,0); gr.addColorStop(0,'rgba(255,244,200,0.85)'); gr.addColorStop(1,'rgba(255,244,200,0)'); g.fillStyle=gr; g.fillRect(0,0,64,128);
   const e=g.createLinearGradient(0,0,64,0); e.addColorStop(0,'rgba(0,0,0,1)'); e.addColorStop(0.25,'rgba(0,0,0,0)'); e.addColorStop(0.75,'rgba(0,0,0,0)'); e.addColorStop(1,'rgba(0,0,0,1)'); g.globalCompositeOperation='destination-out'; g.fillStyle=e; g.fillRect(0,0,64,128); });
@@ -1592,6 +1592,10 @@ function arrestPlayer_old(){ if(player.arrestT>0) return; if(player.veh){ const 
 function updateArrest(dt){ player.arrestT-=dt; const c=chars[cur]; if(c){ for(const k of ['idle','walk','run']){ c.w[k]=k==='idle'?1:0; c.A[k].setEffectiveWeight(c.w[k]); } c.mixer.update(dt); if(c.headless) bones(c).Head.scale.setScalar(0.001); }
   holder.position.copy(player.pos); if(player.arrestT<=0){ player.arrestT=0; copMsgT=2.5; msg.innerHTML='👮 "Può andare. E vada piano!" Sei di nuovo libero.'; } }
 
+// 👮 tamponare la polizia (Teo, 25/11): se vai addosso a una volante (che gira in città o parcheggiata) a più di metà della velocità massima del tuo veicolo, ti inseguono
+function copRam(v,nx,nz,ny,imp){ if(imp<(v.vmax||10)*0.5 || (v.ramCD||0)>performance.now()) return; const C=vehCircles(v,nx,nz,ny);
+  const hitT=TRAFFIC.some(c=>c.kind==='polizia' && C.some(([px,pz,r])=>inVeh(c,px,pz,r+0.3))), hitP=POLICE.some(c=>C.some(([px,pz,r])=>(c.x-px)**2+(c.z-pz)**2<(r+1.6)**2));
+  if(hitT||hitP){ v.ramCD=performance.now()+4000; wantedUp('Hai tamponato una volante della polizia!'); } }
 // guida "a direzione": spingi il joystick dove vuoi andare, l'auto ci gira e accelera (come nei giochi dall'alto)
 function isoDriveInput(v,inp){ if(inp.m<0.12) return {x:0,y:0,m:0}; camera.getWorldDirection(fwd); fwd.y=0; fwd.normalize(); right.crossVectors(fwd,up);
   mv.set(0,0,0).addScaledVector(fwd,-inp.y).addScaledVector(right,inp.x).normalize(); const want=Math.atan2(mv.x,mv.z);
