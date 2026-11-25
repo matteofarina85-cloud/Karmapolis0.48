@@ -162,7 +162,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="taxiMenu" hidden role="dialog" aria-label="Scegli dove andare in taxi"><div class="card"><h3 id="taxiHead">🚕 Dove ti porto?</h3><div id="taxiList"></div><button id="taxiNo" class="ghost" type="button">Scendo qui</button></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.54</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.55</h1><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -783,6 +783,9 @@ function vehFree(v,x,z,yaw){ for(const [px,pz,r] of vehCircles(v,x,z,yaw)){
     for(const o of OBST) if((o.x-px)**2+(o.z-pz)**2<(o.r+r)**2) return false;
     for(const w of veh) if(w!==v) for(const [qx,qz,qr] of vehCircles(w,w.group.position.x,w.group.position.z,w.yaw)) if((qx-px)**2+(qz-pz)**2<(qr+r)**2) return false; }
   return true; }
+// quanto il veicolo è "dentro" pali, alberi, muri e altri veicoli fermi: se è già incastrato (es. spinto da un camion contro un palo) può sempre muoversi in un verso che non lo incastra di più
+function vehPen(v,x,z,yaw){ let s=0; for(const [px,pz,r] of vehCircles(v,x,z,yaw)){ for(const b of BOXES){ const d=boxDist(b,px,pz); if(d<r) s+=r-d; } for(const o of OBST){ const d=Math.hypot(o.x-px,o.z-pz); if(d<o.r+r) s+=o.r+r-d; }
+    for(const c of POLICE){ const d=Math.hypot(c.x-px,c.z-pz); if(d<r+1.2) s+=r+1.2-d; } for(const w of veh) if(w!==v) for(const [qx,qz,qr] of vehCircles(w,w.group.position.x,w.group.position.z,w.yaw)){ const d=Math.hypot(qx-px,qz-pz); if(d<qr+r) s+=qr+r-d; } } return s; }
 const toW=(v,lx,lz)=>{ const s=Math.sin(v.yaw), c=Math.cos(v.yaw); return [v.x+lx*c+lz*s, v.z-lx*s+lz*c]; };
 const spring=(x,vel,target,k,c,dt)=>{ vel+=(k*(target-x)-c*vel)*dt; return [x+vel*dt,vel]; };
 function updateVehicle(v,dt,inp){
@@ -797,7 +800,7 @@ function updateVehicle(v,dt,inp){
   const smax=v.steerMax/(1+Math.abs(v.speed)*v.steerFade); const pull=inp&&Math.abs(v.speed)>1?(v.pull||0)*0.4*dmg/100:0; v.steer=THREE.MathUtils.damp(v.steer,THREE.MathUtils.clamp(st+pull,-1,1)*smax,7,dt);
   v.yawRate=v.speed*Math.tan(v.steer)/v.wb;
   const ny=v.yaw+v.yawRate*dt, nx=v.x+Math.sin(ny)*v.speed*dt, nz=v.z+Math.cos(ny)*v.speed*dt;
-  if(Math.abs(v.speed)>0.001){ if(vehFree(v,nx,nz,ny)){ v.x=nx; v.z=nz; v.yaw=ny; } else { const imp=Math.abs(v.speed), dir=Math.sign(v.speed); v.pv+=dir*Math.min(3,imp)*0.6; v.speed*=-0.25; crash(v,imp,dir); } }
+  if(Math.abs(v.speed)>0.001){ let ok=vehFree(v,nx,nz,ny); if(!ok && v===player.veh){ const p0=vehPen(v,v.x,v.z,v.yaw); if(p0>0.01 && vehPen(v,nx,nz,ny)<=p0+0.0005 && !TRAFFIC.some(c=>vehCircles(v,nx,nz,ny).some(([px,pz,r])=>inVeh(c,px,pz,r)))) ok=true; } /* incastrato: si può uscire */ if(ok){ v.x=nx; v.z=nz; v.yaw=ny; } else { const imp=Math.abs(v.speed), dir=Math.sign(v.speed); v.pv+=dir*Math.min(3,imp)*0.6; v.speed*=-0.25; crash(v,imp,dir); } }
   // appoggio delle ruote sul terreno
   const H=v.contacts.map(([cx,cz])=>{ const [x,z]=toW(v,cx,cz); return height(x,z); });
   const hf=(H[0]+H[1])/2, hr=(H[2]+H[3])/2, hl=(H[0]+H[2])/2, hrt=(H[1]+H[3])/2, gy=(hf+hr)/2;
@@ -1122,6 +1125,12 @@ function addHeadlights(o,len,w,h=0.72,bike){ const f=len/2+0.03, sp=bike?[0]:[-w
   const bw=bike?2.2:w*2.2, bl=bike?6:9; const g=new THREE.ShapeGeometry(new THREE.Shape([new THREE.Vector2(-w*0.45,0),new THREE.Vector2(w*0.45,0),new THREE.Vector2(bw/2,bl),new THREE.Vector2(-bw/2,bl)]));
   const uv=g.attributes.uv, ps=g.attributes.position; for(let i=0;i<ps.count;i++) uv.setXY(i,(ps.getX(i)+bw/2)/bw,ps.getY(i)/bl);
   const m=new THREE.Mesh(g,HL.beam); m.rotation.x=Math.PI/2; m.position.set(0,0.07,f); m.renderOrder=3; o.add(m); }
+// 🔦 FARI VERI della tua auto (solo PC, solo di notte): una luce che proietta le ombre di persone, pali e alberi. Sul telefono no: ogni ombra in tempo reale è un disegno in più della scena a ogni fotogramma.
+const CARSPOT=LOW?null:(()=>{ const l=new THREE.SpotLight(0xfff1c8,0,32,0.62,0.55,1.1); l.castShadow=true; l.shadow.mapSize.set(1024,1024); l.shadow.camera.near=0.5; l.shadow.camera.far=32; l.shadow.bias=-0.0008; l.shadow.autoUpdate=false; scene.add(l); scene.add(l.target); return l; })();
+function updateCarSpot(){ if(!CARSPOT) return; const v=player.veh, on=v&&v.name==='auto'&&!HOME.active&&night>0.25;
+  if(!on){ if(CARSPOT.intensity){ CARSPOT.intensity=0; CARSPOT.shadow.needsUpdate=true; } return; }
+  const [fx,fz]=toW(v,0,1.45), [tx,tz]=toW(v,0,12); CARSPOT.position.set(fx,0.75,fz); CARSPOT.target.position.set(tx,0,tz); CARSPOT.target.updateMatrixWorld();
+  CARSPOT.intensity=40*THREE.MathUtils.smoothstep(night,0.25,0.7); CARSPOT.shadow.needsUpdate=true; }
 function updateHeadlights(n){ const k=THREE.MathUtils.smoothstep(n,0.2,0.6); HL.beam.opacity=0.55*k; HL.bulb.color.setRGB(0.85+0.15*k,0.82+0.16*k,0.72+0.08*k); HL.tail.color.setRGB(0.48+0.52*k,0.11+0.09*k,0.11+0.09*k); }
 function makeTrafficVehicle(kind,i){ const col=VCOL[(i*5+3)%VCOL.length]; let B, extra=null;
   if(kind==='camion') B=truckGeo([0xe0483e,0x2f7de1,0x3fa66b,0xf6f2ea][i%4],[0xf6f2ea,0xe8e4da,0xd9d2c5][i%3]);
@@ -2290,6 +2299,7 @@ document.getElementById('full').onclick=async()=>{ try{ if(!document.fullscreenE
 function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } if(gameOver) return; const raw=readInput();
   // PC (tastiera): guida classica, su = gas, giù = freno/retro, destra/sinistra = sterzo · telefono (joystick): guida "a direzione"
   for(const v of veh){ let inp=null; if(player.veh===v){ const cd=(raw.kb||raw.m>=0.12)?(player.moveTo=null):clickDrive(v); if(cd){ inp=cd; } else if(raw.kb){ v.thr=-raw.ky; inp={x:raw.kx,y:raw.ky,m:1}; } else if(raw.m<0.12){ v.thr=0; inp={x:0,y:0,m:0}; } else if(controls.z>0.35 && !SHOP.G) inp=isoDriveInput(v,raw); else { v.thr=-raw.y; inp={x:raw.x,y:raw.y,m:raw.m}; } } updateVehicle(v,dt,inp); }
+  updateCarSpot();
   if(player.veh) controls.extra=THREE.MathUtils.damp(controls.extra||0,Math.min(34,Math.abs(player.veh.speed)*0.75),2,dt); else controls.extra=THREE.MathUtils.damp(controls.extra||0,0,2,dt);
   updatePolice(dt,clock.elapsedTime); updateShop(dt);
   if(player.safeT>0) player.safeT-=dt;
@@ -2457,26 +2467,53 @@ function goTown(){ const goCar=HOME.carOut; if(HOME.readerBonus){ HOME.readerBon
   if(goCar){ const c=carV(); c.x=PARK[0]; c.z=PARK[1]; c.yaw=0; c.speed=0; c.lastG=null; c.group.position.set(c.x,0,c.z); c.group.rotation.set(0,0,0); c.group.visible=true; player.pos.set(c.x+1.6,0.15,c.z); enter(c); }
   msg.innerHTML=goCar?'🚗 <b>Si parte in auto</b> dal parcheggio a nord. Occhio alla benzina: ⛽ '+Math.round(HOME.fuel)+'%':p?'🚪 Si riparte da dove eri rimasto. Forza!':'🚪 <b>Si gioca!</b> Il grigio sta già nascendo da qualche parte: guarda la bussola in alto.'; copMsgT=4; }
 document.getElementById('homeTown').onclick=()=>{ if(!HOME.active && window.__ready) goHome(false); };
-// --- TV: il tutorial a puntate
-const TUT=[['Benvenuto a Karmapolis! 🌈','Nel paese si diffonde IL GRIGIO: 🔴 nervosismo, 🔵 solitudine, 🟣 ansia, 🟢 pettegolezzo. Dove arriva, le vie e le persone perdono i colori.'],
-  ['Le cure giuste','Avvicinati a chi sta male e scegli: 😄 battuta per i nervosi · 👂 ascoltare per i solitari · 🌬️ respirare per gli ansiosi · 🗣️ la verità per i pettegoli. Ogni cura ha poche cariche: usale bene!'],
-  ['Il bene è contagioso ✨','Chi guarisci diventa un portatore di bene e guarisce gli altri da solo. Vince chi semina meglio e prima.'],
-  ['La bussola e il focolaio ⏱','In alto, il pallino grigio sulla bussola ti dice dov\'è il focolaio e quanto tempo resta. Spegnilo prima che il grigio copra il quartiere e strabordi!'],
-  ['Aiuti e pericoli','🍬 Caramelle: si comprano col karma alle bancarelle. 🚕 Il taxi si chiama con un fischio. Occhio al traffico, ai pedoni che attraversano e alla polizia 👮: fanno perdere tempo.'],
-  ['Fiato e casa ⚡','Correre stanca, e più giochi senza pause più il fiato si accorcia. Torna a casa con 🏠: dormi, allenati sul tapis roulant e fai il pieno in garage.']];
+// --- TV: il tutorial a MICROCLIP (Teo, 22/11): 6 clip brevi in loop, senza audio, una per mossa, con una riga di testo sotto.
+// Per ora sono animazioni disegnate; se nel repository ci sono clip1.mp4…clip6.mp4 (registrate dal gioco), la TV usa quelle.
+const TUT=[['Il Grigio 🩶','Il grigio toglie i colori al paese: tu glieli ridai.'],
+  ['La cura giusta','😄 nervosi · 👂 solitari · 🌬️ ansiosi · 🗣️ pettegoli'],
+  ['Il bene è contagioso ✨','Chi guarisci guarisce gli altri da solo.'],
+  ['Il focolaio ⏱','Senti le campane? Guarda la bussola e corri lì.'],
+  ['Aiuti e pericoli','🍬 caramelle alle bancarelle · 😗 fischia al taxi · occhio al traffico'],
+  ['Fiato e casa ⚡','Correre stanca: a casa dormi e ti alleni.']];
 const tvCv=document.createElement('canvas'); tvCv.width=512; tvCv.height=300; const tvMap=new THREE.CanvasTexture(tvCv); tvMap.colorSpace=THREE.SRGBColorSpace;
 const tvScreen=new THREE.Mesh(new THREE.PlaneGeometry(2.05,1.2),new THREE.MeshBasicMaterial({map:tvMap})); { const [x,z]=HP(2,-5.665); tvScreen.position.set(x,1.25,z); scene.add(tvScreen); }
-let tvI=-1;
+let tvI=-1, tvT0=0, tvTimer=0; const TVVID={};
+function tvVideo(i){ if(TVVID[i]!==undefined) return TVVID[i]; const v=document.createElement('video'); v.muted=true; v.loop=true; v.playsInline=true; v.setAttribute('playsinline',''); TVVID[i]=null; v.onloadeddata=()=>{ TVVID[i]=v; if(tvI===i) v.play().catch(()=>{}); }; v.onerror=()=>{ TVVID[i]=null; }; v.src='clip'+(i+1)+'.mp4'; return null; }
+// piccoli attori disegnati in stile cartone
+function tvPerson(g,x,y,col,s=1,grey=0){ g.save(); g.translate(x,y); g.scale(s,s); g.lineWidth=3; g.strokeStyle='#2a2233';
+  const c=grey?'#9a9ea6':col; g.fillStyle=c; g.beginPath(); g.roundRect(-11,-6,22,30,9); g.fill(); g.stroke(); g.fillStyle=grey?'#c9ccd2':'#f2c9a0'; g.beginPath(); g.arc(0,-16,11,0,7); g.fill(); g.stroke(); g.restore(); }
+function tvEmoji(g,e,x,y,sz=22,a=1){ g.globalAlpha=a; g.font=sz+'px serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(e,x,y); g.globalAlpha=1; }
+function tvStreet(g,grey){ const sky=g.createLinearGradient(0,0,0,170); sky.addColorStop(0,'#bfe6ff'); sky.addColorStop(1,'#e6f6ff'); g.fillStyle=sky; g.fillRect(0,0,512,240);
+  const H=['#ff8f6b','#ffd84d','#5bc0d6','#8c5fd6','#3fa66b','#ff8fb1']; for(let k=0;k<6;k++){ const x=10+k*84, h=70+(k*37)%40; g.fillStyle=H[k]; g.strokeStyle='#2a2233'; g.lineWidth=3; g.fillRect(x,170-h,72,h); g.strokeRect(x,170-h,72,h); g.fillStyle='#fffaf0'; for(let r=0;r<2;r++) for(let c=0;c<2;c++) g.fillRect(x+12+c*30,180-h+r*28,16,16); }
+  g.fillStyle='#8f949c'; g.fillRect(0,170,512,70); g.fillStyle='#d9d2c5'; g.fillRect(0,170,512,10);
+  if(grey>0){ g.fillStyle='rgba(120,124,132,0.78)'; g.fillRect(0,0,512*grey,240); } }
+const TVCLIP=[
+  (g,t)=>{ const k=Math.min(1,t/4); tvStreet(g,k); const pts=[['💢',80],['💧',200],['❗',320],['💬',440]]; pts.forEach(([e,x],i)=>tvEmoji(g,e,x,60+Math.sin(t*3+i)*8,26,x/512<k+0.1?1:0.25)); tvPerson(g,470-k*20,215,'#ff6a4d',1.1); },
+  (g,t)=>{ tvStreet(g,0); const P=[['💢','😄','#e0483e'],['💧','👂','#2f7de1'],['❗','🌬️','#8c5fd6'],['💬','🗣️','#3fa66b']], i=Math.floor(t/1.5)%4, u=(t%1.5)/1.5, [bad,cure,col]=P[i];
+    const px=150+Math.min(1,u*2.2)*150; tvPerson(g,px,215,'#ff6a4d',1.1); const healed=u>0.62; tvPerson(g,350,215,col,1.1,!healed);
+    tvEmoji(g,healed?'✨':bad,350,165,26); if(u>0.45) tvEmoji(g,cure,px,165,30); if(healed){ g.fillStyle='#ffd84d'; g.strokeStyle='#2a2233'; g.lineWidth=5; g.font='bold 28px Fredoka, sans-serif'; g.textAlign='center'; g.strokeText('+8',350,140-(u-0.62)*60); g.fillText('+8',350,140-(u-0.62)*60); } },
+  (g,t)=>{ tvStreet(g,0.0); const xs=[70,150,230,310,390,470]; const lead=40+(t/6)*440; tvPerson(g,lead,215,'#ffd84d',1.05); tvEmoji(g,'✨',lead,168,22);
+    xs.forEach((x,i)=>{ const ok=lead>x-25; tvPerson(g,x,200-(i%2)*14,['#e0483e','#2f7de1','#8c5fd6','#3fa66b','#ff8fb1','#f0a030'][i],0.9,!ok); if(ok) tvEmoji(g,'✨',x,150-(i%2)*14,18,0.9); }); },
+  (g,t)=>{ tvStreet(g,0.35); g.fillStyle='#fffaf0'; g.strokeStyle='#2a2233'; g.lineWidth=3; g.beginPath(); g.roundRect(106,10,300,30,15); g.fill(); g.stroke(); tvEmoji(g,'N',256,26,18);
+    const u=Math.min(1,Math.max(0,(t-0.4)/1.2)); if(t<2){ const sc=t<0.4?t/0.4*1.15:1.15-0.85*u, x=256+(-90)*u, y=120+(-94)*u; g.save(); g.translate(x,y); g.scale(sc,sc); g.fillStyle='#fffaf0'; g.strokeStyle='#e0483e'; g.lineWidth=4; g.beginPath(); g.roundRect(-110,-26,220,52,20); g.fill(); g.stroke(); g.fillStyle='#2a2233'; g.font='bold 28px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('🔴 FOCOLAIO!',0,0); g.restore(); }
+    else { tvEmoji(g,'💢',166,26,20); const sec=Math.max(0,Math.ceil(140-(t-2)*20)); g.fillStyle=sec<40?'#e0483e':'#2a2233'; g.font='bold 22px Fredoka, sans-serif'; g.textAlign='center'; g.fillText('⏱ '+Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0'),256,70); g.fillStyle='rgba(255,90,74,0.35)'; g.fillRect(150,90,40,90); tvPerson(g,190+(t-2)*-10,215,'#ff6a4d',1.1); }
+    if(t<1.4 && Math.floor(t*6)%2===0) tvEmoji(g,'🔔',460,60,28); },
+  (g,t)=>{ tvStreet(g,0); g.fillStyle='#ff6a4d'; g.strokeStyle='#2a2233'; g.lineWidth=3; g.fillRect(40,150,70,30); g.strokeRect(40,150,70,30); tvEmoji(g,'🍬 25',75,132,18);
+    const ph=t%6; tvPerson(g,250,215,'#ff6a4d',1.1); if(ph<2.2) tvEmoji(g,'😗',250,165,26); const tx=ph<2?560-ph*150:ph<3.5?260:260-(ph-3.5)*220; tvEmoji(g,'🚕',tx,214,44); if(ph>2&&ph<3.5) tvEmoji(g,'🙋',250,165,24); },
+  (g,t)=>{ g.fillStyle='#ffe9d6'; g.fillRect(0,0,512,240); const run=t<3, k=run?1-t/3*0.9:0.1+(t-3)/3*0.9;
+    if(run){ tvStreet(g,0); tvPerson(g,60+t*120,215+Math.abs(Math.sin(t*12))*-6,'#ff6a4d',1.1); } else { g.fillStyle='#8c5fd6'; g.strokeStyle='#2a2233'; g.lineWidth=3; g.fillRect(160,150,200,50); g.strokeRect(160,150,200,50); g.fillStyle='#fffaf0'; g.fillRect(160,140,60,20); tvEmoji(g,'💤',300,110+Math.sin(t*3)*6,30); }
+    g.fillStyle='#fffaf0'; g.strokeStyle='#2a2233'; g.lineWidth=3; g.beginPath(); g.roundRect(150,16,212,24,12); g.fill(); g.stroke(); g.fillStyle=k<0.3?'#e0483e':'#3fa66b'; g.fillRect(156,22,200*k,12); tvEmoji(g,'⚡',134,28,20); }];
 function drawTV(i){ const g=tvCv.getContext('2d'); if(i<0){ g.fillStyle='#14161c'; g.fillRect(0,0,512,300); g.fillStyle='#2f3542'; g.font='bold 34px Fredoka, sans-serif'; g.textAlign='center'; g.fillText('📺',256,160); tvMap.needsUpdate=true; return; }
-  const [t,b]=TUT[i]; const gr=g.createLinearGradient(0,0,0,300); gr.addColorStop(0,'#ffe9d6'); gr.addColorStop(1,'#ffd1c4'); g.fillStyle=gr; g.fillRect(0,0,512,300);
-  g.fillStyle='#ff6a4d'; g.fillRect(0,0,512,8); g.fillStyle='#2a2233'; g.textAlign='left'; g.font='bold 30px Fredoka, sans-serif'; g.fillText(t,24,52); g.font='500 21px Inter, sans-serif';
-  const words=b.split(' '); let line='', y=96; for(const w of words){ const tst=line+w+' '; if(g.measureText(tst).width>464){ g.fillText(line,24,y); line=w+' '; y+=30; } else line=tst; } g.fillText(line,24,y);
-  g.fillStyle='#5d5468'; g.font='600 16px Inter, sans-serif'; g.fillText((i+1)+' / '+TUT.length,24,284); tvMap.needsUpdate=true; }
+  const t=((performance.now()-tvT0)/1000)%6, v=tvVideo(i);
+  g.save(); g.beginPath(); g.rect(0,0,512,240); g.clip(); if(v && v.readyState>=2) g.drawImage(v,0,0,512,240); else TVCLIP[i](g,t); g.restore();
+  const [ti,b]=TUT[i]; g.fillStyle='#2a2233'; g.fillRect(0,240,512,60); g.fillStyle='#ffd84d'; g.textAlign='left'; g.textBaseline='alphabetic'; g.font='bold 20px Fredoka, sans-serif'; g.fillText(ti,14,264);
+  g.fillStyle='#fffaf0'; g.font='500 15px Inter, sans-serif'; g.fillText(b,14,288); g.fillStyle='#9a9ea6'; g.textAlign='right'; g.font='600 13px Inter, sans-serif'; g.fillText((i+1)+' / '+TUT.length,500,264); tvMap.needsUpdate=true; }
+function tvPlay(i){ tvI=i; tvT0=performance.now(); for(const k in TVVID) if(TVVID[k]) TVVID[k].pause(); const v=tvVideo(i); if(v){ v.currentTime=0; v.play().catch(()=>{}); } clearInterval(tvTimer); drawTV(i); tvTimer=setInterval(()=>{ if(tvI>=0) drawTV(tvI); },1000/30); }
 drawTV(-1);
 const tvUI=document.getElementById('tvUI'); document.getElementById('tvFrame').appendChild(tvCv); // lo stesso schermo: sulla TV in 3D e grande davanti a te
-function openTV(){ HOME.busy=true; tvI=0; drawTV(0); tvUI.hidden=false; const [px,pz]=HP(2,-2.7); player.pos.set(px,0,pz); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,Math.PI,0); controls.az=controls.azT=0; const [x,z]=HP(2,-5.4); camFocus(x,z,999,0.21); controls.focus.y=1.9; document.getElementById('titleCard').style.visibility='hidden'; }
-function closeTV(){ document.getElementById('titleCard').style.visibility=''; HOME.busy=false; tvUI.hidden=true; drawTV(-1); controls.focusT=0; }
-document.getElementById('tvPrev').onclick=()=>{ tvI=Math.max(0,tvI-1); drawTV(tvI); }; document.getElementById('tvNext').onclick=()=>{ if(tvI>=TUT.length-1){ closeTV(); copMsgT=3; msg.innerHTML='📺 Tutorial finito! Quando vuoi, esci dalla porta per giocare.'; } else { tvI++; drawTV(tvI); } };
+function openTV(){ HOME.busy=true; tvPlay(0); tvUI.hidden=false; const [px,pz]=HP(2,-2.7); player.pos.set(px,0,pz); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,Math.PI,0); controls.az=controls.azT=0; const [x,z]=HP(2,-5.4); camFocus(x,z,999,0.21); controls.focus.y=1.9; document.getElementById('titleCard').style.visibility='hidden'; }
+function closeTV(){ document.getElementById('titleCard').style.visibility=''; HOME.busy=false; tvUI.hidden=true; clearInterval(tvTimer); for(const k in TVVID) if(TVVID[k]) TVVID[k].pause(); tvI=-1; drawTV(-1); controls.focusT=0; }
+document.getElementById('tvPrev').onclick=()=>{ tvPlay(Math.max(0,tvI-1)); }; document.getElementById('tvNext').onclick=()=>{ if(tvI>=TUT.length-1){ closeTV(); copMsgT=3; msg.innerHTML='📺 Tutorial finito! Quando vuoi, esci dalla porta per giocare.'; } else tvPlay(tvI+1); };
 document.getElementById('tvClose').onclick=closeTV;
 // --- 💻 PC: il blog Uno come Voi. Dentro il gioco vedi la home del blog; col pulsante lo apri DAVVERO (e una volta al giorno ricevi il premio del lettore)
 { const A=(geo,x,y,z,col,ry=0)=>{ const [ax,az]=HP(x,z); const m=new THREE.Mesh(geo,toon({color:col})); m.position.set(ax,y,az); m.rotation.y=ry; m.castShadow=true; withOutline(m,0.012); scene.add(m); return m; };
