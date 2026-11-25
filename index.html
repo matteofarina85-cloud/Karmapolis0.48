@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.72.4</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.72.5</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -1519,7 +1519,7 @@ function umColor(P,c){ const lin=x=>new THREE.Color(x), sk=lin(AV.skin[c.skin]),
   return P.roles.map((r,i)=>{ const base=new THREE.Color(P.mats[i].color);
     if(r==='skin') return sk; if(r==='skin2') return sk.clone().multiplyScalar(0.85); if(r==='hair') return hc; if(r==='brow') return hc.clone().multiplyScalar(0.7); if(r==='eye') return lin(AV.eyeCol[c.eyeCol??0]).multiplyScalar(0.55);
     if(r==='c1' && pick[0]!=null) return lin(AV.clothCol[pick[0]]); if(r==='c2' && pick[1]!=null) return lin(AV.clothCol[pick[1]]).multiplyScalar(P.kind==='Body'&&c.top2==null?0.8:1); return base; }); }
-const UMMAT=toon({vertexColors:true}); let UM_HATK=1.12, UM_HATY=0.03; const UM_HANDK=0.72;
+const UMMAT=toon({vertexColors:true}); let UM_HATK=1.12, UM_HATY=0.03; const UM_HANDK=0.72, UM_LEGIN=0.065;
 function umBody(model,cfg){ let ref=model.userData.umRef;
   if(!ref){ let sm=null; model.traverse(o=>{ if(o.isSkinnedMesh && !o.userData.um && !o.userData.avBody && !sm) sm=o; }); if(!sm) return null;
     ref=model.userData.umRef={bones:sm.skeleton.bones,inv:sm.skeleton.boneInverses.map(m=>m.clone()),bind:sm.bindMatrix.clone(),parent:sm.parent,pos:sm.position.clone(),quat:sm.quaternion.clone(),scl:sm.scale.clone(),local:sm.skeleton.bones.map(b=>b.position.clone())}; }
@@ -1530,7 +1530,8 @@ function umBody(model,cfg){ let ref=model.userData.umRef;
   // scala: bacino del modello = nostro bacino (piedi a terra, le clip muovono il bacino); poi tutta la persona si rimpicciolisce finché la testa torna all'altezza di prima
   const foot=new THREE.Vector3().setFromMatrixPosition(Bo[idx.LeftFoot]); // (lo "zero" dello scheletro non è per forza ai piedi: misuro tutto dal piede)
   const k=(hip.y-foot.y)/(J.Hips[1]-J.LeftFoot[1]), off=new THREE.Vector3(hip.x-J.Hips[0]*k,hip.y-J.Hips[1]*k,hip.z-J.Hips[2]*k), fit=(head.y-foot.y)/((J.Head[1]-J.LeftFoot[1])*k);
-  const T=n=>J[n]?new THREE.Vector3(J[n][0]*k+off.x,J[n][1]*k+off.y,J[n][2]*k+off.z):null;
+  const LEGX=n=>/^(Left|Right)(UpLeg|Leg|Foot|ToeBase)/.test(n)?(n[0]==='L'?-UM_LEGIN:UM_LEGIN):0; // gambe meno divaricate (Teo): giunture delle gambe un po' verso il centro
+  const T=n=>J[n]?new THREE.Vector3((J[n][0]+LEGX(n))*k+off.x,J[n][1]*k+off.y,J[n][2]*k+off.z):null;
   const Bn=new Array(B.length); const isB=new Set(B);
   const done=i=>{ if(Bn[i]) return Bn[i]; const b=B[i], pi=isB.has(b.parent)?B.indexOf(b.parent):-1;
     if(pi<0){ Bn[i]=Bo[i].clone(); b.position.copy(ref.local[i]); return Bn[i]; }
@@ -1544,7 +1545,9 @@ function umBody(model,cfg){ let ref=model.userData.umRef;
   if(!geo){ const map=UM.mix.map(n=>{ let j=idx[n]; if(j===undefined) j=idx[n.replace(/Hand.*$/,'Hand')]; return j===undefined?idx.Hips:j; });
     let n=0, ni=0; for(const P of PARTS){ n+=P.n; ni+=P.ind.length; } const pos=new Float32Array(n*3), nor=new Int8Array(n*3), si=new Uint16Array(n*4), sw=new Uint8Array(n*4), ind=new Uint16Array(ni); let o=0, oi=0;
     const hL=UM.mix.indexOf('LeftHand'), hR=UM.mix.indexOf('RightHand'), WL=J.LeftHand, WR=J.RightHand; // mani più piccole (Teo: "troppo grosse"): verso il polso
+    const legSide=UM.mix.map(n=>LEGX(n));
     for(const P of PARTS){ for(let i=0;i<P.n;i++){ let x=P.pos[i*3], y=P.pos[i*3+1], z=P.pos[i*3+2]; const b0=P.si[i*4], w0=P.sw[i*4]/255;
+        { let d=0; for(let q=0;q<4;q++) d+=legSide[P.si[i*4+q]]*P.sw[i*4+q]/255; x+=d; }
         if(w0>0.5 && (b0===hL||b0===hR)){ const W=b0===hL?WL:WR, f=UM_HANDK, sg=b0===hL?1:-1;
           // mano socchiusa (Teo): le dita oltre le nocche si piegano verso il palmo, in due tratti (nocche e metà dito)
           let u=(x-W[0])*sg, v=y-W[1]; for(const [piv,ang] of [[0.145,0.85],[0.185,0.75]]){ if(u>piv){ const du=u-piv, c=Math.cos(ang), sn=Math.sin(ang); const nu=du*c+v*sn, nv=-du*sn+v*c; u=piv+nu; v=nv; } }
