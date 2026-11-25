@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.72.7</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.72.8</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -500,7 +500,7 @@ for(const b of BLOCKS){ const ip=b.i===1&&b.j===1, park=b.i===2&&b.j===0; if(ip|
   fillSide(x1,z1-9.5,x1,z0+9.5,Math.PI/2,nearP); // lato est
   fillSide(x0,z0+9.5,x0,z1-9.5,-Math.PI/2,nearP);// lato ovest
   // cortile interno con un albero
-  const cx=(b.x0+b.x1)/2, cz=(b.z0+b.z1)/2; flat(Math.max(2,b.x1-b.x0-24),Math.max(2,b.z1-b.z0-24),grassTex,cx,0.16,cz,[3,3]); tree(cx,cz,0.15,1.1); }
+  const cx=(b.x0+b.x1)/2, cz=(b.z0+b.z1)/2; flat(Math.max(2,b.x1-b.x0-24),Math.max(2,b.z1-b.z0-24),grassTex,cx,0.19,cz,[3,3]); tree(cx,cz,0.15,1.1); }
 
 // ---------- alberi, cespugli e fiori ----------
 function tree(x,z,y=0,s=1){ put('trunks',trunkGeo,mat4(x,y+1.1*s,z,1,0,s,2.2*s,s),0x8a5a3c,BARK); const c=GREENS[Math.floor(rnd()*GREENS.length)];
@@ -547,10 +547,10 @@ flush('stone',{outline:0.04});
 const PK=BLOCKS.find(b=>b.i===2&&b.j===0);
 flat(PK.x1-PK.x0-3,PK.z1-PK.z0-3,grassTex,(PK.x0+PK.x1)/2,0.16,(PK.z0+PK.z1)/2,[8,8]);
 const pond={x:(PK.x0+PK.x1)/2+4,z:(PK.z0+PK.z1)/2+3,r:6};
-{ const pw=new THREE.Mesh(new THREE.CircleGeometry(pond.r,32),new THREE.MeshBasicMaterial({color:0x58b8d8})); pw.rotation.x=-Math.PI/2; pw.position.set(pond.x,0.18,pond.z); scene.add(pw);
+{ const pw=new THREE.Mesh(new THREE.CircleGeometry(pond.r,32),new THREE.MeshBasicMaterial({color:0x58b8d8})); pw.rotation.x=-Math.PI/2; pw.position.set(pond.x,0.215,pond.z); /* acqua sopra il pavimento (prima alla stessa altezza: strisce bianche) */ scene.add(pw);
   for(let k=0;k<22;k++){ const a=k/22*Math.PI*2; put('stone',BLOB[k%3],mat4(pond.x+Math.cos(a)*pond.r,0.2,pond.z+Math.sin(a)*pond.r,0.55,rnd()*6,0.7,0.4,0.6),0xb1a89c,ROCK); }
   OBST.push({x:pond.x,z:pond.z,r:pond.r-0.5}); flush('stone',{outline:0.03});
-  for(let k=0;k<3;k++){ const p=new THREE.Mesh(new THREE.CircleGeometry(0.6,10),toon({color:0x5cb85c})); p.rotation.x=-Math.PI/2; p.position.set(pond.x-2+k*1.8,0.2,pond.z+1-k); scene.add(p); } }
+  for(let k=0;k<3;k++){ const p=new THREE.Mesh(new THREE.CircleGeometry(0.6,10),toon({color:0x5cb85c})); p.rotation.x=-Math.PI/2; p.position.set(pond.x-2+k*1.8,0.235,pond.z+1-k); scene.add(p); } }
 for(let n=0,g=0;n<16&&g<500;g++){ const x=PK.x0+3+rnd()*(PK.x1-PK.x0-6), z=PK.z0+3+rnd()*(PK.z1-PK.z0-6); if(Math.hypot(x-pond.x,z-pond.z)<pond.r+2.5 || OBST.some(o=>Math.hypot(o.x-x,o.z-z)<4)) continue; n++; (rnd()<0.3?pine:tree)(x,z,0.15,0.8+rnd()*0.5); }
 for(let n=0;n<70;n++){ const x=PK.x0+2+rnd()*(PK.x1-PK.x0-4), z=PK.z0+2+rnd()*(PK.z1-PK.z0-4); if(Math.hypot(x-pond.x,z-pond.z)<pond.r+0.5) continue; put('flowers',new THREE.SphereGeometry(0.13,6,4),mat4(x,0.3,z),[0xff8fb1,0xffffff,0xffd84d,0xb08cff][n%4]); }
 bench(PK.x0+6,(PK.z0+PK.z1)/2,Math.PI/2); bench(pond.x,pond.z-pond.r-1.6,Math.PI);
@@ -596,7 +596,7 @@ const nearAny=(x,z,list,r)=>list.some(([a,b])=>Math.hypot(a-x,b-z)<r);
 { const ST=[]; for(const vx of VX) for(let z=-49;z<=45;z+=14){ if(HZ.some(h=>Math.abs(h-z)<9)) continue; ST.push([vx-(SW+0.9),z]); }
   for(const hz of HZ){ if(hz===52) continue; for(let x=-47;x<=47;x+=14){ if(VX.some(v=>Math.abs(v-x)<9)) continue; ST.push([x,hz+(SW+0.9)]); } }
   ST.forEach(([x,z],i)=>{ if(!inBlock(x,z) || (PK&&x>PK.x0-SW&&x<PK.x1+SW&&z>PK.z0-SW&&z<PK.z1+SW) || nearAny(x,z,KIOSK,4) || (LOW&&i%2)) return;
-    put('decal',new THREE.BoxGeometry(1.3,0.03,1.3),mat4(x,0.165,z),0x6b4a32); for(const [ox,oz,w,d] of [[0,0.68,1.42,0.08],[0,-0.68,1.42,0.08],[0.68,0,0.08,1.42],[-0.68,0,0.08,1.42]]) put('decal',new THREE.BoxGeometry(w,0.06,d),mat4(x+ox,0.17,z+oz),0x8f8a80);
+    put('decal',new THREE.BoxGeometry(1.3,0.03,1.3),mat4(x,0.18,z),0x6b4a32); /* terra dell'aiuola 1,5 cm sopra il marciapiede (prima alla stessa altezza: sfarfallava a strisce) */ for(const [ox,oz,w,d] of [[0,0.68,1.42,0.08],[0,-0.68,1.42,0.08],[0.68,0,0.08,1.42],[-0.68,0,0.08,1.42]]) put('decal',new THREE.BoxGeometry(w,0.06,d),mat4(x+ox,0.17,z+oz),0x8f8a80);
     tree(x,z,0.15,0.62+drnd()*0.12); }); }
 // 2) cestini accanto a un lampione sì e uno no, e chiusini sulle strade
 { let k=0; for(const vx of VX) for(let z=-56;z<=50;z+=14){ if(HZ.some(h=>Math.abs(h-z)<8)) continue; if((k++)%2) continue; const x=vx+SW+0.6, zz=z+1.3; if(!inBlock(x,zz)) continue;
@@ -2560,8 +2560,8 @@ function clickWalk(dt){ const M=player.moveTo; if(!M||player.veh) return null;
   if(M.wp && M.wp.length){ const w=M.wp[0], wd=Math.hypot(w[0]-player.pos.x,w[1]-player.pos.z); if(wd<1.0) M.wp.shift(); else { M.t+=dt; M.wst=(M.wst||0)+(player.speed<0.3?dt:0); if(M.wst>2){ M.wst=0; M.wp=walkPath(player.pos.x,player.pos.z,M.x,M.z)||[]; } return {x:(w[0]-player.pos.x)/wd,z:(w[1]-player.pos.z)/wd,run:!player.tired}; } }
   const dx=M.x-player.pos.x, dz=M.z-player.pos.z, d=Math.hypot(dx,dz); M.t+=dt;
   if(d<M.best-0.05){ M.best=d; M.stuck=0; } else M.stuck+=dt;
-  if(M.stuck>1.0 && (M.retry||0)<3 && d>M.arrive+0.6){ M.retry=(M.retry||0)+1; const wp=walkPath(player.pos.x,player.pos.z,M.x,M.z); if(wp&&wp.length){ M.wp=wp; M.stuck=0; M.best=1e9; return null; } }
-  if(d<=M.arrive||M.stuck>1.2||M.t>40){ player.moveTo=null; if(d<=M.arrive+0.6) arrived(M); return null; }
+  if(M.stuck>(M.type==='taxi'?2.5:1.0) && (M.retry||0)<3 && d>M.arrive+0.6){ M.retry=(M.retry||0)+1; const wp=walkPath(player.pos.x,player.pos.z,M.x,M.z); if(wp&&wp.length){ M.wp=wp; M.stuck=0; M.best=1e9; return null; } }
+  if(d<=M.arrive||M.stuck>(M.type==='taxi'?4:1.2)||M.t>40){ player.moveTo=null; if(d<=M.arrive+0.6) arrived(M); return null; }
   return {x:dx/d,z:dz/d,run:!player.tired&&(d>7||(M.type==='ped'&&d>2.6))}; }
 function arrived(M){ if(M.type==='ped'){ faceTo(M.p); copMsgT=2.5; msg.innerHTML='Sei vicino a lui: scegli cosa fare 👉 🍬 😄 👂 🌬️ 🗣️'; }
   else if(M.type==='veh'){ actBtn.onclick(); } else if(M.type==='taxi'){ if(taxiHailed===M.c) boardTaxi(M.c); } else if(M.type==='thing') useThing(); }
@@ -2678,7 +2678,7 @@ function updatePlayer(dt){ const c=chars[cur]; if(!c) return; const inp=readInpu
   updateStamina(dt,!moving?'idle':sprint&&player.speed>4?'sprint':runT>0.5&&player.speed>2.6?'run':'walk'); player.speed=THREE.MathUtils.damp(player.speed,target,8,dt);
   if(moving){ mv.normalize(); const ty=Math.atan2(mv.x,mv.z); let d=ty-player.yaw; d=Math.atan2(Math.sin(d),Math.cos(d)); player.yaw+=d*Math.min(1,dt*12); }
   if(player.speed>0.01){ const sx=Math.sin(player.yaw)*player.speed*dt, sz=Math.cos(player.yaw)*player.speed*dt; const p=player.pos;
-    if(free(p.x+sx,p.z+sz)){ p.x+=sx; p.z+=sz; } else { let ok=false; /* aggira pali e lampioni: prova a girare un po' a destra o a sinistra */ for(const a of [0.5,-0.5,1.0,-1.0]){ const c=Math.cos(a), s2=Math.sin(a), ax=sx*c+sz*s2, az=-sx*s2+sz*c; if(free(p.x+ax,p.z+az)){ p.x+=ax; p.z+=az; ok=true; break; } } if(!ok){ if(free(p.x+sx,p.z)) p.x+=sx; else if(free(p.x,p.z+sz)) p.z+=sz; } } }
+    if(free(p.x+sx,p.z+sz)){ p.x+=sx; p.z+=sz; } else { let ok=false; /* aggira pali e lampioni: prova a girare un po' a destra o a sinistra */ const AV_ANG=player.moveTo?[0.5,1.0,1.5,2.1]:[0.5,1.0]; const sd=player.avoidSide||1; /* camminata automatica (taxi, clic): aggira anche ostacoli larghi (auto, panchine, siepi) e tiene lo stesso lato */ for(const a0 of AV_ANG) for(const a of [a0*sd,-a0*sd]){ if(ok) break; const c=Math.cos(a), s2=Math.sin(a), ax=sx*c+sz*s2, az=-sx*s2+sz*c; if(free(p.x+ax,p.z+az)){ p.x+=ax; p.z+=az; ok=true; player.avoidSide=Math.sign(a)||1; player.avoidT=1.2; } } if(!ok){ if(free(p.x+sx,p.z)) p.x+=sx; else if(free(p.x,p.z+sz)) p.z+=sz; } } }
   player.pos.y=THREE.MathUtils.damp(player.pos.y,ground(player.pos.x,player.pos.z),20,dt);
   const sp=player.speed, tw={idle:1-THREE.MathUtils.smoothstep(sp,0.05,0.9),run:THREE.MathUtils.smoothstep(sp,2.4,3.8)}; tw.walk=Math.max(0,1-tw.idle-tw.run);
   for(const k of ['idle','walk','run']){ c.w[k]=THREE.MathUtils.damp(c.w[k],tw[k],10,dt); c.A[k].setEffectiveWeight(c.w[k]); }
@@ -2802,7 +2802,7 @@ const HP=(x,z)=>[HX+x,HZ0+z];
   A(box(0.32,0.05,0.22),1.75,0.44,-3.5,0xe0483e); A(box(0.3,0.04,0.2),1.76,0.48,-3.48,0x2f7de1); A(cyl(0.05,0.045,0.1,10),2.3,0.46,-3.55,0xfffaf0); A(sph(0.09),2.55,0.5,-3.4,0x3fa66b); // libri, tazza, piantina
   A(cyl(0.02,0.02,1.6,8),-0.2,0.8,-2.6,0x2e2a33); A(cyl(0.2,0.2,0.04,12),-0.2,0.02,-2.6,0x2e2a33); A(cyl(0.12,0.26,0.32,14,true),-0.2,1.68,-2.6,0xfffaf0); // lampada da terra
   A(box(0.95,0.42,0.9),-0.4,0.3,-0.6,0xd2604c,0.4); A(box(0.95,0.6,0.22),-0.55,0.62,-0.95,0xc4553f,0.4); B(-0.4,-0.6,1,1); // poltrona
-  A(box(1.7,2.2,0.42),-1.4,1.1,-5.74,0x8a5a3c); B(-1.4,-5.74,1.7,0.42); for(let r=0;r<4;r++){ A(box(1.6,0.03,0.38),-1.4,0.12+r*0.55,-5.72,0x6b4428); let x=-2.1; while(x<-0.75){ const w=0.06+((x*37+r*11)%0.07+0.07)%0.07, h=0.3+((x*13+r)%0.12+0.12)%0.12; A(box(w,h,0.26),x+w/2,0.15+r*0.55+h/2,-5.66,[0xe0483e,0x2f7de1,0xffd84d,0x3fa66b,0x8c5fd6,0xf0a030,0xfffaf0][Math.abs(Math.round(x*29+r*3))%7]); x+=w+0.012; } } // libreria piena di libri
+  /* libreria vuota dentro (fondo, fianchi, cielo e base): prima era un blocco pieno con i libri "dentro", il davanti dei libri coincideva col davanti del blocco e sfarfallava */ A(box(1.7,2.2,0.04),-1.4,1.1,-5.93,0x8a5a3c); A(box(0.05,2.2,0.42),-2.225,1.1,-5.74,0x8a5a3c); A(box(0.05,2.2,0.42),-0.575,1.1,-5.74,0x8a5a3c); A(box(1.7,0.05,0.42),-1.4,2.175,-5.74,0x8a5a3c); A(box(1.7,0.06,0.42),-1.4,0.03,-5.74,0x8a5a3c); B(-1.4,-5.74,1.7,0.42); for(let r=0;r<4;r++){ A(box(1.6,0.03,0.38),-1.4,0.12+r*0.55,-5.72,0x6b4428); let x=-2.1; while(x<-0.75){ const w=0.06+((x*37+r*11)%0.07+0.07)%0.07, h=0.3+((x*13+r)%0.12+0.12)%0.12; A(box(w,h,0.26),x+w/2,0.15+r*0.55+h/2,-5.66,[0xe0483e,0x2f7de1,0xffd84d,0x3fa66b,0x8c5fd6,0xf0a030,0xfffaf0][Math.abs(Math.round(x*29+r*3))%7]); x+=w+0.012; } } // libreria piena di libri
   A(cyl(0.3,0.22,0.5,14),6.4,0.25,-5.3,0xb98a5a); A(BLOB[1].clone().scale(0.55,0.75,0.55),6.4,1.0,-5.3,0x4fa64a); A(cyl(0.18,0.14,0.3,12),-2.6,0.15,5.5,0xd2604c); A(BLOB[0].clone().scale(0.35,0.5,0.35),-2.6,0.6,5.5,0x3f9a52);
   // quadri e poster
   const pic=(x,y,z,w,h,ry,draw)=>{ const [ax,az]=HP(x,z); const fr=new THREE.Mesh(box(w+0.1,h+0.1,0.04),toon({color:0x2a2233})); fr.position.set(ax,y,az); fr.rotation.y=ry; scene.add(fr); const p=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:canvasTex(256,Math.round(256*h/w),draw)})); p.position.set(ax,y,az); p.rotation.y=ry; p.translateZ(0.025); scene.add(p); };
