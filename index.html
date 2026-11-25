@@ -188,7 +188,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.70.3</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.71.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -713,7 +713,7 @@ function toonify(model){ const add=[];
     if(o.isSkinnedMesh){ o.geometry.computeBoundingBox(); const v=o.geometry.boundingBox.getSize(new THREE.Vector3()); const t=+(Math.max(v.x,v.y,v.z)*0.0065).toFixed(4);
       const ol=new THREE.SkinnedMesh(o.geometry,outlineMat(t)); ol.bind(o.skeleton,o.bindMatrix); ol.frustumCulled=false; add.push([o.parent,ol]); } });
   add.forEach(([p,ol])=>p.add(ol)); }
-async function loadChar(key,file,names,emotes){ const buf=await bin('assets/'+file); const g=await new Promise((res,rej)=>gltfL.parse(buf,'',res,rej));
+async function loadChar(key,file,names,emotes){ const buf=await bin('assets/'+file); const g=await new Promise((res,rej)=>gltfL.parse(buf,'',res,rej)); for(const a of g.animations) umStripClip(a);
   const model=g.scene; toonify(model); { model.updateMatrixWorld(true); let toe=null, foot=null; model.traverse(o=>{ if(/LeftToeBase$/.test(o.name)) toe=o; if(/LeftFoot$/.test(o.name)) foot=o; }); const dz=toe&&foot?toe.getWorldPosition(new THREE.Vector3()).z-foot.getWorldPosition(new THREE.Vector3()).z:-1; model.rotation.y=dz<0?Math.PI:0; } /* ogni modello guarda avanti, qualunque sia il suo verso d'origine */ model.visible=false; holder.add(model);
   const mixer=new THREE.AnimationMixer(model); const clip=n=>g.animations.find(a=>a.name===n); const A={};
   for(const k of ['idle','walk','run']){ const a=mixer.clipAction(clip(names[k])); a.play(); a.setEffectiveWeight(k==='idle'?1:0); A[k]=a; }
@@ -733,12 +733,12 @@ let lookI=0;
 // look pronti (Cambia look) + il personaggio fatto con l'editor (salvato sul dispositivo come codice)
 function initLooksAv(){ if(LOOKS[0].av) return; LOOKS[0].av={...AVC_DEF}; LOOKS[1].av={...AVC_DEF,sex:'f',skin:4,hair:7,hairCol:1,beard:0,lashes:1,blush:1,eyes:3,top:0,topCol:6,bottom:0,bottomCol:12,shoesCol:13}; LOOKS[2].av={...AVC_DEF,skin:0,hair:0,hairCol:4,beard:0,glasses:1,glassCol:15,hat:1,hatCol:7,top:0,topCol:3,bottom:1,bottomCol:14,shoesCol:15,freckles:1}; LOOKS[3].av={...AVC_DEF,hair:0,hairCol:8,beard:2,beardCol:8,glasses:1,glassCol:15,top:1,topCol:13,bottom:0,bottomCol:15,shoesCol:15,shape:2}; }
 let PLAYER_AV=null;
-function dressPlayer(i){ initLooksAv(); if(PLAYER_AV===null){ PLAYER_AV=false; try{ const k=localStorage.getItem('karmapolis_avatar'); if(k) PLAYER_AV=avDecode(k); }catch(e){} } if(i==='auto') i=PLAYER_AV?'custom':(typeof HOME!=='undefined'?HOME.look:0); const cfg=typeof i==='object'?i:(i==='custom'&&PLAYER_AV)?PLAYER_AV:LOOKS[(+i||0)%LOOKS.length].av, o={...avOutfit(cfg),bag:i===0}; const c=chars.xbot, B=bones(c); avBody(c.model,cfg); dress(c.model,o);
+function dressPlayer(i){ initLooksAv(); if(PLAYER_AV===null){ PLAYER_AV=false; try{ const k=localStorage.getItem('karmapolis_avatar'); if(k) PLAYER_AV=avDecode(k); }catch(e){} } if(i==='auto') i=PLAYER_AV?'custom':(typeof HOME!=='undefined'?HOME.look:0); const cfg=typeof i==='object'?i:(i==='custom'&&PLAYER_AV)?PLAYER_AV:LOOKS[(+i||0)%LOOKS.length].av, o={...avOutfit(cfg),bag:i===0}; const c=chars.xbot, B=bones(c); if(UM.ready) umBody(c.model,cfg); else avBody(c.model,cfg); dress(c.model,o);
   if(c.head){ c.head.parent.remove(c.head); } if(c.extras) c.extras.forEach(x=>x.parent&&x.parent.remove(x));
   const ws={}; for(const k of ['idle','walk','run']){ ws[k]=c.A[k].getEffectiveWeight(); c.A[k].setEffectiveWeight(k==='idle'?1:0); } const t0=c.A.idle.time; c.A.idle.time=0; c.mixer.update(0); holder.updateMatrixWorld(true);
-  const head=mountHead(B,holder,cfg); c.head=head; c.cfg=cfg;
-  const before=new Set([...(B.Spine2?B.Spine2.children:[]),...(B.Hips?B.Hips.children:[])]); addAccessories({head,bones:B},{...o,cap:false}); addSkirt(B,o); addHood(B,o); c.extras=[...(B.Spine2?B.Spine2.children:[]),...(B.Hips?B.Hips.children:[])].filter(x=>!before.has(x)&&!x.isBone);
-  c.A.idle.time=t0; for(const k of ['idle','walk','run']) c.A[k].setEffectiveWeight(ws[k]); c.headless=true; }
+  const head=UM.ready?umHeadStub(B):mountHead(B,holder,cfg); c.head=head; c.cfg=cfg;
+  const before=new Set([...(B.Spine2?B.Spine2.children:[]),...(B.Hips?B.Hips.children:[])]); addAccessories({head,bones:B},{...o,cap:false}); if(!UM.ready){ addSkirt(B,o); addHood(B,o); } c.extras=[...(B.Spine2?B.Spine2.children:[]),...(B.Hips?B.Hips.children:[])].filter(x=>!before.has(x)&&!x.isBone);
+  c.A.idle.time=t0; for(const k of ['idle','walk','run']) c.A[k].setEffectiveWeight(ws[k]); c.headless=!UM.ready; if(UM.ready) B.Head.scale.setScalar(1); }
 document.getElementById('swap').onclick=()=>{ lookI=(lookI+1)%LOOKS.length; dressPlayer(lookI); copMsgT=2; msg.innerHTML='👕 Nuovo look: <b>'+LOOKS[lookI].name+'</b>'; };
 // fumetto con emoji sopra la testa, così il gesto si capisce anche da lontano
 function bubble(txt){ const cv=document.createElement('canvas'); cv.width=cv.height=128; const g=cv.getContext('2d');
@@ -1311,7 +1311,7 @@ const AV={
   glasses:['nessuno','tondi','squadrati','da sole','da vista sottili']};
 // valori di partenza (il "Seminatore" di Teo: testa rasata e barba)
 const AVC_DEF={sex:'m',skin:2,shape:0,eyes:0,eyeCol:0,brows:0,nose:0,mouth:0,freckles:0,blush:0,lashes:0,hair:3,hairCol:1,beard:2,beardCol:1,hat:0,hatCol:7,glasses:0,glassCol:15,earrings:0,
-  top:0,topCol:1,bottom:0,bottomCol:8,shoes:0,shoesCol:11,height:1,build:1};
+  top:0,topCol:1,bottom:0,bottomCol:8,shoes:0,shoesCol:11,height:1,build:1,um:0};
 const AVKEYS=Object.keys(AVC_DEF);
 const avEncode=c=>'KP1-'+AVKEYS.map(k=>k==='sex'?(c.sex==='f'?'f':'m'):(c[k]??AVC_DEF[k]).toString(36)).join('');
 function avDecode(s){ const c={...AVC_DEF}; if(!s||!s.startsWith('KP1-')) return c; const b=s.slice(4); AVKEYS.forEach((k,i)=>{ const ch=b[i]; if(ch===undefined) return; c[k]=k==='sex'?(ch==='f'?'f':'m'):parseInt(ch,36)||0; }); return c; }
@@ -1441,13 +1441,13 @@ function avRand(seed){ let s=Math.abs(Math.floor(seed*9301+49297))%233280||1; re
 function avRandom(seed){ const r=avRand(seed), pick=n=>Math.floor(r()*n), f=r()<0.5; const c={...AVC_DEF,sex:f?'f':'m',skin:pick(AV.skin.length),shape:pick(4),eyes:pick(AV.eyes.length),eyeCol:pick(AV.eyeCol.length),brows:pick(AV.brows.length),nose:pick(4),mouth:[0,0,0,1,2,3][pick(6)],
   freckles:r()<0.15?1:0,blush:f&&r()<0.4?1:0,lashes:f?1:0,hairCol:r()<0.08?8+pick(2):pick(8),hat:r()<0.18?1+pick(5):0,hatCol:pick(AV.clothCol.length),glasses:0,glassCol:[15,13,9,7][pick(4)],earrings:f&&r()<0.5?1:0,
   top:pick(4),topCol:pick(AV.clothCol.length),bottom:f?pick(4):pick(2),bottomCol:[8,14,15,12,13,7,0][pick(7)],shoesCol:[11,15,13,0,4][pick(5)]};
-  c.hair=f?[1,4,6,7,7,8,9,10,2][pick(9)]:[0,0,1,2,3,3,4,5,11][pick(9)]; c.beard=f?0:[0,0,0,1,2,2,3,4,5,6][pick(10)]; c.beardCol=c.hairCol; if(c.hat && [6,7,8,9].includes(c.hair)===false && r()<0.5) c.hat=0; return c; }
+  c.hair=f?[1,4,6,7,7,8,9,10,2][pick(9)]:[0,0,1,2,3,3,4,5,11][pick(9)]; c.beard=f?0:[0,0,0,1,2,2,3,4,5,6][pick(10)]; c.beardCol=c.hairCol; if(c.hat && [6,7,8,9].includes(c.hair)===false && r()<0.5) c.hat=0; c.um=pick(24); return c; }
 const nearestIdx=(arr,col)=>{ const a=new THREE.Color(col); let b=0,bd=9; arr.forEach((x,i)=>{ const c=new THREE.Color(x), d=(c.r-a.r)**2+(c.g-a.g)**2+(c.b-a.b)**2; if(d<bd){ bd=d; b=i; } }); return b; };
 // i personaggi già esistenti (agenti, meccanici…) descritti alla vecchia maniera diventano avatar
 function lookToAv(look,o,seed){ const c=avRandom(seed); c.sex=look.long?'f':'m'; c.lashes=c.sex==='f'?1:0; c.blush=0; c.earrings=0; c.skin=nearestIdx(AV.skin,look.skin); c.hairCol=nearestIdx(AV.hairCol,look.hair===look.skin?0x3b2a20:look.hair); c.beardCol=c.hairCol;
   c.hair=look.hair===look.skin||look.bald?3:look.long?7:[0,1,2][Math.floor(seed)%3]; c.beard=look.beard?2:0; c.glasses=0; c.glassCol=15;
   if(o){ c.topCol=nearestIdx(AV.clothCol,o.top); c.bottomCol=nearestIdx(AV.clothCol,o.pants); c.shoesCol=nearestIdx(AV.clothCol,o.shoes); c.top=o.short?0:1; c.bottom=o.shorts?1:0; c.hat=o.cap?1:0; if(o.capCol) c.hatCol=nearestIdx(AV.clothCol,o.capCol); }
-  else c.hat=0; return c; }
+  else c.hat=0; if(o) c.um=0; return c; }
 // ======================= 🙂 TESTE VERE (v0.70.0, 25/11/2026) =======================
 // Teo: "questi visi non mi piacciono, ste occhiaie non vanno via" → teste modellate dal pacchetto gratuito "Universal Base Characters" di Quaternius (licenza CC0).
 // Dal pacchetto ho preso solo la testa (pelle, occhi, ciglia), i capelli, la barba e le sopracciglia, già messe nella misura delle nostre teste:
@@ -1489,6 +1489,66 @@ function qHead(c){ const grp=new THREE.Group(), S=c.sex==='f'?'Female':'Male';
   const k=QH_SCALE; grp.scale.setScalar(k); grp.position.set(0,-(1-k)*0.17-0.015,-0.045); // (dentro un gruppo: mountHead sovrascrive scala e posizione del gruppo esterno)
   const out=new THREE.Group(); out.add(grp); out.userData.cfg={...c}; return out; }
 const QH_SCALE=0.8;
+// ======================= 🧍 GENTE VERA (v0.71.0, 25/11/2026) =======================
+// Teo ha scaricato "Ultimate Modular Men" e "Ultimate Modular Women" di Quaternius (licenza CC0): persone intere già vestite, tutte nello stesso stile.
+// Li aggancio allo scheletro Mixamo che il gioco usa già: restano camminata, corsa, i 22 gesti, oggetti in mano e polizia.
+// Come: le ossa del nostro scheletro vengono spostate dove stanno le giunture del modello (stesse rotazioni di riposo), poi il modello viene "legato" a quelle ossa.
+// Le clip Mixamo muovono solo le rotazioni (le posizioni delle ossa le ho tolte, tranne il bacino), quindi le proporzioni restano quelle del modello.
+// Colori: pelle, capelli e due colori dei vestiti si cambiano per ogni persona (un colore per vertice: un solo disegno per persona, leggero).
+const UM={ready:false,models:[],men:[],women:[],geo:{}};
+const UMMAT_ROLE=n=>/^Skin_Darker/.test(n)?'skin2':/^Skin/.test(n)?'skin':/Eyebrow|Moustache/.test(n)?'brow':/Hair/.test(n)?'hair':/^Eye$/.test(n)?'eye':'cloth';
+async function umLoad(base){ const get=async f=>{ const r=await fetch(base+f); if(!r.ok) throw new Error('manca '+f); return r; };
+  const [j,b]=await Promise.all([get('gente.json').then(r=>r.json()),get('gente.bin').then(r=>r.arrayBuffer())]);
+  UM.mix=j.mix;
+  for(const m of j.models){ const M={sex:m.sex,name:m.name,n:m.n,joints:m.joints,mats:m.mats};
+    M.pos=new Float32Array(b,m.pos[0],m.pos[1]); M.nor=new Int8Array(b,m.nor[0],m.nor[1]); M.part=new Uint8Array(b,m.part[0],m.part[1]); M.si=new Uint8Array(b,m.si[0],m.si[1]); M.sw=new Uint8Array(b,m.sw[0],m.sw[1]);
+    M.ind=m.i32?new Uint32Array(b,m.ind[0],m.ind[1]):new Uint16Array(b,m.ind[0],m.ind[1]);
+    // vestiti: i due materiali di stoffa più grandi prendono i colori scelti (sopra / sotto)
+    const cnt=new Array(m.mats.length).fill(0); for(let i=0;i<M.n;i++) cnt[M.part[i]]++;
+    M.roles=m.mats.map(x=>UMMAT_ROLE(x.name)); const cloth=M.roles.map((r,i)=>r==='cloth'?i:-1).filter(i=>i>=0).sort((x,y)=>cnt[y]-cnt[x]); if(cloth[0]!==undefined) M.roles[cloth[0]]='c1'; if(cloth[1]!==undefined) M.roles[cloth[1]]='c2';
+    M.cols={}; const i=UM.models.length; UM.models.push(M); (m.sex==='f'?UM.women:UM.men).push(i); }
+  UM.ready=true; }
+const UM_NAMES={Casual_2:'Maglietta e jeans',Casual_Hoodie:'Felpa',Suit:'Giacca e cravatta',Worker:'Operaio',Farmer:'Salopette',Beach:'Camicia hawaiana',Punk:'Punk',Adventurer:'Escursionista',Casual:'Maglietta',Formal:'Vestito'};
+function umModel(c){ const L=c.sex==='f'?UM.women:UM.men; return UM.models[L[((c.um|0)%L.length+L.length)%L.length]]; }
+function umColors(M,c){ const k=[c.skin,c.hairCol,c.topCol,c.bottomCol].join('.'); if(M.cols[k]) return M.cols[k];
+  const lin=x=>new THREE.Color(x), base=M.mats.map(m=>new THREE.Color(m.color)), sk=lin(AV.skin[c.skin]), hc=lin(AV.hairCol[c.hairCol]);
+  const col=M.roles.map((r,i)=>r==='skin'?sk:r==='skin2'?sk.clone().multiplyScalar(0.85):r==='hair'?hc:r==='brow'?hc.clone().multiplyScalar(0.7):r==='c1'?lin(AV.clothCol[c.topCol]):r==='c2'?lin(AV.clothCol[c.bottomCol]):base[i]);
+  const a=new Float32Array(M.n*3); for(let i=0;i<M.n;i++){ const cc=col[M.part[i]]; a[i*3]=cc.r; a[i*3+1]=cc.g; a[i*3+2]=cc.b; } return M.cols[k]=new THREE.BufferAttribute(a,3); }
+const UMMAT=toon({vertexColors:true});
+function umBody(model,cfg){ let ref=model.userData.umRef;
+  if(!ref){ let sm=null; model.traverse(o=>{ if(o.isSkinnedMesh && !o.userData.um && !o.userData.avBody && !sm) sm=o; }); if(!sm) return null;
+    ref=model.userData.umRef={bones:sm.skeleton.bones,inv:sm.skeleton.boneInverses.map(m=>m.clone()),bind:sm.bindMatrix.clone(),parent:sm.parent,pos:sm.position.clone(),quat:sm.quaternion.clone(),scl:sm.scale.clone(),local:sm.skeleton.bones.map(b=>b.position.clone())}; }
+  const old=[]; model.traverse(o=>{ if(o.isSkinnedMesh || o.userData.um) old.push(o); }); old.forEach(o=>o.parent&&o.parent.remove(o));
+  const M=umModel(cfg), B=ref.bones, nm=b=>b.name.replace('mixamorig','').replace(':',''), N=B.map(nm), idx={}; N.forEach((n,i)=>idx[n]=i);
+  const Bo=ref.inv.map(m=>m.clone().invert()), J=M.joints;
+    const head=new THREE.Vector3().setFromMatrixPosition(Bo[idx.Head]), hip=new THREE.Vector3().setFromMatrixPosition(Bo[idx.Hips]);
+  // scala: bacino del modello = nostro bacino (piedi a terra, le clip muovono il bacino); poi tutta la persona si rimpicciolisce finché la testa torna all'altezza di prima
+  const foot=new THREE.Vector3().setFromMatrixPosition(Bo[idx.LeftFoot]); // (lo "zero" dello scheletro non è per forza ai piedi: misuro tutto dal piede)
+  const k=(hip.y-foot.y)/(J.Hips[1]-J.LeftFoot[1]), off=new THREE.Vector3(hip.x-J.Hips[0]*k,hip.y-J.Hips[1]*k,hip.z-J.Hips[2]*k), fit=(head.y-foot.y)/((J.Head[1]-J.LeftFoot[1])*k);
+  const T=n=>J[n]?new THREE.Vector3(J[n][0]*k+off.x,J[n][1]*k+off.y,J[n][2]*k+off.z):null;
+  const Bn=new Array(B.length); const isB=new Set(B);
+  const done=i=>{ if(Bn[i]) return Bn[i]; const b=B[i], pi=isB.has(b.parent)?B.indexOf(b.parent):-1;
+    if(pi<0){ Bn[i]=Bo[i].clone(); b.position.copy(ref.local[i]); return Bn[i]; }
+    const Pn=done(pi), Lo=Bo[pi].clone().invert().multiply(Bo[i]); const t=new THREE.Vector3(), q=new THREE.Quaternion(), s=new THREE.Vector3(); Lo.decompose(t,q,s);
+    const tg=nm(b)==='Hips'?null:T(nm(b)); if(tg) t.copy(tg.applyMatrix4(Pn.clone().invert())); 
+    b.position.copy(t); Bn[i]=Pn.clone().multiply(new THREE.Matrix4().compose(t,q,s)); return Bn[i]; };
+  for(let i=0;i<B.length;i++) done(i);
+  const sk=new THREE.Skeleton(B,Bn.map(m=>m.clone().invert()));
+  // geometria per questo scheletro (posizioni nello spazio di riposo, ossa → indici del nostro scheletro)
+  const gk=UM.models.indexOf(M)+'|'+N.length+'|'+k.toFixed(4); let geo=UM.geo[gk];
+  if(!geo){ geo=new THREE.BufferGeometry(); const P=new Float32Array(M.n*3); for(let i=0;i<M.n;i++){ P[i*3]=M.pos[i*3]*k+off.x; P[i*3+1]=M.pos[i*3+1]*k+off.y; P[i*3+2]=M.pos[i*3+2]*k+off.z; }
+    const map=UM.mix.map(n=>{ let j=idx[n]; if(j===undefined) j=idx[n.replace(/(Thumb|Index|Middle|Ring|Pinky)\d$/,'')]; if(j===undefined) j=idx[n.replace(/Hand.*$/,'Hand')]; return j===undefined?idx.Hips:j; });
+    const si=new Uint16Array(M.n*4); for(let i=0;i<M.n*4;i++) si[i]=map[M.si[i]];
+    geo.setAttribute('position',new THREE.BufferAttribute(P,3)); geo.setAttribute('normal',new THREE.BufferAttribute(M.nor,3,true)); geo.setAttribute('skinIndex',new THREE.BufferAttribute(si,4)); geo.setAttribute('skinWeight',new THREE.BufferAttribute(M.sw,4,true)); geo.setIndex(new THREE.BufferAttribute(M.ind,1)); geo.computeBoundingSphere(); UM.geo[gk]=geo; }
+  const g2=new THREE.BufferGeometry(); for(const a of ['position','normal','skinIndex','skinWeight']) g2.setAttribute(a,geo.attributes[a]); g2.setIndex(geo.index); g2.boundingSphere=geo.boundingSphere; g2.setAttribute('color',umColors(M,cfg));
+  const mk=(mat)=>{ const m=new THREE.SkinnedMesh(g2,mat); m.position.copy(ref.pos); m.quaternion.copy(ref.quat); m.scale.copy(ref.scl); m.userData.um=true; m.frustumCulled=false; ref.parent.add(m); m.bind(sk,ref.bind); return m; };
+  const body=mk(UMMAT); body.castShadow=true; const ol=mk(outlineMat(0.012)); ol.castShadow=false;
+  const hs=fit*[0.95,1,1.05][cfg.height??1]; model.scale.multiplyScalar(hs/(model.userData.hs||1)); model.userData.hs=hs;
+  return body; }
+// testa "vuota" agganciata all'osso della testa: serve al resto del gioco (oggetti, accessori)
+function umHeadStub(bones){ const h=new THREE.Group(); (bones.Head||bones.Neck).add(h); return h; }
+// le clip Mixamo: tolgo le posizioni delle ossa (tranne il bacino), così comandano le proporzioni del modello
+const umStripClip=c=>{ c.tracks=c.tracks.filter(t=>!/\.position$/.test(t.name)||/Hips\.position$/.test(t.name)); return c; };
 // monta la testa sul collo del manichino (in posa di riposo, così resta dritta)
 function mountHead(bones,root,cfg){ const head=avHead(cfg); const hp=bones.Head.getWorldPosition(new THREE.Vector3()); hp.y+=0.075; const nq=bones.Neck.getWorldQuaternion(new THREE.Quaternion()), gq=root.getWorldQuaternion(new THREE.Quaternion()), ns=bones.Neck.getWorldScale(new THREE.Vector3()); hp.y+=0.02;
   bones.Neck.add(head); head.position.copy(bones.Neck.worldToLocal(hp)); head.quaternion.copy(nq.invert().multiply(gq)); head.scale.setScalar(1.32/ns.x); return head; }
@@ -1559,7 +1619,7 @@ function outfitCols(o){ const C=c=>new THREE.Color(c); const skin=C(o.skin);
   return [C(o.top),o.tank?skin.clone():C(o.top).multiplyScalar(0.95),o.short?skin.clone():C(o.top).multiplyScalar(0.92),skin.clone(),skin.clone(),C(o.pants),o.skirt?skin.clone():C(o.pants),o.shorts||o.skirt?skin.clone():C(o.pants).multiplyScalar(0.94),C(o.shoes)]; }
 function randOutfit(i,skin){ const r=k=>Math.floor(hash(i*7.3+k,i*1.9-k)*1000); return {skin,top:TOPS[r(1)%TOPS.length],pants:PANTS[r(2)%PANTS.length],shoes:SHOES[r(3)%SHOES.length],short:r(4)%3===0,shorts:r(5)%5===0,cap:r(6)%6===0,bag:r(7)%5===0,capCol:TOPS[r(8)%TOPS.length]}; }
 function dress(model,o){ const cols=outfitCols(o); const mats=[];
-  model.traverse(x=>{ if(!x.isSkinnedMesh || x.material.side===THREE.BackSide) return; addParts(x); const joints=/Joints/i.test(x.material.name||''); x.material=outfitMat(joints?cols.map(c=>c.clone()):cols,joints?0.82:1); mats.push(x.material); });
+  model.traverse(x=>{ if(!x.isSkinnedMesh || x.userData.um || x.material.side===THREE.BackSide) return; addParts(x); const joints=/Joints/i.test(x.material.name||''); x.material=outfitMat(joints?cols.map(c=>c.clone()):cols,joints?0.82:1); mats.push(x.material); });
   return cols; }
 // accessori semplici: berretto con visiera e zainetto
 const capGeo=(()=>{ const a=new THREE.SphereGeometry(0.175,16,8,0,Math.PI*2,0,Math.PI*0.5); a.scale(1.02,0.75,1.06); const b=new THREE.CylinderGeometry(0.15,0.15,0.018,16,1,false,-Math.PI/2,Math.PI); b.translate(0,0,0.08); return mergeGeometries([a.toNonIndexed(),b.toNonIndexed()].map(g=>{ g.deleteAttribute('uv'); return g; })); })();
@@ -1567,13 +1627,13 @@ function addAccessories(h,o){ if(o.cap && !o.bald){ const c=new THREE.Mesh(capGe
   if(o.bag && h.bones.Spine2){ const B=h.bones.Spine2, s=B.getWorldScale(new THREE.Vector3()).x; const bag=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.36,0.14),toon({color:[0x3a6ea5,0xc0543a,0x4a8a4a,0x2a2233][Math.floor(Math.random()*4)]})); bag.scale.setScalar(1/s); bag.position.set(0,0.02/s,-0.17/s); withOutline(bag,0.01); B.add(bag); } }
 
 let HUMAN_N=0;
-function makeHuman(look,outfit,joint,extra){ const cfg=look.av||lookToAv(look,outfit,(++HUMAN_N)*13.7); if(look.av) outfit=avOutfit(cfg); const src=chars.xlo; const model=SkeletonUtils.clone(src.model); model.visible=true; avBody(model,cfg);
+function makeHuman(look,outfit,joint,extra){ const cfg=look.av||lookToAv(look,outfit,(++HUMAN_N)*13.7); if(look.av) outfit=avOutfit(cfg); const src=chars.xlo; const model=SkeletonUtils.clone(src.model); model.visible=true; if(UM.ready) umBody(model,cfg); else avBody(model,cfg);
   dress(model,outfit);
   const g=new THREE.Group(); g.add(model); scene.add(g);
   const mixer=new THREE.AnimationMixer(model); const A={}; for(const k of ['idle','walk','run']){ A[k]=mixer.clipAction(src.clips[k]); A[k].play(); A[k].setEffectiveWeight(k==='idle'?1:0); }
   const bones={}; model.traverse(o=>{ if(o.isBone) bones[o.name.replace('mixamorig','').replace(':','')]=o; });
   mixer.update(0); g.updateMatrixWorld(true); // posa di riposo: la testa si monta dritta (prima si montava a metà passo e restava storta)
-  const head=mountHead(bones,g,cfg); addSkirt(bones,outfit); addHood(bones,outfit);
+  const head=UM.ready?umHeadStub(bones):mountHead(bones,g,cfg); if(!UM.ready){ addSkirt(bones,outfit); addHood(bones,outfit); }
   const outl=[], skins=[]; model.traverse(o=>{ if(o.isSkinnedMesh){ if(o.material.side===THREE.BackSide) outl.push(o); else skins.push(o); } });
   const H={g,mixer,A,bones,head,outl,skins,cfg,w:{idle:1,walk:0,run:0}}; addAccessories(H,{...outfit,cap:false});
   if(extra) extra(head,bones);
@@ -2936,8 +2996,9 @@ const ED_TABS=[['🧍 Corpo',[['sex','Sesso',['Uomo','Donna']],['skin','Pelle','
   ['👕 Vestiti',[['top','Sopra',AV.top],['topCol','Colore','clothCol'],['bottom','Sotto',AV.bottom],['bottomCol','Colore','clothCol'],['shoesCol','Scarpe','clothCol']]]];
 const edEl=document.getElementById('avEd'), edTabs=document.getElementById('edTabs'), edBody=document.getElementById('edBody');
 // v0.70: con le teste vere i tagli e la barba disponibili sono quelli del pacchetto
-function edRows(t){ return ED_TABS[t][1].map(r=>{ if(!QH.ready) return r; if(r[0]==='hair') return [r[0],r[1],QHAIR_ED[ED.cfg.sex==='f'?'f':'m'].map(x=>x[0])]; if(r[0]==='beard') return [r[0],r[1],['nessuna','barba']]; return r; }); }
-function edVal(k){ if(QH.ready && k==='hair'){ const L=QHAIR_ED[ED.cfg.sex==='f'?'f':'m'], st=qHairOf(ED.cfg,ED.cfg.hair); const i=L.findIndex(x=>qHairOf(ED.cfg,x[1])===st); return i<0?0:i; } if(QH.ready && k==='beard') return ED.cfg.beard>0?1:0;
+function edRows(t){ if(UM.ready){ if(t===0) return ED_TABS[0][1].filter(r=>r[0]!=='build'); if(t===2) return [['hairCol','Colore capelli','hairCol']]; if(t===5){ const L=ED.cfg.sex==='f'?UM.women:UM.men; return [['um','Vestito',L.map(i=>UM_NAMES[UM.models[i].name]||UM.models[i].name)],['topCol','Colore 1','clothCol'],['bottomCol','Colore 2','clothCol']]; } }
+  return ED_TABS[t][1].map(r=>{ if(!QH.ready) return r; if(r[0]==='hair') return [r[0],r[1],QHAIR_ED[ED.cfg.sex==='f'?'f':'m'].map(x=>x[0])]; if(r[0]==='beard') return [r[0],r[1],['nessuna','barba']]; return r; }); }
+function edVal(k){ if(UM.ready && k==='um'){ const L=ED.cfg.sex==='f'?UM.women:UM.men; return ((ED.cfg.um|0)%L.length+L.length)%L.length; } if(QH.ready && k==='hair'){ const L=QHAIR_ED[ED.cfg.sex==='f'?'f':'m'], st=qHairOf(ED.cfg,ED.cfg.hair); const i=L.findIndex(x=>qHairOf(ED.cfg,x[1])===st); return i<0?0:i; } if(QH.ready && k==='beard') return ED.cfg.beard>0?1:0;
   return k==='sex'?(ED.cfg.sex==='f'?1:0):ED.cfg[k]; }
 function edSet(k,v){ if(QH.ready && k==='hair') v=QHAIR_ED[ED.cfg.sex==='f'?'f':'m'][v][1]; if(QH.ready && k==='beard') v=v?2:0; if(k==='sex'){ ED.cfg.sex=v?'f':'m'; ED.cfg.lashes=v?1:0; if(v) ED.cfg.beard=0; } else ED.cfg[k]=v; dressPlayer(ED.cfg); if(ED.mode==='mirror') playerLayer(1); edRender(); }
 function edRender(){ edTabs.innerHTML=ED_TABS.map((t,i)=>(ED.tabs||[0,1,2,3,4,5]).includes(i)?'<button type="button" data-tab="'+i+'" class="'+(i===ED.tab?'on':'')+'">'+t[0]+'</button>':'').join('');
@@ -2952,7 +3013,7 @@ edBody.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) 
 // se il personaggio è finito dentro un mobile (letto, armadio…), lo sposto nel punto libero più vicino
 function unstick(){ const p=player.pos; if(free(p.x,p.z)) return; for(let r=0.2;r<=2.4;r+=0.2) for(let a=0;a<Math.PI*2;a+=Math.PI/8){ const x=p.x+Math.cos(a)*r, z=p.z+Math.sin(a)*r; if(free(x,z)){ p.x=x; p.z=z; holder.position.copy(p); return; } } }
 function playerLayer(l){ holder.traverse(o=>o.layers.set(l)); }
-function openEditor(mode='mirror'){ HOME.busy=true; HOME.editor=true; HOME.edFace=false; ED.mode=mode; ED.tabs=mode==='mirror'?(QH.ready?[0,2,3]:[0,1,2,3]):[4,5]; initLooksAv(); ED.cfg={...(PLAYER_AV||LOOKS[lookI%LOOKS.length].av)}; ED.tab=ED.tabs[0]; ED.showCode=false;
+function openEditor(mode='mirror'){ HOME.busy=true; HOME.editor=true; HOME.edFace=false; ED.mode=mode; ED.tabs=mode==='mirror'?(UM.ready?[0,2]:QH.ready?[0,2,3]:[0,1,2,3]):(UM.ready?[5]:[4,5]); initLooksAv(); ED.cfg={...(PLAYER_AV||LOOKS[lookI%LOOKS.length].av)}; ED.tab=ED.tabs[0]; ED.showCode=false;
   if(mode==='mirror'){ const [sx,sz]=HP(-7.95,-3.05); player.pos.set(sx,0,sz); player.yaw=-Math.PI/2; /* al centro dello specchio, tra specchio e letto (il letto inizia più in là) */ /* davanti allo specchio, fuori dal letto */ holder.position.copy(player.pos); holder.rotation.set(0,player.yaw,0); player.moveTo=null; player.speed=0; document.getElementById('titleCard').style.visibility='hidden'; homeCard.hidden=true; edEl.hidden=false; document.body.classList.add('editing'); edRender(); dressPlayer(ED.cfg); playerLayer(1); if(bubOn){ holder.remove(bubOn); bubOn=null; } return; }
   // la telecamera si mette dove c'è più spazio libero davanti al personaggio
   let best=0, bd=-1; for(let i=0;i<16;i++){ const a=i/16*Math.PI*2; let d=3.2; for(let s=0.3;s<=3.2;s+=0.1){ const x=player.pos.x+Math.sin(a)*s, z=player.pos.z+Math.cos(a)*s; if(BOXES.some(b=>(b.h??8)>1.2&&x>b.x0-0.25&&x<b.x1+0.25&&z>b.z0-0.25&&z<b.z1+0.25)){ d=s; break; } } if(d>bd){ bd=d; best=a; } }
@@ -3072,7 +3133,7 @@ function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; f
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
 window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
 window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…');
-Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e))]).then(()=>{
+Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e)),umLoad('gente/').catch(e=>console.warn('gente non caricata, uso i corpi disegnati',e))]).then(()=>{
   buildSmart(-31.4,-66.6,0); for(const [x,z,y] of [[-15.2,-12.5,-Math.PI/2],[15.2,12.5,Math.PI/2],[-37,PROM.z0+1.2,Math.PI],[24.8,-46,-Math.PI/2],[-50,24.8,Math.PI]]) buildKick(x,z,y); /* sul bordo del marciapiede, col manubrio verso la strada */
   for(const v of veh){ v.home={x:v.x,z:v.z,yaw:v.yaw}; if(v.paint) for(const p of v.paint) p.orig=p.base.clone(); if(v.name==='auto' && v.group) addHeadlights(v.group,2.7,1.5,0.62); }
   player.pos.set(-12,0.15,PZ.z1-4); player.yaw=Math.PI*0.75; useChar('xbot'); holder.position.copy(player.pos); holder.rotation.y=player.yaw; dressPlayer(0);

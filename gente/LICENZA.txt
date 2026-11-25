@@ -1,0 +1,2 @@
+Persone: "Ultimate Modular Men" e "Ultimate Modular Women" di Quaternius (quaternius.com), licenza CC0 1.0 (pubblico dominio).
+Adattate per Karmapolis: armi tolte, vertici saldati (superfici lisce), pesi spostati sullo scheletro Mixamo del gioco.
