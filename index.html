@@ -252,8 +252,8 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.82.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
-    <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.83.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+    <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
 <div id="joy" aria-label="Joystick di movimento"><div id="knob"></div></div>
@@ -277,6 +277,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.83.0',d:'26/11/2026',t:['🍬 Regola nuova: la cura giusta guarisce solo quella persona. La caramella si dà a chi sta già bene e lo trasforma in portatore di bene, che contagia gli altri.','Tutorial in TV aggiornato con la regola nuova.']},
  {v:'0.82.1',d:'26/11/2026',t:['Sistemato: la testa del personaggio che usciva dal tetto del taxi, e l\u2019auto che andava a fare benzina lasciando il personaggio in garage.','Sul PC tutti i passanti si muovono fluidi e hanno l\u2019ombra.','Ombre più definite e morbide quando zoomi.','📱 Sul cellulare il telefono in mano è molto più grande: lo schermo occupa quasi tutta l\u2019altezza.','📺 Tutorial in TV spiegato meglio: sotto ogni clip c\u2019è una spiegazione semplice di cosa fare.']},
  {v:'0.82.0',d:'26/11/2026',t:['🚙 La tua auto è nuova: una compatta blu in stile Grande Punto, fatta in Blender, con fari allungati, fanali alti e vetri da cui si vede chi guida.']},
  {v:'0.81.0',d:'26/11/2026',t:['🚗 Auto rifatte in Blender: berlina, utilitaria, station wagon, SUV, sportiva e furgone con forme vere, abitacolo, fari, fanali, griglia, paraurti e specchietti.','Sul telefono una versione più leggera delle stesse auto, per non perdere fotogrammi.']},
@@ -2257,6 +2258,8 @@ function initMood(p,i){ p.kind=null; p.lvl=0; p.exp=[0,0,0,0]; p.good=0; p.gen=0
 function infect(p,k,amt){ if(p.good>0||p.immune) return; const ki=KI[k]; if(p.kind===k){ p.lvl=Math.min(1,p.lvl+amt); return; } if(p.kind){ if(amt>p.lvl){ p.kind=k; p.lvl=amt; } return; }
   p.exp[ki]+=amt*SUSC[p.trait][ki]; if(p.exp[ki]>=1){ p.kind=k; p.lvl=0.55; p.exp=[0,0,0,0]; } }
 function cleanAround(x,z,a){ const c0=gCell(x,z); for(const f of GF) for(const n of [c0,c0-1,c0+1,c0-GN,c0+GN]) if(n>=0&&n<f.length) f[n]=Math.max(0,f[n]-a); }
+// 🩹 REGOLA DI TEO (26/11/2026): la cura guarisce SOLO quella persona. È la 🍬 caramella, data a chi sta già bene, che lo fa diventare portatore di bene (contagia gli altri)
+function healOnly(p){ const was=p.kind; cleanAround(p.x,p.z,0.25); p.kind=null; p.lvl=0; p.exp=[0,0,0,0]; return was; }
 function makeGood(p,gen){ const was=p.kind; if(gen===0) cleanAround(p.x,p.z,0.35); p.kind=null; p.lvl=0; p.exp=[0,0,0,0]; p.gen=gen; p.good=Math.max(p.good,30*LC.good*Math.pow(0.65,gen)); return was; }
 function pedPace(p){ if(W.sad>0 && !p.kind) return 0.8; if(p.good>0) return 1.45; switch(p.kind){ case 'nervo': return 1.9; case 'soli': return 0.75; case 'ansia': return 3.3; case 'gossip': return 1.15; } return 1.3; }
 function flipDir(p){ const n=p.path.length; p.seg=(p.seg+p.dir+n)%n; p.dir=-p.dir; p.t=1-p.t; }
@@ -2400,8 +2403,10 @@ const SAY={}; function say(e){ if(!SAY[e]) SAY[e]=bubble(e); if(bubOn) holder.re
 function nearPed(){ if((player.veh&&player.veh.name!=='monopattino')||player.taxi||player.ko>0) return null; const F=player.focusPed; if(F){ if(F.ko>0||F.gone||F.fly||F.goto) player.focusPed=null; else { const d=Math.hypot(F.x-player.pos.x,F.z-player.pos.z); if(d<4) return F; if(d>35 && !(player.moveTo&&player.moveTo.p===F)) player.focusPed=null; } } let best=null, bd=3.0; for(const p of PEDS){ if(p.ko>0||p.fly||p.goto) continue; const d=Math.hypot(p.x-player.pos.x,p.z-player.pos.z); if(d<bd){ bd=d; best=p; } } return best; }
 function faceTo(p){ player.yaw=Math.atan2(p.x-player.pos.x,p.z-player.pos.z); }
 function giveCandy(){ const p=nearPed(); if(!p||candyCD>0||gameOver) return; if(G.candies<=0){ copMsgT=3; msg.innerHTML='🍬 <b>Niente caramelle.</b> Sono un aiuto speciale: si comprano a '+CANDY_PRICE+' karma nelle 2 bancarelle col cartello 🍬 in piazza. Intanto usa la cura giusta!'; return; }
-  G.candies--; candyCD=0.8; faceTo(p); say('🍬'); const was=makeGood(p,1); p.owner='me'; startAct(p,'wave',2.2,player); addKarma(was?4:1,p.x,p.z); copMsgT=3; /* cura qualunque male, ma il bene che porta dura meno di quello della cura giusta */
-  msg.innerHTML=was?'🍬 <b>Caramella!</b> Gli è passato il '+KINDS[KI[was]].name.toLowerCase()+': ora porta il bene a chi incontra ✨':'🍬 Stava già bene, ma ora è un <b>portatore di bene</b> ✨'; }
+  if(p.kind){ faceTo(p); copMsgT=3.5; const k=KINDS[KI[p.kind]], best=Object.values(CURE).find(c=>c.k===k.id); msg.innerHTML='🍬 <b>Prima va guarito!</b> Per il '+k.icon+' '+k.name.toLowerCase()+' usa '+best.e+' <b>'+best.name+'</b>, poi dagli la caramella: diventerà un portatore di bene ✨'; return; }
+  if(p.good>0){ copMsgT=2.5; msg.innerHTML='✨ Sta già portando il bene in giro: tieni la caramella per qualcun altro.'; return; }
+  G.candies--; candyCD=0.8; faceTo(p); say('🍬'); makeGood(p,0); p.owner='me'; startAct(p,'wave',2.2,player); addKarma(4,p.x,p.z); copMsgT=3;
+  msg.innerHTML='🍬 <b>Caramella!</b> Ora è un <b>portatore di bene</b> ✨: girando per il paese guarisce chi incontra.'; }
 // ⚖️ ABILITÀ CONTATE (come le caramelle): ogni cura ha 3 cariche, ne torna una ogni 30 secondi → la strategia è usarle sulla persona giusta
 const CH_MAX=3, CH_REGEN=30; G.ch={joke:CH_MAX,listen:CH_MAX,breathe:CH_MAX,truth:CH_MAX}; G.chT={joke:0,listen:0,breathe:0,truth:0};
 for(const [k,c] of Object.entries(CURE)) c.id=k;
@@ -2409,14 +2414,14 @@ const CUREBTN={}; for(const k of Object.keys(CURE)) CUREBTN[k]=document.getEleme
 function updateCharges(dt){ for(const k of Object.keys(G.ch)){ if(G.ch[k]<CH_MAX){ G.chT[k]+=dt; if(G.chT[k]>=CH_REGEN){ G.chT[k]=0; G.ch[k]++; } } else G.chT[k]=0;
     const b=CUREBTN[k], lbl=CURE[k].e+' '+G.ch[k]; if(b._l!==lbl){ b._l=lbl; b.textContent=lbl; b.style.opacity=G.ch[k]?1:0.45; } } }
 function cure(id){ const p=nearPed(); if(!p||candyCD>0||gameOver) return; const C=CURE[id];
-  if(G.ch[id]<=0){ copMsgT=2.5; msg.innerHTML=C.e+' <b>Finite!</b> La prossima carica torna tra '+Math.ceil(CH_REGEN-G.chT[id])+' secondi. Prova un\'altra cura, una caramella o un oggetto del paese.'; return; }
+  if(G.ch[id]<=0){ copMsgT=2.5; msg.innerHTML=C.e+' <b>Finite!</b> La prossima carica torna tra '+Math.ceil(CH_REGEN-G.chT[id])+' secondi. Prova un\'altra cura o un oggetto del paese.'; return; }
   faceTo(p); say(C.e);
   if(C.hold){ player.listen={p,t:0,C}; candyCD=C.hold+0.2; startAct(p,'talk',C.hold+0.6,player); copMsgT=C.hold+0.5; msg.innerHTML='👂 <b>Ascolti…</b> resta fermo qualche secondo.'; return; }
   applyCure(p,C); }
 function applyCure(p,C){ candyCD=0.8; copMsgT=3; if(C.id && G.ch[C.id]>0) G.ch[C.id]--; /* la carica si consuma solo quando la cura arriva davvero (ascoltare interrotto non costa) */
   if(!p.kind){ startAct(p,'wave',1.6,player); addKarma(1,p.x,p.z); msg.innerHTML=C.e+' Stava già bene: un sorriso e via.'; return; }
   const right=p.kind===C.k, k=KINDS[KI[p.kind]];
-  if(right){ makeGood(p,0); p.owner='me'; startAct(p,'wave',2,player); addKarma(8,p.x,p.z); msg.innerHTML='✔️ <b>'+C.verb+'!</b> Era proprio quello che gli serviva contro il '+k.name.toLowerCase()+': ora porta il bene ✨'; }
+  if(right){ healOnly(p); p.owner='me'; startAct(p,'wave',2,player); addKarma(8,p.x,p.z); msg.innerHTML='✔️ <b>'+C.verb+'!</b> Gli è passato il '+k.name.toLowerCase()+'.'+(G.candies>0?' Dagli una 🍬 <b>caramella</b> e porterà il bene agli altri ✨':''); }
   else { p.lvl-=0.35; addKarma(2,p.x,p.z); if(p.lvl<=0){ p.kind=null; p.lvl=0; } startAct(p,'talk',1.2,player);
     const best=Object.values(CURE).find(c=>c.k===k.id); msg.innerHTML=C.e+' Un po\' aiuta… ma per il '+k.icon+' '+k.name.toLowerCase()+' serviva <b>'+best.name+'</b> '+best.e+'.'; } }
 function provoke(){ const p=nearPed(); if(!p||candyCD>0||gameOver) return; candyCD=1; faceTo(p); say('😤'); p.good=0; infect(p,'nervo',0.8); startAct(p,'fist',2.5,player); p.iconOverride='😠'; copMsgT=2.5;
@@ -3075,7 +3080,7 @@ document.getElementById('homeTown').onclick=()=>{ if(!HOME.active && window.__re
 // Per ora sono animazioni disegnate; se nel repository ci sono clip1.mp4…clip6.mp4 (registrate dal gioco), la TV usa quelle.
 const TUT=[['Il Grigio 🩶','Il grigio toglie i colori al paese: tu glieli ridai.'],
   ['La cura giusta','😄 nervosi · 👂 solitari · 🌬️ ansiosi · 🗣️ pettegoli'],
-  ['Il bene è contagioso ✨','Chi guarisci guarisce gli altri da solo.'],
+  ['Il bene è contagioso ✨','🍬 a chi sta bene: diventa portatore di bene.'],
   ['Il focolaio ⏱','Senti le campane? Guarda la bussola e corri lì.'],
   ['Aiuti e pericoli','🍬 caramelle alle bancarelle · 😗 fischia al taxi · occhio al traffico'],
   ['Fiato e casa ⚡','Correre stanca: a casa dormi e ti alleni.']];
@@ -3083,9 +3088,9 @@ const TUT=[['Il Grigio 🩶','Il grigio toglie i colori al paese: tu glieli rida
 const TUT_LONG=[
   '<b>Il Grigio</b> è una tristezza invisibile che gira per il paese. Dove arriva, i colori spariscono e le persone diventano <b>nervose, sole, ansiose o pettegole</b>.<br>Il tuo compito è <b>ridare colore</b>: vai dalle persone grigie e aiutale. A fine tempo vinci se almeno <b>metà del paese</b> è a colori: ⭐ 50% · ⭐⭐ 70% · ⭐⭐⭐ 90%.',
   'Ogni malumore ha <b>la sua cura</b>. Guarda il colore sopra la testa di chi sta male:<br>🔴 <b>Nervosismo</b> → 😄 una battuta · 🔵 <b>Solitudine</b> → 👂 ascoltare · 🟣 <b>Ansia</b> → 🌬️ respirare insieme · 🟢 <b>Pettegolezzo</b> → 🗣️ la verità.<br>La cura giusta <b>vale di più</b>; quella sbagliata aiuta poco e spreca una carica. Ogni cura ha poche cariche, che <b>tornano da sole</b> col tempo: usale bene.',
-  'Chi guarisci diventa un <b>portatore di bene ✨</b>: per un po\u2019 gira per il paese e <b>guarisce da solo</b> chi incontra.<br>Così il bene si allarga senza che tu debba correre ovunque. Conviene aiutare chi sta <b>in mezzo alla gente</b>: piazza, incroci, bancarelle. Più catene fai partire, più il paese si colora.',
+  'Con la cura giusta la persona <b>guarisce</b>, ma resta guarita <b>solo lei</b>.<br>Per far partire il contagio del bene serve la <b>🍬 caramella</b>: dalla a chi <b>sta già bene</b> (appena guarito o mai stato grigio) e diventa un <b>portatore di bene ✨</b>, che gira per il paese e guarisce da solo chi incontra. Chi guarisce lui fa lo stesso: è una catena.<br>Le caramelle sono poche: dalle a chi sta <b>in mezzo alla gente</b> (piazza, incroci, bancarelle).',
   'Ogni tanto il Grigio nasce forte in un punto: è il <b>focolaio</b>. Suonano le <b>campane</b> e compare la scritta al centro.<br>La <b>bussola</b> in alto ti dice dove andare e quanto tempo resta. Arriva prima che scada e cura le persone lì intorno, altrimenti il quartiere diventa tutto grigio. Quando la musica si fa <b>nervosa</b>, il tempo sta finendo.',
-  '🍬 Le <b>caramelle</b> sono un aiuto forte e raro: si comprano alle <b>bancarelle</b> con il karma e guariscono subito chiunque.<br>😗 <b>Fischia al taxi</b> per farti portare lontano; monopattini e la tua auto ti fanno arrivare prima (l\u2019auto consuma benzina).<br>⚠️ Se corri troppo o investi qualcuno arriva la <b>polizia</b>: multa in karma o prigione. E occhio al traffico!',
+  '🍬 Le <b>caramelle</b> sono rare e preziose: si comprano alle <b>bancarelle</b> con il karma. Non curano: trasformano chi sta già bene in un portatore di bene.<br>😗 <b>Fischia al taxi</b> per farti portare lontano; monopattini e la tua auto ti fanno arrivare prima (l\u2019auto consuma benzina).<br>⚠️ Se corri troppo o investi qualcuno arriva la <b>polizia</b>: multa in karma o prigione. E occhio al traffico!',
   'Correre consuma la <b>barra verde ⚡</b> (la stamina): quando è vuota vai piano. Quando non corri si ricarica.<br>Più giochi senza pause, più la barra si <b>accorcia</b>: torna a casa e <b>dormi nel letto</b> per recuperarla. Il <b>tapis roulant</b> ti allena e la allunga per sempre.<br>💪 <b>Antony</b>, nei vicoletti, vende proteine: un minuto di corsa senza stancarti.'];
 const tvCv=document.createElement('canvas'); tvCv.width=512; tvCv.height=300; const tvMap=new THREE.CanvasTexture(tvCv); tvMap.colorSpace=THREE.SRGBColorSpace;
 const tvScreen=new THREE.Mesh(new THREE.PlaneGeometry(2.05,1.2),new THREE.MeshBasicMaterial({map:tvMap})); { const [x,z]=HP(2,-5.665); tvScreen.position.set(x,1.25,z); scene.add(tvScreen); }
