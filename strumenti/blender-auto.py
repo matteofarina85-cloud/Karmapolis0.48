@@ -9,6 +9,7 @@ T={ # L,W,H, belt, nose(h davanti), zw (base parabrezza da davanti), roofF, roof
  'wagon':   dict(L=4.6,W=1.8,H=1.5,belt=0.95,nose=0.70,zw=1.25,r0=1.90,r1=4.05,zc=4.40,trunk=None,tum=0.22,ax=(0.78,0.75),wr=0.33,rnd=0.5),
  'suv':     dict(L=4.6,W=1.92,H=1.78,belt=1.08,nose=0.92,zw=1.15,r0=1.75,r1=4.05,zc=4.38,trunk=None,tum=0.16,ax=(0.85,0.8),wr=0.39,rnd=0.3),
  'sportiva':dict(L=4.35,W=1.9,H=1.16,belt=0.74,nose=0.52,zw=1.55,r0=2.25,r1=2.70,zc=3.75,trunk=0.80,tum=0.26,ax=(0.8,0.82),wr=0.34,rnd=0.6),
+ 'punto':   dict(L=4.03,W=1.69,H=1.49,belt=0.97,nose=0.72,zw=1.08,r0=1.85,r1=3.25,zc=3.82,trunk=None,tum=0.22,ax=(0.82,0.64),wr=0.31,rnd=0.6),
  'furgone': dict(L=4.95,W=1.98,H=2.2,belt=1.18,nose=1.00,zw=0.55,r0=1.10,r1=4.85,zc=4.90,trunk=None,tum=0.08,ax=(0.75,0.7),wr=0.36,rnd=0.25)}
 MATS=['paint','glass','trim','chrome','head','tail','grille']
 def smooth(a,b,t): t=max(0,min(1,t)); return a+(b-a)*t*t*(3-2*t)
@@ -73,10 +74,15 @@ def build(name,P,lod='hi'):
         if bev: m=o.modifiers.new('b','BEVEL'); m.width=bev; m.segments=2 if HI else 1; bpy.ops.object.modifier_apply(modifier='b')
         parts.append((o,k)); return o
     zf=L/2; zb=-L/2; hy=P['nose']-0.13
+    PUNTO=name.startswith('punto')
     for s in (-1,1):
-        box('head',(s*(W/2-0.3),hy,zf-0.06),(0.36,0.14,0.14),0.05,(0.18,0,0),'head')
-        box('tail',(s*(W/2-0.22),belt-0.13,zb+0.05),(0.36,0.13,0.1),0.035,(0,0,0),'tail')
-        box('mirror',(s*(W/2+0.06),belt+0.12,zf-P['zw']-0.15),(0.1,0.1,0.2),0.03,(0,0,0),'paint')
+        if PUNTO:  # fari grandi che salgono verso il parabrezza, fanali verticali alti accanto al lunotto (stile Grande Punto)
+            box('head',(s*(W/2-0.27),hy+0.03,zf-0.16),(0.42,0.13,0.3),0.05,(0.32,s*0.35,0),'head')
+            box('tail',(s*(W/2-0.1),belt+0.02,zb+0.08),(0.12,0.42,0.12),0.04,(0.15,0,0),'tail')
+        else:
+            box('head',(s*(W/2-0.3),hy,zf-0.06),(0.36,0.14,0.14),0.05,(0.18,0,0),'head')
+            box('tail',(s*(W/2-0.22),belt-0.13,zb+0.05),(0.36,0.13,0.1),0.035,(0,0,0),'tail')
+        box('mirror',(s*(W/2+0.05),belt+0.09,zf-P['zw']-0.14),(0.1,0.1,0.2),0.03,(0,0,0),'paint')
         box('skirt',(s*(W/2-0.01),0.33,0.0),(0.05,0.1,L-2*max(P['ax'])-0.5),0.02,(0,0,0),'trim')
         box('handle',(s*(W/2+0.005),belt-0.06,zf-P['zw']-0.65),(0.03,0.04,0.18),0.012,(0,0,0),'chrome')
     box('grille',(0,hy-0.06,zf-0.03),(W*0.42,0.16,0.08),0.03,(0.18,0,0),'grille')

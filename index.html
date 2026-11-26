@@ -250,7 +250,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.81.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.82.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -275,6 +275,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.82.0',d:'26/11/2026',t:['🚙 La tua auto è nuova: una compatta blu in stile Grande Punto, fatta in Blender, con fari allungati, fanali alti e vetri da cui si vede chi guida.']},
  {v:'0.81.0',d:'26/11/2026',t:['🚗 Auto rifatte in Blender: berlina, utilitaria, station wagon, SUV, sportiva e furgone con forme vere, abitacolo, fari, fanali, griglia, paraurti e specchietti.','Sul telefono una versione più leggera delle stesse auto, per non perdere fotogrammi.']},
  {v:'0.80.0',d:'26/11/2026',t:['💡 Luci più morbide: il passaggio tra luce e ombra è sfumato, non più a gradini.','🌗 Ombre con i bordi morbidi (sul PC più morbide).','☀️ Il sole si muove durante il giorno: le ombre girano e si allungano in tempo reale.']},
  {v:'0.79.1',d:'26/11/2026',t:['📱 Pollice appoggiato sul lato destro del telefono, come in GTA; contorno della mano più liscio.']},
@@ -1021,7 +1022,37 @@ function buildCar(g,x,z,yaw){ const v=makeVehicle({name:'auto',bike:false,x,z,ya
   return v; }
 
 // ---------- 🚗 LA TUA PRIMA AUTO: citycar due posti (stile microcar), piccola e lenta per iniziare — stessa fisica, danni e riverniciatura della Ferrari ----------
-function buildSmart(x,z,yaw,col=0xff6a4d){ const W=1.56, L=2.7, H=1.58, belt=0.98, wr=0.3, zf=L/2, zr=-L/2, ws=0.5;
+function buildSmart(x,z,yaw,col=0x1f4fbf){ const D3=CARS3D.ready&&(CARS3D.geo[LOW?'punto_lo':'punto']||CARS3D.geo.punto); if(!D3) return buildSmartOld(x,z,yaw,0xff6a4d);
+  // 🚙 LA TUA AUTO (26/11/2026, Teo: "forma simile alla Grande Punto, di colore blu"): modellata in Blender, stessa fisica "da prima auto" (lenta, da migliorare)
+  const W=1.69, L=4.03, H=1.49, belt=0.97, wr=0.31, zf=L/2, zr=-L/2;
+  const v=makeVehicle({name:'auto',bike:false,x,z,yaw,vmax:19.5,vrev:4,acc:5,taperExp:2,drag0:0.6,dragQ:0.004,brake:20,steerMax:0.66,steerFade:0.11,pitchK:0.008,r:wr,camH:1.25,
+    circles:[[0,1.12,0.88],[0,0,0.9],[0,-1.12,0.88]],seatPos:[0.36,0.5,-0.15],
+    pose:{foot:[0.12,-0.36,0.78],knee:[0.15,0.65,0.55],elbow:[0.7,-0.4,-0.2],lean:-0.05}});
+  const paint=toon({color:col,spec:0.18,gradientMap:gmCar}), dark=toon({color:0x2e2a33,spec:0.3});
+  const glass=toon({color:0x2a3a50,transparent:true,opacity:0.5,depthWrite:false,side:THREE.DoubleSide});
+  const add=(geo,mat,px=0,py=0,pz=0,ol=0.02,deform=true)=>{ const m=new THREE.Mesh(geo,mat); m.position.set(px,py,pz); m.castShadow=mat!==glass; if(ol) withOutline(m,ol); v.body.add(m);
+    if(deform && mat!==glass){ const pa=m.geometry.attributes.position, o=new Float32Array(pa.array); (v.deform??=[]).push({m,orig:o}); } return m; };
+  v.paint=[{m:paint,base:paint.color.clone()}]; // un solo materiale di vernice: danni e riverniciatura lo cambiano
+  // il modello di Blender diviso in tre: vernice, vetri (trasparenti: si vede chi guida), resto (fari, fanali, plastiche, cromature)
+  { const G=D3.g, n=G.attributes.position.count, sel={paint:[],glass:[],rest:[]};
+    for(let t=0;t<n;t+=3){ const k=D3.names[D3.mat[t]]; (k==='paint'?sel.paint:k==='glass'?sel.glass:sel.rest).push(t); }
+    const pick=(list,colored)=>{ const P=new Float32Array(list.length*9), N=new Float32Array(list.length*9), C=colored?new Float32Array(list.length*9):null, c=new THREE.Color();
+      list.forEach((t,j)=>{ for(let q=0;q<3;q++){ const i=t+q; for(let a=0;a<3;a++){ P[j*9+q*3+a]=G.attributes.position.array[i*3+a]; N[j*9+q*3+a]=G.attributes.normal.array[i*3+a]; } if(C){ c.set(CARMATCOL[D3.names[D3.mat[i]]]); C[j*9+q*3]=c.r; C[j*9+q*3+1]=c.g; C[j*9+q*3+2]=c.b; } } });
+      const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(P,3)); g.setAttribute('normal',new THREE.BufferAttribute(N,3)); if(C) g.setAttribute('color',new THREE.BufferAttribute(C,3)); return g; };
+    add(pick(sel.paint),paint,0,0,0,0.025); add(pick(sel.glass),glass,0,0,0,0,false); add(pick(sel.rest,true),toon({vertexColors:true,spec:0.4}),0,0,0,0.015); }
+  // interno: sedili, cruscotto e volante (le mani lo impugnano davvero)
+  for(const sx of [-1,1]){ add(new THREE.BoxGeometry(0.46,0.55,0.12),dark,sx*0.36,0.85,-0.45,0,false); add(new THREE.BoxGeometry(0.46,0.12,0.45),dark,sx*0.36,0.52,-0.22,0,false); add(new THREE.BoxGeometry(1.3,0.45,0.12),dark,0,0.8,-1.15,0,false); }
+  add(new THREE.BoxGeometry(W-0.25,0.28,0.35),dark,0,0.88,0.62,0,false); // cruscotto
+  const sw=new THREE.Mesh(new THREE.TorusGeometry(0.17,0.025,8,20),dark); sw.position.set(0.36,1.0,0.33); sw.rotation.x=-1.0; v.body.add(sw);
+  v.grips=[1,-1].map(s2=>{ const m=new THREE.Object3D(); m.position.set(0.36+0.15*s2,1.0,0.33); v.body.add(m); return m; });
+  v.group.position.set(x,height(x,z),z); v.group.rotation.y=yaw;
+  const tireG=paintGeo((()=>{ const t=new THREE.CylinderGeometry(wr,wr,0.22,18); t.rotateZ(Math.PI/2); return t; })(),0x24242a,false), rimG=paintGeo((()=>{ const t=new THREE.CylinderGeometry(wr*0.6,wr*0.6,0.24,14); t.rotateZ(Math.PI/2); return t; })(),0xc9ccd2,false);
+  const spokeG=paintGeo(new THREE.BoxGeometry(0.25,wr*1.0,0.05),0x8a8f98,false); const WG=mergeGeometries([tireG,rimG,spokeG,spokeG.clone().rotateX(Math.PI/2)]); const WM=toon({vertexColors:true});
+  const wpos=[[W/2-0.12,zf-0.82,true],[-(W/2-0.12),zf-0.82,true],[W/2-0.12,zr+0.64,false],[-(W/2-0.12),zr+0.64,false]];
+  for(const [wx,wz,front] of wpos){ const w=new THREE.Group(); const m=new THREE.Mesh(WG,WM); m.castShadow=true; w.add(m); w.position.set(wx,wr,wz); v.group.add(w); addWheel(v,w,v.group,front); }
+  const Pp=v.wheels.map(w=>w.piv.position); v.contacts=[[Pp[0].x,Pp[0].z],[Pp[1].x,Pp[1].z],[Pp[2].x,Pp[2].z],[Pp[3].x,Pp[3].z]]; v.wb=Pp[0].z-Pp[2].z; v.track=Math.abs(Pp[0].x-Pp[1].x);
+  return v; }
+function buildSmartOld(x,z,yaw,col=0xff6a4d){ const W=1.56, L=2.7, H=1.58, belt=0.98, wr=0.3, zf=L/2, zr=-L/2, ws=0.5;
   const v=makeVehicle({name:'auto',bike:false,x,z,yaw,vmax:19.5,vrev:4,acc:5,taperExp:2,drag0:0.6,dragQ:0.004,brake:20,steerMax:0.68,steerFade:0.11,pitchK:0.008,r:wr,camH:1.2,
     circles:[[0,0.62,0.86],[0,-0.62,0.86]],seatPos:[0.3,0.56,-0.32],
     pose:{foot:[0.12,-0.36,0.78],knee:[0.15,0.65,0.55],elbow:[0.7,-0.4,-0.2],lean:-0.05}});
@@ -1303,7 +1334,7 @@ function makeTrafficVehicle(kind,i){ const col=VCOL[(i*5+3)%VCOL.length]; let B,
     if(kind==='taxi') extra=m=>{ const s=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.2,0.28),toon({color:0xffffff})); s.position.set(0,ty.H+0.09,-0.2); withOutline(s,0.02); m.add(s); };
     if(kind==='polizia') extra=m=>{ const lab=new THREE.Mesh(new THREE.PlaneGeometry(1.3,0.32),new THREE.MeshBasicMaterial({map:POLIZIA_TEX,transparent:true})); lab.rotation.x=-Math.PI/2+0.08; lab.position.set(0,1.02,1.55); m.add(lab); m.userData.lb=addLightbar(m,ty.H+0.08,-0.4); };
     if(kind==='ambulanza') extra=m=>{ m.userData.lb=addLightbar(m,ty.H+0.08,0.9); const cr=new THREE.Mesh(new THREE.PlaneGeometry(0.9,0.9),new THREE.MeshBasicMaterial({map:CROSS_TEX,transparent:true})); cr.rotation.y=Math.PI/2; cr.position.set(ty.W/2+0.02,1.45,-0.6); const cr2=cr.clone(); cr2.rotation.y=-Math.PI/2; cr2.position.x=-cr.position.x; m.add(cr,cr2); }; }
-  const m=new THREE.Mesh(B.geo,toon({vertexColors:true,spec:0.5})); m.castShadow=true; withOutline(m,B.bike?0.015:0.03); if(extra) extra(m); scene.add(m);
+  const m=new THREE.Mesh(B.geo,toon({vertexColors:true,spec:CARS3D.ready?0.22:0.5})); // riflessi più leggeri: sulle auto nuove facevano macchie bianche m.castShadow=true; withOutline(m,B.bike?0.015:0.03); if(extra) extra(m); scene.add(m);
   const fw=(B.fronts||[]).map(f=>{ const piv=new THREE.Group(); piv.position.set(f.x,f.y,f.z); const w=new THREE.Mesh(wheelGeo(f.r,f.w),WHEELMAT); w.castShadow=true; piv.add(w); m.add(piv); return {piv,w,r:f.r}; }); m.userData.fw=fw; m.userData.wb=B.wb||2.6;
   addHeadlights(m,B.len,B.w||1.8,B.bike?0.95:kind==='bus'||kind==='camion'?0.85:0.72,!!B.bike);
   return {m,kind,len:B.len,vmax:B.vmax,w:B.w,bike:!!B.bike}; }
@@ -3414,7 +3445,7 @@ window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…')
 Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e)),umLoad('gente/').catch(e=>{ console.warn('gente non caricata, uso i corpi disegnati',e); window.__umErr=String(e&&e.message||e); }),carsLoad('auto/').catch(e=>console.warn('auto nuove non caricate, uso quelle di prima',e))]).then(()=>{
   if(!UM.ready) setTimeout(()=>{ try{ msg.innerHTML='⚠️ <b>Persone nuove non caricate</b> ('+(window.__umErr||'?')+'): mandami uno screenshot di questo messaggio.'; }catch(e){} },4000);
   buildSmart(-31.4,-66.6,0); for(const [x,z,y] of [[-15.2,-12.5,-Math.PI/2],[15.2,12.5,Math.PI/2],[-37,PROM.z0+1.2,Math.PI],[24.8,-46,-Math.PI/2],[-50,24.8,Math.PI]]) buildKick(x,z,y); /* sul bordo del marciapiede, col manubrio verso la strada */
-  for(const v of veh){ v.home={x:v.x,z:v.z,yaw:v.yaw}; if(v.paint) for(const p of v.paint) p.orig=p.base.clone(); if(v.name==='auto' && v.group) addHeadlights(v.group,2.7,1.5,0.62); }
+  for(const v of veh){ v.home={x:v.x,z:v.z,yaw:v.yaw}; if(v.paint) for(const p of v.paint) p.orig=p.base.clone(); if(v.name==='auto' && v.group) addHeadlights(v.group,CARS3D.ready?4.03:2.7,CARS3D.ready?1.6:1.5,CARS3D.ready?0.72:0.62); }
   player.pos.set(-12,0.15,PZ.z1-4); player.yaw=Math.PI*0.75; useChar('xbot'); holder.position.copy(player.pos); holder.rotation.y=player.yaw; dressPlayer(0);
   controls.target.set(player.pos.x,1,player.pos.z); controls.update();
   loadExtraAnims(); spawnTraffic(LOW?16:24); spawnPeds(LOW?38:56); spawnOfficers(2); spawnMechs(); crowdK(); PEDS.forEach((p,i)=>initMood(p,i));
