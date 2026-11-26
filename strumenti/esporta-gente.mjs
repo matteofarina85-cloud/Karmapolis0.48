@@ -41,5 +41,22 @@ for(const sex of ['m','f']) for(const name of MODELS[sex]){ const g=await loadG(
   const cp=a=>new a.constructor(a); const g=(o)=>new Uint8Array(all.buffer.slice(all.byteOffset+o[0],all.byteOffset+o[0]+o[1]*({nor:1,part:1,si:1,sw:1})[1]));
   const sub=(o,T,b)=>new T(all.buffer.slice(all.byteOffset+o[0],all.byteOffset+o[0]+o[1]*b));
   META.parts.push({...src,name:'Adventurer_Long',pos:push(pos),nor:push(sub(src.nor,Int8Array,1)),part:push(pa),si:push(sub(src.si,Uint8Array,1)),sw:push(sub(src.sw,Uint8Array,1)),ind:push(sub(src.ind,Uint16Array,2))}); }
+
+// 💈 tagli nuovi per i personaggi di Teo (26/11): "Marines" (lati rasati, spazzola sopra) per Carlo, "Calvo in mezzo" (cozzetta, capelli ai lati) per Leo
+function headVariant(srcName,newName,fn){ const src=META.parts.find(p=>p.sex==='m'&&p.kind==='Head'&&p.name===srcName); const all=Buffer.concat(BIN);
+  const sub=(o,T,bytes)=>new T(all.buffer.slice(all.byteOffset+o[0],all.byteOffset+o[0]+o[1]*bytes));
+  const pos=sub(src.pos,Float32Array,4), pa=sub(src.part,Uint8Array,1), mats=src.mats.map(m=>({...m}));
+  fn(pos,pa,mats,src.n);
+  META.parts.push({...src,name:newName,mats,pos:push(pos),nor:push(sub(src.nor,Int8Array,1)),part:push(pa),si:push(sub(src.si,Uint8Array,1)),sw:push(sub(src.sw,Uint8Array,1)),ind:push(sub(src.ind,Uint16Array,2))}); }
+const C0=[0,1.735,0.0]; // centro della testa (circa)
+const pullIn=(pos,i,d)=>{ const x=pos[i*3]-C0[0], y=pos[i*3+1]-C0[1], z=pos[i*3+2]-C0[2], L=Math.hypot(x,y,z)||1; pos[i*3]-=x/L*d; pos[i*3+1]-=y/L*d; pos[i*3+2]-=z/L*d; };
+headVariant('Casual_2','Marines',(pos,pa,mats,n)=>{ const hk=mats.findIndex(m=>m.name==='Hair'); let sd=mats.findIndex(m=>m.name==='Skin_Darker'); if(sd<0){ sd=mats.length; mats.push({name:'Skin_Darker',color:'#9a7a64'}); }
+  for(let i=0;i<n;i++){ if(pa[i]!==hk) continue; const x=pos[i*3], y=pos[i*3+1], z=pos[i*3+2];
+    if(y<1.68 && z>0.02) continue; // barba: resta
+    if(y<1.80 || Math.abs(x)>0.075){ pa[i]=sd; pullIn(pos,i,0.012); } // lati e nuca rasati
+    else { pos[i*3+1]+=0.012+0.25*(y-1.80); } } }); // sopra: spazzola un po' più alta
+headVariant('Suit','Calvo_Lati',(pos,pa,mats,n)=>{ const hk=mats.findIndex(m=>m.name==='Hair'), sk=mats.findIndex(m=>m.name==='Skin');
+  for(let i=0;i<n;i++){ if(pa[i]!==hk) continue; const x=pos[i*3], y=pos[i*3+1], z=pos[i*3+2];
+    if((y>1.755 && Math.abs(x)<0.088) || (z>0.04 && y>1.725)){ pa[i]=sk; const dx=x-C0[0], dy=y-C0[1], dz=z-C0[2], L=Math.hypot(dx,dy,dz), R=Math.min(L,0.092); pos[i*3]=C0[0]+dx/L*R; pos[i*3+1]=C0[1]+dy/L*R; pos[i*3+2]=C0[2]+dz/L*R; } } }); // la parte senza capelli torna sulla forma della testa // in cima e davanti niente capelli (la "cozzetta"), restano ai lati e dietro
 const cnt={}; for(const p of META.parts){ const k=p.sex+p.kind; cnt[k]=(cnt[k]||0)+1; } console.log(cnt, 'vertici medi', Math.round(META.parts.reduce((a,p)=>a+p.n,0)/META.parts.length));
 fs.mkdirSync('/home/claude/umout3',{recursive:true}); fs.writeFileSync('/home/claude/umout3/gente.bin',Buffer.concat(BIN)); fs.writeFileSync('/home/claude/umout3/gente.json',JSON.stringify(META)); console.log('bin',off);

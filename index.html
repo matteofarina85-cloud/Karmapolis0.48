@@ -252,7 +252,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.084.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.086.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -277,6 +277,8 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.086.0',d:'26/11/2026',t:['🔊 Leo ringhia e urla, Carlo ride; Carlo si mette davanti a chi Leo aveva innervosito, apre le braccia e dice «Che spettacolo!».','🪞 Editor: nuovi tagli "Marines (lati rasati)" e "Calvo in mezzo", naso grande o piccolo, rughe; nell\u2019armadio gli occhiali (rettangolari o tondi) con il colore.']},
+ {v:'0.085.0',d:'26/11/2026',t:['😠 Dal livello 10 arriva Leo: va da chi hai guarito e lo rende di nuovo nervoso.','😄 Chiama Carlo dal 📱 telefono (60 karma, una volta a partita): arriva in monopattino, spinge a terra Leo e poi rimette a posto, uno a uno, chi Leo aveva rovinato.']},
  {v:'0.084.0',d:'26/11/2026',t:['🔢 Numero di versione con una cifra in più (0.084 invece di 0.84): c\u2019è ancora tanta strada prima della 1.0.','🧪 Beta: nel telefono, app 🎯 Livelli, puoi scegliere qualsiasi livello fino al 10 e azzerare i progressi quando vuoi (solo nella versione di prova).','📺 La nuvoletta che consiglia il tutorial ricompare a ogni avvio, finché non apri la TV.']},
  {v:'0.83.0',d:'26/11/2026',t:['🍬 Regola nuova: la cura giusta guarisce solo quella persona. La caramella si dà a chi sta già bene e lo trasforma in portatore di bene, che contagia gli altri.','Tutorial in TV aggiornato con la regola nuova.']},
  {v:'0.82.1',d:'26/11/2026',t:['Sistemato: la testa del personaggio che usciva dal tetto del taxi, e l\u2019auto che andava a fare benzina lasciando il personaggio in garage.','Sul PC tutti i passanti si muovono fluidi e hanno l\u2019ombra.','Ombre più definite e morbide quando zoomi.','📱 Sul cellulare il telefono in mano è molto più grande: lo schermo occupa quasi tutta l\u2019altezza.','📺 Tutorial in TV spiegato meglio: sotto ogni clip c\u2019è una spiegazione semplice di cosa fare.']},
@@ -1466,7 +1468,7 @@ const AV={
   glasses:['nessuno','tondi','squadrati','da sole','da vista sottili']};
 // valori di partenza (il "Seminatore" di Teo: testa rasata e barba)
 const AVC_DEF={sex:'m',skin:2,shape:0,eyes:0,eyeCol:0,brows:0,nose:0,mouth:0,freckles:0,blush:0,lashes:0,hair:3,hairCol:1,beard:2,beardCol:1,hat:0,hatCol:7,glasses:0,glassCol:15,earrings:0,
-  top:0,topCol:1,bottom:0,bottomCol:8,shoes:0,shoesCol:11,height:1,build:1,um:0,hd:0,bd:0,lg:0,ft:0,top2:3,tat:0,tatCol:0};
+  top:0,topCol:1,bottom:0,bottomCol:8,shoes:0,shoesCol:11,height:1,build:1,um:0,hd:0,bd:0,lg:0,ft:0,top2:3,tat:0,tatCol:0,gl:0,glc:15,ns:0,wr:0};
 const AVKEYS=Object.keys(AVC_DEF);
 const avEncode=c=>'KP1-'+AVKEYS.map(k=>k==='sex'?(c.sex==='f'?'f':'m'):((v=>v<0?'z':(v%36).toString(36))(c[k]??AVC_DEF[k]))).join(''); // 'z' = scelta automatica (es. scarpe abbinate)
 function avDecode(s){ const c={...AVC_DEF}; if(!s||!s.startsWith('KP1-')) return c; const b=s.slice(4); AVKEYS.forEach((k,i)=>{ const ch=b[i]; if(ch===undefined) return; c[k]=k==='sex'?(ch==='f'?'f':'m'):ch==='z'?-1:parseInt(ch,36)||0; }); return c; }
@@ -1662,7 +1664,8 @@ async function umLoad(base){ const get=async f=>{ const r=await fetch(base+f+'?v
     P.roles=m.mats.map(x=>UMMAT_ROLE(x.name)); const cloth=P.roles.map((r,i)=>r==='cloth'?i:-1).filter(i=>i>=0).sort((x,y)=>cnt[y]-cnt[x]); if(cloth[0]!==undefined) P.roles[cloth[0]]='c1'; if(cloth[1]!==undefined) P.roles[cloth[1]]='c2';
     UM.parts[m.sex][m.kind].push(P); }
   UM.ready=true; }
-const UM_NAMES={Casual_2:'Casual',Casual_Hoodie:'Felpa',Suit:'Elegante',Worker:'Operaio',Farmer:'Contadino',Beach:'Spiaggia',Punk:'Punk',Adventurer:'Avventura',Adventurer_Long:'Avventura capelli lunghi',Casual:'Casual',Formal:'Vestito',Medieval:'Treccia',Soldier:'Sportiva',Witch:'Stivali'};
+const UM_NAMES={Casual_2:'Casual',Casual_Hoodie:'Felpa',Suit:'Elegante',Worker:'Operaio',Farmer:'Contadino',Beach:'Spiaggia',Punk:'Punk',Adventurer:'Avventura',Adventurer_Long:'Avventura capelli lunghi',Marines:'Marines (lati rasati)',Calvo_Lati:'Calvo in mezzo',Casual:'Casual',Formal:'Vestito',Medieval:'Treccia',Soldier:'Sportiva',Witch:'Stivali'};
+AV.glUM=['nessuno','rettangolari','tondi']; AV.noseUM=['normale','grande','piccolo']; AV.wrinkles=['no','poche','tante'];
 AV.tattoo=['nessuno','braccio destro','braccio sinistro','entrambe le braccia','collo','braccia e collo']; AV.tatCol=[0x1c2230,0x2a3f6e,0x5a1f24,0x23452e];
 const UMKEY={Head:'hd',Body:'bd',Legs:'lg',Feet:'ft'};
 function umPart(c,kind){ const L=UM.parts[c.sex==='f'?'f':'m'][kind]; let i=c[UMKEY[kind]]|0;
@@ -1676,6 +1679,14 @@ function umColor(P,c){ const lin=x=>new THREE.Color(x), sk=lin(AV.skin[c.skin]),
     if(r==='skin') return sk; if(r==='skin2') return sk.clone().multiplyScalar(0.85); if(r==='hair') return hc; if(r==='brow') return hc.clone().multiplyScalar(0.7); if(r==='eye') return lin(AV.eyeCol[c.eyeCol??0]).multiplyScalar(0.55);
     if(r==='c1' && pick[0]!=null) return lin(AV.clothCol[pick[0]]); if(r==='c2' && pick[1]!=null) return lin(AV.clothCol[pick[1]]).multiplyScalar(P.kind==='Body'&&c.top2==null?0.8:1); return base; }); }
 const UMMAT=toon({vertexColors:true}); let UM_HATK=1.12, UM_HATY=0.03; const UM_HANDK=0.72, UM_LEGIN=0;
+// 👓 occhiali (per Carlo: rettangolari) costruiti sugli occhi del modello: montatura sottile, lenti appena azzurrine
+function umGlasses(style,col){ const g=new THREE.Group(), m=toon({color:col}), L=new THREE.MeshBasicMaterial({color:0xcfe8ff,transparent:true,opacity:0.22,depthWrite:false});
+  const t=0.0042, add=(geo,x,y,z,ry=0)=>{ const o=new THREE.Mesh(geo,m); o.position.set(x,y,z); o.rotation.y=ry; g.add(o); };
+  for(const sx of [-1,1]){ const cx=sx*0.0325;
+    if(style===1){ const w=0.05, h=0.03; add(new THREE.BoxGeometry(w,t,t),cx,h/2,0); add(new THREE.BoxGeometry(w,t,t),cx,-h/2,0); add(new THREE.BoxGeometry(t,h,t),cx-w/2,0,0); add(new THREE.BoxGeometry(t,h,t),cx+w/2,0,0); const l=new THREE.Mesh(new THREE.PlaneGeometry(w,h),L); l.position.set(cx,0,-0.001); g.add(l); }
+    else { const r=new THREE.Mesh(new THREE.TorusGeometry(0.019,t*0.55,6,20),m); r.position.set(cx,0,0); g.add(r); const l=new THREE.Mesh(new THREE.CircleGeometry(0.019,16),L); l.position.set(cx,0,-0.001); g.add(l); }
+    add(new THREE.BoxGeometry(t,t,0.11),sx*0.062,0.006,-0.055,sx*0.08); }
+  add(new THREE.BoxGeometry(0.016,t,t),0,0.006,0.002); return g; }
 function umBody(model,cfg){ let ref=model.userData.umRef;
   if(!ref){ let sm=null; model.traverse(o=>{ if(o.isSkinnedMesh && !o.userData.um && !o.userData.avBody && !sm) sm=o; }); if(!sm) return null;
     ref=model.userData.umRef={bones:sm.skeleton.bones,inv:sm.skeleton.boneInverses.map(m=>m.clone()),bind:sm.bindMatrix.clone(),parent:sm.parent,pos:sm.position.clone(),quat:sm.quaternion.clone(),scl:sm.scale.clone(),local:sm.skeleton.bones.map(b=>b.position.clone())}; }
@@ -1697,7 +1708,7 @@ function umBody(model,cfg){ let ref=model.userData.umRef;
   for(let i=0;i<B.length;i++) done(i);
   const sk=new THREE.Skeleton(B,Bn.map(m=>m.clone().invert()));
   // geometria per questo scheletro e questa combinazione di pezzi (posizioni nello spazio di riposo, ossa → indici del nostro scheletro)
-  const gk=SX+'|'+PARTS.map(p=>p.name).join(',')+'|'+N.length+'|'+k.toFixed(4); let geo=UM.geo[gk];
+  const gk=SX+'|'+PARTS.map(p=>p.name).join(',')+'|'+N.length+'|'+k.toFixed(4)+'|n'+(cfg.ns|0); let geo=UM.geo[gk];
   if(!geo){ const map=UM.mix.map(n=>{ let j=idx[n]; if(j===undefined) j=idx[n.replace(/Hand.*$/,'Hand')]; return j===undefined?idx.Hips:j; });
     let n=0, ni=0; for(const P of PARTS){ n+=P.n; ni+=P.ind.length; } const pos=new Float32Array(n*3), nor=new Int8Array(n*3), si=new Uint16Array(n*4), sw=new Uint8Array(n*4), ind=new Uint16Array(ni); let o=0, oi=0;
     const hL=UM.mix.indexOf('LeftHand'), hR=UM.mix.indexOf('RightHand'), WL=J.LeftHand, WR=J.RightHand; // mani più piccole (Teo: "troppo grosse"): verso il polso
@@ -1705,13 +1716,21 @@ function umBody(model,cfg){ let ref=model.userData.umRef;
     for(const P of PARTS){ for(let i=0;i<P.n;i++){ let x=P.pos[i*3], y=P.pos[i*3+1], z=P.pos[i*3+2]; const b0=P.si[i*4], w0=P.sw[i*4]/255;
         { let d=0; for(let q=0;q<4;q++) d+=legSide[P.si[i*4+q]]*P.sw[i*4+q]/255; x+=d; }
         // mani più piccole e socchiuse: dal 26/11 sono già così nei modelli (sistemati in Blender), niente più ritocchi qui
+        if(P.kind==='Head' && (cfg.ns|0)>0){ const r=P.roles[P.part[i]]; if(r==='skin'||r==='skin2'){ const cx=0, cy=1.652, cz=0.16, dx=x-cx, dy=y-cy, dz=z-cz, d=Math.hypot(dx*1.3,dy,dz); if(d<0.042 && z>0.12){ const w=Math.pow(1-d/0.042,1.4); // 👃 naso grande ("a canappia", per Leo) o piccolo
+            if(cfg.ns===1){ x+=dx*w*0.8; y+=dy*w*0.45-0.01*w; z+=dz*w*0.8+0.024*w; } else { x-=dx*w*0.3; y-=dy*w*0.2; z-=dz*w*0.35+0.006*w; } } } }
 
         pos[(o+i)*3]=x*k+off.x; pos[(o+i)*3+1]=y*k+off.y; pos[(o+i)*3+2]=z*k+off.z; } nor.set(P.nor,o*3); for(let i=0;i<P.n*4;i++) si[o*4+i]=map[P.si[i]]; sw.set(P.sw,o*4); for(let i=0;i<P.ind.length;i++) ind[oi+i]=P.ind[i]+o; o+=P.n; oi+=P.ind.length; }
     geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(pos,3)); geo.setAttribute('normal',new THREE.BufferAttribute(nor,3,true)); geo.setAttribute('skinIndex',new THREE.BufferAttribute(si,4)); geo.setAttribute('skinWeight',new THREE.BufferAttribute(sw,4,true)); geo.setIndex(new THREE.BufferAttribute(ind,1)); geo.computeBoundingSphere(); UM.geo[gk]=geo; }
-  const ck=gk+'|'+[cfg.skin,cfg.hairCol,cfg.eyeCol,cfg.topCol,cfg.top2,cfg.bottomCol,cfg.shoesCol,cfg.tat,cfg.tatCol].join('.'); let colA=UM.cols[ck];
+  const ck=gk+'|'+[cfg.skin,cfg.hairCol,cfg.eyeCol,cfg.topCol,cfg.top2,cfg.bottomCol,cfg.shoesCol,cfg.tat,cfg.tatCol,cfg.wr|0].join('.'); let colA=UM.cols[ck];
   if(!colA){ const a=new Float32Array(geo.attributes.position.count*3); let o=0; const TT=AV.tattoo[cfg.tat|0], ink=new THREE.Color(AV.tatCol[cfg.tatCol|0]);
     const MX=n=>UM.mix.indexOf(n), RA=[MX('RightArm'),MX('RightForeArm')], LA=[MX('LeftArm'),MX('LeftForeArm')], NK=[MX('Neck'),MX('Spine2')];
     for(const P of PARTS){ const cl=umColor(P,cfg); for(let i=0;i<P.n;i++){ let cc=cl[P.part[i]];
+        // 👴 rughe (per Leo): righe sulla fronte e "zampe di gallina" ai lati degli occhi
+        if((cfg.wr|0)>0 && P.kind==='Head' && (P.roles[P.part[i]]==='skin'||P.roles[P.part[i]]==='skin2')){ const x=P.pos[i*3], y=P.pos[i*3+1], z=P.pos[i*3+2], ax=Math.abs(x);
+          const fore=z>0.085 && y>1.728 && y<(cfg.wr===2?1.80:1.775) && ax<0.075 && Math.sin((y-1.728)*190)>0.45;
+          const crow=cfg.wr===2 && z>0.06 && ax>0.058 && ax<0.09 && y>1.675 && y<1.715 && Math.sin(y*260+ax*160)>0.5;
+          const lab=cfg.wr===2 && z>0.11 && ax>0.022 && ax<0.04 && y>1.6 && y<1.645;
+          if(fore||crow||lab) cc=cc.clone().multiplyScalar(0.6); }
         // tatuaggi (Teo): motivo tribale a fasce ondulate disegnato sulla pelle
         if(TT!=='nessuno' && (P.roles[P.part[i]]==='skin'||P.roles[P.part[i]]==='skin2')){ const b=P.si[i*4], x=P.pos[i*3], y=P.pos[i*3+1], z=P.pos[i*3+2];
           const onR=RA.includes(b), onL=LA.includes(b), onN=NK.includes(b)&&y>1.38;
@@ -1722,6 +1741,9 @@ function umBody(model,cfg){ let ref=model.userData.umRef;
   const g2=new THREE.BufferGeometry(); for(const a of ['position','normal','skinIndex','skinWeight']) g2.setAttribute(a,geo.attributes[a]); g2.setIndex(geo.index); g2.boundingSphere=geo.boundingSphere; g2.setAttribute('color',colA);
   const mk=(mat)=>{ const m=new THREE.SkinnedMesh(g2,mat); m.position.copy(ref.pos); m.quaternion.copy(ref.quat); m.scale.copy(ref.scl); m.userData.um=true; m.frustumCulled=false; ref.parent.add(m); m.bind(sk,ref.bind); return m; };
   // cappelli (e orecchini) di prima, appoggiati sulla testa del modello: agganciati all'osso della testa
+  if((cfg.gl|0)>0){ const hi=idx.Head, gg=umGlasses(cfg.gl,AV.clothCol[cfg.glc??15]); const ey=SX==='f'?1.69:1.698;
+    const D=new THREE.Matrix4().compose(new THREE.Vector3(0*k+off.x,ey*k+off.y,0.168*k+off.z),new THREE.Quaternion(),new THREE.Vector3(k,k,k));
+    const w=new THREE.Group(); w.add(gg); w.userData.um=true; w.matrixAutoUpdate=false; w.matrix.copy(Bn[hi].clone().invert().multiply(D)); B[hi].add(w); }
   if(cfg.hat>0 || cfg.earrings){ const ex=avHead({...cfg,_extraOnly:true,glasses:0}); if(ex.children.length){ const hi=idx.Head, HS=0.118/0.16*k*(UM_HATK||1);
     const D=new THREE.Matrix4().compose(new THREE.Vector3(J.Head[0]*k+off.x,(J.Head[1]+0.118+(UM_HATY||0)-(AV.hat[cfg.hat]==='cappello'?0.045:0))*k+off.y,(J.Head[2]+0.012)*k+off.z),new THREE.Quaternion(),new THREE.Vector3(HS,HS,HS));
     const w=new THREE.Group(); w.add(ex); w.userData.um=true; w.matrixAutoUpdate=false; w.matrix.copy(Bn[hi].clone().invert().multiply(D)); B[hi].add(w); } }
@@ -2909,7 +2931,7 @@ function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } i
   if(player.veh) controls.extra=THREE.MathUtils.damp(controls.extra||0,Math.min(34,Math.abs(player.veh.speed)*0.75),2,dt); else controls.extra=THREE.MathUtils.damp(controls.extra||0,0,2,dt);
   updatePolice(dt,clock.elapsedTime); updateShop(dt);
   if(player.safeT>0) player.safeT-=dt;
-  try{ updateAnthony(dt); }catch(e){ console.warn('Anthony',e); } try{ updateTrafficSound(dt); }catch(e){}
+  try{ updateAnthony(dt); }catch(e){ console.warn('Anthony',e); } try{ updateLeo(dt); }catch(e){ console.warn('Leo',e); } try{ updateTrafficSound(dt); }catch(e){}
   if(player.mode!=='foot'||player.taxi||player.ko>0||player.arrestT>0) updateStamina(dt,'ride');
   if(player.arrestT>0 && !player.taxi) updateArrest(dt); else if(player.taxi) updateTaxiRide(dt); else if(player.ko>0) updatePlayerKO(dt); else if(player.mode==='foot') updatePlayer(dt); else updateRider(dt);
   TT+=dt; updateWeather(dt); updateDayCycle(dt); updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); } updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
@@ -3091,7 +3113,7 @@ const TUT_LONG=[
   'Ogni malumore ha <b>la sua cura</b>. Guarda il colore sopra la testa di chi sta male:<br>🔴 <b>Nervosismo</b> → 😄 una battuta · 🔵 <b>Solitudine</b> → 👂 ascoltare · 🟣 <b>Ansia</b> → 🌬️ respirare insieme · 🟢 <b>Pettegolezzo</b> → 🗣️ la verità.<br>La cura giusta <b>vale di più</b>; quella sbagliata aiuta poco e spreca una carica. Ogni cura ha poche cariche, che <b>tornano da sole</b> col tempo: usale bene.',
   'Con la cura giusta la persona <b>guarisce</b>, ma resta guarita <b>solo lei</b>.<br>Per far partire il contagio del bene serve la <b>🍬 caramella</b>: dalla a chi <b>sta già bene</b> (appena guarito o mai stato grigio) e diventa un <b>portatore di bene ✨</b>, che gira per il paese e guarisce da solo chi incontra. Chi guarisce lui fa lo stesso: è una catena.<br>Le caramelle sono poche: dalle a chi sta <b>in mezzo alla gente</b> (piazza, incroci, bancarelle).',
   'Ogni tanto il Grigio nasce forte in un punto: è il <b>focolaio</b>. Suonano le <b>campane</b> e compare la scritta al centro.<br>La <b>bussola</b> in alto ti dice dove andare e quanto tempo resta. Arriva prima che scada e cura le persone lì intorno, altrimenti il quartiere diventa tutto grigio. Quando la musica si fa <b>nervosa</b>, il tempo sta finendo.',
-  '🍬 Le <b>caramelle</b> sono rare e preziose: si comprano alle <b>bancarelle</b> con il karma. Non curano: trasformano chi sta già bene in un portatore di bene.<br>😗 <b>Fischia al taxi</b> per farti portare lontano; monopattini e la tua auto ti fanno arrivare prima (l\u2019auto consuma benzina).<br>⚠️ Se corri troppo o investi qualcuno arriva la <b>polizia</b>: multa in karma o prigione. E occhio al traffico!',
+  '🍬 Le <b>caramelle</b> sono rare e preziose: si comprano alle <b>bancarelle</b> con il karma. Non curano: trasformano chi sta già bene in un portatore di bene.<br>😗 <b>Fischia al taxi</b> per farti portare lontano; monopattini e la tua auto ti fanno arrivare prima (l\u2019auto consuma benzina).<br>⚠️ Se corri troppo o investi qualcuno arriva la <b>polizia</b>: multa in karma o prigione. E occhio al traffico!<br>😠 Dal livello 10 arriva <b>Leo</b>, che rende di nuovo nervosi quelli che hai guarito: chiama <b>😄 Carlo</b> dal 📱 telefono (60 karma, una volta a partita).',
   'Correre consuma la <b>barra verde ⚡</b> (la stamina): quando è vuota vai piano. Quando non corri si ricarica.<br>Più giochi senza pause, più la barra si <b>accorcia</b>: torna a casa e <b>dormi nel letto</b> per recuperarla. Il <b>tapis roulant</b> ti allena e la allunga per sempre.<br>💪 <b>Antony</b>, nei vicoletti, vende proteine: un minuto di corsa senza stancarti.'];
 const tvCv=document.createElement('canvas'); tvCv.width=512; tvCv.height=300; const tvMap=new THREE.CanvasTexture(tvCv); tvMap.colorSpace=THREE.SRGBColorSpace;
 const tvScreen=new THREE.Mesh(new THREE.PlaneGeometry(2.05,1.2),new THREE.MeshBasicMaterial({map:tvMap})); { const [x,z]=HP(2,-5.665); tvScreen.position.set(x,1.25,z); scene.add(tvScreen); }
@@ -3194,8 +3216,8 @@ const ED_TABS=[['🧍 Corpo',[['sex','Sesso',['Uomo','Donna']],['skin','Pelle','
 const edEl=document.getElementById('avEd'), edTabs=document.getElementById('edTabs'), edBody=document.getElementById('edBody');
 // v0.70: con le teste vere i tagli e la barba disponibili sono quelli del pacchetto
 function edRows(t){ if(UM.ready){ const sx=ED.cfg.sex; if(t===0) return ED_TABS[0][1];
-    if(t===1) return [['hd','Viso e capelli',umList(sx,'Head')],['hairCol','Colore capelli','hairCol'],['eyeCol','Colore occhi','eyeCol']];
-    if(t===4) return [['hat','Cappello',AV.hat],['hatCol','Colore cappello','clothCol'],['earrings','Orecchini',['no','sì']],['tat','Tatuaggi',AV.tattoo],['tatCol','Colore tatuaggi','tatCol']];
+    if(t===1) return [['hd','Viso e capelli',umList(sx,'Head')],['hairCol','Colore capelli','hairCol'],['eyeCol','Colore occhi','eyeCol'],['ns','Naso',AV.noseUM],['wr','Rughe',AV.wrinkles]];
+    if(t===4) return [['hat','Cappello',AV.hat],['hatCol','Colore cappello','clothCol'],['gl','Occhiali',AV.glUM],['glc','Colore occhiali','clothCol'],['earrings','Orecchini',['no','sì']],['tat','Tatuaggi',AV.tattoo],['tatCol','Colore tatuaggi','tatCol']];
     if(t===5) return [['bd','Sopra',umList(sx,'Body')],['topCol','Colore','clothCol'],['top2','Secondo colore','clothCol'],['lg','Sotto',umList(sx,'Legs')],['bottomCol','Colore','clothCol'],['ft','Scarpe',umList(sx,'Feet')],['shoesCol','Colore','clothCol']]; }
   return ED_TABS[t][1].map(r=>{ if(!QH.ready) return r; if(r[0]==='hair') return [r[0],r[1],QHAIR_ED[ED.cfg.sex==='f'?'f':'m'].map(x=>x[0])]; if(r[0]==='beard') return [r[0],r[1],['nessuna','barba']]; return r; }); }
 function edVal(k){ if(UM.ready && k==='ft' && (ED.cfg.ft|0)<0){ const L=UM.parts[ED.cfg.sex==='f'?'f':'m'].Feet; return Math.max(0,L.indexOf(umPart(ED.cfg,'Feet'))); } if(UM.ready && ['hd','bd','lg','ft'].includes(k)){ const n=UM.parts[ED.cfg.sex==='f'?'f':'m'][{hd:'Head',bd:'Body',lg:'Legs',ft:'Feet'}[k]].length; return ((ED.cfg[k]|0)%n+n)%n; } if(UM.ready && k==='top2' && ED.cfg.top2==null) return ED.cfg.topCol; if(QH.ready && k==='hair'){ const L=QHAIR_ED[ED.cfg.sex==='f'?'f':'m'], st=qHairOf(ED.cfg,ED.cfg.hair); const i=L.findIndex(x=>qHairOf(ED.cfg,x[1])===st); return i<0?0:i; } if(QH.ready && k==='beard') return ED.cfg.beard>0?1:0;
@@ -3368,6 +3390,60 @@ function trafficStart(){ if(TSND.on||!soundOn) return; try{ AC=AC||new (window.A
 function updateTrafficSound(dt){ if(!soundOn||HOME.active){ if(TSND.on) TSND.g.gain.value=0; return; } if(!TSND.on){ if(AC&&AUD.ready) trafficStart(); return; } let lv=0, near=99, fast=0; for(const c of TRAFFIC){ const d=Math.hypot(c.x-player.pos.x,c.z-player.pos.z); if(d<near){ near=d; fast=c.speed||0; } lv+=1/Math.max(9,d*d); }
   const tgt=Math.min(0.16,lv*1.4)*(player.veh?0.6:1); TSND.g.gain.value+= (tgt-TSND.g.gain.value)*Math.min(1,dt*3); TSND.o.frequency.value=40+Math.min(40,fast*4); TSND.f.frequency.value=300+Math.min(500,fast*40);
   TSND.horn-=dt; if(TSND.horn<=0){ TSND.horn=10+Math.random()*25; if(near<25 && AUD.ready) horn((Math.random()-0.5)*1.4); } }
+// ======================= 😠 LEO e 😄 CARLO (idea di Teo, 25/11; decisioni 26/11: Leo solo dal livello 10, Carlo 60 karma, 1 volta a partita) =======================
+// Leo arriva nei livelli difficili e rende di nuovo nervosi quelli che hai guarito. Carlo si chiama col 📱: arriva in monopattino, spinge a terra Leo e poi ricura, uno a uno, chi Leo aveva rovinato.
+const LEO={h:null,on:false,ko:0,out:false,victims:[],cd:0,path:null,replan:0,spawnAt:40,told:false,tag:null};
+const CARLO={h:null,state:'off',called:false,price:60,path:null,replan:0,target:null,work:0,deck:null};
+function nameTag(txt,col){ const t=canvasTex(256,64,(g)=>{ g.fillStyle=col||'rgba(255,250,240,.92)'; g.beginPath(); g.roundRect(4,8,248,48,24); g.fill(); g.strokeStyle='#2a2233'; g.lineWidth=4; g.stroke(); g.fillStyle='#2a2233'; g.font='bold 30px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(txt,128,33); });
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false,transparent:true})); sp.scale.set(1.3,0.33,1); sp.position.y=2.25; sp.renderOrder=5; return sp; }
+function mkSpecial(seed,over,tag,col){ const av={...avRandom(seed),sex:'m',...over}; const h=makeHuman({av},null); h.g.add(nameTag(tag,col)); h.g.visible=false; return h; }
+function farNode(x,z,dmin,dmax){ let best=null; for(let k=0;k<40;k++){ const n=WALKN[Math.floor(Math.random()*WALKN.length)], d=Math.hypot(n[0]-x,n[1]-z); if(d>=dmin&&d<=dmax){ best=n; break; } if(!best||Math.abs(d-dmin)<Math.abs(Math.hypot(best[0]-x,best[1]-z)-dmin)) best=n; } return best; }
+function stepTo(h,path,tx,tz,sp,dt){ // cammina lungo il percorso (mai attraverso le case); se il percorso è finito va dritto verso il bersaglio vicino
+  const g=h.g.position; let pt=path&&path.length?path[0]:[tx,tz]; let dx=pt[0]-g.x, dz=pt[1]-g.z, dd=Math.hypot(dx,dz);
+  if(dd<0.3 && path&&path.length){ path.shift(); return; }
+  if(dd<0.05) return; g.x+=dx/dd*Math.min(dd,sp*dt); g.z+=dz/dd*Math.min(dd,sp*dt); const yw=Math.atan2(dx,dz); let dy=((yw-h.g.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI; h.g.rotation.y+=dy*Math.min(1,dt*8); }
+function animSpecial(h,mode,dt){ for(const k of ['idle','walk','run']) h.A[k].setEffectiveWeight(k===mode?1:0); h.mixer.update(dt); }
+// 🔊 voci: Leo ringhia e urla (è sempre arrabbiato), Carlo ride e dice "Che spettacolo!" a braccia aperte
+function speak(txt,pitch,rate){ if(!soundOn||!window.speechSynthesis) return; try{ const u=new SpeechSynthesisUtterance(txt); u.lang='it-IT'; u.pitch=pitch; u.rate=rate; u.volume=1; const v=speechSynthesis.getVoices().find(v=>/^it/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+function leoGrowl(){ if(!soundOn) return; try{ audioInit(); const t=AC.currentTime, o=AC.createOscillator(), o2=AC.createOscillator(), g=AC.createGain(), ws=AC.createWaveShaper(), f=AC.createBiquadFilter();
+  const cur=new Float32Array(256); for(let i=0;i<256;i++){ const x=i/128-1; cur[i]=Math.tanh(x*6); } ws.curve=cur; o.type='sawtooth'; o2.type='square'; o.frequency.setValueAtTime(95,t); o.frequency.linearRampToValueAtTime(150,t+0.25); o.frequency.linearRampToValueAtTime(80,t+0.8); o2.frequency.setValueAtTime(47,t);
+  const lfo=AC.createOscillator(), lg=AC.createGain(); lfo.frequency.value=28; lg.gain.value=25; lfo.connect(lg); lg.connect(o.frequency);
+  f.type='bandpass'; f.frequency.value=700; f.Q.value=0.8; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.5,t+0.06); g.gain.setValueAtTime(0.5,t+0.55); g.gain.exponentialRampToValueAtTime(0.0001,t+0.85);
+  o.connect(ws); o2.connect(ws); ws.connect(f); f.connect(g); g.connect(AUD.master||AC.destination); for(const x of [o,o2,lfo]){ x.start(t); x.stop(t+0.9); } }catch(e){} }
+function carloLaugh(){ if(!soundOn) return; try{ audioInit(); const t0=AC.currentTime; for(let i=0;i<5;i++){ const t=t0+i*0.16, o=AC.createOscillator(), f=AC.createBiquadFilter(), g=AC.createGain(); o.type='triangle'; const p=260-i*12; o.frequency.setValueAtTime(p*1.25,t); o.frequency.exponentialRampToValueAtTime(p,t+0.11);
+    f.type='bandpass'; f.frequency.value=850; f.Q.value=1.2; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.35,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.12); o.connect(f); f.connect(g); g.connect(AUD.master||AC.destination); o.start(t); o.stop(t+0.13); } }catch(e){} }
+function carloArmsOpen(h){ const B=h.bones, g=h.g; if(!B.LeftArm||!B.RightArm) return; g.updateMatrixWorld(true); const f=new V3(Math.sin(g.rotation.y),0,Math.cos(g.rotation.y)), r=new V3(-f.z,0,f.x), up=new V3(0,1,0);
+  for(const [A,F,H,sg] of [[B.LeftArm,B.LeftForeArm,B.LeftHand,-1],[B.RightArm,B.RightForeArm,B.RightHand,1]]){ if(!A||!F||!H) continue; aimW(A,F,r.clone().multiplyScalar(sg).addScaledVector(up,0.45).addScaledVector(f,0.35).normalize(),1); aimW(F,H,r.clone().multiplyScalar(sg).addScaledVector(up,0.9).addScaledVector(f,0.25).normalize(),1); } }
+function leoReset(){ for(const o of [LEO,CARLO]) if(o.h) o.h.g.visible=false; Object.assign(LEO,{on:false,ko:0,out:false,victims:[],cd:0,path:null,replan:0,told:false}); Object.assign(CARLO,{state:'off',called:false,path:null,target:null,work:0}); if(LEO.h) LEO.h.g.rotation.set(0,0,0); }
+function carloAvail(){ return LEO.on && !LEO.out && !CARLO.called; }
+function callCarlo(){ if(!carloAvail()) return; if(G.karma<CARLO.price){ copMsgT=3.5; msg.innerHTML='📞 Carlo costa <b>'+CARLO.price+' karma</b> e ne hai '+Math.round(G.karma)+'. Semina ancora un po\' di bene!'; return false; }
+  G.karma-=CARLO.price; CARLO.called=true; if(!CARLO.h){ CARLO.h=mkSpecial(9191,{topCol:3,bottomCol:8},'😄 Carlo','rgba(255,236,150,.95)'); const deck=new THREE.Group(); const b=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.05,0.8),toon({color:0x2a2a33})); b.position.y=0.1; const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.025,0.025,1.05,6),toon({color:0x9aa0a8})); pole.position.set(0,0.62,0.36); const bar=new THREE.Mesh(new THREE.CylinderGeometry(0.02,0.02,0.45,6),toon({color:0x2a2a33})); bar.rotation.z=Math.PI/2; bar.position.set(0,1.14,0.36); for(const zz of [-0.34,0.36]){ const w=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,0.05,10),toon({color:0x24242a})); w.rotation.z=Math.PI/2; w.position.set(0,0.08,zz); deck.add(w); } deck.add(b,pole,bar); CARLO.h.g.add(deck); CARLO.deck=deck; }
+  const lp=LEO.h.g.position, n=farNode(lp.x,lp.z,30,55); CARLO.h.g.position.set(n[0],0.15,n[1]); CARLO.h.g.rotation.set(0,0,0); CARLO.h.g.visible=true; CARLO.deck.visible=true; CARLO.state='go'; CARLO.replan=0;
+  copMsgT=4.5; msg.innerHTML='📞 <b>Carlo:</b> «Arrivo, arrivo! Prendo il monopattino…» 😄 Aspettalo: sta venendo da Leo.'; carloLaugh(); setTimeout(()=>speak('Arrivo, arrivo!',1.3,1.1),800); return true; }
+function updateLeo(dt){ if(!UM.ready) return;
+  if(!G.started || HOME.active || gameOver){ if(!G.started && (LEO.on||CARLO.state!=='off')) leoReset(); return; }
+  if(LV.n<10) return;
+  if(!LEO.on){ if(G.time<LEO.spawnAt) return; if(!LEO.h) LEO.h=mkSpecial(6611,{topCol:0,bottomCol:15},'😠 Leo','rgba(255,190,180,.95)'); const n=farNode(player.pos.x,player.pos.z,28,50); LEO.h.g.position.set(n[0],0.15,n[1]); LEO.h.g.rotation.set(0,0,0); LEO.h.g.visible=true; LEO.on=true; leoGrowl(); setTimeout(()=>speak('Basta! Che nervi!',0.55,1.15),700);
+    if(typeof showAlarm==='function'){ try{ showAlarm('😠 Arriva Leo!','rende di nuovo nervosi quelli che hai guarito'); }catch(e){} } copMsgT=6; msg.innerHTML='😠 <b>Arriva Leo!</b> Rende di nuovo nervosi quelli che hai guarito. Se hai '+CARLO.price+' karma, chiama <b>😄 Carlo</b> dal 📱 telefono.'; try{ phoneRing('Carlo','ti scrive: «Se Leo ti dà fastidio, chiamami!»'); }catch(e){} }
+  const L=LEO.h, lp=L.g.position;
+  if(LEO.out){ if(LEO.ko>0){ LEO.ko-=dt; if(LEO.ko<=0){ anthPoof(lp); L.g.visible=false; } } }
+  else { // Leo cerca chi hai guarito
+    LEO.replan-=dt; if(LEO.replan<=0){ LEO.replan=3; let best=null,bd=1e9; for(const p of PEDS){ if(p.kind||p.owner!=='me'||p.gone||p.ko>0||p.fly) continue; const d=Math.hypot(p.x-lp.x,p.z-lp.z); if(d<bd){ bd=d; best=p; } }
+      LEO.tgt=best; const tx=best?best.x:farNode(lp.x,lp.z,10,30)[0], tz=best?best.z:farNode(lp.x,lp.z,10,30)[1]; LEO.goal=[tx,tz]; LEO.path=walkPath(lp.x,lp.z,tx,tz)||[]; }
+    if(LEO.tgt && !LEO.tgt.kind){ LEO.goal=[LEO.tgt.x,LEO.tgt.z]; }
+    if(LEO.goal) stepTo(L,LEO.path,LEO.goal[0],LEO.goal[1],1.7,dt);
+    LEO.cd-=dt; if(LEO.cd<=0){ for(const p of PEDS){ if(p.kind||p.owner!=='me'||p.gone) continue; if(Math.hypot(p.x-lp.x,p.z-lp.z)<1.4){ p.good=0; p.immune=0; infect(p,'nervo',0.75); p.owner=null; p.leoHit=true; if(!LEO.victims.includes(p)) LEO.victims.push(p); floatText('😠',p.x,p.z); LEO.cd=1.2; LEO.replan=0; leoGrowl(); LEO.nv=(LEO.nv||0)+1; if(LEO.nv%3===1) setTimeout(()=>speak(['Ma che sorridi?!','Uffa, che nervi!','Smettila di essere felice!'][LEO.nv%3],0.55,1.2),500);
+          if(!LEO.told){ LEO.told=true; copMsgT=4; msg.innerHTML='😠 <b>Leo</b> ha fatto innervosire di nuovo qualcuno che avevi guarito!'; } break; } } }
+    if(L.g.visible) animSpecial(L,'walk',dt); }
+  if(CARLO.state==='off') return; const C=CARLO.h, cp=C.g.position;
+  if(CARLO.state==='go'){ CARLO.replan-=dt; if(CARLO.replan<=0){ CARLO.replan=2; CARLO.path=walkPath(cp.x,cp.z,lp.x,lp.z)||[]; } stepTo(C,CARLO.path,lp.x,lp.z,5.5,dt); animSpecial(C,'idle',dt);
+    if(Math.hypot(cp.x-lp.x,cp.z-lp.z)<1.3){ LEO.out=true; LEO.ko=4; L.g.rotation.set(-Math.PI/2,L.g.rotation.y,0); L.g.position.y=0.3; animSpecial(L,'idle',0); sfx('hit'); leoGrowl(); setTimeout(carloLaugh,500); copMsgT=4.5; msg.innerHTML='😄 <b>Carlo ha spinto a terra Leo!</b> Leo è fuori gioco. Ora Carlo rimette a posto chi Leo aveva fatto innervosire…'; CARLO.state='cure'; CARLO.deck.visible=false; CARLO.target=null; } }
+  else if(CARLO.state==='cure'){ if(!CARLO.target){ let best=null,bd=1e9; for(const p of LEO.victims){ if(!p.kind||p.gone) continue; const d=Math.hypot(p.x-cp.x,p.z-cp.z); if(d<bd){ bd=d; best=p; } } CARLO.target=best; CARLO.work=0; CARLO.replan=0;
+      if(!best){ CARLO.state='bye'; CARLO.work=0; copMsgT=4; msg.innerHTML='😄 <b>Carlo:</b> «Fatto! Tutti di nuovo sereni. Ciao campione!»'; } }
+    const p=CARLO.target; if(p){ const fx=p.x+Math.sin(p.yaw)*1.0, fz=p.z+Math.cos(p.yaw)*1.0, d=Math.hypot(fx-cp.x,fz-cp.z); // si mette DAVANTI alla persona
+      if(d>0.45 && CARLO.work===0){ CARLO.replan-=dt; if(CARLO.replan<=0){ CARLO.replan=2; CARLO.path=walkPath(cp.x,cp.z,fx,fz)||[]; } stepTo(C,CARLO.path,fx,fz,2.4,dt); animSpecial(C,'walk',dt); }
+      else { if(CARLO.work===0){ carloLaugh(); speak('Che spettacolo!',1.35,1.1); try{ startAct(p,'talk',2.6); }catch(e){} } CARLO.work+=dt; animSpecial(C,'idle',dt); const yw=Math.atan2(p.x-cp.x,p.z-cp.z); C.g.rotation.y=yw; carloArmsOpen(C); if(CARLO.work>2.4){ healOnly(p); p.leoHit=false; p.owner='me'; floatText('😄',p.x,p.z); addKarma(2,p.x,p.z); CARLO.target=null; CARLO.work=0; } } } }
+  else if(CARLO.state==='bye'){ CARLO.work+=dt; animSpecial(C,'idle',dt); if(CARLO.work>2.5){ anthPoof(cp); C.g.visible=false; CARLO.state='off'; } } }
 function updateAnthony(dt){ if(!UM.ready || !G.started) return; if(!ANTH.h) initAnthony(); const h=ANTH.h; if(!h) return;
   const d=Math.hypot(h.g.position.x-player.pos.x,h.g.position.z-player.pos.z); ANTH.t+=dt;
   if(ANTH.walk){ const w=ANTH.walk, tgt=w.pts[0], dx=tgt[0]-h.g.position.x, dz=tgt[1]-h.g.position.z, dd=Math.hypot(dx,dz);
@@ -3385,10 +3461,11 @@ const PH_APPS=[['levels','🎯','Livelli','#f0b23a'],['friends','👥','Amici','
 function phSkin(){ try{ initLooksAv(); const c=PLAYER_AV||(LOOKS[lookI]&&LOOKS[lookI].av)||AVC_DEF; return '#'+new THREE.Color(AV.skin[c.skin|0]).getHexString(); }catch(e){ return '#d9a27a'; } }
 function phClock(){ const d=new Date(); document.getElementById('phClock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
 function phRender(){ const a=PH.app, B=PH.body; let t='Karmapolis', h='';
-  if(a==='home'){ h='<div class="apps">'+PH_APPS.map(([id,ic,nm,col])=>'<button type="button" data-app="'+id+'"><span class="ic" style="background:'+col+'">'+ic+'</span>'+nm+'</button>').join('')+'</div>'; }
+  if(a==='home'){ h='<div class="apps">'+PH_APPS.concat(carloAvail()?[['carlo','📞','Carlo','#e9a23b']]:[]).map(([id,ic,nm,col])=>'<button type="button" data-app="'+id+'"><span class="ic" style="background:'+col+'">'+ic+'</span>'+nm+'</button>').join('')+'</div>'; }
   else if(a==='levels'){ t='Livelli'; h='<h4>🎯 Livello '+LV.n+'</h4><div class="note" style="margin:0 0 8px;opacity:.9;background:#2c2a35;border-radius:8px;padding:6px 8px">🧪 <b>Solo nella versione di prova (beta):</b> puoi scegliere qualsiasi livello fino al '+BETA_MAXLV+' e azzerare i progressi quando vuoi. Nel gioco finale i livelli si sbloccheranno vincendo.</div>';
     for(let i=1;i<=Math.max(BETA_MAXLV,LV.best);i++){ const st=LV.stars[i]|0, cur=i===LV.n; h+='<div class="row"'+(cur?' style="background:rgba(255,216,77,.12)"':'')+'><span>'+(cur?'▶ ':'')+'Livello '+i+'</span><span>'+('⭐'.repeat(st)||'—')+' <button type="button" class="tog'+(cur?' on':'')+'" data-do="lv" data-lv="'+i+'">'+(cur?'Scelto':'Gioca')+'</button></span></div>'; }
     h+='<button type="button" class="pbtn ghost" data-do="lvreset" style="background:#3a3846;color:#fff">'+(PH.resetAsk?'Sicuro? Tocca di nuovo per azzerare':'🔄 Azzera i livelli (solo beta)')+'</button>'; }
+  else if(a==='carlo'){ t='Carlo'; h=carloAvail()?'<h4>😄 Chiama Carlo</h4><p>Carlo, il collega sempre allegro, arriva in <b>monopattino</b> (bisogna aspettarlo), <b>spinge a terra Leo</b> e lo mette fuori gioco. Poi rimette a posto, <b>uno a uno</b>, chi Leo aveva fatto innervosire.</p><div class="note">Costa '+CARLO.price+' karma · si può chiamare 1 volta a partita · hai '+Math.round(G.karma)+' karma</div><button type="button" class="pbtn" data-do="carlo">📞 Chiama Carlo · '+CARLO.price+'</button>':(CARLO.called?'<h4>😄 Carlo sta arrivando!</h4><p>Aspettalo: va dritto da Leo.</p>':'<h4>😄 Carlo</h4><p>Lo puoi chiamare quando arriva <b>😠 Leo</b> (dal livello 10).</p>'); }
   else if(a==='karma'){ t='Karma'; h='<div class="row"><span>🪃 Karma</span><b>'+Math.round(G.karma)+'</b></div><div class="row"><span>🍬 Caramelle</span><b>'+(G.candies|0)+'</b></div><div class="row"><span>⛽ Benzina</span><b>'+Math.round(HOME.fuel)+'%</b></div>'; }
   else if(a==='news'){ t='Novità'; const N=window.__NEWS||[]; h=N.map(n=>'<h4>'+n.v+' <small style="opacity:.6;font-weight:500">'+n.d+'</small></h4><ul>'+n.t.map(x=>'<li>'+x+'</li>').join('')+'</ul>').join(''); }
   else if(a==='help'){ t='Comandi'; h=document.getElementById('howto').innerHTML+'<p class="note">📱 Telefono: pulsante 📱, tasto P, joypad View.</p>'; }
@@ -3418,14 +3495,15 @@ function phWhoosh(){ if(!AC||!soundOn||!AUD.white) return; try{ const t=AC.curre
 function phRingSound(){ if(!AC||!soundOn||!AUD.master) return; try{ for(let k=0;k<2;k++){ const t0=AC.currentTime+k*1.2; for(let i=0;i<8;i++){ const t=t0+i*0.07, o=AC.createOscillator(), g=AC.createGain(); o.type='triangle'; o.frequency.value=i%2?1320:1760; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.12,t+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t+0.065); o.connect(g); g.connect(AUD.master); o.start(t); o.stop(t+0.07); } } }catch(e){} }
 function hideToast(){ PH.toast.classList.remove('show'); }
 function phoneRing(who,txt){ PH.btn.classList.add('ring'); PH.toast.textContent='📱 '+who+' '+txt; PH.toast.classList.add('show'); phRingSound(); clearTimeout(PH.ringT); PH.ringT=setTimeout(()=>{ hideToast(); PH.btn.classList.remove('ring'); },9000); }
-PH.btn.addEventListener('click',()=>{ if(PH.on) phoneClose(); else phoneOpen(PH.btn.classList.contains('ring')?'friends':'home'); });
-PH.toast.addEventListener('click',()=>phoneOpen('friends'));
+PH.btn.addEventListener('click',()=>{ if(PH.on) phoneClose(); else phoneOpen(PH.btn.classList.contains('ring')?(carloAvail()?'carlo':'friends'):'home'); });
+PH.toast.addEventListener('click',()=>phoneOpen(carloAvail()?'carlo':'friends'));
 document.getElementById('phBack').addEventListener('click',()=>{ if(PH.app==='home'){ phoneClose(); return; } PH.app='home'; phRender(); });
 PH.body.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; if(b.dataset.app){ PH.app=b.dataset.app; if(PH.app==='friends') PH.lobby=null; phRender(); PH.body.scrollTop=0; return; }
   const d=b.dataset.do; if(d==='snd'){ sndBtn.click(); phRender(); } else if(d==='mus'){ musBtn.click(); phRender(); } else if(d==='full'){ document.getElementById('full').click(); }
   else if(d==='lv'){ const n=+b.dataset.lv; LV.n=n; LV.best=Math.max(LV.best,n); saveLevels(); PH.resetAsk=false; if(HOME.active){ HOME.pendingLevel=true; copMsgT=4; msg.innerHTML='🎯 <b>Livello '+n+'</b> scelto: esci di casa per giocarlo.'; } else { document.getElementById('restart').click(); copMsgT=4; msg.innerHTML='🎯 <b>Livello '+n+'</b>: si riparte da qui!'; } phRender(); }
   else if(d==='lvreset'){ if(!PH.resetAsk){ PH.resetAsk=true; phRender(); return; } PH.resetAsk=false; LV.n=1; LV.best=1; LV.stars={}; saveLevels(); if(HOME.active) HOME.pendingLevel=true; else document.getElementById('restart').click(); copMsgT=4; msg.innerHTML='🔄 Livelli azzerati: si riparte dal livello 1.'; phRender(); }
-  else if(d==='ready'){ PH.lobby.me=!PH.lobby.me; phRender(); } else if(d==='go'){ phoneClose(); if(HOME.active && !HOME.busy) askExit(); } });
+  else if(d==='ready'){ PH.lobby.me=!PH.lobby.me; phRender(); }
+  else if(d==='carlo'){ if(callCarlo()) phoneClose(); else phRender(); } else if(d==='go'){ phoneClose(); if(HOME.active && !HOME.busy) askExit(); } });
 addEventListener('keydown',e=>{ if(window.__newsOpen) return; if(e.code==='KeyP' && !e.repeat && !/INPUT|TEXTAREA/.test((e.target||{}).tagName||'')){ PH.on?phoneClose():phoneOpen(); } else if(e.code==='Escape' && PH.on){ phoneClose(); } });
 function updatePhone(dt){
   if(PH.on && PH.sig!==phSig()){ const st=PH.body.scrollTop; phRender(); PH.body.scrollTop=st; } // aggiorna solo se cambia qualcosa (lobby, karma)
@@ -3464,7 +3542,7 @@ function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; f
   if(settle-->0) return;
   let np=PR; if(fps<FPS_CAP*0.93 && PR>PR_MIN) np=Math.max(PR_MIN,PR-0.1); else if(fps>FPS_CAP*0.99 && PR<PR_MAX) np=Math.min(PR_MAX,PR+0.05);
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
-window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={TRAFFIC,player,controls,holder,G,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
+window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
 window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…');
 Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e)),umLoad('gente/').catch(e=>{ console.warn('gente non caricata, uso i corpi disegnati',e); window.__umErr=String(e&&e.message||e); }),carsLoad('auto/').catch(e=>console.warn('auto nuove non caricate, uso quelle di prima',e))]).then(()=>{
   if(!UM.ready) setTimeout(()=>{ try{ msg.innerHTML='⚠️ <b>Persone nuove non caricate</b> ('+(window.__umErr||'?')+'): mandami uno screenshot di questo messaggio.'; }catch(e){} },4000);
