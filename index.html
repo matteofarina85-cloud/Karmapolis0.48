@@ -157,7 +157,7 @@ body.phoneOn .hud.top,body.phoneOn #compass,body.phoneOn #greyHud,body.phoneOn #
 #phone{position:fixed;z-index:60;left:57%;bottom:-14vh;height:118vh;aspect-ratio:720/920;pointer-events:none;isolation:isolate;transform:translate(-50%,105%);transition:transform .26s cubic-bezier(.2,1.1,.35,1.06)}
 body.phoneOn #phone{transform:translate(-50%,0)}
 #phone>img{position:absolute;inset:0;width:100%;height:100%;user-select:none}
-#phone .skin{position:absolute;inset:0;background:var(--skin,#d9a27a);mix-blend-mode:multiply;-webkit-mask:url(telefono/mano-maschera.png) 0 0/100% 100% no-repeat;mask:url(telefono/mano-maschera.png) 0 0/100% 100% no-repeat}
+#phone .skin{position:absolute;inset:0;background:var(--skin,#d9a27a);mix-blend-mode:multiply;-webkit-mask:url(telefono/mano-maschera.png?v=0791) 0 0/100% 100% no-repeat;mask:url(telefono/mano-maschera.png?v=0791) 0 0/100% 100% no-repeat}
 #phone .scr{position:absolute;left:0;top:0;width:260px;height:480px;transform-origin:0 0;background:#14121c;border-radius:6px;overflow:hidden;pointer-events:auto;display:flex;flex-direction:column;color:#f4f1ea;font:500 15px/1.35 var(--body)}
 #phone .sbar{display:flex;justify-content:space-between;padding:5px 12px 3px;font:600 12px var(--body);opacity:.8}
 #phone .ptop{display:flex;align-items:center;gap:6px;background:#2c2a35;padding:8px 8px;font:700 18px var(--display)}
@@ -218,7 +218,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <canvas id="c" aria-label="Paesino in 3D visto dall'alto, stile cartone animato"></canvas>
 <div id="vig"></div>
 <div id="rotate"><div><div class="ph">📱</div><p>Gira il telefono in orizzontale<br>per giocare a Karmapolis</p><button id="rotFull" type="button">⛶ Schermo intero</button><p style="font-size:13px;opacity:.75;margin-top:14px">Su iPhone controlla che il blocco rotazione sia spento</p></div></div>
-<div id="phone" aria-hidden="true"><img src="telefono/telefono-mano.webp" alt="" draggable="false"><div class="skin"></div><div class="scr"><div class="sbar"><span id="phClock">12:00</span><span>📶 🔋</span></div><div class="ptop"><button id="phBack" type="button" aria-label="Indietro">‹</button><b id="phTitle">Karmapolis</b><span class="bolt">⚡</span></div><div class="pbody" id="phBody"></div></div></div>
+<div id="phone" aria-hidden="true"><img src="telefono/telefono-mano.webp?v=0791" alt="" draggable="false"><div class="skin"></div><div class="scr"><div class="sbar"><span id="phClock">12:00</span><span>📶 🔋</span></div><div class="ptop"><button id="phBack" type="button" aria-label="Indietro">‹</button><b id="phTitle">Karmapolis</b><span class="bolt">⚡</span></div><div class="pbody" id="phBody"></div></div></div>
 <div id="phoneToast" role="status"></div>
 <div id="tvHint" aria-live="polite"><div class="tb">📺 Ti consiglio di guardare il tutorial!</div><div class="ta"></div></div>
 <div id="news" role="dialog" aria-label="Novità della versione"><div class="nbox"><div class="nhead"><h2 id="newsTitle">📋 Novità</h2><p>Karmapolis è in prova (beta): ecco cosa è cambiato.</p></div><div class="nbody" id="newsBody"></div><div class="nfoot"><small id="newsWait">Sto costruendo il paese…</small><button id="newsGo" type="button" disabled>▶ Gioca</button></div></div></div>
@@ -250,7 +250,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.79.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.79.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -275,6 +275,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.79.1',d:'26/11/2026',t:['📱 Pollice appoggiato sul lato destro del telefono, come in GTA; contorno della mano più liscio.']},
  {v:'0.79.0',d:'26/11/2026',t:['📱 Mano e telefono rifatti in 3D con Blender: mano vera che lo stringe, pollice sul bordo, in stile cartone, del colore della tua pelle.']},
  {v:'0.78.2',d:'26/11/2026',t:['Tornato il pulsante ⛶ dello schermo intero in basso a destra.']},
  {v:'0.78.1',d:'26/11/2026',t:['📱 Telefono con l\u2019inquadratura di GTA: la telecamera va agli occhi del personaggio, il telefono in mano al centro, inclinato, con lo sfondo sfocato.']},
