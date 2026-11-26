@@ -260,7 +260,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.089.5</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.089.6</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -285,6 +285,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.089.6',d:'26/11/2026',t:['😄 «Che spettacolo!» di Carletto non è più mozzato alla fine.']},
  {v:'0.089.5',d:'26/11/2026',t:['😄 Quando lo chiami Carlo risponde «Arrivo, arrivo!» con la voce del vero Carletto.']},
  {v:'0.089.4',d:'26/11/2026',t:['😄 Carlo dice «Che spettacolo!» con la voce del vero Carletto!']},
  {v:'0.089.3',d:'26/11/2026',t:['😠 Terza frase di Leo: «Eh, ascolta, non rompere i co… 🔇» (con il biip della censura).']},
@@ -3464,7 +3465,7 @@ function stepTo(h,path,tx,tz,sp,dt){ // cammina lungo il percorso (mai attravers
 function animSpecial(h,mode,dt){ for(const k of ['idle','walk','run']) h.A[k].setEffectiveWeight(k===mode?1:0); h.mixer.update(dt); }
 // 🔊 voci: Leo ringhia e urla (è sempre arrabbiato), Carlo ride e dice "Che spettacolo!" a braccia aperte
 // 😠 voce di Leo "veramente incazzata": voce grave e veloce, al massimo, con il ringhio sotto. Se nel repository c'è un audio vero (voci/leo1.mp3, leo2.mp3) usa quello
-const LEOVOX={}; function voxLoad(f){ if(LEOVOX[f]===undefined){ const a=new Audio(f+'?v=0893'); LEOVOX[f]=null; a.preload='auto'; a.oncanplaythrough=()=>{ LEOVOX[f]=a; }; a.onerror=()=>{ LEOVOX[f]=false; }; a.load(); } return LEOVOX[f]; }
+const LEOVOX={}; function voxLoad(f){ if(LEOVOX[f]===undefined){ const a=new Audio(f+'?v=0896'); LEOVOX[f]=null; a.preload='auto'; a.oncanplaythrough=()=>{ LEOVOX[f]=a; }; a.onerror=()=>{ LEOVOX[f]=false; }; a.load(); } return LEOVOX[f]; }
 function voxPlay(f){ if(!soundOn) return false; const A=voxLoad(f); if(A){ try{ A.currentTime=0; A.volume=1; A.play().catch(()=>{}); }catch(e){} return true; } return false; }
 voxLoad('voci/carlo1.mp3'); voxLoad('voci/carlo2.mp3'); // 😄 "Che spettacolo!" registrato dal vero Carletto (26/11)
 function leoShout(i,txt){ if(!soundOn) return; if(voxPlay('voci/leo'+i+'.mp3')) return;
