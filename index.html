@@ -260,7 +260,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.088.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.089.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -285,6 +285,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.089.0',d:'26/11/2026',t:['✨ I portatori di bene durano di più (45 secondi invece di 30): una caramella data bene fa molta più strada.']},
  {v:'0.088.2',d:'26/11/2026',t:['😠 Leo cammina più piano (deciso da Teo e dal vero Carletto: "più verosimile").']},
  {v:'0.088.1',d:'26/11/2026',t:['🚗 Tornate le auto del traffico! Dalla 0.082 erano invisibili (ma c\u2019erano: per questo la tua auto si bloccava e ti "prendevano in pieno").','🎒 Tolto davvero lo zaino al personaggio di base.']},
  {v:'0.088.0',d:'26/11/2026',t:['⚙️ Telefoni lenti: se il gioco non tiene nemmeno i 30 fps passa da solo alla grafica minima (niente ombre e contorni, risoluzione più bassa). Si può anche scegliere a mano: 📱 → Opzioni → Grafica minima.']},
@@ -2323,7 +2324,7 @@ function infect(p,k,amt){ if(p.good>0||p.immune) return; const ki=KI[k]; if(p.ki
 function cleanAround(x,z,a){ const c0=gCell(x,z); for(const f of GF) for(const n of [c0,c0-1,c0+1,c0-GN,c0+GN]) if(n>=0&&n<f.length) f[n]=Math.max(0,f[n]-a); }
 // 🩹 REGOLA DI TEO (26/11/2026): la cura guarisce SOLO quella persona. È la 🍬 caramella, data a chi sta già bene, che lo fa diventare portatore di bene (contagia gli altri)
 function healOnly(p){ const was=p.kind; cleanAround(p.x,p.z,0.25); p.kind=null; p.lvl=0; p.exp=[0,0,0,0]; return was; }
-function makeGood(p,gen){ const was=p.kind; if(gen===0) cleanAround(p.x,p.z,0.35); p.kind=null; p.lvl=0; p.exp=[0,0,0,0]; p.gen=gen; p.good=Math.max(p.good,30*LC.good*Math.pow(0.65,gen)); return was; }
+function makeGood(p,gen){ const was=p.kind; if(gen===0) cleanAround(p.x,p.z,0.35); p.kind=null; p.lvl=0; p.exp=[0,0,0,0]; p.gen=gen; p.good=Math.max(p.good,45*LC.good*Math.pow(0.65,gen) /* portatori di bene più lunghi: 45 s invece di 30 (Teo, 26/11; provato col giocatore finto) */); return was; }
 function pedPace(p){ if(W.sad>0 && !p.kind) return 0.8; if(p.good>0) return 1.45; switch(p.kind){ case 'nervo': return 1.9; case 'soli': return 0.75; case 'ansia': return 3.3; case 'gossip': return 1.15; } return 1.3; }
 function flipDir(p){ const n=p.path.length; p.seg=(p.seg+p.dir+n)%n; p.dir=-p.dir; p.t=1-p.t; }
 function startAct(p,type,t,face,other){ const L=ACTCLIP[type]; const avail=L?L.filter(n=>EXA[n]):[]; p.actClip=avail.length?avail[Math.floor(Math.random()*avail.length)]:null;
