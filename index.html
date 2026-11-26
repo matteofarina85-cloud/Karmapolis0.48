@@ -260,7 +260,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.089.4</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.089.5</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -285,6 +285,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.089.5',d:'26/11/2026',t:['😄 Quando lo chiami Carlo risponde «Arrivo, arrivo!» con la voce del vero Carletto.']},
  {v:'0.089.4',d:'26/11/2026',t:['😄 Carlo dice «Che spettacolo!» con la voce del vero Carletto!']},
  {v:'0.089.3',d:'26/11/2026',t:['😠 Terza frase di Leo: «Eh, ascolta, non rompere i co… 🔇» (con il biip della censura).']},
  {v:'0.089.2',d:'26/11/2026',t:['😠 Voce di Leo più arrabbiata: più grave, più veloce, urlata e con il ringhio.']},
@@ -3465,7 +3466,7 @@ function animSpecial(h,mode,dt){ for(const k of ['idle','walk','run']) h.A[k].se
 // 😠 voce di Leo "veramente incazzata": voce grave e veloce, al massimo, con il ringhio sotto. Se nel repository c'è un audio vero (voci/leo1.mp3, leo2.mp3) usa quello
 const LEOVOX={}; function voxLoad(f){ if(LEOVOX[f]===undefined){ const a=new Audio(f+'?v=0893'); LEOVOX[f]=null; a.preload='auto'; a.oncanplaythrough=()=>{ LEOVOX[f]=a; }; a.onerror=()=>{ LEOVOX[f]=false; }; a.load(); } return LEOVOX[f]; }
 function voxPlay(f){ if(!soundOn) return false; const A=voxLoad(f); if(A){ try{ A.currentTime=0; A.volume=1; A.play().catch(()=>{}); }catch(e){} return true; } return false; }
-voxLoad('voci/carlo1.mp3'); // 😄 "Che spettacolo!" registrato dal vero Carletto (26/11)
+voxLoad('voci/carlo1.mp3'); voxLoad('voci/carlo2.mp3'); // 😄 "Che spettacolo!" registrato dal vero Carletto (26/11)
 function leoShout(i,txt){ if(!soundOn) return; if(voxPlay('voci/leo'+i+'.mp3')) return;
   if(i===3){ leoGrowl(); speak('EH, ASCOLTA, NON ROMPERE I CO',0.1,1.3); leoBleep(); return; }
   leoGrowl(); speak(txt.toUpperCase(),0.1,1.3); setTimeout(leoGrowl,450); }
@@ -3486,7 +3487,7 @@ function carloAvail(){ return LEO.on && !LEO.out && !CARLO.called; }
 function callCarlo(){ if(!carloAvail()) return; if(G.karma<CARLO.price){ copMsgT=3.5; msg.innerHTML='📞 Carlo costa <b>'+CARLO.price+' karma</b> e ne hai '+Math.round(G.karma)+'. Semina ancora un po\' di bene!'; return false; }
   G.karma-=CARLO.price; CARLO.called=true; if(!CARLO.h){ CARLO.h=mkSpecial(CARLO.code,null,'😄 Carlo','rgba(255,236,150,.95)'); const deck=new THREE.Group(); const b=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.05,0.8),toon({color:0x2a2a33})); b.position.y=0.1; const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.025,0.025,1.05,6),toon({color:0x9aa0a8})); pole.position.set(0,0.62,0.36); const bar=new THREE.Mesh(new THREE.CylinderGeometry(0.02,0.02,0.45,6),toon({color:0x2a2a33})); bar.rotation.z=Math.PI/2; bar.position.set(0,1.14,0.36); for(const zz of [-0.34,0.36]){ const w=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,0.05,10),toon({color:0x24242a})); w.rotation.z=Math.PI/2; w.position.set(0,0.08,zz); deck.add(w); } deck.add(b,pole,bar); CARLO.h.g.add(deck); CARLO.deck=deck; }
   const lp=LEO.h.g.position, n=farNode(lp.x,lp.z,30,55); CARLO.h.g.position.set(n[0],0.15,n[1]); CARLO.h.g.rotation.set(0,0,0); CARLO.h.g.visible=true; CARLO.deck.visible=true; CARLO.state='go'; CARLO.replan=0;
-  copMsgT=4.5; msg.innerHTML='📞 <b>Carlo:</b> «Arrivo, arrivo! Prendo il monopattino…» 😄 Aspettalo: sta venendo da Leo.'; carloLaugh(); setTimeout(()=>speak('Arrivo, arrivo!',1.3,1.1),800); return true; }
+  copMsgT=4.5; msg.innerHTML='📞 <b>Carlo:</b> «Arrivo, arrivo! Prendo il monopattino…» 😄 Aspettalo: sta venendo da Leo.'; if(!voxPlay('voci/carlo2.mp3')){ carloLaugh(); setTimeout(()=>speak('Arrivo, arrivo!',1.3,1.1),800); } return true; } /* "Arrivo, arrivo!" registrato dal vero Carletto (26/11) */
 function updateLeo(dt){ if(!UM.ready) return;
   if(!G.started || HOME.active || gameOver){ if(!G.started && (LEO.on||CARLO.state!=='off')) leoReset(); return; }
   if(LV.n<10) return;
