@@ -252,7 +252,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.086.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -277,6 +277,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.087.0',d:'26/11/2026',t:['👄 Editor: la bocca! Sorriso, seria, arrabbiata, grande sorriso (con i denti) o sorpresa.']},
  {v:'0.086.1',d:'26/11/2026',t:['👓 Occhiali rettangolari più grandi e con la montatura nera più spessa.']},
  {v:'0.086.0',d:'26/11/2026',t:['🔊 Leo ringhia e urla, Carlo ride; Carlo si mette davanti a chi Leo aveva innervosito, apre le braccia e dice «Che spettacolo!».','🪞 Editor: nuovi tagli "Marines (lati rasati)" e "Calvo in mezzo", naso grande o piccolo, rughe; nell\u2019armadio gli occhiali (rettangolari o tondi) con il colore.']},
  {v:'0.085.0',d:'26/11/2026',t:['😠 Dal livello 10 arriva Leo: va da chi hai guarito e lo rende di nuovo nervoso.','😄 Chiama Carlo dal 📱 telefono (60 karma, una volta a partita): arriva in monopattino, spinge a terra Leo e poi rimette a posto, uno a uno, chi Leo aveva rovinato.']},
@@ -1469,7 +1470,7 @@ const AV={
   glasses:['nessuno','tondi','squadrati','da sole','da vista sottili']};
 // valori di partenza (il "Seminatore" di Teo: testa rasata e barba)
 const AVC_DEF={sex:'m',skin:2,shape:0,eyes:0,eyeCol:0,brows:0,nose:0,mouth:0,freckles:0,blush:0,lashes:0,hair:3,hairCol:1,beard:2,beardCol:1,hat:0,hatCol:7,glasses:0,glassCol:15,earrings:0,
-  top:0,topCol:1,bottom:0,bottomCol:8,shoes:0,shoesCol:11,height:1,build:1,um:0,hd:0,bd:0,lg:0,ft:0,top2:3,tat:0,tatCol:0,gl:0,glc:15,ns:0,wr:0};
+  top:0,topCol:1,bottom:0,bottomCol:8,shoes:0,shoesCol:11,height:1,build:1,um:0,hd:0,bd:0,lg:0,ft:0,top2:3,tat:0,tatCol:0,gl:0,glc:15,ns:0,wr:0,mo:0};
 const AVKEYS=Object.keys(AVC_DEF);
 const avEncode=c=>'KP1-'+AVKEYS.map(k=>k==='sex'?(c.sex==='f'?'f':'m'):((v=>v<0?'z':(v%36).toString(36))(c[k]??AVC_DEF[k]))).join(''); // 'z' = scelta automatica (es. scarpe abbinate)
 function avDecode(s){ const c={...AVC_DEF}; if(!s||!s.startsWith('KP1-')) return c; const b=s.slice(4); AVKEYS.forEach((k,i)=>{ const ch=b[i]; if(ch===undefined) return; c[k]=k==='sex'?(ch==='f'?'f':'m'):ch==='z'?-1:parseInt(ch,36)||0; }); return c; }
@@ -1666,7 +1667,7 @@ async function umLoad(base){ const get=async f=>{ const r=await fetch(base+f+'?v
     UM.parts[m.sex][m.kind].push(P); }
   UM.ready=true; }
 const UM_NAMES={Casual_2:'Casual',Casual_Hoodie:'Felpa',Suit:'Elegante',Worker:'Operaio',Farmer:'Contadino',Beach:'Spiaggia',Punk:'Punk',Adventurer:'Avventura',Adventurer_Long:'Avventura capelli lunghi',Marines:'Marines (lati rasati)',Calvo_Lati:'Calvo in mezzo',Casual:'Casual',Formal:'Vestito',Medieval:'Treccia',Soldier:'Sportiva',Witch:'Stivali'};
-AV.glUM=['nessuno','rettangolari','tondi']; AV.noseUM=['normale','grande','piccolo']; AV.wrinkles=['no','poche','tante'];
+AV.glUM=['nessuno','rettangolari','tondi']; AV.mouthUM=['nessuna','sorriso','seria','arrabbiata','grande sorriso','sorpresa']; AV.noseUM=['normale','grande','piccolo']; AV.wrinkles=['no','poche','tante'];
 AV.tattoo=['nessuno','braccio destro','braccio sinistro','entrambe le braccia','collo','braccia e collo']; AV.tatCol=[0x1c2230,0x2a3f6e,0x5a1f24,0x23452e];
 const UMKEY={Head:'hd',Body:'bd',Legs:'lg',Feet:'ft'};
 function umPart(c,kind){ const L=UM.parts[c.sex==='f'?'f':'m'][kind]; let i=c[UMKEY[kind]]|0;
@@ -1688,6 +1689,14 @@ function umGlasses(style,col){ const g=new THREE.Group(), m=toon({color:col}), L
     else { const r=new THREE.Mesh(new THREE.TorusGeometry(0.019,t*0.55,6,20),m); r.position.set(cx,0,0); g.add(r); const l=new THREE.Mesh(new THREE.CircleGeometry(0.019,16),L); l.position.set(cx,0,-0.001); g.add(l); }
     add(new THREE.BoxGeometry(t,t,0.11),sx*(style===1?0.068:0.062),0.006,-0.055,sx*0.08); }
   add(new THREE.BoxGeometry(style===1?0.014:0.016,t,t),0,0.006,0.002); return g; }
+// 👄 bocca (Teo, 26/11: "potresti aggiungere anche le bocche?"): una linea scura che segue la curva del viso; il grande sorriso e la sorpresa sono aperti
+function umMouth(style){ const g=new THREE.Group(), dark=toon({color:0x3a1f22}), w=0.026;
+  const curve=(bend,y0)=>{ const pts=[]; for(let i=0;i<=10;i++){ const u=i/10*2-1, x=u*w; pts.push(new THREE.Vector3(x,y0+bend*u*u,-0.011*u*u)); } return new THREE.CatmullRomCurve3(pts); };
+  if(style===1||style===2||style===3){ const bend=style===1?0.007:style===3?-0.007:0; g.add(new THREE.Mesh(new THREE.TubeGeometry(curve(bend,0),16,0.0022,5,false),dark)); }
+  else if(style===4){ const sh=new THREE.Shape(); sh.moveTo(-w,0.004); sh.quadraticCurveTo(0,0.002,w,0.004); sh.quadraticCurveTo(0,-0.03,-w,0.004); const m=new THREE.Mesh(new THREE.ShapeGeometry(sh,12),dark); g.add(m);
+    const tsh=new THREE.Shape(); tsh.moveTo(-w*0.8,0.0035); tsh.quadraticCurveTo(0,0.0015,w*0.8,0.0035); tsh.lineTo(w*0.75,-0.003); tsh.quadraticCurveTo(0,-0.0055,-w*0.75,-0.003); const t=new THREE.Mesh(new THREE.ShapeGeometry(tsh,8),toon({color:0xf6f2ea})); t.position.z=0.0005; g.add(t); }
+  else if(style===5){ const m=new THREE.Mesh(new THREE.CircleGeometry(0.009,14),dark); m.scale.y=1.3; g.add(m); }
+  return g; }
 function umBody(model,cfg){ let ref=model.userData.umRef;
   if(!ref){ let sm=null; model.traverse(o=>{ if(o.isSkinnedMesh && !o.userData.um && !o.userData.avBody && !sm) sm=o; }); if(!sm) return null;
     ref=model.userData.umRef={bones:sm.skeleton.bones,inv:sm.skeleton.boneInverses.map(m=>m.clone()),bind:sm.bindMatrix.clone(),parent:sm.parent,pos:sm.position.clone(),quat:sm.quaternion.clone(),scl:sm.scale.clone(),local:sm.skeleton.bones.map(b=>b.position.clone())}; }
@@ -1742,6 +1751,9 @@ function umBody(model,cfg){ let ref=model.userData.umRef;
   const g2=new THREE.BufferGeometry(); for(const a of ['position','normal','skinIndex','skinWeight']) g2.setAttribute(a,geo.attributes[a]); g2.setIndex(geo.index); g2.boundingSphere=geo.boundingSphere; g2.setAttribute('color',colA);
   const mk=(mat)=>{ const m=new THREE.SkinnedMesh(g2,mat); m.position.copy(ref.pos); m.quaternion.copy(ref.quat); m.scale.copy(ref.scl); m.userData.um=true; m.frustumCulled=false; ref.parent.add(m); m.bind(sk,ref.bind); return m; };
   // cappelli (e orecchini) di prima, appoggiati sulla testa del modello: agganciati all'osso della testa
+  if((cfg.mo|0)>0){ const hi=idx.Head, HP=PARTS[0]; let mz=0.16; for(let i=0;i<HP.n;i++){ const r=HP.roles[HP.part[i]]; if((r==='skin'||r==='skin2') && Math.abs(HP.pos[i*3])<0.016 && Math.abs(HP.pos[i*3+1]-1.612)<0.012 && HP.pos[i*3+2]>mz) mz=HP.pos[i*3+2]; }
+    const mm=umMouth(cfg.mo); const my=(SX==='f'?1.607:1.612)-(cfg.ns===1?0.004:0); const D=new THREE.Matrix4().compose(new THREE.Vector3(0*k+off.x,my*k+off.y,(mz+0.0025)*k+off.z),new THREE.Quaternion(),new THREE.Vector3(k,k,k));
+    const w=new THREE.Group(); w.add(mm); w.userData.um=true; w.matrixAutoUpdate=false; w.matrix.copy(Bn[hi].clone().invert().multiply(D)); B[hi].add(w); }
   if((cfg.gl|0)>0){ const hi=idx.Head, gg=umGlasses(cfg.gl,AV.clothCol[cfg.glc??15]); const ey=SX==='f'?1.69:1.698;
     const D=new THREE.Matrix4().compose(new THREE.Vector3(0*k+off.x,ey*k+off.y,0.168*k+off.z),new THREE.Quaternion(),new THREE.Vector3(k,k,k));
     const w=new THREE.Group(); w.add(gg); w.userData.um=true; w.matrixAutoUpdate=false; w.matrix.copy(Bn[hi].clone().invert().multiply(D)); B[hi].add(w); }
@@ -3217,7 +3229,7 @@ const ED_TABS=[['🧍 Corpo',[['sex','Sesso',['Uomo','Donna']],['skin','Pelle','
 const edEl=document.getElementById('avEd'), edTabs=document.getElementById('edTabs'), edBody=document.getElementById('edBody');
 // v0.70: con le teste vere i tagli e la barba disponibili sono quelli del pacchetto
 function edRows(t){ if(UM.ready){ const sx=ED.cfg.sex; if(t===0) return ED_TABS[0][1];
-    if(t===1) return [['hd','Viso e capelli',umList(sx,'Head')],['hairCol','Colore capelli','hairCol'],['eyeCol','Colore occhi','eyeCol'],['ns','Naso',AV.noseUM],['wr','Rughe',AV.wrinkles]];
+    if(t===1) return [['hd','Viso e capelli',umList(sx,'Head')],['hairCol','Colore capelli','hairCol'],['eyeCol','Colore occhi','eyeCol'],['ns','Naso',AV.noseUM],['mo','Bocca',AV.mouthUM],['wr','Rughe',AV.wrinkles]];
     if(t===4) return [['hat','Cappello',AV.hat],['hatCol','Colore cappello','clothCol'],['gl','Occhiali',AV.glUM],['glc','Colore occhiali','clothCol'],['earrings','Orecchini',['no','sì']],['tat','Tatuaggi',AV.tattoo],['tatCol','Colore tatuaggi','tatCol']];
     if(t===5) return [['bd','Sopra',umList(sx,'Body')],['topCol','Colore','clothCol'],['top2','Secondo colore','clothCol'],['lg','Sotto',umList(sx,'Legs')],['bottomCol','Colore','clothCol'],['ft','Scarpe',umList(sx,'Feet')],['shoesCol','Colore','clothCol']]; }
   return ED_TABS[t][1].map(r=>{ if(!QH.ready) return r; if(r[0]==='hair') return [r[0],r[1],QHAIR_ED[ED.cfg.sex==='f'?'f':'m'].map(x=>x[0])]; if(r[0]==='beard') return [r[0],r[1],['nessuna','barba']]; return r; }); }
