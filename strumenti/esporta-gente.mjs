@@ -58,5 +58,14 @@ headVariant('Casual_2','Marines',(pos,pa,mats,n)=>{ const hk=mats.findIndex(m=>m
 headVariant('Suit','Calvo_Lati',(pos,pa,mats,n)=>{ const hk=mats.findIndex(m=>m.name==='Hair'), sk=mats.findIndex(m=>m.name==='Skin');
   for(let i=0;i<n;i++){ if(pa[i]!==hk) continue; const x=pos[i*3], y=pos[i*3+1], z=pos[i*3+2];
     if((y>1.755 && Math.abs(x)<0.088) || (z>0.04 && y>1.725)){ pa[i]=sk; const dx=x-C0[0], dy=y-C0[1], dz=z-C0[2], L=Math.hypot(dx,dy,dz), R=Math.min(L,0.092); pos[i*3]=C0[0]+dx/L*R; pos[i*3+1]=C0[1]+dy/L*R; pos[i*3+2]=C0[2]+dz/L*R; } } }); // la parte senza capelli torna sulla forma della testa // in cima e davanti niente capelli (la "cozzetta"), restano ai lati e dietro
+headVariant('Casual_2','Spazzola',(pos,pa,mats,n)=>{ const hk=mats.findIndex(m=>m.name==='Hair'), sk=mats.findIndex(m=>m.name==='Skin'); const sd=mats.length; mats.push({name:'Shaved',color:'#6b5444'});
+  const skin=[]; for(let i=0;i<n;i++) if(pa[i]===sk) skin.push(i);
+  const snap=(i,out)=>{ const x=pos[i*3], y=pos[i*3+1], z=pos[i*3+2]; let b=-1,bd=1e9; for(const j of skin){ const d=(pos[j*3]-x)**2+(pos[j*3+1]-y)**2+(pos[j*3+2]-z)**2; if(d<bd){ bd=d; b=j; } } if(b<0) return;
+    const dx=x-C0[0], dy=y-C0[1], dz=z-C0[2], L=Math.hypot(dx,dy,dz)||1, R=Math.hypot(pos[b*3]-C0[0],pos[b*3+1]-C0[1],pos[b*3+2]-C0[2])+out; pos[i*3]=C0[0]+dx/L*R; pos[i*3+1]=C0[1]+dy/L*R; pos[i*3+2]=C0[2]+dz/L*R; };
+  const orig=pos.slice(); const sel=[];
+  for(let i=0;i<n;i++){ if(pa[i]!==hk) continue; const x=orig[i*3], y=orig[i*3+1], z=orig[i*3+2];
+    const top=y>1.775 && z>-0.075 && Math.abs(x)<0.075;
+    if(top) sel.push([i,0.022]); else { pa[i]=sd; sel.push([i,0.006]); } } // sopra: spazzola corta (2 cm), lati, nuca e barba rasati: niente codino
+  for(const [i,o] of sel) snap(i,o); });
 const cnt={}; for(const p of META.parts){ const k=p.sex+p.kind; cnt[k]=(cnt[k]||0)+1; } console.log(cnt, 'vertici medi', Math.round(META.parts.reduce((a,p)=>a+p.n,0)/META.parts.length));
 fs.mkdirSync('/home/claude/umout3',{recursive:true}); fs.writeFileSync('/home/claude/umout3/gente.bin',Buffer.concat(BIN)); fs.writeFileSync('/home/claude/umout3/gente.json',JSON.stringify(META)); console.log('bin',off);

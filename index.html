@@ -252,7 +252,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -277,6 +277,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.087.2',d:'26/11/2026',t:['💈 Nuovo taglio "Spazzola corta (lati rasati)": lati e nuca rasati, niente codino, capelli dritti ma corti.']},
  {v:'0.087.1',d:'26/11/2026',t:['😠 Leo ha il suo aspetto vero, fatto da Teo con l\u2019editor.']},
  {v:'0.087.0',d:'26/11/2026',t:['👄 Editor: la bocca! Sorriso, seria, arrabbiata, grande sorriso (con i denti) o sorpresa.']},
  {v:'0.086.1',d:'26/11/2026',t:['👓 Occhiali rettangolari più grandi e con la montatura nera più spessa.']},
@@ -1656,7 +1657,7 @@ const QH_SCALE=0.8;
 // Le clip Mixamo muovono solo le rotazioni (le posizioni delle ossa le ho tolte, tranne il bacino), quindi le proporzioni restano quelle del modello.
 // Colori: pelle, capelli e due colori dei vestiti si cambiano per ogni persona (un colore per vertice: un solo disegno per persona, leggero).
 const UM={ready:false,parts:{m:{Head:[],Body:[],Legs:[],Feet:[]},f:{Head:[],Body:[],Legs:[],Feet:[]}},geo:{},cols:{}};
-const UMMAT_ROLE=n=>/^Skin_Darker/.test(n)?'skin2':/^Skin/.test(n)?'skin':/Eyebrow|Moustache/.test(n)?'brow':/Hair/.test(n)?'hair':/^Eye$/.test(n)?'eye':'cloth';
+const UMMAT_ROLE=n=>/^Shaved/.test(n)?'shave':/^Skin_Darker/.test(n)?'skin2':/^Skin/.test(n)?'skin':/Eyebrow|Moustache/.test(n)?'brow':/Hair/.test(n)?'hair':/^Eye$/.test(n)?'eye':'cloth';
 async function umLoad(base){ const get=async f=>{ const r=await fetch(base+f+'?v='+encodeURIComponent((document.getElementById('devTitle')||{}).textContent||Date.now()),{cache:'no-cache'}); /* file nuovi a ogni versione (il browser teneva quelli vecchi) */ if(!r.ok) throw new Error('manca '+f); return r; };
   const [j,b]=await Promise.all([get('gente.json').then(r=>r.json()),get('gente.bin').then(r=>r.arrayBuffer())]);
   UM.mix=j.mix; UM.rigs=j.rigs;
@@ -1667,7 +1668,7 @@ async function umLoad(base){ const get=async f=>{ const r=await fetch(base+f+'?v
     P.roles=m.mats.map(x=>UMMAT_ROLE(x.name)); const cloth=P.roles.map((r,i)=>r==='cloth'?i:-1).filter(i=>i>=0).sort((x,y)=>cnt[y]-cnt[x]); if(cloth[0]!==undefined) P.roles[cloth[0]]='c1'; if(cloth[1]!==undefined) P.roles[cloth[1]]='c2';
     UM.parts[m.sex][m.kind].push(P); }
   UM.ready=true; }
-const UM_NAMES={Casual_2:'Casual',Casual_Hoodie:'Felpa',Suit:'Elegante',Worker:'Operaio',Farmer:'Contadino',Beach:'Spiaggia',Punk:'Punk',Adventurer:'Avventura',Adventurer_Long:'Avventura capelli lunghi',Marines:'Marines (lati rasati)',Calvo_Lati:'Calvo in mezzo',Casual:'Casual',Formal:'Vestito',Medieval:'Treccia',Soldier:'Sportiva',Witch:'Stivali'};
+const UM_NAMES={Casual_2:'Casual',Casual_Hoodie:'Felpa',Suit:'Elegante',Worker:'Operaio',Farmer:'Contadino',Beach:'Spiaggia',Punk:'Punk',Adventurer:'Avventura',Adventurer_Long:'Avventura capelli lunghi',Marines:'Marines (lati rasati)',Spazzola:'Spazzola corta (lati rasati)',Calvo_Lati:'Calvo in mezzo',Casual:'Casual',Formal:'Vestito',Medieval:'Treccia',Soldier:'Sportiva',Witch:'Stivali'};
 AV.glUM=['nessuno','rettangolari','tondi']; AV.mouthUM=['nessuna','sorriso','seria','arrabbiata','grande sorriso','sorpresa']; AV.noseUM=['normale','grande','piccolo']; AV.wrinkles=['no','poche','tante'];
 AV.tattoo=['nessuno','braccio destro','braccio sinistro','entrambe le braccia','collo','braccia e collo']; AV.tatCol=[0x1c2230,0x2a3f6e,0x5a1f24,0x23452e];
 const UMKEY={Head:'hd',Body:'bd',Legs:'lg',Feet:'ft'};
@@ -1679,7 +1680,7 @@ function umList(sex,kind){ return UM.parts[sex==='f'?'f':'m'][kind].map(p=>UM_NA
 function umColor(P,c){ const lin=x=>new THREE.Color(x), sk=lin(AV.skin[c.skin]), hc=lin(AV.hairCol[c.hairCol]);
   const pick={Head:[null,null],Body:[c.topCol,c.top2??c.topCol],Legs:[c.bottomCol,c.bottomCol],Feet:[c.shoesCol,c.shoesCol]}[P.kind];
   return P.roles.map((r,i)=>{ const base=new THREE.Color(P.mats[i].color);
-    if(r==='skin') return sk; if(r==='skin2') return sk.clone().multiplyScalar(0.85); if(r==='hair') return hc; if(r==='brow') return hc.clone().multiplyScalar(0.7); if(r==='eye') return lin(AV.eyeCol[c.eyeCol??0]).multiplyScalar(0.55);
+    if(r==='skin') return sk; if(r==='skin2') return sk.clone().multiplyScalar(0.85); if(r==='shave') return sk.clone().multiplyScalar(0.8).lerp(hc,0.35); /* rasato: pelle con un'ombra del colore dei capelli */ if(r==='hair') return hc; if(r==='brow') return hc.clone().multiplyScalar(0.7); if(r==='eye') return lin(AV.eyeCol[c.eyeCol??0]).multiplyScalar(0.55);
     if(r==='c1' && pick[0]!=null) return lin(AV.clothCol[pick[0]]); if(r==='c2' && pick[1]!=null) return lin(AV.clothCol[pick[1]]).multiplyScalar(P.kind==='Body'&&c.top2==null?0.8:1); return base; }); }
 const UMMAT=toon({vertexColors:true}); let UM_HATK=1.12, UM_HATY=0.03; const UM_HANDK=0.72, UM_LEGIN=0;
 // 👓 occhiali (per Carlo: rettangolari) costruiti sugli occhi del modello: montatura sottile, lenti appena azzurrine
