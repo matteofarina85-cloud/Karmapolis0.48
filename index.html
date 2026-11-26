@@ -152,7 +152,8 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 #c{transition:transform .28s cubic-bezier(.2,.9,.3,1.15),filter .28s}
 body.phoneOn #c{filter:blur(2.6px) brightness(.85)}
 body.phoneOn .hud.top,body.phoneOn #compass,body.phoneOn #greyHud,body.phoneOn #tvHint,body.phoneOn #sta{opacity:0;transition:opacity .15s}
-#phoneBtn{background:#2a2233;color:#fff}
+#phoneBtn{background:#ffd84d;color:#2a2233;padding:2px 10px!important;line-height:0}#phoneBtn svg{width:30px;height:30px;display:block}#phoneBtn .pw{fill:none;stroke:#2a2233;stroke-width:2;stroke-linecap:round;opacity:0}#phoneBtn .pdot{display:none}#phoneBtn.ring .pw{opacity:1;animation:pwave .5s ease-in-out infinite alternate}#phoneBtn.ring .pdot{display:block}#phoneBtn.ring{background:#3fbf6a}@keyframes pwave{from{opacity:.3}to{opacity:1}}
+@media (orientation:landscape) and (max-height:520px){#phoneBtn svg{width:24px;height:24px}}
 #phoneBtn.ring{animation:ringb .5s ease-in-out infinite}
 @keyframes ringb{0%,100%{transform:rotate(0)}25%{transform:rotate(-14deg) scale(1.12)}75%{transform:rotate(14deg) scale(1.12)}}
 #helpBtn[hidden]{display:none!important}
@@ -259,7 +260,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.5</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.6</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -277,13 +278,14 @@ body.phoneOn #phone{transform:translate(-50%,0)}
   <div class="card seg" id="shopCard" hidden><button id="shopBtn" type="button" style="background:#2f7de1;color:#fff">🔧 Ripara</button><button id="shopOut" class="ghost" type="button" hidden>🚗 Esci</button></div>
   <div class="card seg" id="actCard" hidden><button id="act" type="button">Sali</button></div>
   <div class="card seg" id="shootCard" hidden><button id="shoot" type="button" aria-label="Spara">🔫 Spara</button></div>
-  <div class="card seg"><button id="phoneBtn" type="button" aria-label="Telefono">📱</button><button id="homeTown" class="ghost" type="button" aria-label="Torna a casa" hidden>🏠</button><button id="full" class="ghost" type="button" aria-label="Schermo intero orizzontale">⛶</button><button id="rot" class="ghost" type="button" aria-label="Ruota la vista">↻</button><button id="zin" class="ghost" type="button" aria-label="Avvicina">＋</button><button id="zout" class="ghost" type="button" aria-label="Allontana">－</button></div>
+  <div class="card seg"><button id="phoneBtn" type="button" aria-label="Telefono"><svg viewBox="0 0 32 32" aria-hidden="true"><g class="pw"><path d="M7 9 q-3 7 0 14" /><path d="M25 9 q3 7 0 14" /></g><rect x="10" y="3" width="12" height="26" rx="3" fill="#fff" stroke="#2a2233" stroke-width="2"/><rect x="12" y="7" width="8" height="16" rx="1" fill="#3f8ae0"/><rect x="14" y="4.6" width="4" height="1.2" rx=".6" fill="#2a2233"/><circle cx="16" cy="26" r="1.2" fill="#2a2233"/><circle class="pdot" cx="23" cy="5" r="4" fill="#e9655a" stroke="#fff" stroke-width="1.5"/></svg></button><button id="homeTown" class="ghost" type="button" aria-label="Torna a casa" hidden>🏠</button><button id="full" class="ghost" type="button" aria-label="Schermo intero orizzontale">⛶</button><button id="rot" class="ghost" type="button" aria-label="Ruota la vista">↻</button><button id="zin" class="ghost" type="button" aria-label="Avvicina">＋</button><button id="zout" class="ghost" type="button" aria-label="Allontana">－</button></div>
   <div class="card seg" id="sndCard" hidden><button id="snd" class="ghost" type="button" aria-label="Suoni">🔊</button><button id="mus" class="ghost" type="button" aria-label="Musica" aria-pressed="true">🎵</button><button id="swap" type="button" hidden style="display:none">👕 Cambia look</button></div>
 </div>
 
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.087.6',d:'26/11/2026',t:['📱 Pulsante del telefono più chiaro: un telefonino disegnato su fondo giallo; quando squilla diventa verde, con le onde e il pallino rosso.']},
  {v:'0.087.5',d:'26/11/2026',t:['😄 Carlo ha il suo aspetto vero, fatto da Teo con l\u2019editor.']},
  {v:'0.087.4',d:'26/11/2026',t:['📱 Le dita della mano restano sopra lo schermo del telefono.','Nel telefono, nell\u2019editor, nella TV e nelle novità ora si scorre col dito.','Niente più microscatto la prima volta che entri in camera da letto (lo specchio si prepara all\u2019avvio).']},
  {v:'0.087.3',d:'26/11/2026',t:['⛶ Sul telefono una nuvoletta gialla indica il pulsante dello schermo intero finché non lo premi: così non si taglia niente.']},
