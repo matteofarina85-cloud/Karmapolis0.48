@@ -260,7 +260,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.089.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.089.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -285,6 +285,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.089.2',d:'26/11/2026',t:['😠 Voce di Leo più arrabbiata: più grave, più veloce, urlata e con il ringhio.']},
  {v:'0.089.1',d:'26/11/2026',t:['😠 Leo ha le sue frasi vere: «Mia mamma mi ha fatto due mani!» e «Porco diso!».']},
  {v:'0.089.0',d:'26/11/2026',t:['✨ I portatori di bene durano di più (45 secondi invece di 30): una caramella data bene fa molta più strada.']},
  {v:'0.088.2',d:'26/11/2026',t:['😠 Leo cammina più piano (deciso da Teo e dal vero Carletto: "più verosimile").']},
@@ -3459,6 +3460,10 @@ function stepTo(h,path,tx,tz,sp,dt){ // cammina lungo il percorso (mai attravers
   if(dd<0.05) return; g.x+=dx/dd*Math.min(dd,sp*dt); g.z+=dz/dd*Math.min(dd,sp*dt); const yw=Math.atan2(dx,dz); let dy=((yw-h.g.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI; h.g.rotation.y+=dy*Math.min(1,dt*8); }
 function animSpecial(h,mode,dt){ for(const k of ['idle','walk','run']) h.A[k].setEffectiveWeight(k===mode?1:0); h.mixer.update(dt); }
 // 🔊 voci: Leo ringhia e urla (è sempre arrabbiato), Carlo ride e dice "Che spettacolo!" a braccia aperte
+// 😠 voce di Leo "veramente incazzata": voce grave e veloce, al massimo, con il ringhio sotto. Se nel repository c'è un audio vero (voci/leo1.mp3, leo2.mp3) usa quello
+const LEOVOX={}; function leoShout(i,txt){ if(!soundOn) return; const f='voci/leo'+i+'.mp3'; if(LEOVOX[f]===undefined){ const a=new Audio(f); LEOVOX[f]=null; a.oncanplaythrough=()=>{ LEOVOX[f]=a; }; a.onerror=()=>{ LEOVOX[f]=false; }; a.load(); }
+  const A=LEOVOX[f]; if(A){ try{ A.currentTime=0; A.volume=1; A.play(); }catch(e){} return; }
+  leoGrowl(); speak(txt.toUpperCase(),0.1,1.3); setTimeout(leoGrowl,450); }
 function speak(txt,pitch,rate){ if(!soundOn||!window.speechSynthesis) return; try{ const u=new SpeechSynthesisUtterance(txt); u.lang='it-IT'; u.pitch=pitch; u.rate=rate; u.volume=1; const v=speechSynthesis.getVoices().find(v=>/^it/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
 function leoGrowl(){ if(!soundOn) return; try{ audioInit(); const t=AC.currentTime, o=AC.createOscillator(), o2=AC.createOscillator(), g=AC.createGain(), ws=AC.createWaveShaper(), f=AC.createBiquadFilter();
   const cur=new Float32Array(256); for(let i=0;i<256;i++){ const x=i/128-1; cur[i]=Math.tanh(x*6); } ws.curve=cur; o.type='sawtooth'; o2.type='square'; o.frequency.setValueAtTime(95,t); o.frequency.linearRampToValueAtTime(150,t+0.25); o.frequency.linearRampToValueAtTime(80,t+0.8); o2.frequency.setValueAtTime(47,t);
@@ -3478,7 +3483,7 @@ function callCarlo(){ if(!carloAvail()) return; if(G.karma<CARLO.price){ copMsgT
 function updateLeo(dt){ if(!UM.ready) return;
   if(!G.started || HOME.active || gameOver){ if(!G.started && (LEO.on||CARLO.state!=='off')) leoReset(); return; }
   if(LV.n<10) return;
-  if(!LEO.on){ if(G.time<LEO.spawnAt) return; if(!LEO.h) LEO.h=mkSpecial(LEO.code,null,'😠 Leo','rgba(255,190,180,.95)'); const n=farNode(player.pos.x,player.pos.z,28,50); LEO.h.g.position.set(n[0],0.15,n[1]); LEO.h.g.rotation.set(0,0,0); LEO.h.g.visible=true; LEO.on=true; leoGrowl(); setTimeout(()=>speak('Mia mamma mi ha fatto due mani!',0.55,1.1),700);
+  if(!LEO.on){ if(G.time<LEO.spawnAt) return; if(!LEO.h) LEO.h=mkSpecial(LEO.code,null,'😠 Leo','rgba(255,190,180,.95)'); const n=farNode(player.pos.x,player.pos.z,28,50); LEO.h.g.position.set(n[0],0.15,n[1]); LEO.h.g.rotation.set(0,0,0); LEO.h.g.visible=true; LEO.on=true; leoGrowl(); setTimeout(()=>leoShout(1,'Mia mamma mi ha fatto due mani!'),600);
     if(typeof showAlarm==='function'){ try{ showAlarm('😠 Arriva Leo!','rende di nuovo nervosi quelli che hai guarito'); }catch(e){} } copMsgT=6; msg.innerHTML='😠 <b>Arriva Leo!</b> Rende di nuovo nervosi quelli che hai guarito. Se hai '+CARLO.price+' karma, chiama <b>😄 Carlo</b> dal 📱 telefono.'; try{ phoneRing('Carlo','ti scrive: «Se Leo ti dà fastidio, chiamami!»'); }catch(e){} }
   const L=LEO.h, lp=L.g.position;
   if(LEO.out){ if(LEO.ko>0){ LEO.ko-=dt; if(LEO.ko<=0){ anthPoof(lp); L.g.visible=false; } } }
@@ -3487,7 +3492,7 @@ function updateLeo(dt){ if(!UM.ready) return;
       LEO.tgt=best; const tx=best?best.x:farNode(lp.x,lp.z,10,30)[0], tz=best?best.z:farNode(lp.x,lp.z,10,30)[1]; LEO.goal=[tx,tz]; LEO.path=walkPath(lp.x,lp.z,tx,tz)||[]; }
     if(LEO.tgt && !LEO.tgt.kind){ LEO.goal=[LEO.tgt.x,LEO.tgt.z]; }
     if(LEO.goal) stepTo(L,LEO.path,LEO.goal[0],LEO.goal[1],LEO.speed,dt);
-    LEO.cd-=dt; if(LEO.cd<=0){ for(const p of PEDS){ if(p.kind||p.owner!=='me'||p.gone) continue; if(Math.hypot(p.x-lp.x,p.z-lp.z)<1.4){ p.good=0; p.immune=0; infect(p,'nervo',0.75); p.owner=null; p.leoHit=true; if(!LEO.victims.includes(p)) LEO.victims.push(p); floatText('😠',p.x,p.z); LEO.cd=1.2; LEO.replan=0; leoGrowl(); LEO.nv=(LEO.nv||0)+1; if(LEO.nv%2===1||LEO.nv%3===0) setTimeout(()=>speak(LEO.nv%2?'Porco diso!':'Mia mamma mi ha fatto due mani!',0.55,1.15),500); /* frasi di Leo scelte da Teo (26/11) */
+    LEO.cd-=dt; if(LEO.cd<=0){ for(const p of PEDS){ if(p.kind||p.owner!=='me'||p.gone) continue; if(Math.hypot(p.x-lp.x,p.z-lp.z)<1.4){ p.good=0; p.immune=0; infect(p,'nervo',0.75); p.owner=null; p.leoHit=true; if(!LEO.victims.includes(p)) LEO.victims.push(p); floatText('😠',p.x,p.z); LEO.cd=1.2; LEO.replan=0; leoGrowl(); LEO.nv=(LEO.nv||0)+1; if(LEO.nv%2===1||LEO.nv%3===0) setTimeout(()=>LEO.nv%2?leoShout(2,'Porco diso!'):leoShout(1,'Mia mamma mi ha fatto due mani!'),400); /* frasi di Leo scelte da Teo (26/11) */
           if(!LEO.told){ LEO.told=true; copMsgT=4; msg.innerHTML='😠 <b>Leo</b> ha fatto innervosire di nuovo qualcuno che avevi guarito!'; } break; } } }
     if(L.g.visible) animSpecial(L,'walk',dt); }
   if(CARLO.state==='off') return; const C=CARLO.h, cp=C.g.position;
