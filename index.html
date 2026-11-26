@@ -260,7 +260,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.9</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.088.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -285,6 +285,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.088.0',d:'26/11/2026',t:['⚙️ Telefoni lenti: se il gioco non tiene nemmeno i 30 fps passa da solo alla grafica minima (niente ombre e contorni, risoluzione più bassa). Si può anche scegliere a mano: 📱 → Opzioni → Grafica minima.']},
  {v:'0.087.9',d:'26/11/2026',t:['🚗 Sistemata l\u2019auto che restava bloccata dopo uno scontro con il traffico: l\u2019altra auto ora se ne va.','🎒 Tolto lo zaino al personaggio di base.']},
  {v:'0.087.8',d:'26/11/2026',t:['🧱 Se corri contro un muro il personaggio si ferma invece di correre sul posto.','🚿 Sotto la doccia il personaggio è nudo… con la censura a cubetti.']},
  {v:'0.087.7',d:'26/11/2026',t:['📺 In casa basta toccare la TV (o la nuvoletta) per far partire il tutorial.']},
@@ -3519,7 +3520,7 @@ function phRender(){ const a=PH.app, B=PH.body; let t='Karmapolis', h='';
   else if(a==='karma'){ t='Karma'; h='<div class="row"><span>🪃 Karma</span><b>'+Math.round(G.karma)+'</b></div><div class="row"><span>🍬 Caramelle</span><b>'+(G.candies|0)+'</b></div><div class="row"><span>⛽ Benzina</span><b>'+Math.round(HOME.fuel)+'%</b></div>'; }
   else if(a==='news'){ t='Novità'; const N=window.__NEWS||[]; h=N.map(n=>'<h4>'+n.v+' <small style="opacity:.6;font-weight:500">'+n.d+'</small></h4><ul>'+n.t.map(x=>'<li>'+x+'</li>').join('')+'</ul>').join(''); }
   else if(a==='help'){ t='Comandi'; h=document.getElementById('howto').innerHTML+'<p class="note">📱 Telefono: pulsante 📱, tasto P, joypad View.</p>'; }
-  else if(a==='set'){ t='Opzioni'; h='<div class="row"><span>🔊 Suoni</span><button type="button" class="tog'+(soundOn?' on':'')+'" data-do="snd">'+(soundOn?'Sì':'No')+'</button></div><div class="row"><span>🎵 Musica</span><button type="button" class="tog'+(AUD.music?' on':'')+'" data-do="mus">'+(AUD.music?'Sì':'No')+'</button></div><div class="row"><span>⛶ Schermo intero</span><button type="button" class="tog" data-do="full">Apri</button></div><div class="note">'+((document.getElementById('devTitle')||{}).textContent||'')+' · versione di prova</div>'; }
+  else if(a==='set'){ t='Opzioni'; h='<div class="row"><span>🔊 Suoni</span><button type="button" class="tog'+(soundOn?' on':'')+'" data-do="snd">'+(soundOn?'Sì':'No')+'</button></div><div class="row"><span>🎵 Musica</span><button type="button" class="tog'+(AUD.music?' on':'')+'" data-do="mus">'+(AUD.music?'Sì':'No')+'</button></div><div class="row"><span>⛶ Schermo intero</span><button type="button" class="tog" data-do="full">Apri</button></div><div class="row"><span>🎨 Grafica minima<br><small style="opacity:.6">per telefoni lenti</small></span><button type="button" class="tog'+(GFX_MIN?' on':'')+'" data-do="gfx">'+(GFX_MIN?'Sì':'No')+'</button></div><div class="note">'+((document.getElementById('devTitle')||{}).textContent||'')+' · versione di prova</div>'; }
   else if(a==='friends'){ t='Amici'; const L=PH.lobby||(PH.lobby={me:false,t0:performance.now(),people:[['Antony','💪',1.2],['Carlo','😄',3.5],['Leo','😠',7]]}); const el=(performance.now()-L.t0)/1000;
     h='<h4>👥 Partita con gli amici</h4><div class="pl"><span class="av">🙂</span><b>Tu</b><span class="st'+(L.me?' ok':'')+'">'+(L.me?'PRONTO':'non pronto')+'</span></div>'+
       L.people.map(([n,e,d])=>'<div class="pl"><span class="av">'+e+'</span><b>'+n+'</b><span class="st'+(el>d?' ok':'')+'">'+(el>d?'PRONTO':(n==='Leo'?'sta arrivando…':'…'))+'</span></div>').join('');
@@ -3549,7 +3550,7 @@ PH.btn.addEventListener('click',()=>{ if(PH.on) phoneClose(); else phoneOpen(PH.
 PH.toast.addEventListener('click',()=>phoneOpen(carloAvail()?'carlo':'friends'));
 document.getElementById('phBack').addEventListener('click',()=>{ if(PH.app==='home'){ phoneClose(); return; } PH.app='home'; phRender(); });
 PH.body.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; if(b.dataset.app){ PH.app=b.dataset.app; if(PH.app==='friends') PH.lobby=null; phRender(); PH.body.scrollTop=0; return; }
-  const d=b.dataset.do; if(d==='snd'){ sndBtn.click(); phRender(); } else if(d==='mus'){ musBtn.click(); phRender(); } else if(d==='full'){ document.getElementById('full').click(); }
+  const d=b.dataset.do; if(d==='snd'){ sndBtn.click(); phRender(); } else if(d==='mus'){ musBtn.click(); phRender(); } else if(d==='full'){ document.getElementById('full').click(); } else if(d==='gfx'){ setGfxMin(!GFX_MIN); if(!GFX_MIN){ PR_MIN=LOW?0.9:1; } phRender(); }
   else if(d==='lv'){ const n=+b.dataset.lv; LV.n=n; LV.best=Math.max(LV.best,n); saveLevels(); PH.resetAsk=false; if(HOME.active){ HOME.pendingLevel=true; copMsgT=4; msg.innerHTML='🎯 <b>Livello '+n+'</b> scelto: esci di casa per giocarlo.'; } else { document.getElementById('restart').click(); copMsgT=4; msg.innerHTML='🎯 <b>Livello '+n+'</b>: si riparte da qui!'; } phRender(); }
   else if(d==='lvreset'){ if(!PH.resetAsk){ PH.resetAsk=true; phRender(); return; } PH.resetAsk=false; LV.n=1; LV.best=1; LV.stars={}; saveLevels(); if(HOME.active) HOME.pendingLevel=true; else document.getElementById('restart').click(); copMsgT=4; msg.innerHTML='🔄 Livelli azzerati: si riparte dal livello 1.'; phRender(); }
   else if(d==='ready'){ PH.lobby.me=!PH.lobby.me; phRender(); }
@@ -3591,12 +3592,17 @@ function loop(ts){ if(ts!==undefined && !window.__pause && ts-lastTs<1000/FPS_CA
   adaptRes(dt); controls.dt=dt; controls.update(); try{ phCam(dt); }catch(e){} try{ fitShadow(); }catch(e){} renderer.render(scene,camera); if(!window.__pause) requestAnimationFrame(loop); }
 // modalità leggera automatica: se il computer fatica (sotto i 45 fps per due controlli di fila) alleggerisce ombre, risoluzione e animazioni lontane
 let slowN=0; const fpsEl=document.getElementById('fps');
+let GFX_MIN=false, minN=0;
+function setGfxMin(on){ GFX_MIN=on; try{ localStorage.setItem('karmapolis_gfxmin',on?'1':'0'); }catch(e){} if(on){ if(!ECO) goEco(); FPS_CAP=30; PR_MIN=0.6; PR=Math.min(PR,0.85); renderer.setPixelRatio(PR); resize(); }
+  sun.castShadow=!on; for(const k in olCache) olCache[k].visible=!on; fpsEl.textContent=''; }
 function goEco(){ ECO=true; PR_MIN=0.75; renderer.shadowMap.autoUpdate=false; sun.shadow.mapSize.set(1024,1024); if(sun.shadow.map){ sun.shadow.map.dispose(); sun.shadow.map=null; } }
 function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; fN++; if(fAcc<1.5) return; const fps=fN/fAcc; fAcc=0; fN=0;
   fpsEl.textContent=Math.round(fps)+' fps'+(FPS_CAP===30?' fissi':'')+(ECO?' · leggera':'');
   // 1) sotto i 52 fps: modalità leggera · 2) se anche così non tiene i 60 (o parte già sotto i 40): 30 fps FISSI
   if(FPS_CAP===60){ const lim=ECO?50:52; if(fps<40) slowN+=2; else slowN=fps<lim?slowN+1:0;
     if(slowN>=2){ slowN=0; if(!ECO) goEco(); else { FPS_CAP=30; settle=2; copMsgT=3; msg.innerHTML='⚙️ Questo dispositivo è un po\' affaticato: gioco a <b>30 fps fissi</b> per restare fluido.'; } } }
+  // 3) telefoni deboli (es. Xiaomi di fascia bassa): se anche a 30 fps fissi non ce la fa, grafica MINIMA: niente ombre, niente contorni, risoluzione più bassa
+  if(FPS_CAP===30 && !GFX_MIN){ if(fps<25) minN++; else minN=0; if(minN>=3){ setGfxMin(true); copMsgT=3; msg.innerHTML='⚙️ Telefono in affanno: passo alla <b>grafica minima</b> (niente ombre e contorni) per restare fluido.'; } }
   if(settle-->0) return;
   let np=PR; if(fps<FPS_CAP*0.93 && PR>PR_MIN) np=Math.max(PR_MIN,PR-0.1); else if(fps>FPS_CAP*0.99 && PR<PR_MAX) np=Math.min(PR_MAX,PR+0.05);
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
@@ -3612,7 +3618,7 @@ Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{ye
   if(POLIZIA){ spawnCop(-30,(PROM.z0+PROM.z1)/2,Math.PI/2); spawnCop(VX[3]+SW+2.6,-40,0); }
   if(ARMI) for(const k of ['xbot'].filter(k=>chars[k])){ const B={}; chars[k].model.traverse(o=>{ if(o.isBone) B[o.name.replace('mixamorig','').replace(':','')]=o; }); attachGun(B); }
   if(!LOW) document.getElementById('howto').innerHTML='WASD o frecce per muoverti. Vicino all\'auto o allo scooter premi <b>E</b>. In guida: <b>↑ gas, ↓ freno e retromarcia, ← → sterzo</b>. Rotellina per lo zoom, ↻ ruota la vista. Trascina col mouse per girare la visuale. Officina 🔧 e carrozzeria 🎨 fuori paese, lato ovest. <b>Karmapolis:</b> vicino a un passante <b>C</b> caramella, <b>1</b> battuta (nervosi), <b>2</b> ascolta (solitari), <b>3</b> respira (ansiosi), <b>4</b> la verità (pettegoli), <b>Q</b> provoca; <b>R</b> usa campane, fontana e panchine. Clic per andare, <b>doppio clic per lo scatto</b> (consuma stamina ⚡).';
-  window.__stage&&window.__stage('preparo casa e paese'); const l=document.getElementById('load'); l.style.opacity=0; setTimeout(()=>l.remove(),600); window.__ready=true; try{ if(MIRROR.R){ const v0=MIRROR.R.visible; MIRROR.R.visible=true; renderer.compile(scene,camera); renderer.render(scene,camera); MIRROR.R.visible=v0; } }catch(e){} /* specchio e materiali preparati subito: niente microscatto la prima volta che entri in camera */ makeHomeCar(); G.karma=HOME.karma||0; lookI=HOME.look%LOOKS.length; dressPlayer('auto'); goHome(true); setTimeout(()=>window.__bootOk&&window.__bootOk(),4000); })
+  window.__stage&&window.__stage('preparo casa e paese'); const l=document.getElementById('load'); l.style.opacity=0; setTimeout(()=>l.remove(),600); window.__ready=true; try{ if(localStorage.getItem('karmapolis_gfxmin')==='1') setGfxMin(true); }catch(e){} try{ if(MIRROR.R){ const v0=MIRROR.R.visible; MIRROR.R.visible=true; renderer.compile(scene,camera); renderer.render(scene,camera); MIRROR.R.visible=v0; } }catch(e){} /* specchio e materiali preparati subito: niente microscatto la prima volta che entri in camera */ makeHomeCar(); G.karma=HOME.karma||0; lookI=HOME.look%LOOKS.length; dressPlayer('auto'); goHome(true); setTimeout(()=>window.__bootOk&&window.__bootOk(),4000); })
   .catch(e=>{ document.getElementById('load').textContent='Errore nel caricamento: '+e.message; console.error(e); });
 loop();
 
