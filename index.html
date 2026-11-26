@@ -260,7 +260,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.7</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.8</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -285,6 +285,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.087.8',d:'26/11/2026',t:['🧱 Se corri contro un muro il personaggio si ferma invece di correre sul posto.','🚿 Sotto la doccia il personaggio è nudo… con la censura a cubetti.']},
  {v:'0.087.7',d:'26/11/2026',t:['📺 In casa basta toccare la TV (o la nuvoletta) per far partire il tutorial.']},
  {v:'0.087.6',d:'26/11/2026',t:['📱 Pulsante del telefono più chiaro: un telefonino disegnato su fondo giallo; quando squilla diventa verde, con le onde e il pallino rosso.']},
  {v:'0.087.5',d:'26/11/2026',t:['😄 Carlo ha il suo aspetto vero, fatto da Teo con l\u2019editor.']},
@@ -1691,7 +1692,9 @@ function umPart(c,kind){ const L=UM.parts[c.sex==='f'?'f':'m'][kind]; let i=c[UM
   return L[((i%L.length)+L.length)%L.length]; }
 function umList(sex,kind){ return UM.parts[sex==='f'?'f':'m'][kind].map(p=>UM_NAMES[p.name]||p.name); }
 // i quattro pezzi (testa, busto, gambe, piedi) uniti in una sola geometria per persona: un solo disegno, leggero anche con tanta gente
+let UM_NUDE=false; // 🚿 sotto la doccia (Teo, 26/11): vestiti color pelle + censura a cubetti
 function umColor(P,c){ const lin=x=>new THREE.Color(x), sk=lin(AV.skin[c.skin]), hc=lin(AV.hairCol[c.hairCol]);
+  if(UM_NUDE && P.kind!=='Head') return P.roles.map((r,i)=>r==='eye'?lin(AV.eyeCol[c.eyeCol??0]).multiplyScalar(0.55):r==='hair'?hc:r==='brow'?hc.clone().multiplyScalar(0.7):sk.clone().multiplyScalar(r==='skin2'?0.85:1));
   const pick={Head:[null,null],Body:[c.topCol,c.top2??c.topCol],Legs:[c.bottomCol,c.bottomCol],Feet:[c.shoesCol,c.shoesCol]}[P.kind];
   return P.roles.map((r,i)=>{ const base=new THREE.Color(P.mats[i].color);
     if(r==='skin') return sk; if(r==='skin2') return sk.clone().multiplyScalar(0.85); if(r==='shave') return sk.clone().multiplyScalar(0.8).lerp(hc,0.35); /* rasato: pelle con un'ombra del colore dei capelli */ if(r==='hair') return hc; if(r==='brow') return hc.clone().multiplyScalar(0.7); if(r==='eye') return lin(AV.eyeCol[c.eyeCol??0]).multiplyScalar(0.55);
@@ -1747,7 +1750,7 @@ function umBody(model,cfg){ let ref=model.userData.umRef;
 
         pos[(o+i)*3]=x*k+off.x; pos[(o+i)*3+1]=y*k+off.y; pos[(o+i)*3+2]=z*k+off.z; } nor.set(P.nor,o*3); for(let i=0;i<P.n*4;i++) si[o*4+i]=map[P.si[i]]; sw.set(P.sw,o*4); for(let i=0;i<P.ind.length;i++) ind[oi+i]=P.ind[i]+o; o+=P.n; oi+=P.ind.length; }
     geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(pos,3)); geo.setAttribute('normal',new THREE.BufferAttribute(nor,3,true)); geo.setAttribute('skinIndex',new THREE.BufferAttribute(si,4)); geo.setAttribute('skinWeight',new THREE.BufferAttribute(sw,4,true)); geo.setIndex(new THREE.BufferAttribute(ind,1)); geo.computeBoundingSphere(); UM.geo[gk]=geo; }
-  const ck=gk+'|'+[cfg.skin,cfg.hairCol,cfg.eyeCol,cfg.topCol,cfg.top2,cfg.bottomCol,cfg.shoesCol,cfg.tat,cfg.tatCol,cfg.wr|0].join('.'); let colA=UM.cols[ck];
+  const ck=gk+'|'+(UM_NUDE?'N':'')+[cfg.skin,cfg.hairCol,cfg.eyeCol,cfg.topCol,cfg.top2,cfg.bottomCol,cfg.shoesCol,cfg.tat,cfg.tatCol,cfg.wr|0].join('.'); let colA=UM.cols[ck];
   if(!colA){ const a=new Float32Array(geo.attributes.position.count*3); let o=0; const TT=AV.tattoo[cfg.tat|0], ink=new THREE.Color(AV.tatCol[cfg.tatCol|0]);
     const MX=n=>UM.mix.indexOf(n), RA=[MX('RightArm'),MX('RightForeArm')], LA=[MX('LeftArm'),MX('LeftForeArm')], NK=[MX('Neck'),MX('Spine2')];
     for(const P of PARTS){ const cl=umColor(P,cfg); for(let i=0;i<P.n;i++){ let cc=cl[P.part[i]];
@@ -2900,10 +2903,12 @@ function updatePlayer(dt){ const c=chars[cur]; if(!c) return; const inp=readInpu
   if(player.tired) runT=0; const sprint=!player.tired && ((player.moveTo && player.moveTo.sprint) || joySprint); const target=moving?(sprint?5.8:THREE.MathUtils.lerp(1.5,4.6,runT)):0;
   updateStamina(dt,!moving?'idle':sprint&&player.speed>4?'sprint':runT>0.5&&player.speed>2.6?'run':'walk'); player.speed=THREE.MathUtils.damp(player.speed,target,8,dt);
   if(moving){ mv.normalize(); const ty=Math.atan2(mv.x,mv.z); let d=ty-player.yaw; d=Math.atan2(Math.sin(d),Math.cos(d)); player.yaw+=d*Math.min(1,dt*12); }
+  player._px=player.pos.x; player._pz=player.pos.z;
   if(player.speed>0.01){ const sx=Math.sin(player.yaw)*player.speed*dt, sz=Math.cos(player.yaw)*player.speed*dt; const p=player.pos;
     if(free(p.x+sx,p.z+sz)){ p.x+=sx; p.z+=sz; } else { let ok=false; /* aggira pali e lampioni: prova a girare un po' a destra o a sinistra */ const AV_ANG=player.moveTo?[0.5,1.0,1.5,2.1]:[0.5,1.0]; const sd=player.avoidSide||1; /* camminata automatica (taxi, clic): aggira anche ostacoli larghi (auto, panchine, siepi) e tiene lo stesso lato */ for(const a0 of AV_ANG) for(const a of [a0*sd,-a0*sd]){ if(ok) break; const c=Math.cos(a), s2=Math.sin(a), ax=sx*c+sz*s2, az=-sx*s2+sz*c; if(free(p.x+ax,p.z+az)){ p.x+=ax; p.z+=az; ok=true; player.avoidSide=Math.sign(a)||1; player.avoidT=1.2; } } if(!ok){ if(free(p.x+sx,p.z)) p.x+=sx; else if(free(p.x,p.z+sz)) p.z+=sz; } } }
+  { const mvd=Math.hypot(player.pos.x-(player._px??player.pos.x),player.pos.z-(player._pz??player.pos.z)); player.blockT=(player.speed>0.3 && mvd<player.speed*dt*0.3)?(player.blockT||0)+dt:0; } /* contro un muro: niente corsa sul posto (Teo, 26/11) */
   player.pos.y=THREE.MathUtils.damp(player.pos.y,ground(player.pos.x,player.pos.z),20,dt);
-  const sp=player.speed, tw={idle:1-THREE.MathUtils.smoothstep(sp,0.05,0.9),run:THREE.MathUtils.smoothstep(sp,2.4,3.8)}; tw.walk=Math.max(0,1-tw.idle-tw.run);
+  const sp=player.blockT>0.06?0:player.speed, tw={idle:1-THREE.MathUtils.smoothstep(sp,0.05,0.9),run:THREE.MathUtils.smoothstep(sp,2.4,3.8)}; tw.walk=Math.max(0,1-tw.idle-tw.run);
   for(const k of ['idle','walk','run']){ c.w[k]=THREE.MathUtils.damp(c.w[k],tw[k],10,dt); c.A[k].setEffectiveWeight(c.w[k]); }
   c.A.walk.timeScale=THREE.MathUtils.clamp(sp/1.5,0.6,1.3); c.A.run.timeScale=THREE.MathUtils.clamp(sp/4.6,0.8,1.3);
   c.mixer.update(dt); if(c.headless) bones(c).Head.scale.setScalar(0.001); holder.position.copy(player.pos); holder.rotation.y=player.yaw;
@@ -3286,10 +3291,16 @@ function changeClothes(){ openEditor(); }
 function changeClothes_old(){ lookI=(lookI+1)%LOOKS.length; dressPlayer(lookI); say('👕'); saveHome(); copMsgT=2.5; msg.innerHTML='👕 Nuovo look: <b>'+LOOKS[lookI].name+'</b>. (Nel gioco vero qui ci sarà l\'editor completo e i vestiti comprati coi crediti karma.)'; }
 // --- DOCCIA: gocce che scendono e stamina al massimo
 const showerDrops=[]; { const dm=new THREE.SpriteMaterial({map:dropTex,color:0xdff6ff,transparent:true,depthWrite:false}); for(let i=0;i<40;i++){ const s=new THREE.Sprite(dm); s.scale.setScalar(0.1); s.visible=false; scene.add(s); showerDrops.push(s); } }
-function takeShower(){ HOME.busy=true; const [x,z]=HP(-8.1,4.9); player.pos.set(x,0,z); player.yaw=Math.PI/2; holder.position.copy(player.pos); holder.rotation.y=player.yaw; HOME.showerT=4; camFocus(x,z,4,0.18); copMsgT=4; msg.innerHTML='🚿 Acqua calda… che meraviglia.'; }
+const CENSOR=(()=>{ const t=canvasTex(64,64,(g)=>{ const cols=['#e8b894','#d9a27a','#c98e66','#f3cfae','#b77d58','#e0a882']; for(let y=0;y<4;y++) for(let x=0;x<4;x++){ g.fillStyle=cols[(x*3+y*5+x*y)%cols.length]; g.fillRect(x*16,y*16,16,16); } }); t.magFilter=THREE.NearestFilter; t.minFilter=THREE.NearestFilter;
+  const mk=()=>{ const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:true})); sp.scale.set(0.22,0.2,1); sp.visible=false; scene.add(sp); return sp; }; return {low:mk(),high:mk()}; })();
+function showerNude(on){ UM_NUDE=on; try{ dressPlayer('auto'); }catch(e){ console.warn(e); } UM_NUDE=false; CENSOR.low.visible=on; const fem=(PLAYER_AV||{}).sex==='f'; CENSOR.high.visible=on&&fem; }
+function placeCensor(){ const c=chars[cur]; if(!c||!CENSOR.low.visible) return; const B=bones(c); holder.updateMatrixWorld(true); const f=new THREE.Vector3(Math.sin(player.yaw),0,Math.cos(player.yaw)); const hp=(B.Hips||B.Spine).getWorldPosition(new THREE.Vector3());
+  CENSOR.low.position.copy(hp).addScaledVector(f,0.16).add(new THREE.Vector3(0,-0.1,0)); if(CENSOR.high.visible){ const cp=(B.Spine2||B.Spine1||B.Spine).getWorldPosition(new THREE.Vector3()); CENSOR.high.position.copy(cp).addScaledVector(f,0.17); CENSOR.high.scale.set(0.3,0.15,1); } }
+function takeShower(){ HOME.busy=true; const [x,z]=HP(-8.1,4.9); player.pos.set(x,0,z); player.yaw=Math.PI/2; holder.position.copy(player.pos); holder.rotation.y=player.yaw; HOME.showerT=4; showerNude(true); camFocus(x,z,4,0.18); copMsgT=4; msg.innerHTML='🚿 Acqua calda… che meraviglia.'; }
 function updateShower(dt){ if(!(HOME.showerT>0)) return; HOME.showerT-=dt; const [x,z]=HP(-8.2,4.9);
   showerDrops.forEach((s,i)=>{ s.visible=HOME.showerT>0; const t=(performance.now()/600+i/40)%1; s.position.set(x+Math.sin(i*2.3)*0.35,2.15-t*2.1,z+Math.cos(i*1.7)*0.35); });
-  if(HOME.showerT<=0){ HOME.busy=false; player.sta=staCap(); player.tired=false; showerDrops.forEach(s=>s.visible=false); copMsgT=3; msg.innerHTML='🚿 <b>Fresco come una rosa!</b> Fiato al massimo.'; } }
+  placeCensor();
+  if(HOME.showerT<=0){ showerNude(false); HOME.busy=false; player.sta=staCap(); player.tired=false; showerDrops.forEach(s=>s.visible=false); copMsgT=3; msg.innerHTML='🚿 <b>Fresco come una rosa!</b> Fiato al massimo.'; } }
 // --- LETTO: dormi, il fiato torna lungo
 function sleepBed(){ HOME.busy=true; const f=document.getElementById('fade'); f.hidden=false; f.style.opacity=1; const [x,z]=HP(-6.5,-4.2); player.pos.set(x,0,z+1.8); holder.position.copy(player.pos);
   setTimeout(()=>{ G.playT=0; player.sta=staCap(); player.tired=false; f.style.opacity=0; setTimeout(()=>{ f.hidden=true; HOME.busy=false; },700); copMsgT=4; msg.innerHTML='🛏️ <b>Che bella dormita!</b> Il fiato è tornato lungo come all\'inizio.'; },2600); }
