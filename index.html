@@ -154,33 +154,34 @@ body.phoneOn .hud.top,body.phoneOn #compass,body.phoneOn #greyHud,body.phoneOn #
 #phoneBtn.ring{animation:ringb .5s ease-in-out infinite}
 @keyframes ringb{0%,100%{transform:rotate(0)}25%{transform:rotate(-14deg) scale(1.12)}75%{transform:rotate(14deg) scale(1.12)}}
 #helpBtn[hidden]{display:none!important}
-#phone{position:fixed;z-index:60;left:56%;bottom:0;height:min(84vh,760px);aspect-ratio:300/560;pointer-events:none;transform:translate(-50%,120%) perspective(900px) rotateX(9deg) rotateY(-10deg) rotate(-6deg);transition:transform .26s cubic-bezier(.2,1.1,.35,1.08)}
-body.phoneOn #phone{transform:translate(-50%,-6%) perspective(900px) rotateX(9deg) rotateY(-10deg) rotate(-6deg)}
-#phone svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-#phone .scr{position:absolute;left:13%;right:14.5%;top:10.6%;bottom:15%;background:#14121c;border-radius:4% / 2.2%;overflow:hidden;pointer-events:auto;display:flex;flex-direction:column;color:#f4f1ea;font:500 clamp(11px,2.2vh,15px)/1.35 var(--body)}
-#phone .sbar{display:flex;justify-content:space-between;padding:4px 10px 2px;font:600 clamp(9px,1.6vh,12px) var(--body);opacity:.8}
-#phone .ptop{display:flex;align-items:center;gap:6px;background:#2c2a35;padding:6px 8px;font:700 clamp(13px,2.5vh,17px) var(--display)}
+#phone{position:fixed;z-index:60;left:57%;bottom:-14vh;height:118vh;aspect-ratio:720/920;pointer-events:none;isolation:isolate;transform:translate(-50%,105%);transition:transform .26s cubic-bezier(.2,1.1,.35,1.06)}
+body.phoneOn #phone{transform:translate(-50%,0)}
+#phone>img{position:absolute;inset:0;width:100%;height:100%;user-select:none}
+#phone .skin{position:absolute;inset:0;background:var(--skin,#d9a27a);mix-blend-mode:multiply;-webkit-mask:url(telefono/mano-maschera.png) 0 0/100% 100% no-repeat;mask:url(telefono/mano-maschera.png) 0 0/100% 100% no-repeat}
+#phone .scr{position:absolute;left:0;top:0;width:260px;height:480px;transform-origin:0 0;background:#14121c;border-radius:6px;overflow:hidden;pointer-events:auto;display:flex;flex-direction:column;color:#f4f1ea;font:500 15px/1.35 var(--body)}
+#phone .sbar{display:flex;justify-content:space-between;padding:5px 12px 3px;font:600 12px var(--body);opacity:.8}
+#phone .ptop{display:flex;align-items:center;gap:6px;background:#2c2a35;padding:8px 8px;font:700 18px var(--display)}
 #phone .ptop b{flex:1;text-align:center}
-#phone .ptop button{background:none;border:none;box-shadow:none;color:#fff;font-size:clamp(18px,3.2vh,24px);padding:0 6px;min-width:28px;line-height:1}
-#phone .ptop .bolt{color:#3fd6e8;min-width:28px;text-align:center}
-#phone .pbody{flex:1;overflow:auto;padding:8px 10px}
-#phone .apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 4px;padding-top:6px}
-#phone .apps button{background:none;border:none;box-shadow:none;color:#f4f1ea;display:flex;flex-direction:column;align-items:center;gap:3px;padding:2px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:600 clamp(8px,1.5vh,12px) var(--display);letter-spacing:-.2px}
-#phone .apps .ic{width:min(100%,clamp(30px,7.5vh,54px));aspect-ratio:1;border-radius:24%;display:grid;place-items:center;font-size:clamp(18px,4vh,28px);border:2px solid rgba(0,0,0,.35);box-shadow:0 2px 0 rgba(0,0,0,.35)}
-#phone h4{margin:6px 0 3px;font:700 1.05em var(--display)}
-#phone ul{margin:0;padding-left:16px}
-#phone .row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-#phone .pbtn{display:block;width:100%;margin-top:10px;font-size:clamp(12px,2.2vh,15px)}
-#phone .tog{background:#3a3846;color:#fff;border:2px solid #000;padding:3px 10px;font-size:clamp(11px,2vh,14px);box-shadow:none}
+#phone .ptop button{background:none;border:none;box-shadow:none;color:#fff;font-size:24px;padding:0 6px;min-width:30px;line-height:1}
+#phone .ptop .bolt{color:#3fd6e8;min-width:30px;text-align:center}
+#phone .pbody{flex:1;overflow:auto;padding:10px 12px}
+#phone .apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 6px;padding-top:8px}
+#phone .apps button{background:none;border:none;box-shadow:none;color:#f4f1ea;display:flex;flex-direction:column;align-items:center;gap:4px;padding:2px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:600 12px var(--display)}
+#phone .apps .ic{width:56px;aspect-ratio:1;border-radius:24%;display:grid;place-items:center;font-size:28px;border:2px solid rgba(0,0,0,.35);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+#phone h4{margin:6px 0 4px;font:700 17px var(--display)}
+#phone ul{margin:0;padding-left:18px}
+#phone .row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+#phone .pbtn{display:block;width:100%;margin-top:12px;font-size:16px}
+#phone .tog{background:#3a3846;color:#fff;border:2px solid #000;padding:4px 12px;font-size:14px;box-shadow:none}
 #phone .tog.on{background:#3fbf6a}
-#phone .pl{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
+#phone .pl{display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
 #phone .pl .av{width:2em;height:2em;border-radius:50%;display:grid;place-items:center;background:#3a3846}
 #phone .pl .st{margin-left:auto;font:700 .9em var(--display);color:#8a8797}
 #phone .pl .st.ok{color:#5fe08a}
 #phone .note{opacity:.65;font-size:.85em;margin-top:8px}
 #phoneToast{position:fixed;z-index:61;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-160%);transition:transform .3s cubic-bezier(.2,1.1,.35,1.12);background:#2c2a35;color:#fff;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:8px 14px;font:600 15px var(--display);pointer-events:auto;cursor:pointer;white-space:nowrap}
 #phoneToast.show{transform:translate(-50%,0)}
-@media (orientation:landscape) and (max-height:520px){#phone{height:92vh} body.phoneOn #phone{transform:translate(-50%,-3%) perspective(700px) rotateX(9deg) rotateY(-10deg) rotate(-6deg)}}
+@media (orientation:landscape) and (max-height:520px){#phone{height:132vh;bottom:-20vh}}
 #tvHint{position:fixed;left:0;top:0;z-index:40;pointer-events:none;transform:translate(-50%,-100%);display:none}
 #tvHint .tb{background:#fffaf0;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:6px 12px;font:600 15px var(--display);white-space:nowrap;animation:tvbob 1.4s ease-in-out infinite}
 #tvHint .ta{position:absolute;left:50%;top:100%;width:0;height:0;margin-left:-11px;border:11px solid transparent;border-top:14px solid var(--accent);transform-origin:50% 0;filter:drop-shadow(1px 1px 0 var(--line))}
@@ -217,15 +218,7 @@ body.phoneOn #phone{transform:translate(-50%,-6%) perspective(900px) rotateX(9de
 <canvas id="c" aria-label="Paesino in 3D visto dall'alto, stile cartone animato"></canvas>
 <div id="vig"></div>
 <div id="rotate"><div><div class="ph">📱</div><p>Gira il telefono in orizzontale<br>per giocare a Karmapolis</p><button id="rotFull" type="button">⛶ Schermo intero</button><p style="font-size:13px;opacity:.75;margin-top:14px">Su iPhone controlla che il blocco rotazione sia spento</p></div></div>
-<div id="phone" aria-hidden="true"><svg viewBox="0 0 300 560">
-<path id="phHand1" d="M228 330 C292 330 330 400 336 470 L350 640 L120 640 C112 590 128 540 160 505 C185 478 205 440 228 330 Z" stroke="#2a2233" stroke-width="5" stroke-linejoin="round"/>
-<g id="phFing"><path d="M44 262 C-6 258 -14 300 30 306 L48 304 Z"/><path d="M42 320 C-10 318 -16 362 28 366 L48 364 Z"/><path d="M44 378 C-4 378 -8 418 32 420 L50 418 Z"/><path d="M48 432 C8 434 6 468 40 470 L54 468 Z"/></g>
-<rect x="22" y="20" width="250" height="500" rx="38" fill="#e9edf2" stroke="#2a2233" stroke-width="5"/>
-<rect x="34" y="34" width="226" height="472" rx="30" fill="#cfd5dc"/>
-<rect x="118" y="42" width="58" height="8" rx="4" fill="#2a2233"/><circle cx="188" cy="46" r="5" fill="#2a2233"/>
-<rect x="127" y="486" width="40" height="9" rx="4.5" fill="#2a2233"/>
-<path id="phThumb" d="M318 300 C276 290 240 300 226 326 C214 350 230 366 252 360 C268 356 290 352 318 356 Z" stroke="#2a2233" stroke-width="5" stroke-linejoin="round"/>
-</svg><div class="scr"><div class="sbar"><span id="phClock">12:00</span><span>📶 🔋</span></div><div class="ptop"><button id="phBack" type="button" aria-label="Indietro">‹</button><b id="phTitle">Karmapolis</b><span class="bolt">⚡</span></div><div class="pbody" id="phBody"></div></div></div>
+<div id="phone" aria-hidden="true"><img src="telefono/telefono-mano.webp" alt="" draggable="false"><div class="skin"></div><div class="scr"><div class="sbar"><span id="phClock">12:00</span><span>📶 🔋</span></div><div class="ptop"><button id="phBack" type="button" aria-label="Indietro">‹</button><b id="phTitle">Karmapolis</b><span class="bolt">⚡</span></div><div class="pbody" id="phBody"></div></div></div>
 <div id="phoneToast" role="status"></div>
 <div id="tvHint" aria-live="polite"><div class="tb">📺 Ti consiglio di guardare il tutorial!</div><div class="ta"></div></div>
 <div id="news" role="dialog" aria-label="Novità della versione"><div class="nbox"><div class="nhead"><h2 id="newsTitle">📋 Novità</h2><p>Karmapolis è in prova (beta): ecco cosa è cambiato.</p></div><div class="nbody" id="newsBody"></div><div class="nfoot"><small id="newsWait">Sto costruendo il paese…</small><button id="newsGo" type="button" disabled>▶ Gioca</button></div></div></div>
@@ -257,7 +250,7 @@ body.phoneOn #phone{transform:translate(-50%,-6%) perspective(900px) rotateX(9de
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.78.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.79.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -282,6 +275,7 @@ body.phoneOn #phone{transform:translate(-50%,-6%) perspective(900px) rotateX(9de
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.79.0',d:'26/11/2026',t:['📱 Mano e telefono rifatti in 3D con Blender: mano vera che lo stringe, pollice sul bordo, in stile cartone, del colore della tua pelle.']},
  {v:'0.78.2',d:'26/11/2026',t:['Tornato il pulsante ⛶ dello schermo intero in basso a destra.']},
  {v:'0.78.1',d:'26/11/2026',t:['📱 Telefono con l\u2019inquadratura di GTA: la telecamera va agli occhi del personaggio, il telefono in mano al centro, inclinato, con lo sfondo sfocato.']},
  {v:'0.78.0',d:'26/11/2026',t:['📱 Il telefono, come in GTA: premi 📱 (sul PC il tasto P, sul joypad View) e lo tiri fuori, con il paese sfocato dietro.','Dentro: Livelli e stelle, Amici (lobby di prova), Novità, Karma, Comandi e Opzioni (suoni, musica, schermo intero).','Quando un amico ti invita il telefono squilla: per ora una chiamata di prova di Antony.','Pulsanti in basso a destra più ordinati: suoni, musica e schermo intero ora sono nel telefono.','Sul PC il riquadro dei messaggi in alto a sinistra non è più un grande box vuoto.']},
@@ -3332,8 +3326,17 @@ function phRender(){ const a=PH.app, B=PH.body; let t='Karmapolis', h='';
     h+='<div class="note">Prova: gli amici qui sono finti, gli inviti veri arrivano col multigiocatore.</div>'; }
   PH.title.textContent=t; B.innerHTML=h; const bk=document.getElementById('phBack'); bk.textContent=a==='home'?'✕':'‹'; bk.setAttribute('aria-label',a==='home'?'Chiudi il telefono':'Indietro'); PH.sig=phSig(); }
 function phSig(){ if(PH.app==='friends'&&PH.lobby){ const el=(performance.now()-PH.lobby.t0)/1000; return PH.lobby.people.filter(p=>el>p[2]).length; } if(PH.app==='karma') return Math.round(G.karma)+'|'+(G.candies|0)+'|'+Math.round(HOME.fuel); return 0; }
+
+// lo schermo HTML segue la prospettiva del telefono renderizzato in Blender (angoli dello schermo nell'immagine 720×920)
+const PH_CORNERS=[[250.96,132.24],[463.12,161.44],[391.04,565.52],[169.68,525.12]], PH_SW=260, PH_SH=480;
+function phFit(){ const w=PH.el.offsetWidth; if(!w) return; const k=w/720, D=PH_CORNERS.map(([x,y])=>[x*k,y*k]), S=[[0,0],[PH_SW,0],[PH_SW,PH_SH],[0,PH_SH]];
+  const A=[], b=[]; for(let i=0;i<4;i++){ const [x,y]=S[i], [u,v]=D[i]; A.push([x,y,1,0,0,0,-u*x,-u*y]); b.push(u); A.push([0,0,0,x,y,1,-v*x,-v*y]); b.push(v); }
+  for(let c=0;c<8;c++){ let p=c; for(let r=c+1;r<8;r++) if(Math.abs(A[r][c])>Math.abs(A[p][c])) p=r; [A[c],A[p]]=[A[p],A[c]]; [b[c],b[p]]=[b[p],b[c]];
+    for(let r=0;r<8;r++){ if(r===c) continue; const f=A[r][c]/A[c][c]; for(let j=c;j<8;j++) A[r][j]-=f*A[c][j]; b[r]-=f*b[c]; } }
+  const h=b.map((v,i)=>v/A[i][i]); document.querySelector('#phone .scr').style.transform='matrix3d('+[h[0],h[3],0,h[6],h[1],h[4],0,h[7],0,0,1,0,h[2],h[5],0,1].join(',')+')'; }
+addEventListener('resize',()=>{ if(PH.on) phFit(); });
 function phoneOpen(app){ if(HOME.editor) return; PHC.head=null; try{ audioInit(); }catch(e){} PH.on=true; PH.app=app||'home'; if(PH.app==='friends') PH.lobby=null; PH.btn.classList.remove('ring'); hideToast();
-  const sk=phSkin(); document.getElementById('phHand1').setAttribute('fill',sk); document.getElementById('phThumb').setAttribute('fill',sk); document.querySelectorAll('#phFing path').forEach(p=>{ p.setAttribute('fill',sk); p.setAttribute('stroke','#2a2233'); p.setAttribute('stroke-width','5'); });
+  PH.el.style.setProperty('--skin',phSkin()); phFit();
   phClock(); phRender(); document.body.classList.add('phoneOn'); PH.el.setAttribute('aria-hidden','false'); phWhoosh(); }
 function phoneClose(){ if(!PH.on) return; PH.on=false; document.body.classList.remove('phoneOn'); PH.el.setAttribute('aria-hidden','true'); }
 function phWhoosh(){ if(!AC||!soundOn||!AUD.white) return; try{ const t=AC.currentTime, n=AC.createBufferSource(); n.buffer=AUD.white; const f=AC.createBiquadFilter(); f.type='bandpass'; f.frequency.setValueAtTime(600,t); f.frequency.exponentialRampToValueAtTime(2600,t+0.18); const g=AC.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.25,t+0.05); g.gain.exponentialRampToValueAtTime(0.0001,t+0.22); n.connect(f); f.connect(g); g.connect(AUD.master); n.start(t); n.stop(t+0.25); }catch(e){} }
