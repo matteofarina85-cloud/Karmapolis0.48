@@ -184,6 +184,10 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 #phoneToast{position:fixed;z-index:61;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-160%);transition:transform .3s cubic-bezier(.2,1.1,.35,1.12);background:#2c2a35;color:#fff;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:8px 14px;font:600 15px var(--display);pointer-events:auto;cursor:pointer;white-space:nowrap}
 #phoneToast.show{transform:translate(-50%,0)}
 @media (orientation:landscape) and (max-height:520px){#phone{height:200vh;bottom:-75vh;left:58%}} /* sul telefono lo schermo occupa quasi tutta l'altezza (Teo: "troppo piccolo, taglia il polso") */
+#fsHint{position:fixed;z-index:45;pointer-events:none;display:none;transform:translate(-50%,-100%)}
+#fsHint .tb{background:#ffd84d;border:2.5px solid var(--line);border-radius:14px;box-shadow:3px 3px 0 var(--line);padding:5px 10px;font:700 14px var(--display);white-space:nowrap;animation:tvbob 1.2s ease-in-out infinite}
+#fsHint .ta{position:absolute;left:50%;top:100%;margin-left:-10px;border:10px solid transparent;border-top:13px solid #ffd84d;filter:drop-shadow(1px 1px 0 var(--line))}
+#full.fsPulse{animation:ringb .9s ease-in-out infinite;background:#ffd84d!important}
 #tvHint{position:fixed;left:0;top:0;z-index:40;pointer-events:none;transform:translate(-50%,-100%);display:none}
 #tvHint .tb{background:#fffaf0;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:6px 12px;font:600 15px var(--display);white-space:nowrap;animation:tvbob 1.4s ease-in-out infinite}
 #tvHint .ta{position:absolute;left:50%;top:100%;width:0;height:0;margin-left:-11px;border:11px solid transparent;border-top:14px solid var(--accent);transform-origin:50% 0;filter:drop-shadow(1px 1px 0 var(--line))}
@@ -222,6 +226,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="rotate"><div><div class="ph">📱</div><p>Gira il telefono in orizzontale<br>per giocare a Karmapolis</p><button id="rotFull" type="button">⛶ Schermo intero</button><p style="font-size:13px;opacity:.75;margin-top:14px">Su iPhone controlla che il blocco rotazione sia spento</p></div></div>
 <div id="phone" aria-hidden="true"><img src="telefono/telefono-mano.webp?v=0791" alt="" draggable="false"><div class="skin"></div><div class="scr"><div class="sbar"><span id="phClock">12:00</span><span>📶 🔋</span></div><div class="ptop"><button id="phBack" type="button" aria-label="Indietro">‹</button><b id="phTitle">Karmapolis</b><span class="bolt">⚡</span></div><div class="pbody" id="phBody"></div></div></div>
 <div id="phoneToast" role="status"></div>
+<div id="fsHint" aria-live="polite"><div class="tb">⛶ Premi qui: schermo intero!</div><div class="ta"></div></div>
 <div id="tvHint" aria-live="polite"><div class="tb">📺 Ti consiglio di guardare il tutorial!</div><div class="ta"></div></div>
 <div id="news" role="dialog" aria-label="Novità della versione"><div class="nbox"><div class="nhead"><h2 id="newsTitle">📋 Novità</h2><p>Karmapolis è in prova (beta): ecco cosa è cambiato.</p></div><div class="nbody" id="newsBody"></div><div class="nfoot"><small id="newsWait">Sto costruendo il paese…</small><button id="newsGo" type="button" disabled>▶ Gioca</button></div></div></div>
 <div id="load">Sto costruendo il paese…</div>
@@ -252,7 +257,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.3</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -277,6 +282,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.087.3',d:'26/11/2026',t:['⛶ Sul telefono una nuvoletta gialla indica il pulsante dello schermo intero finché non lo premi: così non si taglia niente.']},
  {v:'0.087.2',d:'26/11/2026',t:['💈 Nuovo taglio "Spazzola corta (lati rasati)": lati e nuca rasati, niente codino, capelli dritti ma corti.']},
  {v:'0.087.1',d:'26/11/2026',t:['😠 Leo ha il suo aspetto vero, fatto da Teo con l\u2019editor.']},
  {v:'0.087.0',d:'26/11/2026',t:['👄 Editor: la bocca! Sorriso, seria, arrabbiata, grande sorriso (con i denti) o sorpresa.']},
@@ -3541,8 +3547,16 @@ function phCam(dt){ const want=(PH.on && !player.veh)?1:0; PHC.k+=Math.sign(want
 
 // 🌗 area delle ombre che segue lo zoom (Teo, 26/11: "quando zoomi alcune ombre sgranano"): più sei vicino, più l'area è piccola e l'ombra definita
 let SH_HALF=34; function fitShadow(){ const d=controls.dist||60, want=THREE.MathUtils.clamp(Math.round(d*0.62),HOME.active?9:14,34); if(Math.abs(want-SH_HALF)<2) return; SH_HALF=want; const c=sun.shadow.camera; c.left=-want; c.right=want; c.top=want; c.bottom=-want; c.updateProjectionMatrix(); sun.shadow.radius=(LOW?2:4.5)*Math.sqrt(34/want)*0.8+ (LOW?0.4:0.9); renderer.shadowMap.needsUpdate=true; }
+
+// ⛶ nuvoletta che indica lo SCHERMO INTERO (Teo, 26/11: "importantissimo, se no si tagliano le cose"): sul telefono, finché non sei a tutto schermo
+const FSH={el:document.getElementById('fsHint'),btn:document.getElementById('full'),done:false};
+function fsIsOn(){ return !!(document.fullscreenElement||document.webkitFullscreenElement) || matchMedia('(display-mode: standalone)').matches || navigator.standalone===true; }
+FSH.btn.addEventListener('click',()=>{ FSH.done=true; },true);
+function updateFsHint(){ const el=FSH.el; if(!el) return; const show=window.__ready && LOW && !FSH.done && !fsIsOn() && !window.__newsOpen && !PH.on && !HOME.editor && !FSH.btn.hidden && FSH.btn.offsetParent!==null;
+  FSH.btn.classList.toggle('fsPulse',show); if(!show){ if(el.style.display!=='none') el.style.display='none'; return; }
+  const r=FSH.btn.getBoundingClientRect(); el.style.display='block'; const w=el.offsetWidth; let x=r.left+r.width/2; const minX=w/2+6, maxX=innerWidth-w/2-6; const cx=Math.min(maxX,Math.max(minX,x)); el.style.left=cx+'px'; el.style.top=(r.top-6)+'px'; el.querySelector('.ta').style.marginLeft=(x-cx-10)+'px'; }
 function loop(ts){ if(ts!==undefined && !window.__pause && ts-lastTs<1000/FPS_CAP-1.2){ requestAnimationFrame(loop); return; } if(ts!==undefined) lastTs=ts;
-  const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime; try{ pollPad(dt); }catch(e){} try{ updatePhone(dt); }catch(e){ console.warn('telefono',e); } wU.uTime.value=t; wU.uCam.value.copy(camera.position);
+  const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime; try{ pollPad(dt); }catch(e){} try{ updatePhone(dt); }catch(e){ console.warn('telefono',e); } try{ updateFsHint(); }catch(e){} wU.uTime.value=t; wU.uCam.value.copy(camera.position);
   updateLife(t); if(window.__ready && !PORTRAIT_MQ.matches) updateWorld(dt); // in verticale sul telefono il gioco resta in pausa
   if(ECO && ((++frameN)%2===0 || (player.veh?Math.abs(player.veh.speed)>3:player.speed>2.2))) renderer.shadowMap.needsUpdate=true; // sul telefono le ombre si ridisegnano a fotogrammi alterni, ma se corri o guidi ogni fotogramma: altrimenti l'ombra del corpo "salta" sulle gambe (le gambe che vibravano)
   adaptRes(dt); controls.dt=dt; controls.update(); try{ phCam(dt); }catch(e){} try{ fitShadow(); }catch(e){} renderer.render(scene,camera); if(!window.__pause) requestAnimationFrame(loop); }
