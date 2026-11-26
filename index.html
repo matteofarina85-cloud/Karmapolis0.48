@@ -191,7 +191,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 #fsHint .tb{background:#ffd84d;border:2.5px solid var(--line);border-radius:14px;box-shadow:3px 3px 0 var(--line);padding:5px 10px;font:700 14px var(--display);white-space:nowrap;animation:tvbob 1.2s ease-in-out infinite}
 #fsHint .ta{position:absolute;left:50%;top:100%;margin-left:-10px;border:10px solid transparent;border-top:13px solid #ffd84d;filter:drop-shadow(1px 1px 0 var(--line))}
 #full.fsPulse{animation:ringb .9s ease-in-out infinite;background:#ffd84d!important}
-#tvHint{position:fixed;left:0;top:0;z-index:40;pointer-events:none;transform:translate(-50%,-100%);display:none}
+#tvHint{position:fixed;left:0;top:0;z-index:40;pointer-events:auto;cursor:pointer;transform:translate(-50%,-100%);display:none}
 #tvHint .tb{background:#fffaf0;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:6px 12px;font:600 15px var(--display);white-space:nowrap;animation:tvbob 1.4s ease-in-out infinite}
 #tvHint .ta{position:absolute;left:50%;top:100%;width:0;height:0;margin-left:-11px;border:11px solid transparent;border-top:14px solid var(--accent);transform-origin:50% 0;filter:drop-shadow(1px 1px 0 var(--line))}
 @keyframes tvbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
@@ -230,7 +230,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="phone" aria-hidden="true"><img src="telefono/telefono-mano.webp?v=0791" alt="" draggable="false"><div class="skin"></div><div class="scr"><div class="sbar"><span id="phClock">12:00</span><span>📶 🔋</span></div><div class="ptop"><button id="phBack" type="button" aria-label="Indietro">‹</button><b id="phTitle">Karmapolis</b><span class="bolt">⚡</span></div><div class="pbody" id="phBody"></div></div><div class="handTop"></div><div class="skin skinTop"></div></div>
 <div id="phoneToast" role="status"></div>
 <div id="fsHint" aria-live="polite"><div class="tb">⛶ Premi qui: schermo intero!</div><div class="ta"></div></div>
-<div id="tvHint" aria-live="polite"><div class="tb">📺 Ti consiglio di guardare il tutorial!</div><div class="ta"></div></div>
+<div id="tvHint" aria-live="polite"><div class="tb">📺 Tocca la TV per il tutorial!</div><div class="ta"></div></div>
 <div id="news" role="dialog" aria-label="Novità della versione"><div class="nbox"><div class="nhead"><h2 id="newsTitle">📋 Novità</h2><p>Karmapolis è in prova (beta): ecco cosa è cambiato.</p></div><div class="nbody" id="newsBody"></div><div class="nfoot"><small id="newsWait">Sto costruendo il paese…</small><button id="newsGo" type="button" disabled>▶ Gioca</button></div></div></div>
 <div id="load">Sto costruendo il paese…</div>
 <div id="greyHud" aria-live="polite"></div>
@@ -260,7 +260,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.6</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.7</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -285,6 +285,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.087.7',d:'26/11/2026',t:['📺 In casa basta toccare la TV (o la nuvoletta) per far partire il tutorial.']},
  {v:'0.087.6',d:'26/11/2026',t:['📱 Pulsante del telefono più chiaro: un telefonino disegnato su fondo giallo; quando squilla diventa verde, con le onde e il pallino rosso.']},
  {v:'0.087.5',d:'26/11/2026',t:['😄 Carlo ha il suo aspetto vero, fatto da Teo con l\u2019editor.']},
  {v:'0.087.4',d:'26/11/2026',t:['📱 Le dita della mano restano sopra lo schermo del telefono.','Nel telefono, nell\u2019editor, nella TV e nelle novità ora si scorre col dito.','Niente più microscatto la prima volta che entri in camera da letto (lo specchio si prepara all\u2019avvio).']},
@@ -2737,6 +2738,11 @@ function clickAt(cx,cy){ if(gameOver||!window.__ready) return; const o=pickAt(cx
   if(o.type==='taxicar'){ if(taxiHailed!==o.c){ whistle(); if(taxiHailed!==o.c) return; } if(o.c.speed<0.5){ const rx=-Math.cos(o.c.yaw), rz=Math.sin(o.c.yaw); player.moveTo={type:'taxi',c:o.c,x:o.c.x+rx*2.2,z:o.c.z+rz*2.2,arrive:1.2,t:0,best:1e9,stuck:0}; } return; }
   if(o.type==='ped'){ x=o.p.x; z=o.p.z; arrive=1.7; player.focusPed=o.p; } else if(o.type==='veh'){ x=o.v.x; z=o.v.z; arrive=o.v.bike?1.6:2.6; } else if(o.type==='thing'){ x=o.t.x; z=o.t.z; arrive=Math.max(1.2,o.t.r-1.2); } else { x=o.x; z=o.z; }
   player.listen=null; player.moveTo={...o,x,z,arrive,t:0,best:1e9,stuck:0}; clickRing.position.set(x,0.2,z); clickT=0.8; }
+// 📺 in casa si può toccare direttamente la TV per far partire il tutorial (feedback di un'amica di Teo, 26/11: "pensava di dover premere sulla TV")
+function tapHomeObject(cx,cy){ if(!HOME.active || HOME.busy || HOME.editor || (typeof PH!=='undefined' && PH.on)) return false; const r=canvas.getBoundingClientRect(); ndc.set((cx-r.left)/r.width*2-1,-(cy-r.top)/r.height*2+1); rc.setFromCamera(ndc,camera);
+  let hit=rc.intersectObject(tvScreen,false).length>0;
+  if(!hit){ const hs=rc.intersectObjects(scene.children,true).filter(h=>h.object.visible!==false && !(h.object.material&&h.object.material.transparent&&h.object.material.opacity<0.3)); if(hs.length && hs[0].point.distanceTo(tvScreen.position)<1.5) hit=true; }
+  if(!hit) return false; openTV(); return true; }
 // distingue il tocco dal trascinamento (che gira la città)
 { let down=null, timer=0, touches=0, lastTap=null;
   const startHold=()=>{ if(!down||touches>1) return; HOLD.active=true; HOLD.x=down.cx; HOLD.y=down.cy; player.listen=null; };
@@ -2745,7 +2751,7 @@ function clickAt(cx,cy){ if(gameOver||!window.__ready) return; const o=pickAt(cx
   canvas.addEventListener('pointermove',e=>{ if(e.pointerType==='mouse') hoverCursor(e.clientX,e.clientY); if(!down||down.id!==e.pointerId) return; down.cx=e.clientX; down.cy=e.clientY;
     const moved=Math.hypot(e.clientX-down.x,e.clientY-down.y); if(HOLD.active){ HOLD.x=e.clientX; HOLD.y=e.clientY; } else if(moved>9){ clearTimeout(timer); if(down.mouse) startHold(); else down=null; } });
   const end=e=>{ if(e.pointerType!=='mouse') touches=Math.max(0,touches-1); if(!down||down.id!==e.pointerId) return; clearTimeout(timer); const moved=Math.hypot(e.clientX-down.x,e.clientY-down.y), dur=performance.now()-down.t;
-    if(HOLD.active){ HOLD.active=false; if(player.moveTo&&player.moveTo.hold) player.moveTo=null; } else if(moved<9 && dur<400){ const dbl=lastTap && down.t-lastTap.t<330 && Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<40; clickAt(e.clientX,e.clientY); const now=performance.now();
+    if(HOLD.active){ HOLD.active=false; if(player.moveTo&&player.moveTo.hold) player.moveTo=null; } else if(moved<9 && dur<400){ if(tapHomeObject(e.clientX,e.clientY)){ down=null; return; } const dbl=lastTap && down.t-lastTap.t<330 && Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<40; clickAt(e.clientX,e.clientY); const now=performance.now();
       if(dbl && player.moveTo && !player.veh){ if(player.tired){ copMsgT=2; msg.innerHTML='😮‍💨 Sei senza fiato: niente scatto per ora.'; } else { player.moveTo.sprint=true; clickRing.material.color.set(0xff6a4d); setTimeout(()=>clickRing.material.color.set(0xffd84d),500); } lastTap=null; } else lastTap={t:now,x:e.clientX,y:e.clientY}; } down=null; };
   canvas.addEventListener('pointerup',end); canvas.addEventListener('pointercancel',end); }
 // mentre tieni premuto: lo scatto segue il cursore
@@ -3323,7 +3329,7 @@ function endTread(fell){ const gain=Math.round(T.pts*(fell?0.5:1)); T.on=false; 
   player.sta=Math.max(0,player.sta-20); saveHome(); copMsgT=5; msg.innerHTML=(fell?'😅 Caduto! Metà punti: ':'💪 <b>Allenamento finito!</b> ')+'cardio <b>+'+gain+'</b> (totale '+HOME.cardio+') → in partita il fiato dura <b>+'+staBonus()+'%</b>.'; }
 // --- giro del mondo in casa
 // 📺 nuvoletta con freccia verso la TV (Teo, 26/11): finché non hai guardato il tutorial almeno una volta
-const TVHINT={el:document.getElementById('tvHint'),seen:false,v:new THREE.Vector3()}; // (Teo, 26/11: la nuvoletta deve esserci sempre: ricompare a ogni avvio finché non apri la TV)
+const TVHINT={el:document.getElementById('tvHint'),seen:false,v:new THREE.Vector3()}; TVHINT.el.addEventListener('click',()=>{ if(HOME.active && !HOME.busy) openTV(); }); // (Teo, 26/11: la nuvoletta deve esserci sempre: ricompare a ogni avvio finché non apri la TV)
 function updateTvHint(){ const el=TVHINT.el; if(!el) return; const show=HOME.active && !TVHINT.seen && !HOME.busy && !HOME.editor && !window.__newsOpen;
   if(!show){ if(el.style.display!=='none') el.style.display='none'; return; }
   const v=TVHINT.v.set(tvScreen.position.x,tvScreen.position.y+0.75,tvScreen.position.z).project(camera); const W=innerWidth, H=innerHeight;
