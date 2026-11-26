@@ -131,6 +131,25 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 #alarm small{display:block;font:600 16px var(--body);opacity:.85;margin-top:2px}
 @media (orientation:landscape) and (max-height:520px){#alarm{font-size:22px;padding:8px 16px;top:42%}#alarm small{font-size:13px}}
 #compass.ping .ctrack{animation:cping .5s ease-out 2}@keyframes cping{50%{transform:scale(1.12);box-shadow:0 0 0 6px rgba(224,72,62,.5),3px 3px 0 var(--line)}}
+/* 📋 Novità della versione (beta): compare all'avvio, prima di giocare */
+#news{position:fixed;inset:0;z-index:150;display:grid;place-items:center;background:rgba(28,36,80,.55);padding:max(10px,env(safe-area-inset-top,0px)) 12px}
+#news[hidden]{display:none}
+#news .nbox{background:var(--paper);border:2.5px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);width:min(620px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+#news .nhead{padding:12px 16px 6px;border-bottom:2px dashed rgba(0,0,0,.15)}
+#news .nhead h2{font:700 22px var(--display);margin:0}
+#news .nhead p{margin:2px 0 0;font:500 13px var(--body);opacity:.75}
+#news .nbody{overflow:auto;padding:8px 16px;font:500 14px/1.4 var(--body)}
+#news .nbody h3{font:700 16px var(--display);margin:10px 0 4px}
+#news .nbody ul{margin:0;padding-left:20px}#news .nbody li{margin:3px 0}
+#news details{margin-top:8px}#news summary{cursor:pointer;font:600 14px var(--display);opacity:.8}
+#news .nfoot{padding:10px 16px 12px;display:flex;gap:10px;align-items:center;justify-content:flex-end;border-top:2px dashed rgba(0,0,0,.15)}
+#news .nfoot small{margin-right:auto;font:500 12px var(--body);opacity:.7}
+#news #newsGo[disabled]{opacity:.55;cursor:wait}
+@media (orientation:landscape) and (max-height:520px){#news .nbox{max-height:96vh}#news .nhead h2{font-size:18px}#news .nbody{font-size:13px}}
+#tvHint{position:fixed;left:0;top:0;z-index:40;pointer-events:none;transform:translate(-50%,-100%);display:none}
+#tvHint .tb{background:#fffaf0;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:6px 12px;font:600 15px var(--display);white-space:nowrap;animation:tvbob 1.4s ease-in-out infinite}
+#tvHint .ta{position:absolute;left:50%;top:100%;width:0;height:0;margin-left:-11px;border:11px solid transparent;border-top:14px solid var(--accent);transform-origin:50% 0;filter:drop-shadow(1px 1px 0 var(--line))}
+@keyframes tvbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 #rotate{display:none;position:fixed;inset:0;z-index:200;background:#1c2450;color:#fffaf0;place-items:center;text-align:center;padding:24px;font:600 20px var(--display)}
 #rotate .ph{font-size:64px;display:inline-block;animation:rot 2s ease-in-out infinite}@keyframes rot{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
 #rotate button{margin-top:18px;font-size:16px;padding:10px 18px}
@@ -161,6 +180,8 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <canvas id="c" aria-label="Paesino in 3D visto dall'alto, stile cartone animato"></canvas>
 <div id="vig"></div>
 <div id="rotate"><div><div class="ph">📱</div><p>Gira il telefono in orizzontale<br>per giocare a Karmapolis</p><button id="rotFull" type="button">⛶ Schermo intero</button><p style="font-size:13px;opacity:.75;margin-top:14px">Su iPhone controlla che il blocco rotazione sia spento</p></div></div>
+<div id="tvHint" aria-live="polite"><div class="tb">📺 Ti consiglio di guardare il tutorial!</div><div class="ta"></div></div>
+<div id="news" role="dialog" aria-label="Novità della versione"><div class="nbox"><div class="nhead"><h2 id="newsTitle">📋 Novità</h2><p>Karmapolis è in prova (beta): ecco cosa è cambiato.</p></div><div class="nbody" id="newsBody"></div><div class="nfoot"><small id="newsWait">Sto costruendo il paese…</small><button id="newsGo" type="button" disabled>▶ Gioca</button></div></div></div>
 <div id="load">Sto costruendo il paese…</div>
 <div id="greyHud" aria-live="polite"></div>
 <div id="alarm" aria-live="assertive"></div>
@@ -189,7 +210,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.76.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.77.0</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -211,6 +232,31 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
   <div class="card seg"><button id="snd" class="ghost" type="button" aria-label="Suoni">🔊</button><button id="mus" class="ghost" type="button" aria-label="Musica" aria-pressed="true">🎵</button><button id="swap" type="button" hidden style="display:none">👕 Cambia look</button></div>
 </div>
 
+<script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
+(function(){
+var NEWS=[
+ {v:'0.77.0',d:'26/11/2026',t:['Questa schermata: a ogni avvio vedi la versione e cosa è cambiato.','In casa una nuvoletta indica la 📺 TV: ti consiglia il tutorial finché non l\u2019hai guardato.']},
+ {v:'0.76.0',d:'26/11/2026',t:['Mani dei personaggi più naturali: più piccole e socchiuse, sistemate in Blender dito per dito.','Il gioco parte un po’ più leggero.']},
+ {v:'0.75',d:'26/11/2026',t:['💪 Antony ora si sposta a piedi ogni minuto tra lampioni e vicoletti, senza attraversare le case.','Proteine: suono power-up e barra della stamina che brilla forte.','Suoni del traffico in paese (si spengono con 🔊).','Aquaplaning più leggero.','Lucine dei vicoletti rifatte, solo dove c’è il muro.']},
+ {v:'0.75.0',d:'26/11/2026',t:['🏘️ I vicoletti: stradine strette in ciottoli tra le case, si passano a piedi.']},
+ {v:'0.74.0',d:'26/11/2026',t:['💪 Arriva Antony, lo spacciatore di proteine: 1 minuto di scatto infinito per 40 karma.']},
+ {v:'0.73.0',d:'26/11/2026',t:['Capelli lunghi "Avventura" e tatuaggi nell’armadio.']},
+ {v:'0.72',d:'25/11/2026',t:['Editor del personaggio ricco: viso e capelli, corporatura, cappelli, vestiti con due colori, scarpe.','Sistemati sfarfallii sotto gli alberi, nel laghetto e nella libreria; il personaggio non si incastra più andando al taxi.']},
+ {v:'0.71.0',d:'25/11/2026',t:['Persone nuove, intere e già vestite, per te e per tutti i passanti.']}
+];
+function fill(){ var b=document.getElementById('newsBody'); if(!b) return; var dev=(document.getElementById('devTitle')||{}).textContent||''; var cur=(dev.match(/[\d.]+/)||[NEWS[0].v])[0];
+  document.getElementById('newsTitle').textContent='📋 Novità della versione '+cur;
+  var li=function(n){ return '<h3>'+n.v+' <small style="font-weight:500;opacity:.6">· '+n.d+'</small></h3><ul>'+n.t.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>'; };
+  b.innerHTML=li(NEWS[0])+(NEWS.length>1?'<details><summary>Versioni precedenti</summary>'+NEWS.slice(1).map(li).join('')+'</details>':''); }
+function close(){ var n=document.getElementById('news'); if(!n||n.hidden) return; var g=document.getElementById('newsGo'); if(g&&g.disabled) return; n.hidden=true; window.__newsOpen=false; }
+window.__newsOpen=true; window.__newsClose=close;
+document.addEventListener('DOMContentLoaded',function(){ fill(); var g=document.getElementById('newsGo'); g.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){ if(window.__newsOpen && (e.key==='Enter'||e.key===' '||e.key==='Escape')){ e.preventDefault(); close(); } },true);
+  var t=setInterval(function(){ if(window.__ready){ clearInterval(t); g.disabled=false; var w=document.getElementById('newsWait'); if(w) w.textContent='Pronto!'; } },250);
+  (function pad(){ if(!window.__newsOpen) return; try{ var ps=navigator.getGamepads?navigator.getGamepads():[]; for(var i=0;i<ps.length;i++){ var p=ps[i]; if(p&&p.buttons&&(p.buttons[0]&&p.buttons[0].pressed||p.buttons[9]&&p.buttons[9].pressed)){ close(); return; } } }catch(e){} requestAnimationFrame(pad); })();
+});
+})();
+</script>
 <script>/* se qualcosa va storto (soprattutto su iPhone/Safari) lo scrivo sullo schermo, così si può fare uno screenshot */
 (function(){ function show(t){ try{ var L=document.getElementById('load'); if(!L){ L=document.createElement('div'); L.id='load'; document.body.appendChild(L); } L.dataset.err='1'; L.style.display='grid'; L.hidden=false; L.style.zIndex=99; L.style.fontSize='15px'; L.style.padding='20px'; L.style.textAlign='center'; L.innerHTML='⚠️ Errore: '+String(t).slice(0,220).replace(/</g,'&lt;')+'<br><br><small>'+navigator.userAgent.replace(/</g,'')+'</small><br><br>📸 Fai uno screenshot e mandalo a Teo!'; }catch(e){} }
   window.addEventListener('error',function(e){ show((e.message||'errore')+(e.filename?' ('+e.filename.split('/').pop()+':'+e.lineno+')':'')); });
@@ -2920,7 +2966,7 @@ function goHome(first){ SHOP.auto=null; if(!first&&HOME.carOut){ if(HOME.fuel<=0
   musicTense(0); if(!first) HOME.townPos=player.pos.clone(); HOME.active=true; player.moveTo=null; player.focusPed=null; HOLD.active=false; const [x,z]=HP(0,3.6); player.pos.set(x,0,z); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,player.yaw,0);
   controls.ready=false; HOME.zoomTown=controls.zoom; controls.zoom=0.35; controls.az=controls.azT=player.yaw+Math.PI; controls.userT=0; for(const el of homeTopEls()) el.hidden=true; document.getElementById('homeTown').hidden=true; timerSpr.visible=beam.visible=beamRing.visible=beamIcon.visible=false;
   msg.innerHTML=first?'🏠 <b>Sei a casa!</b> Gira per le stanze: ogni oggetto fa qualcosa. Quando sei pronto, esci dalla <b>porta</b> per giocare.':'🏠 <b>Di nuovo a casa.</b> La partita è in pausa: riposati, allenati o fai il pieno.'; copMsgT=5; lastHomeLbl='-'; }
-function goTown(){ const goCar=HOME.carOut; if(HOME.readerBonus){ HOME.readerBonus=false; G.candies=Math.min(CANDY_MAX+1,G.candies+1); } HOME.active=false; townVisible(true); if(HOWTO_TOWN!==null) document.getElementById('howto').innerHTML=HOWTO_TOWN; homeCard.hidden=true; document.getElementById('homeTown').hidden=false; const p=HOME.townPos; if(p) player.pos.copy(p); else player.pos.set(-12,0.15,PZ.z1-4);
+function goTown(){ if(TVHINT.el) TVHINT.el.style.display='none'; const goCar=HOME.carOut; if(HOME.readerBonus){ HOME.readerBonus=false; G.candies=Math.min(CANDY_MAX+1,G.candies+1); } HOME.active=false; townVisible(true); if(HOWTO_TOWN!==null) document.getElementById('howto').innerHTML=HOWTO_TOWN; homeCard.hidden=true; document.getElementById('homeTown').hidden=false; const p=HOME.townPos; if(p) player.pos.copy(p); else player.pos.set(-12,0.15,PZ.z1-4);
   holder.position.copy(player.pos); controls.ready=false; controls.zoom=HOME.zoomTown||0.66; compassEl.hidden=false; document.getElementById('greyHud').hidden=false; syncCar(); saveHome();
   if(goCar){ const c=carV(); c.x=PARK[0]; c.z=PARK[1]; c.yaw=0; c.speed=0; c.lastG=null; c.group.position.set(c.x,0,c.z); c.group.rotation.set(0,0,0); c.group.visible=true; player.pos.set(c.x+1.6,0.15,c.z); enter(c); }
   msg.innerHTML=goCar?'🚗 <b>Si parte in auto</b> dal parcheggio a nord. Occhio alla benzina: ⛽ '+Math.round(HOME.fuel)+'%':p?'🚪 Si riparte da dove eri rimasto. Forza!':'🚪 <b>Si gioca!</b> Il grigio sta già nascendo da qualche parte: guarda la bussola in alto.'; copMsgT=4; }
@@ -2975,7 +3021,7 @@ function drawTV(i){ const g=tvCv.getContext('2d'); if(i==='yt'){ drawYT(g); retu
 function tvPlay(i){ tvI=i; document.getElementById('tvYTopen').hidden=true; document.getElementById('tvYT').hidden=false; tvT0=performance.now(); for(const k in TVVID) if(TVVID[k]) TVVID[k].pause(); const v=tvVideo(i); if(v){ v.currentTime=0; v.play().catch(()=>{}); } clearInterval(tvTimer); drawTV(i); tvTimer=setInterval(()=>{ if(tvI!==-1) drawTV(tvI); },1000/30); }
 drawTV(-1);
 const tvUI=document.getElementById('tvUI'); document.getElementById('tvFrame').appendChild(tvCv); // lo stesso schermo: sulla TV in 3D e grande davanti a te
-function openTV(){ HOME.busy=true; tvPlay(0); tvUI.hidden=false; const [px,pz]=HP(2,-2.7); player.pos.set(px,0,pz); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,Math.PI,0); controls.az=controls.azT=0; const [x,z]=HP(2,-5.4); camFocus(x,z,999,0.21); controls.focus.y=1.9; document.getElementById('titleCard').style.visibility='hidden'; }
+function openTV(){ try{ localStorage.setItem('karmapolis_tutorial','1'); }catch(e){} TVHINT.seen=true; HOME.busy=true; tvPlay(0); tvUI.hidden=false; const [px,pz]=HP(2,-2.7); player.pos.set(px,0,pz); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,Math.PI,0); controls.az=controls.azT=0; const [x,z]=HP(2,-5.4); camFocus(x,z,999,0.21); controls.focus.y=1.9; document.getElementById('titleCard').style.visibility='hidden'; }
 function closeTV(){ document.getElementById('titleCard').style.visibility=''; HOME.busy=false; unstick(); tvUI.hidden=true; clearInterval(tvTimer); for(const k in TVVID) if(TVVID[k]) TVVID[k].pause(); tvI=-1; drawTV(-1); controls.focusT=0; }
 document.getElementById('tvPrev').onclick=()=>{ tvPlay(tvI==='yt'?0:Math.max(0,tvI-1)); };
 document.getElementById('tvYT').onclick=()=>{ tvI='yt'; for(const k in TVVID) if(TVVID[k]) TVVID[k].pause(); document.getElementById('tvYTopen').hidden=false; document.getElementById('tvYT').hidden=true; drawTV('yt'); };
@@ -3112,7 +3158,16 @@ function updateTread(dt){ const c=chars[cur]; T.t+=dt;
 function endTread(fell){ const gain=Math.round(T.pts*(fell?0.5:1)); T.on=false; HOME.cardio+=gain; HOME.busy=false; treadUI.hidden=true; controls.focusT=0; holder.rotation.set(0,player.yaw,0); holder.position.y=0; const [x,z]=HP(5.2,1.4); player.pos.set(x,0,z); holder.position.copy(player.pos);
   player.sta=Math.max(0,player.sta-20); saveHome(); copMsgT=5; msg.innerHTML=(fell?'😅 Caduto! Metà punti: ':'💪 <b>Allenamento finito!</b> ')+'cardio <b>+'+gain+'</b> (totale '+HOME.cardio+') → in partita il fiato dura <b>+'+staBonus()+'%</b>.'; }
 // --- giro del mondo in casa
-function updateHome(dt){ if(HOME.editor){ const c=chars[cur]; if(c){ for(const k of ['idle','walk','run']){ c.w[k]=k==='idle'?1:0; c.A[k].setEffectiveWeight(c.w[k]); } c.mixer.update(dt); } holder.position.copy(player.pos); holder.rotation.y=player.yaw; return; } if(T.on){ updateTread(dt); } else if(HOME.fuelPhase!==undefined){ updateFuel(dt); } else if(!HOME.busy || HOME.showerT>0){ if(!(HOME.showerT>0)) updatePlayer(dt); else { const c=chars[cur]; if(c){ c.mixer.update(dt); if(c.headless) bones(c).Head.scale.setScalar(0.001); } } }
+// 📺 nuvoletta con freccia verso la TV (Teo, 26/11): finché non hai guardato il tutorial almeno una volta
+const TVHINT={el:document.getElementById('tvHint'),seen:(()=>{ try{ return localStorage.getItem('karmapolis_tutorial')==='1'; }catch(e){ return false; } })(),v:new THREE.Vector3()};
+function updateTvHint(){ const el=TVHINT.el; if(!el) return; const show=HOME.active && !TVHINT.seen && !HOME.busy && !HOME.editor && !window.__newsOpen;
+  if(!show){ if(el.style.display!=='none') el.style.display='none'; return; }
+  const v=TVHINT.v.set(tvScreen.position.x,tvScreen.position.y+0.75,tvScreen.position.z).project(camera); const W=innerWidth, H=innerHeight;
+  let x=(v.x*0.5+0.5)*W, y=(-v.y*0.5+0.5)*H; const behind=v.z>1; if(behind){ x=W-x; y=H; }
+  const m=90, cx=Math.min(W-m-60,Math.max(m+60,x)), cy=Math.min(H-40,Math.max(m,y));
+  const ang=(cx===x&&cy===y&&!behind)?0:Math.atan2(x-cx,y-cy)*-1; el.style.display='block'; el.style.left=cx+'px'; el.style.top=cy+'px';
+  el.querySelector('.ta').style.transform='rotate('+ang+'rad)'; }
+function updateHome(dt){ updateTvHint(); if(HOME.editor){ const c=chars[cur]; if(c){ for(const k of ['idle','walk','run']){ c.w[k]=k==='idle'?1:0; c.A[k].setEffectiveWeight(c.w[k]); } c.mixer.update(dt); } holder.position.copy(player.pos); holder.rotation.y=player.yaw; return; } if(T.on){ updateTread(dt); } else if(HOME.fuelPhase!==undefined){ updateFuel(dt); } else if(!HOME.busy || HOME.showerT>0){ if(!(HOME.showerT>0)) updatePlayer(dt); else { const c=chars[cur]; if(c){ c.mixer.update(dt); if(c.headless) bones(c).Head.scale.setScalar(0.001); } } }
   updateShower(dt); updateDoor(dt); updateHomeUI(); updateClickFx(dt); updateFloats(dt); updateAudio(dt);
   if(copMsgT>0) copMsgT-=dt; }
 
