@@ -113,7 +113,7 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
   #titleCard{padding:5px 10px;max-width:420px}#titleCard h1{font-size:16px;display:inline-block;margin:0;vertical-align:middle}
   body:not(.showHelp) #howto{display:none}body.showHelp #howto{display:block;margin-top:6px}
   .top .row{max-width:440px;flex-direction:column;gap:6px}
-  #msg{max-width:420px;font-size:13.5px;padding:6px 11px}
+  #msg{max-width:420px;font-size:13.5px;padding:6px 11px;flex:0 0 auto} /* prima era un riquadro alto e vuoto */
   #greyHud{bottom:calc(14px + env(safe-area-inset-bottom,0px))}
   #sta{bottom:calc(54px + env(safe-area-inset-bottom,0px))}
   .right{flex-direction:row;flex-wrap:wrap-reverse;justify-content:flex-end;align-items:flex-end;max-width:52vw;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
@@ -146,6 +146,41 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 #news .nfoot small{margin-right:auto;font:500 12px var(--body);opacity:.7}
 #news #newsGo[disabled]{opacity:.55;cursor:wait}
 @media (orientation:landscape) and (max-height:520px){#news .nbox{max-height:96vh}#news .nhead h2{font-size:18px}#news .nbody{font-size:13px}}
+/* 📱 IL TELEFONO IN MANO (Teo, 26/11/2026, foto da GTA 6): zoomata veloce, mano col telefono, gioco sfocato dietro */
+#c{transition:transform .28s cubic-bezier(.2,.9,.3,1.15),filter .28s}
+body.phoneOn #c{transform:scale(1.12);filter:blur(3px) brightness(.72)}
+body.phoneOn .hud.top,body.phoneOn #compass,body.phoneOn #greyHud,body.phoneOn #tvHint{opacity:.25;transition:opacity .2s}
+#phoneBtn{background:#2a2233;color:#fff}
+#phoneBtn.ring{animation:ringb .5s ease-in-out infinite}
+@keyframes ringb{0%,100%{transform:rotate(0)}25%{transform:rotate(-14deg) scale(1.12)}75%{transform:rotate(14deg) scale(1.12)}}
+#helpBtn[hidden]{display:none!important}
+#phone{position:fixed;z-index:60;right:max(24vw,env(safe-area-inset-right,0px));bottom:0;height:min(86vh,720px);aspect-ratio:300/560;pointer-events:none;transform:translateY(115%) rotate(-3deg);transition:transform .3s cubic-bezier(.2,1.1,.35,1.12)}
+body.phoneOn #phone{transform:translateY(6%) rotate(-3deg)}
+#phone svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#phone .scr{position:absolute;left:13%;right:14.5%;top:10.6%;bottom:15%;background:#14121c;border-radius:4% / 2.2%;overflow:hidden;pointer-events:auto;display:flex;flex-direction:column;color:#f4f1ea;font:500 clamp(11px,2.2vh,15px)/1.35 var(--body)}
+#phone .sbar{display:flex;justify-content:space-between;padding:4px 10px 2px;font:600 clamp(9px,1.6vh,12px) var(--body);opacity:.8}
+#phone .ptop{display:flex;align-items:center;gap:6px;background:#2c2a35;padding:6px 8px;font:700 clamp(13px,2.5vh,17px) var(--display)}
+#phone .ptop b{flex:1;text-align:center}
+#phone .ptop button{background:none;border:none;box-shadow:none;color:#fff;font-size:clamp(18px,3.2vh,24px);padding:0 6px;min-width:28px;line-height:1}
+#phone .ptop .bolt{color:#3fd6e8;min-width:28px;text-align:center}
+#phone .pbody{flex:1;overflow:auto;padding:8px 10px}
+#phone .apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 4px;padding-top:6px}
+#phone .apps button{background:none;border:none;box-shadow:none;color:#f4f1ea;display:flex;flex-direction:column;align-items:center;gap:3px;padding:2px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:600 clamp(8px,1.5vh,12px) var(--display);letter-spacing:-.2px}
+#phone .apps .ic{width:min(100%,clamp(30px,7.5vh,54px));aspect-ratio:1;border-radius:24%;display:grid;place-items:center;font-size:clamp(18px,4vh,28px);border:2px solid rgba(0,0,0,.35);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+#phone h4{margin:6px 0 3px;font:700 1.05em var(--display)}
+#phone ul{margin:0;padding-left:16px}
+#phone .row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+#phone .pbtn{display:block;width:100%;margin-top:10px;font-size:clamp(12px,2.2vh,15px)}
+#phone .tog{background:#3a3846;color:#fff;border:2px solid #000;padding:3px 10px;font-size:clamp(11px,2vh,14px);box-shadow:none}
+#phone .tog.on{background:#3fbf6a}
+#phone .pl{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
+#phone .pl .av{width:2em;height:2em;border-radius:50%;display:grid;place-items:center;background:#3a3846}
+#phone .pl .st{margin-left:auto;font:700 .9em var(--display);color:#8a8797}
+#phone .pl .st.ok{color:#5fe08a}
+#phone .note{opacity:.65;font-size:.85em;margin-top:8px}
+#phoneToast{position:fixed;z-index:61;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-160%);transition:transform .3s cubic-bezier(.2,1.1,.35,1.12);background:#2c2a35;color:#fff;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:8px 14px;font:600 15px var(--display);pointer-events:auto;cursor:pointer;white-space:nowrap}
+#phoneToast.show{transform:translate(-50%,0)}
+@media (orientation:landscape) and (max-height:520px){#phone{height:97vh;right:max(30vw,env(safe-area-inset-right,0px))} body.phoneOn #phone{transform:translateY(9%) rotate(-3deg)}}
 #tvHint{position:fixed;left:0;top:0;z-index:40;pointer-events:none;transform:translate(-50%,-100%);display:none}
 #tvHint .tb{background:#fffaf0;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:6px 12px;font:600 15px var(--display);white-space:nowrap;animation:tvbob 1.4s ease-in-out infinite}
 #tvHint .ta{position:absolute;left:50%;top:100%;width:0;height:0;margin-left:-11px;border:11px solid transparent;border-top:14px solid var(--accent);transform-origin:50% 0;filter:drop-shadow(1px 1px 0 var(--line))}
@@ -182,6 +217,16 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <canvas id="c" aria-label="Paesino in 3D visto dall'alto, stile cartone animato"></canvas>
 <div id="vig"></div>
 <div id="rotate"><div><div class="ph">📱</div><p>Gira il telefono in orizzontale<br>per giocare a Karmapolis</p><button id="rotFull" type="button">⛶ Schermo intero</button><p style="font-size:13px;opacity:.75;margin-top:14px">Su iPhone controlla che il blocco rotazione sia spento</p></div></div>
+<div id="phone" aria-hidden="true"><svg viewBox="0 0 300 560">
+<path id="phHand1" d="M250 290 C296 320 310 420 296 500 L292 600 L140 600 C140 540 150 500 168 470 Z" stroke="#2a2233" stroke-width="5" stroke-linejoin="round"/>
+<g id="phFing"><path d="M40 244 C-4 244 -10 284 30 288 L46 286 Z"/><path d="M38 298 C-8 299 -12 340 28 343 L46 341 Z"/><path d="M40 352 C-2 355 -4 393 32 395 L48 393 Z"/><path d="M42 404 C8 408 8 438 38 440 L50 438 Z"/></g>
+<rect x="22" y="20" width="250" height="500" rx="38" fill="#e9edf2" stroke="#2a2233" stroke-width="5"/>
+<rect x="34" y="34" width="226" height="472" rx="30" fill="#cfd5dc"/>
+<rect x="118" y="42" width="58" height="8" rx="4" fill="#2a2233"/><circle cx="188" cy="46" r="5" fill="#2a2233"/>
+<rect x="127" y="486" width="40" height="9" rx="4.5" fill="#2a2233"/>
+<path id="phThumb" d="M306 328 C262 314 226 326 216 350 C209 369 223 381 242 377 L306 384 Z" stroke="#2a2233" stroke-width="5" stroke-linejoin="round"/>
+</svg><div class="scr"><div class="sbar"><span id="phClock">12:00</span><span>📶 🔋</span></div><div class="ptop"><button id="phBack" type="button" aria-label="Indietro">‹</button><b id="phTitle">Karmapolis</b><span class="bolt">⚡</span></div><div class="pbody" id="phBody"></div></div></div>
+<div id="phoneToast" role="status"></div>
 <div id="tvHint" aria-live="polite"><div class="tb">📺 Ti consiglio di guardare il tutorial!</div><div class="ta"></div></div>
 <div id="news" role="dialog" aria-label="Novità della versione"><div class="nbox"><div class="nhead"><h2 id="newsTitle">📋 Novità</h2><p>Karmapolis è in prova (beta): ecco cosa è cambiato.</p></div><div class="nbody" id="newsBody"></div><div class="nfoot"><small id="newsWait">Sto costruendo il paese…</small><button id="newsGo" type="button" disabled>▶ Gioca</button></div></div></div>
 <div id="load">Sto costruendo il paese…</div>
@@ -212,7 +257,7 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.77.1</h1><button id='helpBtn' class='ghost' type='button'>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.78.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: 🍬 caramella o la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli). Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -230,13 +275,14 @@ body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opa
   <div class="card seg" id="shopCard" hidden><button id="shopBtn" type="button" style="background:#2f7de1;color:#fff">🔧 Ripara</button><button id="shopOut" class="ghost" type="button" hidden>🚗 Esci</button></div>
   <div class="card seg" id="actCard" hidden><button id="act" type="button">Sali</button></div>
   <div class="card seg" id="shootCard" hidden><button id="shoot" type="button" aria-label="Spara">🔫 Spara</button></div>
-  <div class="card seg"><button id="homeTown" class="ghost" type="button" aria-label="Torna a casa" hidden>🏠</button><button id="full" class="ghost" type="button" aria-label="Schermo intero orizzontale">⛶</button><button id="rot" class="ghost" type="button" aria-label="Ruota la vista">↻</button><button id="zin" class="ghost" type="button" aria-label="Avvicina">＋</button><button id="zout" class="ghost" type="button" aria-label="Allontana">－</button></div>
-  <div class="card seg"><button id="snd" class="ghost" type="button" aria-label="Suoni">🔊</button><button id="mus" class="ghost" type="button" aria-label="Musica" aria-pressed="true">🎵</button><button id="swap" type="button" hidden style="display:none">👕 Cambia look</button></div>
+  <div class="card seg"><button id="phoneBtn" type="button" aria-label="Telefono">📱</button><button id="homeTown" class="ghost" type="button" aria-label="Torna a casa" hidden>🏠</button><button id="full" class="ghost" type="button" aria-label="Schermo intero orizzontale" hidden>⛶</button><button id="rot" class="ghost" type="button" aria-label="Ruota la vista">↻</button><button id="zin" class="ghost" type="button" aria-label="Avvicina">＋</button><button id="zout" class="ghost" type="button" aria-label="Allontana">－</button></div>
+  <div class="card seg" id="sndCard" hidden><button id="snd" class="ghost" type="button" aria-label="Suoni">🔊</button><button id="mus" class="ghost" type="button" aria-label="Musica" aria-pressed="true">🎵</button><button id="swap" type="button" hidden style="display:none">👕 Cambia look</button></div>
 </div>
 
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.78.0',d:'26/11/2026',t:['📱 Il telefono, come in GTA: premi 📱 (sul PC il tasto P, sul joypad View) e lo tiri fuori, con il paese sfocato dietro.','Dentro: Livelli e stelle, Amici (lobby di prova), Novità, Karma, Comandi e Opzioni (suoni, musica, schermo intero).','Quando un amico ti invita il telefono squilla: per ora una chiamata di prova di Antony.','Pulsanti in basso a destra più ordinati: suoni, musica e schermo intero ora sono nel telefono.','Sul PC il riquadro dei messaggi in alto a sinistra non è più un grande box vuoto.']},
  {v:'0.77.1',d:'26/11/2026',t:['Sul telefono il messaggio in alto a sinistra è più piccolo, e in casa sta più in alto: copre meno la scena.']},
  {v:'0.77.0',d:'26/11/2026',t:['Questa schermata: a ogni avvio vedi la versione e cosa è cambiato.','In casa una nuvoletta indica la 📺 TV: ti consiglia il tutorial finché non l\u2019hai guardato.']},
  {v:'0.76.0',d:'26/11/2026',t:['Mani dei personaggi più naturali: più piccole e socchiuse, sistemate in Blender dito per dito.','Il gioco parte un po’ più leggero.']},
@@ -252,7 +298,7 @@ function fill(){ var b=document.getElementById('newsBody'); if(!b) return; var d
   var li=function(n){ return '<h3>'+n.v+' <small style="font-weight:500;opacity:.6">· '+n.d+'</small></h3><ul>'+n.t.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>'; };
   b.innerHTML=li(NEWS[0])+(NEWS.length>1?'<details><summary>Versioni precedenti</summary>'+NEWS.slice(1).map(li).join('')+'</details>':''); }
 function close(){ var n=document.getElementById('news'); if(!n||n.hidden) return; var g=document.getElementById('newsGo'); if(g&&g.disabled) return; n.hidden=true; window.__newsOpen=false; }
-window.__newsOpen=true; window.__newsClose=close;
+window.__newsOpen=true; window.__newsClose=close; window.__NEWS=NEWS;
 document.addEventListener('DOMContentLoaded',function(){ fill(); var g=document.getElementById('newsGo'); g.addEventListener('click',close);
   document.addEventListener('keydown',function(e){ if(window.__newsOpen && (e.key==='Enter'||e.key===' '||e.key==='Escape')){ e.preventDefault(); close(); } },true);
   var t=setInterval(function(){ if(window.__ready){ clearInterval(t); g.disabled=false; var w=document.getElementById('newsWait'); if(w) w.textContent='Pronto!'; } },250);
@@ -3263,8 +3309,50 @@ function updateAnthony(dt){ if(!UM.ready || !G.started) return; if(!ANTH.h) init
   const at=d<3.2 && !player.veh && !player.taxi && !(player.ko>0) && !HOME.active; if(anthCard.hidden===at) anthCard.hidden=!at;
   if(at && h.g.visible && !ANTH.walk){ const tgt=Math.atan2(player.pos.x-h.g.position.x,player.pos.z-h.g.position.z); if(h.bones.Head){ const dy=((tgt-h.g.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI; h.bones.Head.rotation.y+=THREE.MathUtils.clamp(dy,-0.9,0.9); } }
   if(ANTH.boost>0){ ANTH.boost-=dt; player.sta=staCap(); player.tired=false; staEl.classList.add('boost'); if(ANTH.boost<=0){ staEl.classList.remove('boost'); copMsgT=3; msg.innerHTML='💪 L\'effetto delle proteine è finito.'; } } }
+// ======================= 📱 IL TELEFONO (Teo, 26/11/2026: "come GTA 6, zoomata veloce sulla mano col cellulare") =======================
+const PH={on:false,app:'home',el:document.getElementById('phone'),body:document.getElementById('phBody'),title:document.getElementById('phTitle'),toast:document.getElementById('phoneToast'),btn:document.getElementById('phoneBtn'),lobby:null,rang:false,ringT:null};
+const PH_APPS=[['levels','🎯','Livelli','#f0b23a'],['friends','👥','Amici','#3f8ae0'],['news','📋','Novità','#e9655a'],['karma','🪃','Karma','#5cbf73'],['help','❔','Comandi','#8b6fd6'],['set','⚙️','Opzioni','#6c7380']];
+function phSkin(){ try{ initLooksAv(); const c=PLAYER_AV||(LOOKS[lookI]&&LOOKS[lookI].av)||AVC_DEF; return '#'+new THREE.Color(AV.skin[c.skin|0]).getHexString(); }catch(e){ return '#d9a27a'; } }
+function phClock(){ const d=new Date(); document.getElementById('phClock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+function phRender(){ const a=PH.app, B=PH.body; let t='Karmapolis', h='';
+  if(a==='home'){ h='<div class="apps">'+PH_APPS.map(([id,ic,nm,col])=>'<button type="button" data-app="'+id+'"><span class="ic" style="background:'+col+'">'+ic+'</span>'+nm+'</button>').join('')+'</div>'; }
+  else if(a==='levels'){ t='Livelli'; h='<h4>🎯 Sei al livello '+LV.n+'</h4><div class="note" style="margin:0 0 6px">Migliore raggiunto: '+LV.best+'</div>';
+    for(let i=1;i<=Math.max(LV.best,LV.n);i++){ const st=LV.stars[i]|0; h+='<div class="row"><span>Livello '+i+'</span><span>'+('⭐'.repeat(st)||'—')+'</span></div>'; } }
+  else if(a==='karma'){ t='Karma'; h='<div class="row"><span>🪃 Karma</span><b>'+Math.round(G.karma)+'</b></div><div class="row"><span>🍬 Caramelle</span><b>'+(G.candies|0)+'</b></div><div class="row"><span>⛽ Benzina</span><b>'+Math.round(HOME.fuel)+'%</b></div>'; }
+  else if(a==='news'){ t='Novità'; const N=window.__NEWS||[]; h=N.map(n=>'<h4>'+n.v+' <small style="opacity:.6;font-weight:500">'+n.d+'</small></h4><ul>'+n.t.map(x=>'<li>'+x+'</li>').join('')+'</ul>').join(''); }
+  else if(a==='help'){ t='Comandi'; h=document.getElementById('howto').innerHTML+'<p class="note">📱 Telefono: pulsante 📱, tasto P, joypad View.</p>'; }
+  else if(a==='set'){ t='Opzioni'; h='<div class="row"><span>🔊 Suoni</span><button type="button" class="tog'+(soundOn?' on':'')+'" data-do="snd">'+(soundOn?'Sì':'No')+'</button></div><div class="row"><span>🎵 Musica</span><button type="button" class="tog'+(AUD.music?' on':'')+'" data-do="mus">'+(AUD.music?'Sì':'No')+'</button></div><div class="row"><span>⛶ Schermo intero</span><button type="button" class="tog" data-do="full">Apri</button></div><div class="note">'+((document.getElementById('devTitle')||{}).textContent||'')+' · versione di prova</div>'; }
+  else if(a==='friends'){ t='Amici'; const L=PH.lobby||(PH.lobby={me:false,t0:performance.now(),people:[['Antony','💪',1.2],['Carlo','😄',3.5],['Leo','😠',7]]}); const el=(performance.now()-L.t0)/1000;
+    h='<h4>👥 Partita con gli amici</h4><div class="pl"><span class="av">🙂</span><b>Tu</b><span class="st'+(L.me?' ok':'')+'">'+(L.me?'PRONTO':'non pronto')+'</span></div>'+
+      L.people.map(([n,e,d])=>'<div class="pl"><span class="av">'+e+'</span><b>'+n+'</b><span class="st'+(el>d?' ok':'')+'">'+(el>d?'PRONTO':(n==='Leo'?'sta arrivando…':'…'))+'</span></div>').join('');
+    const all=L.me&&L.people.every(p=>el>p[2]);
+    h+=all?'<div class="note" style="opacity:.9">✅ Tutti pronti! Nel gioco vero la partita parte <b>quando uscite tutti dalla porta di casa</b>.</div><button type="button" class="pbtn" data-do="go">🚪 Esci a giocare</button>':'<button type="button" class="pbtn" data-do="ready">'+(L.me?'✖ Non sono pronto':'✔ Sono pronto')+'</button>';
+    h+='<div class="note">Prova: gli amici qui sono finti, gli inviti veri arrivano col multigiocatore.</div>'; }
+  PH.title.textContent=t; B.innerHTML=h; const bk=document.getElementById('phBack'); bk.textContent=a==='home'?'✕':'‹'; bk.setAttribute('aria-label',a==='home'?'Chiudi il telefono':'Indietro'); PH.sig=phSig(); }
+function phSig(){ if(PH.app==='friends'&&PH.lobby){ const el=(performance.now()-PH.lobby.t0)/1000; return PH.lobby.people.filter(p=>el>p[2]).length; } if(PH.app==='karma') return Math.round(G.karma)+'|'+(G.candies|0)+'|'+Math.round(HOME.fuel); return 0; }
+function phoneOpen(app){ if(HOME.editor) return; try{ audioInit(); }catch(e){} PH.on=true; PH.app=app||'home'; if(PH.app==='friends') PH.lobby=null; PH.btn.classList.remove('ring'); hideToast();
+  const sk=phSkin(); document.getElementById('phHand1').setAttribute('fill',sk); document.getElementById('phThumb').setAttribute('fill',sk); document.querySelectorAll('#phFing path').forEach(p=>{ p.setAttribute('fill',sk); p.setAttribute('stroke','#2a2233'); p.setAttribute('stroke-width','5'); });
+  phClock(); phRender(); document.body.classList.add('phoneOn'); PH.el.setAttribute('aria-hidden','false'); phWhoosh(); }
+function phoneClose(){ if(!PH.on) return; PH.on=false; document.body.classList.remove('phoneOn'); PH.el.setAttribute('aria-hidden','true'); }
+function phWhoosh(){ if(!AC||!soundOn||!AUD.white) return; try{ const t=AC.currentTime, n=AC.createBufferSource(); n.buffer=AUD.white; const f=AC.createBiquadFilter(); f.type='bandpass'; f.frequency.setValueAtTime(600,t); f.frequency.exponentialRampToValueAtTime(2600,t+0.18); const g=AC.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.25,t+0.05); g.gain.exponentialRampToValueAtTime(0.0001,t+0.22); n.connect(f); f.connect(g); g.connect(AUD.master); n.start(t); n.stop(t+0.25); }catch(e){} }
+function phRingSound(){ if(!AC||!soundOn||!AUD.master) return; try{ for(let k=0;k<2;k++){ const t0=AC.currentTime+k*1.2; for(let i=0;i<8;i++){ const t=t0+i*0.07, o=AC.createOscillator(), g=AC.createGain(); o.type='triangle'; o.frequency.value=i%2?1320:1760; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.12,t+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t+0.065); o.connect(g); g.connect(AUD.master); o.start(t); o.stop(t+0.07); } } }catch(e){} }
+function hideToast(){ PH.toast.classList.remove('show'); }
+function phoneRing(who,txt){ PH.btn.classList.add('ring'); PH.toast.textContent='📱 '+who+' '+txt; PH.toast.classList.add('show'); phRingSound(); clearTimeout(PH.ringT); PH.ringT=setTimeout(()=>{ hideToast(); PH.btn.classList.remove('ring'); },9000); }
+PH.btn.addEventListener('click',()=>{ if(PH.on) phoneClose(); else phoneOpen(PH.btn.classList.contains('ring')?'friends':'home'); });
+PH.toast.addEventListener('click',()=>phoneOpen('friends'));
+document.getElementById('phBack').addEventListener('click',()=>{ if(PH.app==='home'){ phoneClose(); return; } PH.app='home'; phRender(); });
+PH.body.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; if(b.dataset.app){ PH.app=b.dataset.app; if(PH.app==='friends') PH.lobby=null; phRender(); PH.body.scrollTop=0; return; }
+  const d=b.dataset.do; if(d==='snd'){ sndBtn.click(); phRender(); } else if(d==='mus'){ musBtn.click(); phRender(); } else if(d==='full'){ document.getElementById('full').click(); }
+  else if(d==='ready'){ PH.lobby.me=!PH.lobby.me; phRender(); } else if(d==='go'){ phoneClose(); if(HOME.active && !HOME.busy) askExit(); } });
+addEventListener('keydown',e=>{ if(window.__newsOpen) return; if(e.code==='KeyP' && !e.repeat && !/INPUT|TEXTAREA/.test((e.target||{}).tagName||'')){ PH.on?phoneClose():phoneOpen(); } else if(e.code==='Escape' && PH.on){ phoneClose(); } });
+function updatePhone(dt){
+  if(PH.on && PH.sig!==phSig()){ const st=PH.body.scrollTop; phRender(); PH.body.scrollTop=st; } // aggiorna solo se cambia qualcosa (lobby, karma)
+  // squillo di prova: una volta sola, dopo un po' che sei in casa (Teo: "quando un tuo amico ti invita a giocare squilla il telefono")
+  if(!PH.rang && window.__ready && HOME.active && !HOME.busy && !PH.on && !window.__newsOpen){ PH.home=(PH.home||0)+dt; if(PH.home>25){ PH.rang=true; phoneRing('Antony','ti invita a giocare! (prova)'); } }
+  // joypad: View/Select (8) apre e chiude
+  try{ const gp=(navigator.getGamepads?[...navigator.getGamepads()]:[]).find(p=>p&&p.connected); if(gp){ const b8=!!(gp.buttons[8]&&gp.buttons[8].pressed); if(b8&&!PH.p8){ PH.on?phoneClose():phoneOpen(); } PH.p8=b8; } }catch(e){} }
 function loop(ts){ if(ts!==undefined && !window.__pause && ts-lastTs<1000/FPS_CAP-1.2){ requestAnimationFrame(loop); return; } if(ts!==undefined) lastTs=ts;
-  const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime; try{ pollPad(dt); }catch(e){} wU.uTime.value=t; wU.uCam.value.copy(camera.position);
+  const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime; try{ pollPad(dt); }catch(e){} try{ updatePhone(dt); }catch(e){ console.warn('telefono',e); } wU.uTime.value=t; wU.uCam.value.copy(camera.position);
   updateLife(t); if(window.__ready && !PORTRAIT_MQ.matches) updateWorld(dt); // in verticale sul telefono il gioco resta in pausa
   if(ECO && ((++frameN)%2===0 || (player.veh?Math.abs(player.veh.speed)>3:player.speed>2.2))) renderer.shadowMap.needsUpdate=true; // sul telefono le ombre si ridisegnano a fotogrammi alterni, ma se corri o guidi ogni fotogramma: altrimenti l'ombra del corpo "salta" sulle gambe (le gambe che vibravano)
   adaptRes(dt); controls.dt=dt; controls.update(); renderer.render(scene,camera); if(!window.__pause) requestAnimationFrame(loop); }
