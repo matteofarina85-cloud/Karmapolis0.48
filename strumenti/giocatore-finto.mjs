@@ -23,7 +23,7 @@ for(const lv of LVS){ const R=[];
       if(!best){ busy=0.5; continue; }
       if(goTo(best)){ S.player.focusPed=best; const id=Object.keys(S.CURE).find(k=>S.CURE[k].k===best.kind); S.cure(id); st.cure++; busy=(S.CURE[id].hold?0:0.6)/SK; } }
     if(S.LEO.victims) st.leoHit=S.LEO.victims.length;
-    R.push({stars:($('goStars').textContent.match(/⭐/g)||[]).length, win:/superato/.test($('goTitle').textContent), pct:Math.round(S.colorPct()*100), k:Math.round(S.G.karma-k0), maxCarriers, ...st}); }
+    R.push({stars:($('goStars').textContent.match(/⭐/g)||[]).length, win:($('goStars').textContent.match(/⭐/g)||[]).length>0, pct:Math.round(S.colorPct()*100), k:Math.round(S.G.karma-k0), maxCarriers, ...st}); }
   const avg=k=>(R.reduce((a,x)=>a+(+x[k]),0)/R.length);
   const row={liv:lv,partite:R.length,vinte:R.filter(x=>x.win).length,stelle:avg('stars').toFixed(1),colori:Math.round(avg('pct'))+'%',karma:Math.round(avg('k')),cure:Math.round(avg('cure')),caramelle:avg('candy').toFixed(1),comprate:avg('buy').toFixed(1),portatori_max:Math.round(avg('maxCarriers')),carlo:avg('carlo').toFixed(1),leo_vittime:avg('leoHit').toFixed(1)};
   out.push(row); console.log(JSON.stringify(row)); }
