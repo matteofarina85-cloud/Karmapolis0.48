@@ -252,7 +252,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.086.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.086.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -277,6 +277,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.086.1',d:'26/11/2026',t:['👓 Occhiali rettangolari più grandi e con la montatura nera più spessa.']},
  {v:'0.086.0',d:'26/11/2026',t:['🔊 Leo ringhia e urla, Carlo ride; Carlo si mette davanti a chi Leo aveva innervosito, apre le braccia e dice «Che spettacolo!».','🪞 Editor: nuovi tagli "Marines (lati rasati)" e "Calvo in mezzo", naso grande o piccolo, rughe; nell\u2019armadio gli occhiali (rettangolari o tondi) con il colore.']},
  {v:'0.085.0',d:'26/11/2026',t:['😠 Dal livello 10 arriva Leo: va da chi hai guarito e lo rende di nuovo nervoso.','😄 Chiama Carlo dal 📱 telefono (60 karma, una volta a partita): arriva in monopattino, spinge a terra Leo e poi rimette a posto, uno a uno, chi Leo aveva rovinato.']},
  {v:'0.084.0',d:'26/11/2026',t:['🔢 Numero di versione con una cifra in più (0.084 invece di 0.84): c\u2019è ancora tanta strada prima della 1.0.','🧪 Beta: nel telefono, app 🎯 Livelli, puoi scegliere qualsiasi livello fino al 10 e azzerare i progressi quando vuoi (solo nella versione di prova).','📺 La nuvoletta che consiglia il tutorial ricompare a ogni avvio, finché non apri la TV.']},
@@ -1681,12 +1682,12 @@ function umColor(P,c){ const lin=x=>new THREE.Color(x), sk=lin(AV.skin[c.skin]),
 const UMMAT=toon({vertexColors:true}); let UM_HATK=1.12, UM_HATY=0.03; const UM_HANDK=0.72, UM_LEGIN=0;
 // 👓 occhiali (per Carlo: rettangolari) costruiti sugli occhi del modello: montatura sottile, lenti appena azzurrine
 function umGlasses(style,col){ const g=new THREE.Group(), m=toon({color:col}), L=new THREE.MeshBasicMaterial({color:0xcfe8ff,transparent:true,opacity:0.22,depthWrite:false});
-  const t=0.0042, add=(geo,x,y,z,ry=0)=>{ const o=new THREE.Mesh(geo,m); o.position.set(x,y,z); o.rotation.y=ry; g.add(o); };
-  for(const sx of [-1,1]){ const cx=sx*0.0325;
-    if(style===1){ const w=0.05, h=0.03; add(new THREE.BoxGeometry(w,t,t),cx,h/2,0); add(new THREE.BoxGeometry(w,t,t),cx,-h/2,0); add(new THREE.BoxGeometry(t,h,t),cx-w/2,0,0); add(new THREE.BoxGeometry(t,h,t),cx+w/2,0,0); const l=new THREE.Mesh(new THREE.PlaneGeometry(w,h),L); l.position.set(cx,0,-0.001); g.add(l); }
+  const t=style===1?0.0068:0.0045, add=(geo,x,y,z,ry=0)=>{ const o=new THREE.Mesh(geo,m); o.position.set(x,y,z); o.rotation.y=ry; g.add(o); };
+  for(const sx of [-1,1]){ const cx=sx*(style===1?0.036:0.0325);
+    if(style===1){ const w=0.06, h=0.037; add(new THREE.BoxGeometry(w,t,t),cx,h/2,0); add(new THREE.BoxGeometry(w,t,t),cx,-h/2,0); add(new THREE.BoxGeometry(t,h,t),cx-w/2,0,0); add(new THREE.BoxGeometry(t,h,t),cx+w/2,0,0); const l=new THREE.Mesh(new THREE.PlaneGeometry(w,h),L); l.position.set(cx,0,-0.001); g.add(l); }
     else { const r=new THREE.Mesh(new THREE.TorusGeometry(0.019,t*0.55,6,20),m); r.position.set(cx,0,0); g.add(r); const l=new THREE.Mesh(new THREE.CircleGeometry(0.019,16),L); l.position.set(cx,0,-0.001); g.add(l); }
-    add(new THREE.BoxGeometry(t,t,0.11),sx*0.062,0.006,-0.055,sx*0.08); }
-  add(new THREE.BoxGeometry(0.016,t,t),0,0.006,0.002); return g; }
+    add(new THREE.BoxGeometry(t,t,0.11),sx*(style===1?0.068:0.062),0.006,-0.055,sx*0.08); }
+  add(new THREE.BoxGeometry(style===1?0.014:0.016,t,t),0,0.006,0.002); return g; }
 function umBody(model,cfg){ let ref=model.userData.umRef;
   if(!ref){ let sm=null; model.traverse(o=>{ if(o.isSkinnedMesh && !o.userData.um && !o.userData.avBody && !sm) sm=o; }); if(!sm) return null;
     ref=model.userData.umRef={bones:sm.skeleton.bones,inv:sm.skeleton.boneInverses.map(m=>m.clone()),bind:sm.bindMatrix.clone(),parent:sm.parent,pos:sm.position.clone(),quat:sm.quaternion.clone(),scl:sm.scale.clone(),local:sm.skeleton.bones.map(b=>b.position.clone())}; }
