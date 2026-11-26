@@ -252,7 +252,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -277,6 +277,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.087.1',d:'26/11/2026',t:['😠 Leo ha il suo aspetto vero, fatto da Teo con l\u2019editor.']},
  {v:'0.087.0',d:'26/11/2026',t:['👄 Editor: la bocca! Sorriso, seria, arrabbiata, grande sorriso (con i denti) o sorpresa.']},
  {v:'0.086.1',d:'26/11/2026',t:['👓 Occhiali rettangolari più grandi e con la montatura nera più spessa.']},
  {v:'0.086.0',d:'26/11/2026',t:['🔊 Leo ringhia e urla, Carlo ride; Carlo si mette davanti a chi Leo aveva innervosito, apre le braccia e dice «Che spettacolo!».','🪞 Editor: nuovi tagli "Marines (lati rasati)" e "Calvo in mezzo", naso grande o piccolo, rughe; nell\u2019armadio gli occhiali (rettangolari o tondi) con il colore.']},
@@ -3405,11 +3406,11 @@ function updateTrafficSound(dt){ if(!soundOn||HOME.active){ if(TSND.on) TSND.g.g
   TSND.horn-=dt; if(TSND.horn<=0){ TSND.horn=10+Math.random()*25; if(near<25 && AUD.ready) horn((Math.random()-0.5)*1.4); } }
 // ======================= 😠 LEO e 😄 CARLO (idea di Teo, 25/11; decisioni 26/11: Leo solo dal livello 10, Carlo 60 karma, 1 volta a partita) =======================
 // Leo arriva nei livelli difficili e rende di nuovo nervosi quelli che hai guarito. Carlo si chiama col 📱: arriva in monopattino, spinge a terra Leo e poi ricura, uno a uno, chi Leo aveva rovinato.
-const LEO={h:null,on:false,ko:0,out:false,victims:[],cd:0,path:null,replan:0,spawnAt:40,told:false,tag:null};
+const LEO={code:'KP1-m220500000001280d1f01f0f0f100a160f000f123' /* fatto da Teo con l'editor, 26/11 */,h:null,on:false,ko:0,out:false,victims:[],cd:0,path:null,replan:0,spawnAt:40,told:false,tag:null};
 const CARLO={h:null,state:'off',called:false,price:60,path:null,replan:0,target:null,work:0,deck:null};
 function nameTag(txt,col){ const t=canvasTex(256,64,(g)=>{ g.fillStyle=col||'rgba(255,250,240,.92)'; g.beginPath(); g.roundRect(4,8,248,48,24); g.fill(); g.strokeStyle='#2a2233'; g.lineWidth=4; g.stroke(); g.fillStyle='#2a2233'; g.font='bold 30px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(txt,128,33); });
   const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false,transparent:true})); sp.scale.set(1.3,0.33,1); sp.position.y=2.25; sp.renderOrder=5; return sp; }
-function mkSpecial(seed,over,tag,col){ const av={...avRandom(seed),sex:'m',...over}; const h=makeHuman({av},null); h.g.add(nameTag(tag,col)); h.g.visible=false; return h; }
+function mkSpecial(seed,over,tag,col){ const av=typeof seed==='string'?avDecode(seed):{...avRandom(seed),sex:'m',...over}; const h=makeHuman({av},null); h.g.add(nameTag(tag,col)); h.g.visible=false; return h; }
 function farNode(x,z,dmin,dmax){ let best=null; for(let k=0;k<40;k++){ const n=WALKN[Math.floor(Math.random()*WALKN.length)], d=Math.hypot(n[0]-x,n[1]-z); if(d>=dmin&&d<=dmax){ best=n; break; } if(!best||Math.abs(d-dmin)<Math.abs(Math.hypot(best[0]-x,best[1]-z)-dmin)) best=n; } return best; }
 function stepTo(h,path,tx,tz,sp,dt){ // cammina lungo il percorso (mai attraverso le case); se il percorso è finito va dritto verso il bersaglio vicino
   const g=h.g.position; let pt=path&&path.length?path[0]:[tx,tz]; let dx=pt[0]-g.x, dz=pt[1]-g.z, dd=Math.hypot(dx,dz);
@@ -3436,7 +3437,7 @@ function callCarlo(){ if(!carloAvail()) return; if(G.karma<CARLO.price){ copMsgT
 function updateLeo(dt){ if(!UM.ready) return;
   if(!G.started || HOME.active || gameOver){ if(!G.started && (LEO.on||CARLO.state!=='off')) leoReset(); return; }
   if(LV.n<10) return;
-  if(!LEO.on){ if(G.time<LEO.spawnAt) return; if(!LEO.h) LEO.h=mkSpecial(6611,{topCol:0,bottomCol:15},'😠 Leo','rgba(255,190,180,.95)'); const n=farNode(player.pos.x,player.pos.z,28,50); LEO.h.g.position.set(n[0],0.15,n[1]); LEO.h.g.rotation.set(0,0,0); LEO.h.g.visible=true; LEO.on=true; leoGrowl(); setTimeout(()=>speak('Basta! Che nervi!',0.55,1.15),700);
+  if(!LEO.on){ if(G.time<LEO.spawnAt) return; if(!LEO.h) LEO.h=mkSpecial(LEO.code,null,'😠 Leo','rgba(255,190,180,.95)'); const n=farNode(player.pos.x,player.pos.z,28,50); LEO.h.g.position.set(n[0],0.15,n[1]); LEO.h.g.rotation.set(0,0,0); LEO.h.g.visible=true; LEO.on=true; leoGrowl(); setTimeout(()=>speak('Basta! Che nervi!',0.55,1.15),700);
     if(typeof showAlarm==='function'){ try{ showAlarm('😠 Arriva Leo!','rende di nuovo nervosi quelli che hai guarito'); }catch(e){} } copMsgT=6; msg.innerHTML='😠 <b>Arriva Leo!</b> Rende di nuovo nervosi quelli che hai guarito. Se hai '+CARLO.price+' karma, chiama <b>😄 Carlo</b> dal 📱 telefono.'; try{ phoneRing('Carlo','ti scrive: «Se Leo ti dà fastidio, chiamami!»'); }catch(e){} }
   const L=LEO.h, lp=L.g.position;
   if(LEO.out){ if(LEO.ko>0){ LEO.ko-=dt; if(LEO.ko<=0){ anthPoof(lp); L.g.visible=false; } } }
