@@ -260,7 +260,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.8</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.087.9</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -285,6 +285,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.087.9',d:'26/11/2026',t:['🚗 Sistemata l\u2019auto che restava bloccata dopo uno scontro con il traffico: l\u2019altra auto ora se ne va.','🎒 Tolto lo zaino al personaggio di base.']},
  {v:'0.087.8',d:'26/11/2026',t:['🧱 Se corri contro un muro il personaggio si ferma invece di correre sul posto.','🚿 Sotto la doccia il personaggio è nudo… con la censura a cubetti.']},
  {v:'0.087.7',d:'26/11/2026',t:['📺 In casa basta toccare la TV (o la nuvoletta) per far partire il tutorial.']},
  {v:'0.087.6',d:'26/11/2026',t:['📱 Pulsante del telefono più chiaro: un telefonino disegnato su fondo giallo; quando squilla diventa verde, con le onde e il pallino rosso.']},
@@ -853,7 +854,7 @@ function useChar(k){ for(const c of Object.values(chars)) c.model.visible=false;
   document.getElementById('emotes').hidden=true; }
 // look del giocatore (anteprima dell'editor dell'avatar): si cambia col pulsante
 const LOOKS=[
-  {name:'Il Seminatore',look:{skin:0xe8b894,hair:0xe8b894,bald:true,beard:true,beardCol:0x3b2a20},o:{skin:0xe8b894,top:0xff6a4d,pants:0x2f4f86,shoes:0xf6f2ea,bag:true}},
+  {name:'Il Seminatore',look:{skin:0xe8b894,hair:0xe8b894,bald:true,beard:true,beardCol:0x3b2a20},o:{skin:0xe8b894,top:0xff6a4d,pants:0x2f4f86,shoes:0xf6f2ea,bag:false}}, /* niente zaino (Teo, 26/11: bruttissimo) */
   {name:'La Seminatrice',look:{skin:0xc98e66,hair:0x3b2a20,long:true},o:{skin:0xc98e66,top:0x5bc0d6,pants:0xc9b58f,shoes:0x7a4e34,short:true}},
   {name:'Lo Studente',look:{skin:0xf6d2b4,hair:0xb0763a,glasses:true},o:{skin:0xf6d2b4,top:0xf0c43a,pants:0x55606e,shoes:0x2a2233,shorts:true,cap:true,capCol:0x2f7de1}},
   {name:'Il Nonno',look:{skin:0xe8b894,hair:0x9a9a9a,beard:true,glasses:true},o:{skin:0xe8b894,top:0x6b5a4a,pants:0x2a2a33,shoes:0x2a2233}}];
@@ -2228,9 +2229,13 @@ function pushOut(c){ const fx=Math.sin(c.yaw), fz=Math.cos(c.yaw), dx=player.pos
   const nx=player.pos.x+fz*s*need, nz=player.pos.z-fx*s*need; if(!hitBox(nx,nz,0.25)){ player.pos.x=nx; player.pos.z=nz; } else { const g=(c.len||4.2)/2+0.33-Math.abs(f), sf=Math.sign(f)||1; player.pos.x+=fx*sf*g; player.pos.z+=fz*sf*g; } holder.position.x=player.pos.x; holder.position.z=player.pos.z; }
 // il traffico contro i TUOI veicoli (scooter e citycar): niente più auto che ti passano attraverso.
 // se ti prende di traverso ti sposta e ti ammacca; da fermo si blocca e suona.
+function trafficRespawnFar(c){ const E=[]; for(const A of NODES) for(const B of NB[key(A.x,A.z)]){ if(Math.hypot(A.x-player.pos.x,A.z-player.pos.z)>45) E.push([A,B]); } if(!E.length) return; const [A,B]=E[Math.floor(Math.random()*E.length)];
+  Object.assign(c,{A,B,seg:laneSeg(A,B),s:0,mode:'lane',speed:0,curve:null,u:0,panic:false,stall:0,mission:null}); }
 function trafficVsMine(c){ for(const v of veh){ const C=vehCircles(v,v.x,v.z,v.yaw); let hit=null; for(const [cx,cz,r] of C) if(inVeh(c,cx,cz,r*0.9)){ hit=[cx,cz]; break; } if(!hit) continue;
     const fx=Math.sin(c.yaw), fz=Math.cos(c.yaw), dx=v.x-c.x, dz=v.z-c.z, l=dx*fz-dz*fx, f=dx*fx+dz*fz, s=Math.sign(l)||1;
     const imp=c.speed; c.speed=0; c.panic=true; c.stall=0;
+    // 🚗 se l'auto del traffico resta incastrata con la tua per più di un secondo e mezzo, se ne va (riappare lontano): prima restavate bloccati a vicenda (Teo, 26/11)
+    { const nw=performance.now(); if(nw-(c.touchLast||0)>300) c.touchT=0; c.touchLast=nw; c.touchT=(c.touchT||0)+0.033; } if(c.touchT>1.5){ c.touchT=0; trafficRespawnFar(c); continue; }
     if(imp>2.5){ v.speed*=0.3; v.pv+=0.6; crash(v,imp*1.2,f>0?-1:1); if(player.veh===v){ copMsgT=2.5; msg.innerHTML='💥 <b>Ti hanno preso '+(c.kind==='bus'?"con l'autobus":c.kind==='camion'?'col camion':'in pieno')+'!</b> Occhio agli incroci.'; } if(AUD.ready&&soundOn) horn(0); }
     else if(!(c.honkT>0) && player.veh===v){ if(AUD.ready&&soundOn) horn(0); c.honkT=2.5; }
     // spingo il tuo veicolo fuori dalla sagoma dell'auto (di lato, o avanti/indietro se di lato c'è un muro)
