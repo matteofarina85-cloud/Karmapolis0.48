@@ -191,6 +191,26 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 #fsHint .tb{background:#ffd84d;border:2.5px solid var(--line);border-radius:14px;box-shadow:3px 3px 0 var(--line);padding:5px 10px;font:700 14px var(--display);white-space:nowrap;animation:tvbob 1.2s ease-in-out infinite}
 #fsHint .ta{position:absolute;left:50%;top:100%;margin-left:-10px;border:10px solid transparent;border-top:13px solid #ffd84d;filter:drop-shadow(1px 1px 0 var(--line))}
 #full.fsPulse{animation:ringb .9s ease-in-out infinite;background:#ffd84d!important}
+
+/* 🎓 ADDESTRAMENTO (idea del vero Antony, 27/11) */
+#trCard{position:fixed;left:50%;top:64px;transform:translateX(-50%);z-index:30;width:min(520px,calc(100vw - 24px));pointer-events:auto;background:var(--paper);border:3px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);padding:10px 14px 10px;font:500 15px var(--body);color:var(--ink)}
+#trCard[hidden]{display:none}
+#trCard .trh{display:flex;align-items:center;gap:8px;font:700 17px var(--display);margin-bottom:3px}
+#trCard .trh .trn{margin-left:auto;font:600 12px var(--body);opacity:.65}
+#trCard .trx{border:none;background:none;font-size:18px;cursor:pointer;padding:0 2px;color:var(--ink)}
+#trCard p{margin:0;line-height:1.35}
+#trCard .trb{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+#trCard .trb button{flex:1 1 auto}
+#trCard .trdots{height:5px;border-radius:3px;background:#e7e0d2;margin-top:8px;overflow:hidden}#trCard .trdots i{display:block;height:100%;background:var(--accent);transition:width .4s}
+#trCard.pop{animation:trpop .45s ease}
+@keyframes trpop{0%{transform:translateX(-50%) scale(.85)}60%{transform:translateX(-50%) scale(1.05)}100%{transform:translateX(-50%) scale(1)}}
+.trGlow{animation:trglow 1s ease-in-out infinite!important;outline:4px solid #ffd84d!important;outline-offset:2px}
+@keyframes trglow{0%,100%{outline-offset:1px;outline-color:#ffd84d}50%{outline-offset:7px;outline-color:#ff9f1c}}
+#trArrow{position:fixed;left:0;top:0;z-index:29;width:0;height:0;pointer-events:none;display:none;border:18px solid transparent;border-bottom:30px solid #ffd84d;filter:drop-shadow(2px 2px 0 #2a2233);transform-origin:50% 100%}
+#trAsk .big{font-size:18px;padding:12px}
+#trAsk p{margin:0 0 10px;line-height:1.4}
+#trAsk .col{display:flex;flex-direction:column;gap:8px}
+@media (max-height:500px){#trCard{top:50px;padding:7px 11px 7px;font-size:13px;width:min(470px,calc(100vw - 280px))}#trCard .trh{font-size:15px}#trCard .trb{margin-top:5px}#trCard .trb button{padding:6px 10px;font-size:14px}}
 #tvHint{position:fixed;left:0;top:0;z-index:40;pointer-events:auto;cursor:pointer;transform:translate(-50%,-100%);display:none}
 #tvHint .tb{background:#fffaf0;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:6px 12px;font:600 15px var(--display);white-space:nowrap;animation:tvbob 1.4s ease-in-out infinite}
 #tvHint .ta{position:absolute;left:50%;top:100%;width:0;height:0;margin-left:-11px;border:11px solid transparent;border-top:14px solid var(--accent);transform-origin:50% 0;filter:drop-shadow(1px 1px 0 var(--line))}
@@ -230,7 +250,10 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="phone" aria-hidden="true"><img src="telefono/telefono-mano.webp?v=0791" alt="" draggable="false"><div class="skin"></div><div class="scr"><div class="sbar"><span id="phClock">12:00</span><span>📶 🔋</span></div><div class="ptop"><button id="phBack" type="button" aria-label="Indietro">‹</button><b id="phTitle">Karmapolis</b><span class="bolt">⚡</span></div><div class="pbody" id="phBody"></div></div><div class="handTop"></div><div class="skin skinTop"></div></div>
 <div id="phoneToast" role="status"></div>
 <div id="fsHint" aria-live="polite"><div class="tb">⛶ Premi qui: schermo intero!</div><div class="ta"></div></div>
-<div id="tvHint" aria-live="polite"><div class="tb">📺 Tocca la TV per il tutorial!</div><div class="ta"></div></div>
+<div id="trCard" hidden role="dialog" aria-live="polite"><div class="trh"><span id="trTitle">🎓 Addestramento</span><span class="trn" id="trNum"></span><button id="trExit" class="trx" type="button" aria-label="Esci dall'addestramento">✕</button></div><p id="trText"></p><div class="trb" id="trBtns"></div><div class="trdots"><i id="trBar" style="width:0"></i></div></div>
+<div id="trArrow"></div>
+<div id="trAsk" class="menuov" hidden role="dialog" aria-label="Addestramento"><div class="card"><h3>🎓 Addestramento<small>Impari giocando: io ti dico cosa fare, tu lo fai. Circa 3 minuti, senza fretta: niente tempo e niente grigio che corre.</small></h3><div class="col"><button id="trGo" class="big" type="button">▶ Inizia l'addestramento</button><button id="trCards" class="ghost" type="button">📺 Guarda le schede in TV</button><button id="trNo" class="ghost" type="button">✕ Non ora</button></div></div></div>
+<div id="tvHint" aria-live="polite"><div class="tb">📺 Tocca la TV: addestramento!</div><div class="ta"></div></div>
 <div id="news" role="dialog" aria-label="Novità della versione"><div class="nbox"><div class="nhead"><h2 id="newsTitle">📋 Novità</h2><p>Karmapolis è in prova (beta): ecco cosa è cambiato.</p></div><div class="nbody" id="newsBody"></div><div class="nfoot"><small id="newsWait">Sto costruendo il paese…</small><button id="newsGo" type="button" disabled>▶ Gioca</button></div></div></div>
 <div id="load">Sto costruendo il paese…</div>
 <div id="greyHud" aria-live="polite"></div>
@@ -260,7 +283,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.089.7</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.090.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -285,6 +308,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.090.0',d:'27/11/2026',t:['🎓 <b>Addestramento</b> (idea di Antony): tocca la TV di casa e impari giocando davvero, passo passo: muoverti, la cura giusta, la caramella, la catena del bene, comprare caramelle.','Durante l\'addestramento niente tempo, niente pioggia e niente grigio che corre.']},
  {v:'0.089.7',d:'27/11/2026',t:['🏷️ Nomi sopra Antony, Leo e Carlo molto più grandi e leggibili anche da lontano.']},
  {v:'0.089.6',d:'26/11/2026',t:['😄 «Che spettacolo!» di Carletto non è più mozzato alla fine.']},
  {v:'0.089.5',d:'26/11/2026',t:['😄 Quando lo chiami Carlo risponde «Arrivo, arrivo!» con la voce del vero Carletto.']},
@@ -937,7 +961,7 @@ function pollPad(dt){ const gps=navigator.getGamepads?navigator.getGamepads():[]
   PAD.x=DZ(g.axes[0]||0); PAD.y=DZ(g.axes[1]||0);
   const rx=DZ(g.axes[2]||0), ry=DZ(g.axes[3]||0); if(rx){ controls.azT-=rx*dt*2.4; controls.userT=0; } if(ry && typeof zoom==='function') zoom(1+ry*dt*1.2);
   PAD.drive=player.veh&&player.veh.name!=='monopattino'?{gas:V(7),brake:V(6)}:null;
-  if(hit(0)){ const order=['homeBtn','act','use','buyBtn','taxiBtn','towBtn','shopBtn','yes']; for(const id of order){ const b=document.getElementById(id); if(b && !b.hidden && b.offsetParent!==null && !(b.closest('.card')&&b.closest('.card').hidden)){ b.click(); break; } } }
+  if(hit(0)){ const order=['trNext','homeBtn','act','use','buyBtn','taxiBtn','towBtn','shopBtn','yes']; for(const id of order){ const b=document.getElementById(id); if(b && !b.hidden && b.offsetParent!==null && !(b.closest('.card')&&b.closest('.card').hidden)){ b.click(); break; } } }
   if(!talkCard.hidden){ if(hit(2)) cure('joke'); if(hit(3)) cure('listen'); if(hit(1)) cure('breathe'); if(hit(5)) cure('truth'); if(hit(4)) giveCandy(); }
   if(hit(9)){ const h=document.getElementById('homeTown'); if(h && !h.hidden) h.click(); }
   if(hit(10)) document.getElementById('rot').click();
@@ -1920,6 +1944,7 @@ function updatePeds(dt){ const threats=[]; for(const v of veh) if(Math.abs(v.spe
       const gy=height(p.x,p.z); if(F.y<=gy){ F.y=gy; if(F.vy<-4){ F.vy*=-0.35; F.vx*=0.55; F.vz*=0.55; if(Math.random()<0.6) puff(p.x,gy+0.2,p.z,true); } else { p.fly=null; p.yaw=Math.atan2(F.vx,F.vz)||p.yaw; } }
       if(p.fly){ if(p.icon) p.icon.visible=false; p.act=null; p.g.position.set(p.x,F.y,p.z); p.g.rotation.set(-F.t*F.spin,p.yaw,F.t*F.spin*0.4); animHuman(p,0,dt,p.g.visible); continue; } }
     if(p.goto){ updateGoto(p,dt,pedVis(p.x,p.z)); continue; }
+    if(p.trWalk){ trWalkPed(p,dt); continue; }
     if(p.cross && !(p.ko>0)){ updateCross(p,dt,threats); continue; }
     if(p.ko>0){ p.ko-=dt; p.g.rotation.set(-Math.PI/2,p.yaw,0); p.g.position.set(p.x,height(p.x,p.z)+0.25,p.z); p.stars.position.set(p.x,0.9,p.z); p.stars.material.rotation+=dt*3; if(p.ko<=0){ p.g.rotation.set(0,p.yaw,0); p.stars.visible=false; if(p.home){ p.x=p.home[0]; p.z=p.home[1]; } p.px=null; } animHuman(p,0,dt,p.g.visible); continue; }
     const n=p.path.length, a=p.path[p.seg], b=p.path[(p.seg+p.dir+n)%n]; const L=Math.hypot(b[0]-a[0],b[1]-a[1]); const ux=(b[0]-a[0])/L, uz=(b[1]-a[1])/L;
@@ -1930,13 +1955,13 @@ function updatePeds(dt){ const threats=[]; for(const v of veh) if(Math.abs(v.spe
       if(ahead>-1 && ahead<2+t.sp*0.3 && Math.abs(lat)<t.r+0.6){ const side=Math.sign((-uz)*dx+ux*dz)||1, mx=t.sp<6?2.4:1.5; tgtOff=THREE.MathUtils.clamp(side*(t.r+1.4),-mx,mx); run=true; } /* piano si scansano, forte non fanno in tempo */ }
     p.offT=THREE.MathUtils.damp(p.offT,tgtOff,run?3.2:2.5,dt);
     const dme=Math.hypot(p.x-player.pos.x,p.z-player.pos.z), waits=!run && !player.veh && !player.taxi && player.focusPed===p && dme<30; p.waitMe=waits; // ti ha visto arrivare: si ferma e ti aspetta
-    p.speed=THREE.MathUtils.damp(p.speed,run?3.8:(waits||p.act?0:pedPace(p)),waits?9:6,dt);
+    p.speed=THREE.MathUtils.damp(p.speed,run?3.8:(waits||p.act||p.trStop?0:pedPace(p)),waits||p.trStop?9:6,dt);
     p.t+=p.speed*dt/L; if(p.t>=1){ p.t=0; p.seg=(p.seg+p.dir+n)%n; maybeCrossAtCorner(p); } else if(!run && !p.waitMe && maybeJaywalk(p,dt,ux,uz)) {}
     let x=a[0]+(b[0]-a[0])*p.t+(-uz)*p.offT, z=a[1]+(b[1]-a[1])*p.t+ux*p.offT; p.home=[x,z];
     for(const t of threats){ const dx=x-t.x, dz=z-t.z, d=Math.hypot(dx,dz); if(d<t.r*0.85){ if(t.sp>3 && t.mine){ const ux2=dx/(d||1), uz2=dz/(d||1); knockPed(p,'Hai investito un passante!',t.fx*t.sp*1.1+ux2*2.5,2.4+t.sp*0.15,t.fz*t.sp*1.1+uz2*2.5); if(player.veh&&player.veh.name==='monopattino'){ const kv=player.veh, ks=Math.abs(kv.speed), kf=Math.sign(kv.speed)||1; kv.speed=0; exit(); knockPlayer(t.fx*ks*0.5*kf,2.2+ks*0.12,t.fz*ks*0.5*kf,{kind:'kick'}); } else if(player.veh){ player.veh.speed*=0.9; player.veh.pv+=0.8; } break; } x=t.x+dx/(d||1)*t.r*0.85; z=t.z+dz/(d||1)*t.r*0.85; } }
     // guardano dove vanno davvero (prima guardavano la via anche mentre si spostavano di lato: sembravano camminare storti)
     if(p.px!==null){ const vx=x-p.px, vz=z-p.pz; if(vx*vx+vz*vz>1e-6){ const yy=Math.atan2(vx,vz); let dd=Math.atan2(Math.sin(yy-p.yaw),Math.cos(yy-p.yaw)); p.yaw+=dd*Math.min(1,dt*10); } } else p.yaw=Math.atan2(ux,uz);
-    p.px=x; p.pz=z; p.x=x; p.z=z; p.g.position.set(x,height(x,z),z); if(p.act) faceAct(p,dt); else if(p.waitMe && p.speed<0.4){ const yy=Math.atan2(player.pos.x-x,player.pos.z-z); p.yaw+=Math.atan2(Math.sin(yy-p.yaw),Math.cos(yy-p.yaw))*Math.min(1,dt*6); } p.g.rotation.y=p.yaw;
+    p.px=x; p.pz=z; p.x=x; p.z=z; p.g.position.set(x,height(x,z),z); if(p.act) faceAct(p,dt); else if((p.waitMe||p.trStop) && p.speed<0.4){ const yy=Math.atan2(player.pos.x-x,player.pos.z-z); p.yaw+=Math.atan2(Math.sin(yy-p.yaw),Math.cos(yy-p.yaw))*Math.min(1,dt*6); } p.g.rotation.y=p.yaw;
     const vis=pedVis(x,z); const dl=Math.hypot(x-controls.look.x,z-controls.look.z); p.lod=(p.act||!ECO)?1:(dl<controls.dist*0.4?1:3); /* sul PC tutti i passanti si animano a ogni fotogramma (Teo: "stuttering su alcuni pedoni") */
     if(vis){ const near=!ECO || dl<controls.dist*0.35+6; /* sul PC ombra e contorno per tutti i passanti visibili */ if(p.nearLOD!==near){ p.nearLOD=near; for(const o of p.outl||[]) o.visible=near; for(const o of p.skins||[]) o.castShadow=near; } } p.g.visible=vis; animHuman(p,p.speed,dt,vis); if(vis) pedGesture(p,dt); pedIcon(p); } }
 
@@ -1946,12 +1971,12 @@ function attachToLoop(p,blk,x,z){ p.blk=blk; p.path=pedLoop(blk); const P=p.path
   for(let k=0;k<n;k++){ const a=P[k], b=P[(k+1)%n], ux=b[0]-a[0], uz=b[1]-a[1], L2=ux*ux+uz*uz, u=THREE.MathUtils.clamp(((x-a[0])*ux+(z-a[1])*uz)/L2,0,1), d=Math.hypot(a[0]+ux*u-x,a[1]+uz*u-z); if(d<bd){ bd=d; bk=k; bu=u; } }
   if(p.dir===1){ p.seg=bk; p.t=bu; } else { p.seg=(bk+1)%n; p.t=1-bu; } p.px=null; }
 // arrivato a un angolo: a volte attraversa verso l'isolato di fronte, sulle strisce
-function maybeCrossAtCorner(p){ if(!p.blk||p.cop||p.hosp||p.act||Math.random()>0.2) return; const b=p.blk, c=p.path[p.seg], cx=(b.x0+b.x1)/2, cz=(b.z0+b.z1)/2, di=c[0]<cx?-1:1, dj=c[1]<cz?-1:1, gap=2*(SW+1.6);
+function maybeCrossAtCorner(p){ if(p.trStop||!p.blk||p.cop||p.hosp||p.act||Math.random()>0.2) return; const b=p.blk, c=p.path[p.seg], cx=(b.x0+b.x1)/2, cz=(b.z0+b.z1)/2, di=c[0]<cx?-1:1, dj=c[1]<cz?-1:1, gap=2*(SW+1.6);
   const opts=[]; const nh=blockAt(b.i+di,b.j), nv=blockAt(b.i,b.j+dj); if(nh) opts.push({nb:nh,x1:c[0]+di*gap,z1:c[1],axis:'z'}); if(nv) opts.push({nb:nv,x1:c[0],z1:c[1]+dj*gap,axis:'x'});
   if(!opts.length) return; const o=opts[Math.floor(Math.random()*opts.length)]; const node=nearestNode((c[0]+o.x1)/2,(c[1]+o.z1)/2);
   p.cross={x0:c[0],z0:c[1],x1:o.x1,z1:o.z1,nb:o.nb,key:key(node.x,node.z),axis:o.axis,wait:true,wt:0,zebra:true}; }
 // a metà via: ogni tanto qualcuno attraversa di corsa fuori dalle strisce (è qui che chi guida deve stare attento!)
-function maybeJaywalk(p,dt,ux,uz){ if(!p.blk||p.cop||p.hosp||p.act||p.t<0.25||p.t>0.75||Math.random()>dt*0.014) return false; const b=p.blk, cx=(b.x0+b.x1)/2, cz=(b.z0+b.z1)/2;
+function maybeJaywalk(p,dt,ux,uz){ if(p.trStop||!p.blk||p.cop||p.hosp||p.act||p.t<0.25||p.t>0.75||Math.random()>dt*0.014) return false; const b=p.blk, cx=(b.x0+b.x1)/2, cz=(b.z0+b.z1)/2;
   let nx=-uz, nz=ux; if(nx*(p.x-cx)+nz*(p.z-cz)<0){ nx=-nx; nz=-nz; } const nb=blockAt(b.i+Math.round(nx),b.j+Math.round(nz)); if(!nb) return false; const gap=2*(SW+1.6); const mx=p.x+nx*gap/2, mz=p.z+nz*gap/2; if(TRAFFIC.some(c=>Math.hypot(c.x-mx,c.z-mz)<16)) return false;
   p.cross={x0:p.x,z0:p.z,x1:p.x+nx*gap,z1:p.z+nz*gap,nb,wait:false,wt:0,zebra:false}; return true; }
 function updateCross(p,dt,threats){ const C=p.cross;
@@ -2070,7 +2095,7 @@ player.hp=100; let gameOver=false, copMsgT=0;
 const hpBox=document.getElementById('hp'), hpFill=document.getElementById('hpFill'), shootCard=document.getElementById('shootCard');
 function hurt(n,why){ player.hp=Math.max(0,player.hp-n); if(player.hp<=0) endGame('💥 Colpito!','Gli agenti hanno risposto al fuoco. Nel gioco vero, qui si riparte dall\'ultimo checkpoint.'); }
 function endGame(title,text,stars){ if(gameOver) return; gameOver=true; document.getElementById('goTitle').textContent=title; document.getElementById('goText').textContent=text; document.getElementById('goStars').textContent=stars==null?'':'⭐'.repeat(stars)+'☆'.repeat(3-stars); document.getElementById('goNext').hidden=!(stars>0); document.getElementById('over').hidden=false; if(typeof musicTense==='function') musicTense(0); sirenUpdate(false,0); engineStop(); }
-document.getElementById('restart').onclick=()=>{ copMenu.hidden=true; SHOP.auto=null; setTimeout(syncCar,0); for(const k of Object.keys(G.ch)){ G.ch[k]=CH_MAX; G.chT[k]=0; } player.sta=staCap(); player.tired=false; player.focusPed=null; player.arrestT=0; for(const p of PEDS) p.cross=null; G.stat.warned=0; VICTIMS.length=0; for(const c of TRAFFIC){ c.mission=null; if(c.kind==='ambulanza') c.route=null; } for(const p of PEDS) if(p.gone||p.hosp){ p.gone=false; p.hosp=false; p.ko=0; p.fly=null; p.g.visible=true; p.g.rotation.set(0,p.yaw,0); if(p.stars) p.stars.visible=false; p.px=null; } player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,0,0); if(player.taxi) leaveTaxi(); taxiHailed=null; G.started=false; setupLevel(); W.rain=0; W.wet=0; W.sad=0; W.next=0; W.phase='off'; W.warn=0; for(const z of ZONES) z.timer=null; tgtZone=null; TGT=null; G.candies=CANDY_START; fountT=0; player.listen=null; if(radioOn) setRadio(false); for(const p of PEDS){ p.goto=null; p.actClip=null; p.owner=null; } for(const p of PEDS){ p.act=null; p.iconOverride=null; } for(const c of [...POLICE]) if(c.extra) removeCop(c); WANT.level=0; for(const p of PEDS){ if(p.ko>0){ p.ko=0; p.g.rotation.set(0,p.yaw,0); if(p.stars) p.stars.visible=false; } } if(player.veh){ const v=player.veh; v.speed=0; exit(); } player.pos.set(-12,0.15,PZ.z1-4); player.hp=100; WANT.aggro=false; holder.position.copy(player.pos);
+document.getElementById('restart').onclick=()=>{ if(TR.on && !TR.starting) trainStop(); copMenu.hidden=true; SHOP.auto=null; setTimeout(syncCar,0); for(const k of Object.keys(G.ch)){ G.ch[k]=CH_MAX; G.chT[k]=0; } player.sta=staCap(); player.tired=false; player.focusPed=null; player.arrestT=0; for(const p of PEDS) p.cross=null; G.stat.warned=0; VICTIMS.length=0; for(const c of TRAFFIC){ c.mission=null; if(c.kind==='ambulanza') c.route=null; } for(const p of PEDS) if(p.gone||p.hosp){ p.gone=false; p.hosp=false; p.ko=0; p.fly=null; p.g.visible=true; p.g.rotation.set(0,p.yaw,0); if(p.stars) p.stars.visible=false; p.px=null; } player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,0,0); if(player.taxi) leaveTaxi(); taxiHailed=null; G.started=false; setupLevel(); W.rain=0; W.wet=0; W.sad=0; W.next=0; W.phase='off'; W.warn=0; for(const z of ZONES) z.timer=null; tgtZone=null; TGT=null; G.candies=CANDY_START; fountT=0; player.listen=null; if(radioOn) setRadio(false); for(const p of PEDS){ p.goto=null; p.actClip=null; p.owner=null; } for(const p of PEDS){ p.act=null; p.iconOverride=null; } for(const c of [...POLICE]) if(c.extra) removeCop(c); WANT.level=0; for(const p of PEDS){ if(p.ko>0){ p.ko=0; p.g.rotation.set(0,p.yaw,0); if(p.stars) p.stars.visible=false; } } if(player.veh){ const v=player.veh; v.speed=0; exit(); } player.pos.set(-12,0.15,PZ.z1-4); player.hp=100; WANT.aggro=false; holder.position.copy(player.pos);
   for(const c of POLICE){ c.state='parked'; c.x=c.home.x; c.z=c.home.z; c.yaw=c.home.yaw; c.speed=0; c.hp=10; c.off.state='in'; c.off.g.visible=false; c.off.hp=3; c.off.g.rotation.set(0,0,0); place(c); c.red.color.set(0x661111); c.blue.color.set(0x112266); c.glowR.material.opacity=0; }
   for(const v of veh){ repair(v); if(v.home){ v.x=v.home.x; v.z=v.home.z; v.yaw=v.home.yaw; } v.speed=0; v.steer=0; v.accel=0; v.thr=0; v.lastG=null; v.paintI=undefined;
     if(v.paint) for(const p of v.paint){ if(p.orig) p.base.copy(p.orig); p.m.color.copy(p.base); } updateVehicle(v,0.016,null); }
@@ -2318,6 +2343,7 @@ const TOWN=[]; for(let c=0;c<GN*GN;c++) if(inTown(c)) TOWN.push(c);
 /* più gente in strada non deve voler dire grigio più veloce: l'emissione si riscala sulla folla (tarata su 32 persone) */
 let CROWD_K=1; const crowdK=()=>{ CROWD_K=Math.min(1,Math.pow(32/Math.max(1,PEDS.length),0.9)); };
 const G={acc:0,time:0,eventT:40,boomCD:0,started:false,stat:{grey:0,counts:[0,0,0,0],good:0}};
+const TR={on:false,step:-1}; // 🎓 addestramento (27/11)
 
 // ---------- icone sopra la testa ----------
 const ICONTEX={}; function iconTex(e){ if(ICONTEX[e]) return ICONTEX[e]; const t=canvasTex(64,64,(g)=>{ g.font='46px serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(e,32,36); }); t.wrapS=t.wrapT=THREE.ClampToEdgeWrapping; return ICONTEX[e]=t; }
@@ -2375,7 +2401,7 @@ function nearMiss(p,t){ if(p.reactCD>0 || p.act || p.ko>0 || p.fly) return; p.re
   startAct(p,'startle',0.7,car); }
 
 // ---------- il cuore della meccanica: diffusione, focolai, contagio del bene ----------
-function seedGrigio(){ for(const f of GF) f.fill(0); PEDS.forEach((p,i)=>{ initMood(p,i); }); const ks=KINDS.filter(k=>KIND_OK(k.id)).sort(()=>Math.random()-0.5).slice(0,2); const ps=PEDS.filter(p=>ACT[gCell(p.x,p.z)]).sort(()=>Math.random()-0.5);
+function seedGrigio(){ if(TR.on){ for(const f of GF) f.fill(0); PEDS.forEach((p,i)=>initMood(p,i)); G.time=0; G.levelT=9999; G.lvKarma=0; G.seedT=1e9; G.announced=true; G.eventT=1e9; G.started=true; G.win=false; return; } for(const f of GF) f.fill(0); PEDS.forEach((p,i)=>{ initMood(p,i); }); const ks=KINDS.filter(k=>KIND_OK(k.id)).sort(()=>Math.random()-0.5).slice(0,2); const ps=PEDS.filter(p=>ACT[gCell(p.x,p.z)]).sort(()=>Math.random()-0.5);
   ks.forEach((k,i)=>{ const p=ps[i]; if(!p) return; p.kind=k.id; p.lvl=1; GF[KI[k.id]][gCell(p.x,p.z)]=0.5; }); if(ks.length===1){ const p=ps[1]; if(p){ p.kind=ks[0].id; p.lvl=1; } } G.time=0; G.levelT=LC.time; G.lvKarma=0; G.seedT=LC.seedEvery; G.announced=false; announceLevel(); G.eventT=35+Math.random()*20; G.started=true; G.win=false; }
 const EVENTS=[
   {k:'nervo', txt:'📺 <b>Il Milan ha perso.</b> Nervosismo nell\'aria…'},
@@ -2396,7 +2422,7 @@ function updateGrigio(dt){ if(gameOver) return; if(!G.started) seedGrigio(); G.t
       for(const [a,b] of [[p,q],[q,p]]){
         if(a.good>0 && b.kind && !(W.sad>0)){ b.lvl-=dt*0.7*LC.good; if(b.lvl<=0){ makeGood(b,Math.min(3,a.gen+1)); b.owner=a.owner; if(a.owner==='me') addKarma(2,b.x,b.z); if(!b.act) startAct(b,'wave',1.8,a); } }
         if(a.kind==='ansia' && a.lvl>0.3) infect(b,'ansia',dt*0.5); }
-      if(d<2.2 && !p.act && !q.act && p.reactCD<=0 && q.reactCD<=0){
+      if(d<2.2 && !TR.on && !p.act && !q.act && p.reactCD<=0 && q.reactCD<=0){
         if((p.kind==='nervo'||q.kind==='nervo') && p.kind!=='soli' && q.kind!=='soli' && !(p.good>0||q.good>0)){ startAct(p,'argue',3.5,q,q); startAct(q,'argue',3.5,p,p); p.reactCD=q.reactCD=8; }
         else if((p.kind==='gossip'||q.kind==='gossip') && p.kind!=='soli' && q.kind!=='soli'){ startAct(p,'talk',4,q,q); startAct(q,'talk',4,p,p); p.reactCD=q.reactCD=8; } } } }
   if(G.acc<0.2) return; const T=G.acc; G.acc=0;
@@ -2406,7 +2432,7 @@ function updateGrigio(dt){ if(gameOver) return; if(!G.started) seedGrigio(); G.t
     if(p.good>0) for(const f of GF){ f[c]=Math.max(0,f[c]-1.2*T); for(const n of [c-1,c+1,c-GN,c+GN]) if(n>=0&&n<f.length) f[n]=Math.max(0,f[n]-0.5*T); }
     // la zona contagia chi ci passa
     if(p.good<=0 && !(p.ko>0) && ACT[c]) for(let k=0;k<4;k++){ const v=GF[k][c]; if(v>0.15) infect(p,KINDS[k].id,v*0.35*T); }
-    if(p.kind && GF[KI[p.kind]][c]<0.08 && !p.act){ p.lvl-=0.015*T; if(p.lvl<=0){ p.kind=null; p.lvl=0; } } }
+    if(p.kind && !p.trStop && GF[KI[p.kind]][c]<0.08 && !p.act){ p.lvl-=0.015*T; if(p.lvl<=0){ p.kind=null; p.lvl=0; } } }
   if(!player.veh){ const c0=gCell(player.pos.x,player.pos.z); for(const f of GF) for(const n of [c0,c0-1,c0+1,c0-GN,c0+GN]) if(n>=0&&n<f.length) f[n]=Math.max(0,f[n]-0.06*T); }
   // diffusione lenta, focolai alla Pandemic
   for(let k=0;k<4;k++){ const f=GF[k];
@@ -2429,6 +2455,7 @@ function updateGrigio(dt){ if(gameOver) return; if(!G.started) seedGrigio(); G.t
   if(lost>=ACTZ.length-3 && ACTZ.length>3) for(const q of ACTZ){ if(q.grey) continue; const nb=zoneNeighbors(q).filter(o=>o.active), gn=nb.filter(o=>o.grey); if(gn.length<Math.max(1,Math.ceil(nb.length/2))) continue; const k=zoneVal(gn[0]).k; for(const c of q.cells) GF[k][c]=Math.min(1,GF[k][c]+0.02*T*gn.length/nb.length); }
   if(lost>=ACTZ.length-2 && lost<ACTZ.length && lost>0 && (st.warned||0)<lost){ st.warned=lost; copMsgT=4; msg.innerHTML='⚠️ <b>Restano solo '+(ACTZ.length-lost)+' quartier'+(ACTZ.length-lost===1?'e':'i')+' a colori!</b> Se diventa grigio tutto il paese, è finita.'; }
   if(lost<(st.warned||0)) st.warned=lost;
+  if(TR.on){ greyHud.innerHTML='🎓 <b>Addestramento</b> · passo '+(TR.step+1)+'/'+TRS.length+' · 🪃 '+G.karma+' · 🍬 '+G.candies; return; }
   G.levelT-=T; const pct=colorPct(); st.pct=pct; const tl=Math.max(0,G.levelT), sNow=pct>=STAR_AT[2]?3:pct>=STAR_AT[1]?2:pct>=STAR_AT[0]?1:0;
   greyHud.innerHTML='🎯 <b>Liv. '+LC.n+'</b> · ⏳ <b'+(tl<30?' style="color:#e0483e"':'')+'>'+fmtT(tl)+'</b> · 🎨 Colori '+Math.round(pct*100)+'% '+('⭐'.repeat(sNow)||'☆')+' · 🪃 '+G.karma+' · '+KINDS.filter(k=>KIND_OK(k.id)).map(k=>k.dot+st.counts[KI[k.id]]).join(' ')+' · ✨'+st.good;
   if(G.levelT<=0){ endLevel(pct,false); return; }
@@ -2459,7 +2486,7 @@ function openShop(){ const room=CANDY_MAX-G.candies; document.getElementById('sh
   if(room<=0){ shopList.innerHTML='<p style="margin:0">Hai già la scorta piena: usale prima! 😉</p>'; }
   else shopList.innerHTML=Array.from({length:room},(_,i)=>i+1).map(n=>'<button type="button" data-n="'+n+'"'+(G.karma<n*CANDY_PRICE?' disabled':'')+'><span>'+'🍬'.repeat(n)+' '+n+(n===1?' caramella':' caramelle')+'</span><span>🪃 '+n*CANDY_PRICE+'</span></button>').join('')+(G.karma<CANDY_PRICE?'<p style="margin:4px 0 0;font-size:13px">Non hai abbastanza karma: cura qualcuno con la cura giusta e torna!</p>':'');
   shopMenu.hidden=false; }
-shopList.addEventListener('click',e=>{ const b=e.target.closest('button[data-n]'); if(!b||b.disabled) return; const n=+b.dataset.n; if(G.karma<n*CANDY_PRICE) return; G.karma-=n*CANDY_PRICE; G.candies+=n; floatText('🍬+'+n,player.pos.x,player.pos.z); shopMenu.hidden=true; copMsgT=3; msg.innerHTML='🍬 <b>'+(n===1?'Comprata!':'Comprate '+n+'!')+'</b> Ora ne hai '+G.candies+'. Funzionano su qualunque male.'; });
+shopList.addEventListener('click',e=>{ const b=e.target.closest('button[data-n]'); if(!b||b.disabled) return; const n=+b.dataset.n; if(G.karma<n*CANDY_PRICE) return; G.karma-=n*CANDY_PRICE; G.candies+=n; floatText('🍬+'+n,player.pos.x,player.pos.z); shopMenu.hidden=true; copMsgT=3; msg.innerHTML='🍬 <b>'+(n===1?'Comprata!':'Comprate '+n+'!')+'</b> Ora ne hai '+G.candies+'. Funzionano su qualunque male.'; if(TR.on) trainBuy(); });
 document.getElementById('shopNo').onclick=()=>{ shopMenu.hidden=true; };
 document.getElementById('buyBtn').onclick=openShop;
 for(const [x,z] of CANDY_STALLS){ const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:canvasTex(128,64,(g)=>{ g.fillStyle='#fffaf0'; g.strokeStyle='#2a2233'; g.lineWidth=6; g.beginPath(); g.roundRect(6,6,116,52,26); g.fill(); g.stroke(); g.font='bold 30px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillStyle='#2a2233'; g.fillText('🍬 '+CANDY_PRICE,64,34); }),transparent:true})); sp.material.map.wrapS=sp.material.map.wrapT=THREE.ClampToEdgeWrapping; sp.scale.set(2,1,1); sp.position.set(x,3.6,z); scene.add(sp); }
@@ -2477,7 +2504,7 @@ function giveCandy(){ const p=nearPed(); if(!p||candyCD>0||gameOver) return; if(
   if(p.kind){ faceTo(p); copMsgT=3.5; const k=KINDS[KI[p.kind]], best=Object.values(CURE).find(c=>c.k===k.id); msg.innerHTML='🍬 <b>Prima va guarito!</b> Per il '+k.icon+' '+k.name.toLowerCase()+' usa '+best.e+' <b>'+best.name+'</b>, poi dagli la caramella: diventerà un portatore di bene ✨'; return; }
   if(p.good>0){ copMsgT=2.5; msg.innerHTML='✨ Sta già portando il bene in giro: tieni la caramella per qualcun altro.'; return; }
   G.candies--; candyCD=0.8; faceTo(p); say('🍬'); makeGood(p,0); p.owner='me'; startAct(p,'wave',2.2,player); addKarma(4,p.x,p.z); copMsgT=3;
-  msg.innerHTML='🍬 <b>Caramella!</b> Ora è un <b>portatore di bene</b> ✨: girando per il paese guarisce chi incontra.'; }
+  msg.innerHTML='🍬 <b>Caramella!</b> Ora è un <b>portatore di bene</b> ✨: girando per il paese guarisce chi incontra.'; if(TR.on) trainCandy(p); }
 // ⚖️ ABILITÀ CONTATE (come le caramelle): ogni cura ha 3 cariche, ne torna una ogni 30 secondi → la strategia è usarle sulla persona giusta
 const CH_MAX=3, CH_REGEN=30; G.ch={joke:CH_MAX,listen:CH_MAX,breathe:CH_MAX,truth:CH_MAX}; G.chT={joke:0,listen:0,breathe:0,truth:0};
 for(const [k,c] of Object.entries(CURE)) c.id=k;
@@ -2492,9 +2519,9 @@ function cure(id){ const p=nearPed(); if(!p||candyCD>0||gameOver) return; const 
 function applyCure(p,C){ candyCD=0.8; copMsgT=3; if(C.id && G.ch[C.id]>0) G.ch[C.id]--; /* la carica si consuma solo quando la cura arriva davvero (ascoltare interrotto non costa) */
   if(!p.kind){ startAct(p,'wave',1.6,player); addKarma(1,p.x,p.z); msg.innerHTML=C.e+' Stava già bene: un sorriso e via.'; return; }
   const right=p.kind===C.k, k=KINDS[KI[p.kind]];
-  if(right){ healOnly(p); p.owner='me'; startAct(p,'wave',2,player); addKarma(8,p.x,p.z); msg.innerHTML='✔️ <b>'+C.verb+'!</b> Gli è passato il '+k.name.toLowerCase()+'.'+(G.candies>0?' Dagli una 🍬 <b>caramella</b> e porterà il bene agli altri ✨':''); }
+  if(right){ healOnly(p); p.owner='me'; startAct(p,'wave',2,player); addKarma(8,p.x,p.z); msg.innerHTML='✔️ <b>'+C.verb+'!</b> Gli è passato il '+k.name.toLowerCase()+'.'+(G.candies>0?' Dagli una 🍬 <b>caramella</b> e porterà il bene agli altri ✨':''); if(TR.on) trainCure(p,true); }
   else { p.lvl-=0.35; addKarma(2,p.x,p.z); if(p.lvl<=0){ p.kind=null; p.lvl=0; } startAct(p,'talk',1.2,player);
-    const best=Object.values(CURE).find(c=>c.k===k.id); msg.innerHTML=C.e+' Un po\' aiuta… ma per il '+k.icon+' '+k.name.toLowerCase()+' serviva <b>'+best.name+'</b> '+best.e+'.'; } }
+    const best=Object.values(CURE).find(c=>c.k===k.id); msg.innerHTML=C.e+' Un po\' aiuta… ma per il '+k.icon+' '+k.name.toLowerCase()+' serviva <b>'+best.name+'</b> '+best.e+'.'; if(TR.on) trainCure(p,false,k,best); } }
 function provoke(){ const p=nearPed(); if(!p||candyCD>0||gameOver) return; candyCD=1; faceTo(p); say('😤'); p.good=0; infect(p,'nervo',0.8); startAct(p,'fist',2.5,player); p.iconOverride='😠'; copMsgT=2.5;
   msg.innerHTML='😤 <b>L\'hai provocato.</b> Adesso è nervoso… e il nervosismo si attacca.'; }
 document.getElementById('candy').onclick=giveCandy; document.getElementById('provoke').onclick=provoke;
@@ -2509,6 +2536,89 @@ function updateTalkUI(dt){ candyCD-=dt; const p=nearPed(); talkCard.hidden=!p;
   { const at=!player.veh && !player.taxi && !(player.ko>0) && CANDY_STALLS.some(([x,z])=>Math.hypot(x-player.pos.x,z-player.pos.z)<3.8); if(buyCard.hidden===at) buyCard.hidden=!at; if(!at && !shopMenu.hidden) shopMenu.hidden=true; }
   updateAudio(dt); updateHold(); updateFloats(dt); updateThings(dt); updateCompass(dt); updateClickFx(dt); }
 
+
+// ======================= 🎓 ADDESTRAMENTO (idea del vero Antony, 27/11/2026) =======================
+// Al posto delle clip: si gioca davvero in paese e il gioco dice passo passo cosa fare, come nei tutorial dei videogiochi.
+// Niente tempo, niente grigio che si allarga, niente pioggia, niente "pazienti zero": solo le persone preparate dall'addestramento.
+const TRD={card:document.getElementById('trCard'),title:document.getElementById('trTitle'),num:document.getElementById('trNum'),text:document.getElementById('trText'),btns:document.getElementById('trBtns'),bar:document.getElementById('trBar'),arrow:document.getElementById('trArrow')};
+const trTouch=()=>matchMedia('(pointer:coarse)').matches, trPad=()=>!!(typeof PAD!=='undefined'&&PAD.on);
+const trKey=(pc,pad)=>trPad()?' (joypad: <b>'+pad+'</b>)':trTouch()?'':' (tastiera: <b>'+pc+'</b>)';
+const trMark=new THREE.Group(); { const ring=new THREE.Mesh(new THREE.RingGeometry(0.9,1.25,36),new THREE.MeshBasicMaterial({color:0xffd84d,transparent:true,opacity:0.9,depthWrite:false,side:THREE.DoubleSide})); ring.rotation.x=-Math.PI/2; ring.position.y=0.08; trMark.add(ring); trMark.ring=ring;
+  const ar=new THREE.Sprite(new THREE.SpriteMaterial({map:canvasTex(128,128,(g)=>{ g.lineJoin='round'; g.beginPath(); g.moveTo(64,118); g.lineTo(16,58); g.lineTo(44,58); g.lineTo(44,10); g.lineTo(84,10); g.lineTo(84,58); g.lineTo(112,58); g.closePath(); g.fillStyle='#ffd84d'; g.fill(); g.lineWidth=8; g.strokeStyle='#2a2233'; g.stroke(); }),transparent:true,depthTest:false})); ar.scale.set(1.1,1.1,1); ar.renderOrder=14; trMark.add(ar); trMark.ar=ar; }
+trMark.visible=false; scene.add(trMark);
+const trFree=(p)=>p&&!p.kind&&!(p.good>0)&&!(p.ko>0)&&!p.fly&&!p.goto&&!p.cross&&!p.gone&&!p.hosp&&!p.cop&&p.blk&&!p.trStop&&!p.trWalk;
+function trPickPed(x,z,dmin,dmax,not){ let best=null, bd=1e9; for(const p of PEDS){ if(!trFree(p)||(not&&not.includes(p))) continue; const d=Math.hypot(p.x-x,p.z-z); if(d<dmin||d>dmax) continue; if(d<bd){ bd=d; best=p; } } if(!best&&dmax<80) return trPickPed(x,z,Math.max(0,dmin-4),dmax*1.8,not); return best; }
+function trLineFree(ax,az,bx,bz){ const n=Math.ceil(Math.hypot(bx-ax,bz-az)/0.5); for(let i=1;i<n;i++){ const t=i/n; if(hitBox(ax+(bx-ax)*t,az+(bz-az)*t,0.25)) return false; } return true; }
+function trWalkPed(p,dt){ const T2=p.trWalk, tx=T2.p?T2.p.x:T2.x, tz=T2.p?T2.p.z:T2.z, dx=tx-p.x, dz=tz-p.z, d=Math.hypot(dx,dz), stop=T2.p?1.3:0.3;
+  p.speed=THREE.MathUtils.damp(p.speed,d>stop?1.6:0,6,dt); const yy=Math.atan2(dx,dz); p.yaw+=Math.atan2(Math.sin(yy-p.yaw),Math.cos(yy-p.yaw))*Math.min(1,dt*8);
+  const st=Math.min(Math.max(0,d-stop),p.speed*dt); p.x+=Math.sin(p.yaw)*st; p.z+=Math.cos(p.yaw)*st; p.home=[p.x,p.z]; p.px=p.x; p.pz=p.z;
+  p.g.position.set(p.x,height(p.x,p.z),p.z); p.g.rotation.y=p.yaw; const vis=pedVis(p.x,p.z); p.g.visible=vis; animHuman(p,p.speed,dt,vis); if(vis) pedGesture(p,dt); pedIcon(p); }
+function trSick(p,k){ p.kind=k; p.lvl=1; p.exp=[0,0,0,0]; p.trStop=true; p.trKind=k; if(p.act) endAct(p); }
+function trRelease(p){ if(!p) return; p.trStop=false; p.trKind=null; if(p.trWalk){ p.trWalk=null; if(p.blk) attachToLoop(p,p.blk,p.x,p.z); } }
+function trGlow(ids){ for(const el of document.querySelectorAll('.trGlow')) el.classList.remove('trGlow'); for(const id of ids||[]){ const el=document.getElementById(id); if(el) el.classList.add('trGlow'); } }
+// i passi: t = titolo, x() = testo, go() = preparazione, ok() = passo superato (se manca c'è il pulsante Avanti), tgt() = dove punta la freccia
+const TRS=[
+ {t:'🎓 Benvenuto!',x:()=>'Ti insegno a giocare <b>giocando</b>. Io ti dico cosa fare, tu lo fai: qui nessuno ti mette fretta. Il gioco vero è salvare i colori del paese dal <b>Grigio</b>, che rende la gente nervosa, sola, ansiosa o pettegola.'},
+ {t:'🚶 Muoviti',x:()=>(trPad()?'Usa la <b>levetta sinistra</b>':trTouch()?'Usa la <b>levetta</b> in basso a sinistra (oppure <b>tocca per terra</b> dove vuoi andare)':'Usa <b>W A S D</b> o le <b>frecce</b> (oppure <b>clicca per terra</b>)')+' e raggiungi la <b>freccia gialla</b>.',
+  go(){ const p=trPickPed(player.pos.x,player.pos.z,9,16); TR.xz=p?[p.x,p.z]:[player.pos.x+8,player.pos.z]; }, tgt:()=>TR.xz, ok:()=>Math.hypot(TR.xz[0]-player.pos.x,TR.xz[1]-player.pos.z)<2.2},
+ {t:'🔴 Una persona nervosa',x:()=>'Vedi la persona con la freccia? Sopra la testa ha 😠: è <b>nervosa</b>. Il nervosismo si attacca agli altri, come tutti i mali del Grigio. <b>Avvicinati a lei.</b>',
+  go(){ const p=trPickPed(player.pos.x,player.pos.z,7,20); TR.p1=p; if(p){ trSick(p,'nervo'); player.focusPed=p; } }, tgt:()=>TR.p1, ok:()=>!TR.p1||Math.hypot(TR.p1.x-player.pos.x,TR.p1.z-player.pos.z)<3.6},
+ {t:'😄 La cura giusta',x:()=>'Quando sei vicino a qualcuno compaiono i pulsanti delle <b>cure</b>. Per il nervosismo serve <b>😄 una battuta</b>: premi 😄'+trKey('1','X')+'.',
+  go(){ trGlow(['c_joke']); }, tgt:()=>TR.p1, ok:()=>!TR.p1||TR.done||!TR.p1.kind},
+ {t:'🔵 Una persona sola',x:()=>'Bravo! La cura giusta <b>guarisce quella persona</b> e ti dà <b>karma</b> 🪃 (i punti del gioco). Ora c\'è qualcuno di <b>solo</b> 😔: vai da lui.',
+  go(){ trGlow([]); const p=trPickPed(player.pos.x,player.pos.z,6,18,[TR.p1]); TR.p2=p; if(p){ trSick(p,'soli'); player.focusPed=p; } }, tgt:()=>TR.p2, ok:()=>!TR.p2||Math.hypot(TR.p2.x-player.pos.x,TR.p2.z-player.pos.z)<3.6},
+ {t:'👂 Ascoltare',x:()=>'Chi è solo ha bisogno di essere <b>ascoltato</b>: premi 👂'+trKey('2','Y')+' e <b>resta fermo</b> vicino a lui finché non ha finito.',
+  go(){ trGlow(['c_listen']); }, tgt:()=>TR.p2, ok:()=>!TR.p2||TR.done||!TR.p2.kind},
+ {t:'🩹 Le 4 cure',x:()=>'Ogni male ha la sua cura:<br>😄 <b>battuta</b> → 🔴 nervosi · 👂 <b>ascoltare</b> → 🔵 soli<br>🌬️ <b>respirare</b> → 🟣 ansiosi · 🗣️ <b>verità</b> → 🟡 pettegoli<br>Il numero sul pulsante sono le <b>cariche</b>: ne torna una ogni 30 secondi. La cura sbagliata aiuta poco.',
+  go(){ trGlow([]); }},
+ {t:'🍬 La caramella',x:()=>'Ora il trucco più importante. La cura guarisce solo quella persona. Ma se a chi <b>sta già bene</b> dai una 🍬 <b>caramella</b>, diventa un <b>portatore di bene</b> ✨ che guarisce gli altri da solo! Torna da lui e premi 🍬'+trKey('C','LB')+'.',
+  go(){ if(G.candies<1) G.candies=1; trGlow(['candy']); if(TR.p2) player.focusPed=TR.p2; }, tgt:()=>TR.p2, ok:()=>!TR.p2||TR.done||TR.p2.good>0, tick(){ if(G.candies<1 && TR.p2 && !(TR.p2.good>0)) G.candies=1; }},
+ {t:'✨ La catena del bene',x:()=>'Guarda! Il portatore ✨ va dalle persone nervose e le guarisce, e chi guarisce diventa portatore a sua volta. <b>Una caramella = una catena di bene.</b> Usale sulle persone in mezzo alla gente!',
+  go(){ trGlow([]); const c=TR.p2; if(!c){ TR.chain=[]; return; } c.trStop=false; const cand=PEDS.filter(p=>trFree(p)&&p!==TR.p1).map(p=>({p,d:Math.hypot(p.x-c.x,p.z-c.z)})).filter(o=>o.d>2.5&&o.d<20).sort((a,b)=>a.d-b.d); const L=[];
+    for(const o of cand){ if(L.length>=2) break; const from=L.length?L[L.length-1]:c; if(trLineFree(from.x,from.z,o.p.x,o.p.z)) L.push(o.p); }
+    for(const o of cand){ if(L.length>=2) break; if(!L.includes(o.p)) L.push(o.p); }
+    TR.chain=L; for(const p of L) trSick(p,'nervo'); if(L[0]) c.trWalk={p:L[0]}; TR.ct=0; },
+  tgt:()=>TR.p2, tick(dt){ const c=TR.p2; TR.ct+=dt; if(!c) return; const left=TR.chain.filter(p=>p.kind); if(left.length&&c.trWalk&&!c.trWalk.p.kind) c.trWalk={p:left[0]};
+    if(TR.ct>28) for(const p of left){ makeGood(p,1); p.owner='me'; } },
+  ok:()=>TR.chain.every(p=>!p.kind)&&TR.ct>1.5, end(){ trRelease(TR.p2); for(const p of TR.chain) trRelease(p); }},
+ {t:'🧭 Focolai, tempo e stelle',x:()=>'Nella partita vera il Grigio nasce da solo. Quando un quartiere si ammala, in alto la <b>bussola</b> 🧭 indica il <b>focolaio</b> e parte un conto alla rovescia: corri lì e cura! In basso vedi ⏳ il <b>tempo</b> e 🎨 quanto paese è a colori: alla fine ⭐ 50% · ⭐⭐ 70% · ⭐⭐⭐ 90%.',
+  go(){ trGlow(['compass','greyHud']); }},
+ {t:'🛒 Comprare caramelle',x:()=>'Le caramelle finiscono. Si comprano col <b>karma</b> alle <b>bancarelle</b> con il cartello 🍬 '+CANDY_PRICE+' in piazza. Raggiungi la freccia gialla.',
+  go(){ trGlow([]); let b=null, bd=1e9; for(const s of CANDY_STALLS){ const d=Math.hypot(s[0]-player.pos.x,s[1]-player.pos.z); if(d<bd){ bd=d; b=s; } } TR.xz=[b[0],b[1]]; }, tgt:()=>TR.xz, ok:()=>!buyCard.hidden},
+ {t:'🍬 Compra',x:()=>'Premi <b>🍬 Compra caramelle</b> e scegline una. (Il karma che manca te lo regalo io, solo per questa volta 😉)',
+  go(){ G.candies=0; if(G.karma<CANDY_PRICE) G.karma=CANDY_PRICE; trGlow(['buyBtn']); }, tgt:()=>TR.xz, ok:()=>TR.done},
+ {t:'🏆 Sei pronto!',x:()=>'Ultimi consigli: ⚡ la barra del <b>fiato</b> cala se corri, si ricarica camminando e a casa. 🏠 ti riporta <b>a casa</b> (la partita va in pausa). Dal 📱 <b>telefono</b> trovi livelli, opzioni e aiuto. Occhio alle auto e alla polizia! 🚓',
+  go(){ trGlow([]); }, last:true}];
+function trShow(){ const S=TRS[TR.step]; TRD.title.textContent=S.t; TRD.num.textContent=(TR.step+1)+'/'+TRS.length; TRD.text.innerHTML=S.x(); TRD.bar.style.width=Math.round(TR.step/(TRS.length-1)*100)+'%';
+  TRD.btns.innerHTML=S.last?'<button id="trPlay" type="button">▶ Gioca il livello '+LV.n+'</button><button id="trHome" class="ghost" type="button">🏠 Torna a casa</button>':!S.ok?'<button id="trNext" type="button">Avanti ▶</button>':'';
+  TRD.card.hidden=false; TRD.card.classList.remove('pop'); void TRD.card.offsetWidth; TRD.card.classList.add('pop'); }
+function trGo(i){ const P=TRS[TR.step]; if(P&&P.end) P.end(); TR.step=i; TR.done=false; TR.wait=0; const S=TRS[i]; if(S.go) S.go(); trShow(); sfx('pick'); }
+TRD.btns.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; if(b.id==='trNext') trGo(TR.step+1); else if(b.id==='trPlay'){ trainStop(); document.getElementById('restart').click(); copMsgT=4; msg.innerHTML='🎯 <b>Livello '+LV.n+'</b>: adesso si fa sul serio. Forza!'; } else if(b.id==='trHome') goHome(false); });
+document.getElementById('trExit').onclick=()=>{ goHome(false); };
+function trainCure(p,right,k,best){ const S=TRS[TR.step]; if(!S||!S.ok||(p!==TR.p1&&p!==TR.p2)) return; if(right){ TR.done=true; return; }
+  p.kind=p.trKind||p.kind; p.lvl=1; copMsgT=4; msg.innerHTML='🙂 <b>Quasi!</b> Per il '+k.icon+' '+k.name.toLowerCase()+' serve '+best.e+' <b>'+best.name+'</b>. Riprova!'; }
+function trainCandy(p){ if(p===TR.p2) TR.done=true; }
+function trainBuy(){ if(TRS[TR.step]&&TRS[TR.step].t.startsWith('🍬 Compra')) TR.done=true; }
+function trainStart(){ document.getElementById('trAsk').hidden=true; closeTV(); TR.on=true; TR.save={karma:G.karma,candies:G.candies}; TR.p1=TR.p2=null; TR.chain=[];
+  const co=HOME.carOut; HOME.carOut=false; HOME.townPos=null; HOME.pendingLevel=false; goTown(); HOME.carOut=co; TR.starting=true; document.getElementById('restart').click(); TR.starting=false;
+  G.karma=0; G.candies=1; trGo(0); copMsgT=0; msg.innerHTML='🎓 <b>Addestramento</b>: segui le istruzioni in alto.'; }
+function trainStop(){ if(!TR.on) return; const P=TRS[TR.step]; if(P&&P.end) P.end(); for(const p of [TR.p1,TR.p2]) trRelease(p); TR.on=false; TR.step=-1; trGlow([]); TRD.card.hidden=true; TRD.card.style.visibility=''; TRD.arrow.style.display='none'; trMark.visible=false;
+  if(TR.save){ G.karma=TR.save.karma; G.candies=TR.save.candies; } HOME.pendingLevel=true; HOME.townPos=null; try{ localStorage.setItem('karmapolis_addestramento','1'); }catch(e){} }
+const _trV=new THREE.Vector3();
+function updateTraining(dt){ const S=TRS[TR.step]; if(!S) return; if(S.tick) S.tick(dt); { const cov=!shopMenu.hidden||!copMenu.hidden; const vv=cov?'hidden':''; if(TRD.card.style.visibility!==vv) TRD.card.style.visibility=vv; }
+  for(const p of [TR.p1,TR.p2]) if(p&&p.trStop&&p.trKind&&p.kind&&p.lvl<1) p.lvl=1; /* le persone dell'addestramento non guariscono da sole */
+  if(S.ok && S.ok()){ TR.wait+=dt; if(TR.wait>0.9) trGo(TR.step+1); }
+  // freccia gialla: sopra il punto o la persona da raggiungere, e sul bordo dello schermo se è fuori
+  const t=S.tgt?S.tgt():null; let tx=null, tz=null; if(t){ if(Array.isArray(t)){ tx=t[0]; tz=t[1]; } else if(t.x!==undefined){ tx=t.x; tz=t.z; } }
+  if(tx===null){ trMark.visible=false; TRD.arrow.style.display='none'; return; }
+  trMark.visible=true; trMark.position.set(tx,height(tx,tz),tz); const bob=Math.sin(G.time*4)*0.25; trMark.ar.position.y=(Array.isArray(t)?2.2:3.1)+bob; trMark.ring.scale.setScalar(1+Math.sin(G.time*4)*0.08);
+  const v=_trV.set(tx,height(tx,tz)+1.2,tz).project(camera), W=innerWidth, H=innerHeight; let x=(v.x*0.5+0.5)*W, y=(-v.y*0.5+0.5)*H; const behind=v.z>1; if(behind){ x=W-x; y=H-y; }
+  const m=46, off=behind||x<m||x>W-m||y<m||y>H-m; if(!off){ TRD.arrow.style.display='none'; return; }
+  const cx=W/2, cy=H/2, ang=Math.atan2(y-cy,x-cx), k=Math.min((W/2-m)/Math.abs(Math.cos(ang)||1e-6),(H/2-m)/Math.abs(Math.sin(ang)||1e-6));
+  TRD.arrow.style.display='block'; TRD.arrow.style.left=(cx+Math.cos(ang)*k-18)+'px'; TRD.arrow.style.top=(cy+Math.sin(ang)*k-30)+'px'; TRD.arrow.style.transform='rotate('+(ang+Math.PI/2)+'rad)'; }
+document.getElementById('trGo').onclick=trainStart;
+document.getElementById('trCards').onclick=()=>{ document.getElementById('trAsk').hidden=true; tvPlay(0); tvUI.hidden=false; };
+document.getElementById('trNo').onclick=()=>{ document.getElementById('trAsk').hidden=true; closeTV(); };
 // ---------- LO SCENARIO CHE REAGISCE: campane, fontana, panchine, autoradio ----------
 const BELL={x:9,z:PZ.z0+7-2}; // campanile
 const THINGS=[{id:'bell',x:BELL.x,z:BELL.z,r:5.2,label:'🔔 Suona le campane',cd:0,cdMax:35},{id:'fountain',x:0,z:0,r:6.5,label:'⛲ Accendi la fontana',cd:0,cdMax:45}];
@@ -2627,7 +2737,7 @@ function levelCfg(n){ const b=LEVELS[Math.min(n,LEVELS.length)-1], extra=Math.ma
 const LV={n:1,best:1,stars:{}}; try{ const sv=JSON.parse(localStorage.getItem('karmapolis_livelli')||'{}'); LV.n=sv.n||1; LV.best=sv.best||1; LV.stars=sv.stars||{}; }catch(e){}
 const saveLevels=()=>{ try{ localStorage.setItem('karmapolis_livelli',JSON.stringify({n:LV.n,best:LV.best,stars:LV.stars})); }catch(e){} };
 let LC=levelCfg(LV.n); const ACT=new Uint8Array(GN*GN); let ACTZ=ZONES;
-function setupLevel(){ LC=levelCfg(LV.n); const pz=ZONES.find(q=>q.name==='la piazza')||ZONES[0];
+function setupLevel(){ LC=levelCfg(TR.on?1:LV.n); if(TR.on){ LC.emit=0.03; LC.time=9999; } const pz=ZONES.find(q=>q.name==='la piazza')||ZONES[0];
   ACTZ=[...ZONES].sort((a,b)=>Math.hypot(a.cx-pz.cx,a.cz-pz.cz)-Math.hypot(b.cx-pz.cx,b.cz-pz.cz)).slice(0,LC.zones);
   ACT.fill(0); for(const q of ACTZ) for(const c of q.cells) ACT[c]=1; for(const q of ZONES) q.active=ACTZ.includes(q);
   G.levelT=LC.time; G.lvKarma=0; }
@@ -2969,7 +3079,7 @@ function thunder(){ if(!AUD.ready||!soundOn) return; const t=AC.currentTime+0.05
 function rainShiftFocus(){ if(!TGT||!TGT.zone) return false; const q=TGT.zone, others=ACTZ.filter(o=>o!==q); if(!others.length) return false; const o=others[Math.floor(Math.random()*others.length)];
   for(let k=0;k<4;k++){ let tot=0; for(const c of q.cells){ const a=GF[k][c]*0.8; GF[k][c]-=a; tot+=a; } if(tot>0){ const per=tot/(o.cells.length||1)*1.1; for(const c of o.cells) GF[k][c]=Math.min(1,GF[k][c]+per*(0.6+Math.random()*0.8)); } }
   q.timer=null; tgtZone=null; TGT=null; tgtT=0; return o; }
-function updateWeather(dt){ if(!G.started||gameOver) return; W.t+=dt;
+function updateWeather(dt){ if(!G.started||gameOver||TR.on) return; W.t+=dt;
   if(!W.next) W.next=LC.n<=1?140+Math.random()*60:70+Math.random()*50;
   if(W.phase==='off'){ W.next-=dt; if(W.next<=6 && !W.warn){ W.warn=1; copMsgT=4; msg.innerHTML='🌩️ <b>Nuvoloni in arrivo…</b> Sta per piovere: tra poco la città si intristisce e le strade diventano scivolose.'; thunder(); }
     if(W.next<=0){ W.phase='rain'; W.t=0; W.sad=30; W.warn=0; copMsgT=5; msg.innerHTML='🌧️ <b>Piove!</b> Per 30 secondi tutti sono tristi e il bene non si passa. In auto: frena prima e occhio alle pozzanghere 💦'; thunder(); } }
@@ -2989,7 +3099,7 @@ function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } i
   try{ updateAnthony(dt); }catch(e){ console.warn('Anthony',e); } try{ updateLeo(dt); }catch(e){ console.warn('Leo',e); } try{ updateTrafficSound(dt); }catch(e){}
   if(player.mode!=='foot'||player.taxi||player.ko>0||player.arrestT>0) updateStamina(dt,'ride');
   if(player.arrestT>0 && !player.taxi) updateArrest(dt); else if(player.taxi) updateTaxiRide(dt); else if(player.ko>0) updatePlayerKO(dt); else if(player.mode==='foot') updatePlayer(dt); else updateRider(dt);
-  TT+=dt; updateWeather(dt); updateDayCycle(dt); updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); } updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
+  TT+=dt; updateWeather(dt); updateDayCycle(dt); updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); } if(TR.on) updateTraining(dt); updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
 
 // ======================= 🏠 CASA = IL MENU DEL GIOCO (alla GTA): giri per casa e ogni oggetto è una voce =======================
 // TV = tutorial · tapis roulant = minigioco del cardio (stamina più lunga) · armadio = vestiti · doccia e letto = stamina · garage = pieno di benzina · porta = esci a giocare
@@ -3145,7 +3255,7 @@ addEventListener('keydown',e=>{ if(HOME.active && (e.code==='KeyE'||e.code==='En
 const homeTopEls=()=>['compass','greyHud','buyCard','taxiCard','useCard','talkCard','actCard','radioCard'].map(id=>document.getElementById(id)).filter(Boolean);
 const HOWTO_HOME='🏠 <b>Casa:</b> muoviti come in paese (levetta, frecce o clic). Avvicinati agli oggetti e premi il pulsante che compare (o <b>E</b>): 📺 TV tutorial · 💻 PC col blog · 🏃 tapis roulant · 👕 armadio · 🚿 doccia · 🛏️ letto · ⛽ garage · 🚪 porta = esci a giocare.'; let HOWTO_TOWN=null;
 function townVisible(on){ for(const p of PEDS){ if(!on){ p.g.visible=false; if(p.icon) p.icon.visible=false; if(p.stars) p.stars.visible=false; } } for(const c of TRAFFIC) c.m.visible=on; for(const c of POLICE){ c.g.visible=on; } for(const v of veh) v.group.visible=on&&(v.name!=='auto'||HOME.carOut); }
-function goHome(first){ SHOP.auto=null; if(!first&&HOME.carOut){ if(HOME.fuel<=0) callTow(true); else { if(player.veh&&player.veh.name==='auto'){ player.veh.speed=0; exit(); } HOME.carOut=false; } } townVisible(false); syncCar(); const hw=document.getElementById('howto'); if(HOWTO_TOWN===null) HOWTO_TOWN=hw.innerHTML; hw.innerHTML=HOWTO_HOME; if(player.taxi) leaveTaxi(); if(player.veh){ player.veh.speed=0; exit(); } if(player.ko>0){ player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,player.yaw,0); }
+function goHome(first){ if(TR.on) trainStop(); SHOP.auto=null; if(!first&&HOME.carOut){ if(HOME.fuel<=0) callTow(true); else { if(player.veh&&player.veh.name==='auto'){ player.veh.speed=0; exit(); } HOME.carOut=false; } } townVisible(false); syncCar(); const hw=document.getElementById('howto'); if(HOWTO_TOWN===null) HOWTO_TOWN=hw.innerHTML; hw.innerHTML=HOWTO_HOME; if(player.taxi) leaveTaxi(); if(player.veh){ player.veh.speed=0; exit(); } if(player.ko>0){ player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,player.yaw,0); }
   musicTense(0); if(!first) HOME.townPos=player.pos.clone(); HOME.active=true; player.moveTo=null; player.focusPed=null; HOLD.active=false; const [x,z]=HP(0,3.6); player.pos.set(x,0,z); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,player.yaw,0);
   controls.ready=false; HOME.zoomTown=controls.zoom; controls.zoom=0.35; controls.az=controls.azT=player.yaw+Math.PI; controls.userT=0; for(const el of homeTopEls()) el.hidden=true; document.getElementById('homeTown').hidden=true; timerSpr.visible=beam.visible=beamRing.visible=beamIcon.visible=false;
   msg.innerHTML=first?'🏠 <b>Sei a casa!</b> Gira per le stanze: ogni oggetto fa qualcosa. Quando sei pronto, esci dalla <b>porta</b> per giocare.':'🏠 <b>Di nuovo a casa.</b> La partita è in pausa: riposati, allenati o fai il pieno.'; copMsgT=5; lastHomeLbl='-'; }
@@ -3212,7 +3322,7 @@ function drawTV(i){ const g=tvCv.getContext('2d'); if(i==='yt'){ drawYT(g); retu
 function tvPlay(i){ tvI=i; { const tx=document.getElementById('tvText'); if(tx){ tx.hidden=false; tx.innerHTML='<small>'+(i+1)+'/'+TUT.length+'</small> '+TUT_LONG[i]; } } document.getElementById('tvYTopen').hidden=true; document.getElementById('tvYT').hidden=false; tvT0=performance.now(); for(const k in TVVID) if(TVVID[k]) TVVID[k].pause(); const v=tvVideo(i); if(v){ v.currentTime=0; v.play().catch(()=>{}); } clearInterval(tvTimer); drawTV(i); tvTimer=setInterval(()=>{ if(tvI!==-1) drawTV(tvI); },1000/30); }
 drawTV(-1);
 const tvUI=document.getElementById('tvUI'); document.getElementById('tvFrame').appendChild(tvCv); // lo stesso schermo: sulla TV in 3D e grande davanti a te
-function openTV(){ try{ localStorage.setItem('karmapolis_tutorial','1'); }catch(e){} TVHINT.seen=true; HOME.busy=true; tvPlay(0); tvUI.hidden=false; const [px,pz]=HP(2,-2.7); player.pos.set(px,0,pz); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,Math.PI,0); controls.az=controls.azT=0; const [x,z]=HP(2,-5.4); camFocus(x,z,999,0.21); controls.focus.y=1.9; document.getElementById('titleCard').style.visibility='hidden'; }
+function openTV(cards){ try{ localStorage.setItem('karmapolis_tutorial','1'); }catch(e){} TVHINT.seen=true; HOME.busy=true; if(cards){ tvPlay(0); tvUI.hidden=false; } else { drawTV(-1); document.getElementById('trAsk').hidden=false; } const [px,pz]=HP(2,-2.7); player.pos.set(px,0,pz); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,Math.PI,0); controls.az=controls.azT=0; const [x,z]=HP(2,-5.4); camFocus(x,z,999,0.21); controls.focus.y=1.9; document.getElementById('titleCard').style.visibility='hidden'; }
 function closeTV(){ document.getElementById('titleCard').style.visibility=''; HOME.busy=false; unstick(); tvUI.hidden=true; clearInterval(tvTimer); for(const k in TVVID) if(TVVID[k]) TVVID[k].pause(); tvI=-1; drawTV(-1); controls.focusT=0; }
 document.getElementById('tvPrev').onclick=()=>{ tvPlay(tvI==='yt'?0:Math.max(0,tvI-1)); };
 document.getElementById('tvYT').onclick=()=>{ tvI='yt'; { const tx=document.getElementById('tvText'); if(tx) tx.hidden=true; } for(const k in TVVID) if(TVVID[k]) TVVID[k].pause(); document.getElementById('tvYTopen').hidden=false; document.getElementById('tvYT').hidden=true; drawTV('yt'); };
@@ -3625,7 +3735,7 @@ function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; f
   if(settle-->0) return;
   let np=PR; if(fps<FPS_CAP*0.93 && PR>PR_MIN) np=Math.max(PR_MIN,PR-0.1); else if(fps>FPS_CAP*0.99 && PR<PR_MAX) np=Math.min(PR_MAX,PR+0.05);
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
-window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
+window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
 window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…');
 Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e)),umLoad('gente/').catch(e=>{ console.warn('gente non caricata, uso i corpi disegnati',e); window.__umErr=String(e&&e.message||e); }),carsLoad('auto/').catch(e=>console.warn('auto nuove non caricate, uso quelle di prima',e))]).then(()=>{
   if(!UM.ready) setTimeout(()=>{ try{ msg.innerHTML='⚠️ <b>Persone nuove non caricate</b> ('+(window.__umErr||'?')+'): mandami uno screenshot di questo messaggio.'; }catch(e){} },4000);
