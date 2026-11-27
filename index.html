@@ -193,7 +193,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 #full.fsPulse{animation:ringb .9s ease-in-out infinite;background:#ffd84d!important}
 
 /* 🎓 ADDESTRAMENTO (idea del vero Antony, 27/11) */
-#trCard{position:fixed;left:50%;top:64px;transform:translateX(-50%);z-index:30;width:min(520px,calc(100vw - 24px));pointer-events:auto;background:var(--paper);border:3px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);padding:10px 14px 10px;font:500 15px var(--body);color:var(--ink)}
+#trCard{position:fixed;left:14px;top:126px;z-index:30;width:min(300px,calc(100vw - 24px));max-height:calc(100vh - 230px);overflow-y:auto;pointer-events:auto;background:var(--paper);border:3px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);padding:10px 14px 10px;font:500 15px var(--body);color:var(--ink)}
 #trCard[hidden]{display:none}
 #trCard .trh{display:flex;align-items:center;gap:8px;font:700 17px var(--display);margin-bottom:3px}
 #trCard .trh .trn{margin-left:auto;font:600 12px var(--body);opacity:.65}
@@ -203,7 +203,8 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 #trCard .trb button{flex:1 1 auto}
 #trCard .trdots{height:5px;border-radius:3px;background:#e7e0d2;margin-top:8px;overflow:hidden}#trCard .trdots i{display:block;height:100%;background:var(--accent);transition:width .4s}
 #trCard.pop{animation:trpop .45s ease}
-@keyframes trpop{0%{transform:translateX(-50%) scale(.85)}60%{transform:translateX(-50%) scale(1.05)}100%{transform:translateX(-50%) scale(1)}}
+@keyframes trpop{0%{transform:translateX(-30px);opacity:.3}100%{transform:none;opacity:1}}
+body.training #greyHud{display:none!important}
 .trGlow{animation:trglow 1s ease-in-out infinite!important;outline:4px solid #ffd84d!important;outline-offset:2px}
 @keyframes trglow{0%,100%{outline-offset:1px;outline-color:#ffd84d}50%{outline-offset:7px;outline-color:#ff9f1c}}
 #trArrow,.trPoint{position:fixed;left:0;top:0;z-index:29;width:44px;height:58px;pointer-events:none;display:none;transform-origin:50% 0}
@@ -214,7 +215,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 #trAsk .big{font-size:18px;padding:12px}
 #trAsk p{margin:0 0 10px;line-height:1.4}
 #trAsk .col{display:flex;flex-direction:column;gap:8px}
-@media (max-height:500px){#trCard{top:50px;padding:7px 11px 7px;font-size:13px;width:min(470px,calc(100vw - 280px))}#trCard .trh{font-size:15px}#trCard .trb{margin-top:5px}#trCard .trb button{padding:6px 10px;font-size:14px}}
+@media (max-height:500px){#trCard{top:8px;left:8px;padding:6px 9px 7px;font-size:12px;width:min(225px,32vw);max-height:calc(100vh - 140px)}#trMsg{font-size:11.5px}#trCard .trh{font-size:15px}#trCard .trb{margin-top:5px}#trCard .trb button{padding:6px 10px;font-size:14px}}
 #tvHint{position:fixed;left:0;top:0;z-index:40;pointer-events:auto;cursor:pointer;transform:translate(-50%,-100%);display:none}
 #tvHint .tb{background:#fffaf0;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:6px 12px;font:600 15px var(--display);white-space:nowrap;animation:tvbob 1.4s ease-in-out infinite}
 #tvHint .ta{position:absolute;left:50%;top:100%;width:0;height:0;margin-left:-11px;border:11px solid transparent;border-top:14px solid var(--accent);transform-origin:50% 0;filter:drop-shadow(1px 1px 0 var(--line))}
@@ -287,7 +288,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.090.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.090.3</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -312,6 +313,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.090.3',d:'27/11/2026',t:['🎓 Il riquadro dell\'addestramento ora è una colonna a sinistra: non copre più il personaggio.','🔭 Lo zoom indietro arriva meno in alto: non si vede più tutta la città (trovare i focolai era troppo facile).']},
  {v:'0.090.2',d:'27/11/2026',t:['😤 Tolto il pulsante «Provoca» dalle abilità: non serviva a niente.','🎓 Addestramento: zoomate meno strette (prima la telecamera finiva dentro i muri).']},
  {v:'0.090.1',d:'27/11/2026',t:['🎓 Addestramento più chiaro: zoomate sugli obiettivi, colonna di luce e freccia più grandi, frecce gialle che indicano i pulsanti da premere.','I messaggi del gioco compaiono dentro il riquadro dell\'addestramento: niente più fumetti uno sopra l\'altro.']},
  {v:'0.090.0',d:'27/11/2026',t:['🎓 <b>Addestramento</b> (idea di Antony): tocca la TV di casa e impari giocando davvero, passo passo: muoverti, la cura giusta, la caramella, la catena del bene, comprare caramelle.','Durante l\'addestramento niente tempo, niente pioggia e niente grigio che corre.']},
@@ -501,7 +503,7 @@ const _edV=new THREE.Vector3(); const controls={target:new THREE.Vector3(),look:
     this.target.set(px,py,pz);
     // inquadratura del momento: entra in 0,4 s, resta, esce piano
     this.focusT=Math.max(0,this.focusT-dt); this.fk=THREE.MathUtils.damp(this.fk,this.focusT>0?1:0,this.focusT>0?5:2.2,dt);
-    this.vz=THREE.MathUtils.damp(this.vz||0,v?Math.min(0.34,Math.abs(v.speed)*0.013):0,1.6,dt); const zBase=Math.min(1,this.zoom+this.vz); // più vai veloce, più la telecamera si allontana (morbida, senza scatti)
+    this.vz=THREE.MathUtils.damp(this.vz||0,v?Math.min(0.34,Math.abs(v.speed)*0.013):0,1.6,dt); const zBase=Math.min(v?0.9:0.74,Math.min(0.74,this.zoom)+this.vz); // più vai veloce, più la telecamera si allontana (morbida, senza scatti)
     this.z=THREE.MathUtils.lerp(zBase,this.focusZoom,this.fk); const z=this.z;
     const D=THREE.MathUtils.lerp(6.5,92,z*z), el=THREE.MathUtils.lerp(0.3,0.96,Math.min(1,z*1.7));
     // da vicino la telecamera si mette alle spalle (come prima); da lontano resta ferma a 45° e la giri tu
@@ -528,7 +530,8 @@ function occluded(px,py,pz,az,D,el){ const c=Math.cos(el)*D, cx=px+Math.sin(az)*
 function camFocus(x,z,dur=2.4,zoom=0.13){ controls.focus.set(x,1.1,z); controls.focusT=dur; controls.focusZoom=zoom; }
 camera.near=0.3; camera.far=650; camera.updateProjectionMatrix();
 document.getElementById('rot').onclick=()=>{ controls.azT-=Math.PI/2; controls.userT=0; };
-const zoom=f=>{ controls.zoom=THREE.MathUtils.clamp(controls.zoom*f,0.1,1); };
+const ZOOM_MAX=0.74; /* Teo 27/11: da troppo in alto si vedeva tutta la città e i focolai erano troppo facili da trovare */
+const zoom=f=>{ controls.zoom=THREE.MathUtils.clamp(controls.zoom*f,0.1,ZOOM_MAX); };
 document.getElementById('zin').onclick=()=>zoom(0.8); document.getElementById('zout').onclick=()=>zoom(1.25);
 canvas.addEventListener('wheel',e=>{ e.preventDefault(); zoom(e.deltaY>0?1.1:0.9); },{passive:false});
 // trascina per girare la città, pizzica per lo zoom
@@ -2589,7 +2592,7 @@ const TRS=[
     if(TR.ct>28) for(const p of left){ makeGood(p,1); p.owner='me'; } },
   ok:()=>TR.chain.every(p=>!p.kind)&&TR.ct>1.5, end(){ trRelease(TR.p2); for(const p of TR.chain) trRelease(p); }},
  {t:'🧭 Focolai, tempo e stelle',x:()=>'Nella partita vera il Grigio nasce da solo. Quando un quartiere si ammala, in alto la <b>bussola</b> 🧭 indica il <b>focolaio</b> e parte un conto alla rovescia: corri lì e cura! In basso vedi ⏳ il <b>tempo</b> e 🎨 quanto paese è a colori: alla fine ⭐ 50% · ⭐⭐ 70% · ⭐⭐⭐ 90%.',
-  go(){ trGlow(['compass','greyHud']); }},
+  go(){ trGlow(['compass']); }},
  {t:'🛒 Comprare caramelle',x:()=>'Le caramelle finiscono. Si comprano col <b>karma</b> alle <b>bancarelle</b> con il cartello 🍬 '+CANDY_PRICE+' in piazza. Raggiungi la freccia gialla.',
   go(){ trGlow([]); let b=null, bd=1e9; for(const s of CANDY_STALLS){ const d=Math.hypot(s[0]-player.pos.x,s[1]-player.pos.z); if(d<bd){ bd=d; b=s; } } TR.xz=[b[0],b[1]]; }, tgt:()=>TR.xz, zoom:0.5, zt:2.6, ok:()=>!buyCard.hidden},
  {t:'🍬 Compra',x:()=>'Premi <b>🍬 Compra caramelle</b> e scegline una. (Il karma che manca te lo regalo io, solo per questa volta 😉)',
@@ -2597,7 +2600,8 @@ const TRS=[
  {t:'🏆 Sei pronto!',x:()=>'Ultimi consigli: ⚡ la barra del <b>fiato</b> cala se corri, si ricarica camminando e a casa. 🏠 ti riporta <b>a casa</b> (la partita va in pausa). Dal 📱 <b>telefono</b> trovi livelli, opzioni e aiuto. Occhio alle auto e alla polizia! 🚓',
   go(){ trGlow([]); }, last:true}];
 function trShow(){ const S=TRS[TR.step]; TRD.title.textContent=S.t; TRD.num.textContent=(TR.step+1)+'/'+TRS.length; TRD.text.innerHTML=S.x(); TRD.bar.style.width=Math.round(TR.step/(TRS.length-1)*100)+'%';
-  TRD.btns.innerHTML=S.last?'<button id="trPlay" type="button">▶ Gioca il livello '+LV.n+'</button><button id="trHome" class="ghost" type="button">🏠 Torna a casa</button>':!S.ok?'<button id="trNext" type="button">Avanti ▶</button>':'';
+  if(S.last){ trMsgEl.hidden=true; trMsgT=0; } { const jy=document.getElementById('joy'), jr=jy&&jy.offsetParent!==null?jy.getBoundingClientRect():null; TRD.card.style.maxHeight=Math.max(150,(jr?jr.top-14:innerHeight-120)-(parseFloat(getComputedStyle(TRD.card).top)||8))+'px'; }
+  TRD.btns.innerHTML=S.last?'<button id="trPlay" type="button">▶ Gioca liv. '+LV.n+'</button><button id="trHome" class="ghost" type="button">🏠 Casa</button>':!S.ok?'<button id="trNext" type="button">Avanti ▶</button>':'';
   TRD.card.hidden=false; TRD.card.classList.remove('pop'); void TRD.card.offsetWidth; TRD.card.classList.add('pop'); }
 function trGo(i){ const P=TRS[TR.step]; if(P&&P.end) P.end(); TR.step=i; TR.done=false; TR.wait=0; const S=TRS[i]; if(S.go) S.go(); trShow(); sfx('pick');
   /* zoomata sull'obiettivo (Teo, 27/11: "frecce, indicatori e zoomate sugli obiettivi") */ const t=S.tgt?S.tgt():null; if(t&&S.zoom!==0){ const x=Array.isArray(t)?t[0]:t.x, z=Array.isArray(t)?t[1]:t.z; if(x!==undefined && Math.hypot(x-player.pos.x,z-player.pos.z)>2.5) camFocus(x,z,S.zt||2.2,S.zoom||(Array.isArray(t)?0.42:0.34)); } }
@@ -2631,7 +2635,7 @@ function updateTraining(dt){ const S=TRS[TR.step]; if(!S) return; if(S.tick) S.t
   trMark.visible=true; trMark.position.set(tx,height(tx,tz),tz); const bob=Math.sin(G.time*4)*0.25; trMark.ar.position.y=(Array.isArray(t)?2.6:3.5)+bob; trMark.bm.material.opacity=0.2+Math.sin(G.time*3)*0.08; trMark.ring.scale.setScalar(1+Math.sin(G.time*4)*0.08);
   const v=_trV.set(tx,height(tx,tz)+1.2,tz).project(camera), W=innerWidth, H=innerHeight; let x=(v.x*0.5+0.5)*W, y=(-v.y*0.5+0.5)*H; const behind=v.z>1; if(behind){ x=W-x; y=H-y; }
   const m=46, off=behind||x<m||x>W-m||y<m||y>H-m; if(!off){ TRD.arrow.style.display='none'; return; }
-  const cr=TRD.card.getBoundingClientRect(), top=Math.max(m,cr.bottom+16), bot=H-120, cx=W/2, cy=(top+bot)/2, ang=Math.atan2(y-cy,x-cx), k=Math.min((W/2-m)/Math.abs(Math.cos(ang)||1e-6),((bot-top)/2)/Math.abs(Math.sin(ang)||1e-6)), eb=Math.abs(Math.sin(G.time*5))*8;
+  const cr=TRD.card.getBoundingClientRect(), lft=cr.right+12, rgt=W-m, top=70, bot=H-120, cx=(lft+rgt)/2, cy=(top+bot)/2, ang=Math.atan2(y-cy,x-cx), k=Math.min(((rgt-lft)/2)/Math.abs(Math.cos(ang)||1e-6),((bot-top)/2)/Math.abs(Math.sin(ang)||1e-6)), eb=Math.abs(Math.sin(G.time*5))*8;
   TRD.arrow.style.display='block'; TRD.arrow.style.left=(cx+Math.cos(ang)*(k+eb)-22)+'px'; TRD.arrow.style.top=(cy+Math.sin(ang)*(k+eb))+'px'; TRD.arrow.style.transform='rotate('+(ang+Math.PI/2)+'rad)'; }
 document.getElementById('trGo').onclick=trainStart;
 document.getElementById('trCards').onclick=()=>{ document.getElementById('trAsk').hidden=true; tvPlay(0); tvUI.hidden=false; };
@@ -3277,7 +3281,7 @@ function goHome(first){ if(TR.on) trainStop(); SHOP.auto=null; if(!first&&HOME.c
   controls.ready=false; HOME.zoomTown=controls.zoom; controls.zoom=0.35; controls.az=controls.azT=player.yaw+Math.PI; controls.userT=0; for(const el of homeTopEls()) el.hidden=true; document.getElementById('homeTown').hidden=true; timerSpr.visible=beam.visible=beamRing.visible=beamIcon.visible=false;
   msg.innerHTML=first?'🏠 <b>Sei a casa!</b> Gira per le stanze: ogni oggetto fa qualcosa. Quando sei pronto, esci dalla <b>porta</b> per giocare.':'🏠 <b>Di nuovo a casa.</b> La partita è in pausa: riposati, allenati o fai il pieno.'; copMsgT=5; lastHomeLbl='-'; }
 function goTown(){ if(TVHINT.el) TVHINT.el.style.display='none'; const goCar=HOME.carOut; if(HOME.readerBonus){ HOME.readerBonus=false; G.candies=Math.min(CANDY_MAX+1,G.candies+1); } HOME.active=false; townVisible(true); if(HOWTO_TOWN!==null) document.getElementById('howto').innerHTML=HOWTO_TOWN; homeCard.hidden=true; document.getElementById('homeTown').hidden=false; const p=HOME.townPos; if(p) player.pos.copy(p); else player.pos.set(-12,0.15,PZ.z1-4);
-  holder.position.copy(player.pos); controls.ready=false; controls.zoom=HOME.zoomTown||0.66; compassEl.hidden=false; document.getElementById('greyHud').hidden=false; syncCar(); saveHome(); if(HOME.pendingLevel){ HOME.pendingLevel=false; setTimeout(()=>document.getElementById('restart').click(),0); }
+  holder.position.copy(player.pos); controls.ready=false; controls.zoom=Math.min(0.74,HOME.zoomTown||0.66); compassEl.hidden=false; document.getElementById('greyHud').hidden=false; syncCar(); saveHome(); if(HOME.pendingLevel){ HOME.pendingLevel=false; setTimeout(()=>document.getElementById('restart').click(),0); }
   if(goCar){ const c=carV(); c.x=PARK[0]; c.z=PARK[1]; c.yaw=0; c.speed=0; c.lastG=null; c.group.position.set(c.x,0,c.z); c.group.rotation.set(0,0,0); c.group.visible=true; player.pos.set(c.x+1.6,0.15,c.z); enter(c); }
   msg.innerHTML=goCar?'🚗 <b>Si parte in auto</b> dal parcheggio a nord. Occhio alla benzina: ⛽ '+Math.round(HOME.fuel)+'%':p?'🚪 Si riparte da dove eri rimasto. Forza!':'🚪 <b>Si gioca!</b> Il grigio sta già nascendo da qualche parte: guarda la bussola in alto.'; copMsgT=4; }
 document.getElementById('homeTown').onclick=()=>{ if(!HOME.active && window.__ready) goHome(false); };
