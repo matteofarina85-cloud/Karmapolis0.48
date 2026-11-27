@@ -193,7 +193,7 @@ body.phoneOn #phone{transform:translate(-50%,0)}
 #full.fsPulse{animation:ringb .9s ease-in-out infinite;background:#ffd84d!important}
 
 /* 🎓 ADDESTRAMENTO (idea del vero Antony, 27/11) */
-#trCard{position:fixed;left:14px;top:126px;z-index:30;width:min(300px,calc(100vw - 24px));max-height:calc(100vh - 230px);display:flex;flex-direction:column;overflow:hidden;pointer-events:auto;background:var(--paper);border:3px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);padding:10px 14px 10px;font:500 15px var(--body);color:var(--ink)}
+#trCard{position:fixed;left:max(14px,calc(env(safe-area-inset-left,0px) + 6px));top:126px;z-index:30;width:min(300px,calc(100vw - 24px));max-height:calc(100vh - 230px);display:flex;flex-direction:column;overflow:hidden;pointer-events:auto;background:var(--paper);border:3px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);padding:10px 14px 10px;font:500 15px var(--body);color:var(--ink)}
 #trCard[hidden]{display:none}
 #trCard .trbody{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}#trCard .trh,#trCard .trb,#trCard .trdots{flex:0 0 auto}
 #trCard .trh{display:flex;align-items:center;gap:8px;font:700 17px var(--display);margin-bottom:3px}
@@ -217,7 +217,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 #trAsk .big{font-size:18px;padding:12px}
 #trAsk p{margin:0 0 10px;line-height:1.4}
 #trAsk .col{display:flex;flex-direction:column;gap:8px}
-@media (max-height:500px){#trCard{top:8px;left:8px;padding:6px 9px 7px;font-size:12px;width:min(225px,32vw);max-height:calc(100vh - 140px)}#trMsg{font-size:11.5px}#trCard .trh{font-size:15px}#trCard .trb{margin-top:5px}#trCard .trb button{padding:6px 10px;font-size:14px}}
+@media (max-height:500px){#trCard{top:max(8px,env(safe-area-inset-top,0px));left:max(8px,calc(env(safe-area-inset-left,0px) + 4px));padding:6px 9px 7px;font-size:12px;width:min(225px,32vw);max-height:calc(100vh - 140px)}#trMsg{font-size:11.5px}#trCard .trh{font-size:15px}#trCard .trb{margin-top:5px}#trCard .trb button{padding:6px 10px;font-size:14px}}
 /* 💤 Zzz animata (Teo 27/11) */
 .zz{position:relative;display:flex;align-items:flex-end;gap:2px;font:700 46px var(--display);height:120px}.zz .zm{font-size:54px;animation:zbob 1.6s ease-in-out infinite}
 .zz b{display:inline-block;color:#bcd6ff;opacity:0;animation:zfly 2.1s ease-in-out infinite}.zz b:nth-of-type(1){font-size:30px;animation-delay:0s}.zz b:nth-of-type(2){font-size:40px;animation-delay:.45s}.zz b:nth-of-type(3){font-size:54px;animation-delay:.9s}
@@ -305,7 +305,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.093.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.093.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -330,6 +330,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.093.2',d:'27/11/2026',t:['📱 iPhone: il riquadro dell\'addestramento non finisce più sotto la tacca della fotocamera.','⛶ iPhone: il tasto dello schermo intero apre sempre la guida per mettere Karmapolis sulla schermata Home (l\'unico modo per giocare a tutto schermo su iPhone).']},
  {v:'0.093.1',d:'27/11/2026',t:['🪞 Niente più microscatto entrando in camera: lo specchio si prepara davvero all\'avvio.','😴 Quando dormi le Z volano su animate.','⚡ Al risveglio la barra del fiato si riempie, rimbalza, lampeggia e suona: «100% ⚡».']},
  {v:'0.093.0',d:'27/11/2026',t:['❤️ In soggiorno, sul muro di sinistra, 4 quadri della solidarietà: UNICEF, AIRC, Still I Rise e Un pozzo per Andrea. Avvicinati («Fai del bene reale») o toccali: si apre la pagina ufficiale per donare.']},
  {v:'0.092.1',d:'27/11/2026',t:['🚿 Sotto la doccia la censura a cubetti copre tutto il corpo, dal collo ai piedi.']},
@@ -2645,7 +2646,7 @@ const TRS=[
   go(){ trGlow([]); }, last:true}];
 function trNum(){ TRD.num.textContent=(TR.step+1)+'/'+TRS.length+' · 🎨 '+Math.round(colorPct()*100)+'% · ⏳∞'; }
 function trShow(){ const S=TRS[TR.step]; TRD.title.textContent=S.t; trNum(); if(!S.ok){ trMsgEl.hidden=true; trMsgT=0; } TRD.text.innerHTML=S.x(); TRD.bar.style.width=Math.round(TR.step/(TRS.length-1)*100)+'%';
-  if(S.last){ trMsgEl.hidden=true; trMsgT=0; } { const jy=document.getElementById('joy'), jr=jy&&jy.offsetParent!==null?jy.getBoundingClientRect():null; TRD.card.style.maxHeight=Math.max(150,(jr?jr.top-14:innerHeight-120)-(parseFloat(getComputedStyle(TRD.card).top)||8))+'px'; }
+  if(S.last){ trMsgEl.hidden=true; trMsgT=0; } { const jy=document.getElementById('joy'), jr=jy&&jy.offsetParent!==null?jy.getBoundingClientRect():null; TRD.card.style.maxHeight=Math.max(150,(jr?jr.top-22:innerHeight-120)-(parseFloat(getComputedStyle(TRD.card).top)||8))+'px'; }
   TRD.btns.innerHTML=S.last?'<button id="trPlay" type="button">▶ Gioca liv. '+LV.n+'</button><button id="trHome" class="ghost" type="button">🏠 Casa</button>':!S.ok?'<button id="trNext" type="button">Avanti ▶</button>':'';
   TRD.card.hidden=false; TRD.card.classList.remove('pop'); void TRD.card.offsetWidth; TRD.card.classList.add('pop'); }
 function trGo(i){ const P=TRS[TR.step]; if(P&&P.end) P.end(); TR.step=i; TR.done=false; TR.wait=0; const S=TRS[i]; if(S.go) S.go(); trShow(); sfx('pick');
@@ -3119,10 +3120,11 @@ function where(x,z){ if(HOME.active) return; let p='il paese'; if(x>PZ.x0-SW&&x<
 // ⛶ schermo intero. Su iPhone Safari NON permette lo schermo intero alle pagine web (solo ai video): l'unico modo è aggiungere il gioco alla schermata Home, che lo apre a tutto schermo come un'app
 const isStandalone=()=>navigator.standalone===true||matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: standalone)').matches;
 function iosHomeGuide(){ let o=document.getElementById('iosGuide'); if(!o){ o=document.createElement('div'); o.id='iosGuide'; o.className='menuov'; o.style.zIndex=210;
-    o.innerHTML='<div class="card"><h3>📱 Schermo intero su iPhone<small>Safari non permette lo schermo intero alle pagine: si installa il gioco come un\'app (gratis, 10 secondi).</small></h3><ol style="margin:4px 0 12px 18px;padding:0;font-size:14.5px;line-height:1.6"><li>Tocca <b>Condividi</b> <span style="font-size:18px">⬆️</span> (in basso, o in alto a destra)</li><li>Scegli <b>Aggiungi alla schermata Home</b> ➕</li><li>Tocca <b>Aggiungi</b>, poi apri <b>Karmapolis</b> dall\'icona: si gioca a tutto schermo, senza barre di Safari</li></ol><button type="button" id="iosGuideOk">Ho capito</button></div>';
+    o.innerHTML='<div class="card"><h3>📱 Schermo intero su iPhone<small>Su iPhone i browser non permettono lo schermo intero alle pagine: si mette il gioco sulla schermata Home come un\'app (gratis, 10 secondi).</small></h3><ol style="margin:4px 0 12px 18px;padding:0;font-size:14.5px;line-height:1.6"><li>Tocca <b>Condividi</b> <span style="font-size:18px">⬆️</span> (accanto all\'indirizzo, in basso o in alto; se non lo vedi tocca prima <b>⋯</b>)</li><li>Scegli <b>Aggiungi alla schermata Home</b> ➕</li><li>Tocca <b>Aggiungi</b>, poi apri <b>Karmapolis</b> dall\'icona: si gioca a tutto schermo, senza barre del browser</li></ol><button type="button" id="iosGuideOk">Ho capito</button></div>';
     document.body.appendChild(o); o.querySelector('#iosGuideOk').onclick=()=>{ o.hidden=true; }; } o.hidden=false; }
 document.getElementById('full').onclick=async()=>{ const el=document.documentElement, req=el.requestFullscreen||el.webkitRequestFullscreen, fsEl=document.fullscreenElement||document.webkitFullscreenElement;
   if(fsEl){ try{ screen.orientation&&screen.orientation.unlock(); }catch(e){} (document.exitFullscreen||document.webkitExitFullscreen).call(document); return; }
+  if(/iPhone|iPod/.test(navigator.userAgent)){ iosHomeGuide(); return; } /* Teo 27/11, iPhone di Antony: su iPhone lo schermo intero delle pagine non esiste (a volte il browser finge di averlo e non fa niente): sempre la guida */
   if(req){ try{ await req.call(el,{navigationUI:'hide'}); try{ await screen.orientation.lock('landscape'); }catch(e){} return; }catch(e){} }
   if(IOS){ iosHomeGuide(); return; }
   copMsgT=3; msg.innerHTML='📱 Qui lo schermo intero non è permesso: gira il telefono in <b>orizzontale</b>, il gioco si adatta da solo.'; };
