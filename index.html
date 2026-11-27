@@ -305,7 +305,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.093.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.093.3</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -330,6 +330,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.093.3',d:'27/11/2026',t:['😠 Leo ha la sua voce vera: «Mia mamma mi ha fatto due mani!», «Porco diso!» e «Eh, ascolta, non rompere i… 🔇» (con il biip).']},
  {v:'0.093.2',d:'27/11/2026',t:['📱 iPhone: il riquadro dell\'addestramento non finisce più sotto la tacca della fotocamera.','⛶ iPhone: il tasto dello schermo intero apre sempre la guida per mettere Karmapolis sulla schermata Home (l\'unico modo per giocare a tutto schermo su iPhone).']},
  {v:'0.093.1',d:'27/11/2026',t:['🪞 Niente più microscatto entrando in camera: lo specchio si prepara davvero all\'avvio.','😴 Quando dormi le Z volano su animate.','⚡ Al risveglio la barra del fiato si riempie, rimbalza, lampeggia e suona: «100% ⚡».']},
  {v:'0.093.0',d:'27/11/2026',t:['❤️ In soggiorno, sul muro di sinistra, 4 quadri della solidarietà: UNICEF, AIRC, Still I Rise e Un pozzo per Andrea. Avvicinati («Fai del bene reale») o toccali: si apre la pagina ufficiale per donare.']},
@@ -3675,7 +3676,7 @@ function animSpecial(h,mode,dt){ for(const k of ['idle','walk','run']) h.A[k].se
 // 😠 voce di Leo "veramente incazzata": voce grave e veloce, al massimo, con il ringhio sotto. Se nel repository c'è un audio vero (voci/leo1.mp3, leo2.mp3) usa quello
 const LEOVOX={}; function voxLoad(f){ if(LEOVOX[f]===undefined){ const a=new Audio(f+'?v=0896'); LEOVOX[f]=null; a.preload='auto'; a.oncanplaythrough=()=>{ LEOVOX[f]=a; }; a.onerror=()=>{ LEOVOX[f]=false; }; a.load(); } return LEOVOX[f]; }
 function voxPlay(f){ if(!soundOn) return false; const A=voxLoad(f); if(A){ try{ A.currentTime=0; A.volume=1; A.play().catch(()=>{}); }catch(e){} return true; } return false; }
-voxLoad('voci/carlo1.mp3'); voxLoad('voci/carlo2.mp3'); // 😄 "Che spettacolo!" registrato dal vero Carletto (26/11)
+voxLoad('voci/carlo1.mp3'); voxLoad('voci/carlo2.mp3'); voxLoad('voci/leo1.mp3'); voxLoad('voci/leo2.mp3'); voxLoad('voci/leo3.mp3'); /* 😠 voci vere di Leo (27/11), il biip su «coglioni» è già dentro leo3 */ // 😄 "Che spettacolo!" registrato dal vero Carletto (26/11)
 function leoShout(i,txt){ if(!soundOn) return; if(voxPlay('voci/leo'+i+'.mp3')) return;
   if(i===3){ leoGrowl(); speak('EH, ASCOLTA, NON ROMPERE I CO',0.1,1.3); leoBleep(); return; }
   leoGrowl(); speak(txt.toUpperCase(),0.1,1.3); setTimeout(leoGrowl,450); }
