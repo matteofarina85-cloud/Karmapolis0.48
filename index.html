@@ -217,6 +217,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 #trAsk p{margin:0 0 10px;line-height:1.4}
 #trAsk .col{display:flex;flex-direction:column;gap:8px}
 @media (max-height:500px){#trCard{top:8px;left:8px;padding:6px 9px 7px;font-size:12px;width:min(225px,32vw);max-height:calc(100vh - 140px)}#trMsg{font-size:11.5px}#trCard .trh{font-size:15px}#trCard .trb{margin-top:5px}#trCard .trb button{padding:6px 10px;font-size:14px}}
+#sta .hurtI{display:none;font-size:13px;margin-right:2px}#sta.hurt .hurtI{display:inline}
 #tvHint{position:fixed;left:0;top:0;z-index:40;pointer-events:auto;cursor:pointer;transform:translate(-50%,-100%);display:none}
 #tvHint .tb{background:#fffaf0;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:6px 12px;font:600 15px var(--display);white-space:nowrap;animation:tvbob 1.4s ease-in-out infinite}
 #tvHint .ta{position:absolute;left:50%;top:100%;width:0;height:0;margin-left:-11px;border:11px solid transparent;border-top:14px solid var(--accent);transform-origin:50% 0;filter:drop-shadow(1px 1px 0 var(--line))}
@@ -264,7 +265,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="load">Sto costruendo il paese…</div>
 <div id="greyHud" aria-live="polite"></div>
 <div id="alarm" aria-live="assertive"></div>
-<div id="sta" aria-label="Stamina"><span>⚡</span><div class="sbar"><div id="staFill"></div><div id="staCap" title="Più giochi senza pause, più la barra si accorcia"></div></div></div>
+<div id="sta" aria-label="Stamina"><span>⚡</span><b class="hurtI" title="Sei stato investito: il fiato torna dormendo">🩹</b><div class="sbar"><div id="staFill"></div><div id="staCap" title="Più giochi senza pause, più la barra si accorcia"></div></div></div>
 <div id="fps" aria-hidden="true"></div>
 <div id="compass" hidden role="img" aria-label="Bussola con la direzione del focolaio"><div class="ctrack"><div class="cmid"></div></div><div id="cinfo"></div></div>
 <div id="wanted" hidden aria-label="Livello di ricerca"></div>
@@ -289,7 +290,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.091.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.092.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -314,6 +315,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.092.0',d:'27/11/2026',t:['🚑 Se ti investono perdi un pezzo della barra del fiato ⚡ (accanto compare 🩹): torna solo dormendo nel letto di casa. Al massimo se ne perdono 3 pezzi.']},
  {v:'0.091.2',d:'27/11/2026',t:['🎓 Il pulsante «Avanti» dell\'addestramento resta sempre visibile in fondo al riquadro; se il testo è lungo, scorre sopra di lui.']},
  {v:'0.091.1',d:'27/11/2026',t:['🎓 Nell\'addestramento usi tutte e 4 le cure: 😄 battuta, 👂 ascoltare, 🌬️ respirare e 🗣️ verità, ognuna su una persona vera, più la 🍬 caramella. Alla fine un ripasso: quale icona, quale cura.']},
  {v:'0.091.0',d:'27/11/2026',t:['🩶 Il Grigio per terra è un po\' più scuro: si vede meglio.','🩶 Nell\'addestramento c\'è il Grigio vero: vedi la macchia che si allarga, la persona malata che lo sparge, e come la cura e i portatori di bene lo fanno sparire. Il tempo è infinito.']},
@@ -2306,7 +2308,8 @@ function knockPlayer(vx,vy,vz,car){ player.ko=KO_TIME; player.fly={vx,vy,vz,y:pl
   if(car.kind==='kick'){ camFocus(player.pos.x,player.pos.z,KO_TIME,0.2); copMsgT=KO_TIME; msg.innerHTML='🛴💥 <b>Sei caduto dal monopattino!</b> Hai preso in pieno un passante e siete finiti a terra tutti e due. Il noleggio è finito: per risalire si ripagano '+KICK_PRICE+' karma.'; return; }
   if(AUD.ready && soundOn) horn(0); camFocus(player.pos.x,player.pos.z,KO_TIME,0.2); copMsgT=KO_TIME;
   const what=car.kind==='bus'?"dall'autobus":car.kind==='camion'?'da un camion':car.bike?'da una moto':car.kind==='taxi'?'da un taxi':"da un'auto";
-  msg.innerHTML='🚑 <b>Investito '+what+'!</b> Niente di rotto, ma ti serve qualche secondo per rialzarti… e il focolaio non aspetta. Attraversa sulle strisce, col verde!';
+  const lost=Math.min(HURT_HIT,HURT_MAX-(G.hurt||0)); if(lost>0){ G.hurt=(G.hurt||0)+lost; player.sta=Math.min(player.sta,staCap()); }
+  msg.innerHTML='🚑 <b>Investito '+what+'!</b> Ti serve qualche secondo per rialzarti'+(lost>0?' e hai perso un pezzo di <b>fiato ⚡</b>: torna solo <b>dormendo</b> nel letto di casa':'')+'. Attraversa sulle strisce, col verde!'; if(lost>0) staEl.classList.add('hurt');
   for(const q of PEDS) if(!(q.ko>0) && Math.hypot(q.x-player.pos.x,q.z-player.pos.z)<10 && !q.act && !q.fly) startAct(q,'startle',1.6,{x:player.pos.x,z:player.pos.z}); }
 function updatePlayerKO(dt){ const c=chars[cur]; const F=player.fly;
   if(F){ F.t+=dt; F.vy-=18*dt; let nx=player.pos.x+F.vx*dt, nz=player.pos.z+F.vz*dt; if(!inMap(nx,nz)||hitBox(nx,nz,0.3)){ F.vx*=-0.3; F.vz*=-0.3; nx=player.pos.x; nz=player.pos.z; } player.pos.x=nx; player.pos.z=nz; F.y+=F.vy*dt;
@@ -2613,7 +2616,7 @@ const TRS=[
   go(){ trGlow([]); let b=null, bd=1e9; for(const s of CANDY_STALLS){ const d=Math.hypot(s[0]-player.pos.x,s[1]-player.pos.z); if(d<bd){ bd=d; b=s; } } TR.xz=[b[0],b[1]]; }, tgt:()=>TR.xz, zoom:0.5, zt:2.6, ok:()=>!buyCard.hidden},
  {t:'🍬 Compra',x:()=>'Premi <b>🍬 Compra caramelle</b> e scegline una. (Il karma che manca te lo regalo io, solo per questa volta 😉)',
   go(){ G.candies=0; if(G.karma<CANDY_PRICE) G.karma=CANDY_PRICE; trGlow(['buyBtn']); }, tgt:()=>TR.xz, ok:()=>TR.done},
- {t:'🏆 Sei pronto!',x:()=>'Ultimi consigli: ⚡ la barra del <b>fiato</b> cala se corri, si ricarica camminando e a casa. 🏠 ti riporta <b>a casa</b> (la partita va in pausa). Dal 📱 <b>telefono</b> trovi livelli, opzioni e aiuto. Occhio alle auto e alla polizia! 🚓',
+ {t:'🏆 Sei pronto!',x:()=>'Ultimi consigli: ⚡ la barra del <b>fiato</b> cala se corri e si ricarica camminando. Se ti <b>investono</b> ne perdi un pezzo 🩹 che torna solo <b>dormendo</b> a casa. 🏠 ti riporta <b>a casa</b> (la partita va in pausa). Dal 📱 <b>telefono</b> trovi livelli, opzioni e aiuto. Occhio alle auto e alla polizia! 🚓',
   go(){ trGlow([]); }, last:true}];
 function trNum(){ TRD.num.textContent=(TR.step+1)+'/'+TRS.length+' · 🎨 '+Math.round(colorPct()*100)+'% · ⏳∞'; }
 function trShow(){ const S=TRS[TR.step]; TRD.title.textContent=S.t; trNum(); if(!S.ok){ trMsgEl.hidden=true; trMsgT=0; } TRD.text.innerHTML=S.x(); TRD.bar.style.width=Math.round(TR.step/(TRS.length-1)*100)+'%';
@@ -3040,7 +3043,8 @@ const musBtn=document.getElementById('mus'); musBtn.onclick=()=>{ audioInit(); A
 player.sta=100; G.playT=0; let hiddenAt=0;
 const staEl=document.getElementById('sta'), staFill=document.getElementById('staFill'), staCapEl=document.getElementById('staCap');
 // cap della barra: perde ~3 punti ogni minuto di gioco continuo, fino a dimezzarsi; fare una pausa (chiudere o mettere in secondo piano il gioco) la fa recuperare
-const staCap=()=>Math.max(50,100-G.playT/60*3);
+G.hurt=0; const HURT_HIT=15, HURT_MAX=45; /* Teo 27/11: se ti investono perdi un pezzo di fiato che torna solo dormendo */
+const staCap=()=>Math.max(50,100-G.playT/60*3)-(G.hurt||0);
 document.addEventListener('visibilitychange',()=>{ if(document.hidden) hiddenAt=performance.now(); else if(hiddenAt){ const rest=(performance.now()-hiddenAt)/1000; G.playT=Math.max(0,G.playT-rest*4); hiddenAt=0; if(rest>30){ copMsgT=3; msg.innerHTML='☕ Bentornato! La pausa ti ha fatto bene: la stamina si è allungata.'; } } });
 function updateStamina(dt,mode){ if(!HOME.active) G.playT+=dt; if(mode==='sprint'||mode==='run') dt/=1+staBonus()/100; /* il cardio allenato a casa fa durare di più il fiato */ const cap=staCap(); let drain=0;
   if(mode==='sprint') drain=10; else if(mode==='run') drain=6;
@@ -3317,7 +3321,7 @@ const TUT_LONG=[
   'Con la cura giusta la persona <b>guarisce</b>, ma resta guarita <b>solo lei</b>.<br>Per far partire il contagio del bene serve la <b>🍬 caramella</b>: dalla a chi <b>sta già bene</b> (appena guarito o mai stato grigio) e diventa un <b>portatore di bene ✨</b>, che gira per il paese e guarisce da solo chi incontra. Chi guarisce lui fa lo stesso: è una catena.<br>Le caramelle sono poche: dalle a chi sta <b>in mezzo alla gente</b> (piazza, incroci, bancarelle).',
   'Ogni tanto il Grigio nasce forte in un punto: è il <b>focolaio</b>. Suonano le <b>campane</b> e compare la scritta al centro.<br>La <b>bussola</b> in alto ti dice dove andare e quanto tempo resta. Arriva prima che scada e cura le persone lì intorno, altrimenti il quartiere diventa tutto grigio. Quando la musica si fa <b>nervosa</b>, il tempo sta finendo.',
   '🍬 Le <b>caramelle</b> sono rare e preziose: si comprano alle <b>bancarelle</b> con il karma. Non curano: trasformano chi sta già bene in un portatore di bene.<br>😗 <b>Fischia al taxi</b> per farti portare lontano; monopattini e la tua auto ti fanno arrivare prima (l\u2019auto consuma benzina).<br>⚠️ Se corri troppo o investi qualcuno arriva la <b>polizia</b>: multa in karma o prigione. E occhio al traffico!<br>😠 Dal livello 10 arriva <b>Leo</b>, che rende di nuovo nervosi quelli che hai guarito: chiama <b>😄 Carlo</b> dal 📱 telefono (60 karma, una volta a partita).',
-  'Correre consuma la <b>barra verde ⚡</b> (la stamina): quando è vuota vai piano. Quando non corri si ricarica.<br>Più giochi senza pause, più la barra si <b>accorcia</b>: torna a casa e <b>dormi nel letto</b> per recuperarla. Il <b>tapis roulant</b> ti allena e la allunga per sempre.<br>💪 <b>Antony</b>, nei vicoletti, vende proteine: un minuto di corsa senza stancarti.'];
+  'Correre consuma la <b>barra verde ⚡</b> (la stamina): quando è vuota vai piano. Quando non corri si ricarica.<br>Più giochi senza pause, più la barra si <b>accorcia</b>, e se ti <b>investono</b> ne perdi un pezzo 🩹: torna a casa e <b>dormi nel letto</b> per recuperarla. Il <b>tapis roulant</b> ti allena e la allunga per sempre.<br>💪 <b>Antony</b>, nei vicoletti, vende proteine: un minuto di corsa senza stancarti.'];
 const tvCv=document.createElement('canvas'); tvCv.width=512; tvCv.height=300; const tvMap=new THREE.CanvasTexture(tvCv); tvMap.colorSpace=THREE.SRGBColorSpace;
 const tvScreen=new THREE.Mesh(new THREE.PlaneGeometry(2.05,1.2),new THREE.MeshBasicMaterial({map:tvMap})); { const [x,z]=HP(2,-5.665); tvScreen.position.set(x,1.25,z); scene.add(tvScreen); }
 let tvI=-1, tvT0=0, tvTimer=0; const TVVID={};
@@ -3467,7 +3471,7 @@ function updateShower(dt){ if(!(HOME.showerT>0)) return; HOME.showerT-=dt; const
   if(HOME.showerT<=0){ showerNude(false); HOME.busy=false; player.sta=staCap(); player.tired=false; showerDrops.forEach(s=>s.visible=false); copMsgT=3; msg.innerHTML='🚿 <b>Fresco come una rosa!</b> Fiato al massimo.'; } }
 // --- LETTO: dormi, il fiato torna lungo
 function sleepBed(){ HOME.busy=true; const f=document.getElementById('fade'); f.hidden=false; f.style.opacity=1; const [x,z]=HP(-6.5,-4.2); player.pos.set(x,0,z+1.8); holder.position.copy(player.pos);
-  setTimeout(()=>{ G.playT=0; player.sta=staCap(); player.tired=false; f.style.opacity=0; setTimeout(()=>{ f.hidden=true; HOME.busy=false; },700); copMsgT=4; msg.innerHTML='🛏️ <b>Che bella dormita!</b> Il fiato è tornato lungo come all\'inizio.'; },2600); }
+  setTimeout(()=>{ G.playT=0; G.hurt=0; staEl.classList.remove('hurt'); player.sta=staCap(); player.tired=false; f.style.opacity=0; setTimeout(()=>{ f.hidden=true; HOME.busy=false; },700); copMsgT=4; msg.innerHTML='🛏️ <b>Che bella dormita!</b> Il fiato è tornato lungo come all\'inizio.'; },2600); }
 // --- GARAGE: esci a fare benzina (non la fai tu: guardi la lancetta che sale)
 const fuelUI=document.getElementById('fuelUI'), fuelCv=document.getElementById('fuelGauge');
 function drawFuel(f){ const g=fuelCv.getContext('2d'), W=fuelCv.width, H=fuelCv.height, cx=W/2, cy=H*0.62, R=W*0.4; g.clearRect(0,0,W,H);
@@ -3773,7 +3777,7 @@ function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; f
   if(settle-->0) return;
   let np=PR; if(fps<FPS_CAP*0.93 && PR>PR_MIN) np=Math.max(PR_MIN,PR-0.1); else if(fps>FPS_CAP*0.99 && PR<PR_MAX) np=Math.min(PR_MAX,PR+0.05);
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
-window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
+window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={staCap,get hurt(){return G.hurt;},greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
 window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…');
 Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e)),umLoad('gente/').catch(e=>{ console.warn('gente non caricata, uso i corpi disegnati',e); window.__umErr=String(e&&e.message||e); }),carsLoad('auto/').catch(e=>console.warn('auto nuove non caricate, uso quelle di prima',e))]).then(()=>{
   if(!UM.ready) setTimeout(()=>{ try{ msg.innerHTML='⚠️ <b>Persone nuove non caricate</b> ('+(window.__umErr||'?')+'): mandami uno screenshot di questo messaggio.'; }catch(e){} },4000);
