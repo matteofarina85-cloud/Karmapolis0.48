@@ -317,7 +317,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.095.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.096.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -342,6 +342,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.096.0',d:'28/11/2026',t:['🚗 A Milanopolis l\'auto non va più piano come sullo sterrato: in città e sull\'autostrada va a velocità piena.','🛣️ Strade rifatte: mezzerie tratteggiate, strisce pedonali a ogni incrocio, marciapiedi larghi con il cordolo (si sale e si scende), lampioni lungo anelli e viali, i Bastioni con due filari di alberi.','🏢 Palazzi alla milanese: uno attaccato all\'altro, larghi e alti diversi, con i negozi e le tende colorate al piano terra, il cornicione, i tetti di coppi in centro. Finestre diverse per zona: persiane verdi in centro, balconi con la ringhiera più fuori, finestre larghe in periferia. Capannoni con il tetto a shed nella zona industriale.']},
  {v:'0.095.1',d:'27/11/2026',t:['🔒 Milanopolis si sblocca al <b>livello 15</b>: prima il pulsante nel garage ha il lucchetto.','🧪 Beta: nel telefono, app 🎯 Livelli, ora puoi scegliere fino al livello 15, così sblocchi Milanopolis subito per provarla.']},
  {v:'0.095.0',d:'27/11/2026',t:['🏙️ Prima anteprima di <b>Milanopolis</b>, la seconda città: dal garage scegli «Milanopolis», il viaggio costa il 10% di benzina e c\'è la scenetta dell\'auto in viaggio.','🗺️ La città è ancora vuota ma ci giri in auto e a piedi: circonvallazione, Bastioni, la Cerchia dei Navigli riaperta coi ponti, Naviglio Grande e Pavese, Darsena, isolati di case e palazzi con le finestre.','⛪ Monumenti in versione caricatura: il Duomone, la Galleria, il Teatro alla Scaletta, il Castello Sforzato, l\'Arco della Pacina, Porta Nuovissima, la Stazione Centralona, le Tre Torri, lo Stadio San Sirolo, la Bocconcina. Traffico, passanti e Grigio arrivano nella prossima tappa.','🪧 Il paese di partenza ora si chiama <b>Borgo Karma</b> (Karmapolis è il nome del gioco).']},
  {v:'0.094.0',d:'27/11/2026',t:['🏆 Punteggio di bravura a fine partita: conta quanto paese salvi, le stelle, i focolai spenti, le cure giuste (le sbagliate tolgono punti) e la catena del bene; più alto è il livello, più vale.','📱 Nuova app 🏆 Classifica nel telefono con i tuoi 10 migliori punteggi. La classifica tra giocatori e squadre arriverà con il multigiocatore.']},
@@ -610,7 +611,7 @@ const ROAD={ dist:(x,z)=>{ let d=1e9; for(const vx of VX){ const cz=Math.max(-60
 const BLOCKS=[]; for(let i=0;i<3;i++) for(let j=0;j<3;j++) BLOCKS.push({x0:VX[i]+SW,x1:VX[i+1]-SW,z0:HZ[j]+SW,z1:HZ[j+1]-SW,i,j});
 const inBlock=(x,z)=>BLOCKS.some(b=>{ if(!(x>b.x0&&x<b.x1&&z>b.z0&&z<b.z1)) return false; const R=2.4, cx=Math.min(Math.max(x,b.x0+R),b.x1-R), cz=Math.min(Math.max(z,b.z0+R),b.z1-R); return (x-cx)**2+(z-cz)**2<=R*R; });
 const PROM={x0:-60-SW,x1:60+SW,z0:52+SW,z1:SEA_Z}; // lungomare (marciapiede largo)
-function height(x,z){ if(z>SEA_Z) return -Math.min(2,(z-SEA_Z)*0.22); if(inBlock(x,z) || (z>PROM.z0&&z<PROM.z1&&inRange(x,PROM.x0,PROM.x1))) return 0.15; return 0; }
+function height(x,z){ if(MIL.on) return milGround(x,z); if(z>SEA_Z) return -Math.min(2,(z-SEA_Z)*0.22); if(inBlock(x,z) || (z>PROM.z0&&z<PROM.z1&&inRange(x,PROM.x0,PROM.x1))) return 0.15; return 0; }
 const ground=height;
 const BOXES=[]; const OBST=[];
 const hitBox=(x,z,m=0)=>MIL.on?milHit(x,z,m):BOXES.some(b=>x>b.x0-m&&x<b.x1+m&&z>b.z0-m&&z<b.z1+m);
@@ -623,11 +624,14 @@ function milHit(x,z,m){ const dx=x-MIL.X, dz=z-MIL.Z, r=Math.hypot(dx,dz); let a
   if(Math.abs(r-81)<4+m){ let br=false; for(const ra of MIL.RAD){ const t=ra*Math.PI/180; if(Math.abs(-Math.sin(t)*dx+Math.cos(t)*dz)<4.2 && Math.cos(t)*dx+Math.sin(t)*dz>0) br=true; } if(!br) return true; }
   if(MIL.canals && !(Math.abs(r-162)<7||Math.abs(r-258)<9)) for(const pl of MIL.canals) for(let i=0;i<pl.length-1;i++){ const [x0,z0]=pl[i],[x1,z1]=pl[i+1], ex=x1-x0, ez=z1-z0, L=ex*ex+ez*ez, t=Math.max(0,Math.min(1,((x-x0)*ex+(z-z0)*ez)/L)); if(Math.hypot(x-x0-ex*t,z-z0-ez*t)<3.3+m) return true; }
   for(const b of MIL.blocks){ if(r<b.r0-m||r>b.r1+m) continue; const da=(m/Math.max(r,1))*180/Math.PI; let aa=a; while(aa<b.a0-da) aa+=360; while(aa>b.a1+da) aa-=360; if(aa>=b.a0-da&&aa<=b.a1+da) return true; }
-  for(const s of MIL.solids){ if(s.r){ if(Math.hypot(x-s.x,z-s.z)<s.r+m) return true; } else if(x>s.x0-m&&x<s.x1+m&&z>s.z0-m&&z<s.z1+m) return true; }
+  const cell=MIL.grid?MIL.grid.get(Math.floor(x/8)*4096+Math.floor(z/8)):MIL.solids; if(cell) for(const s of cell){ if(s.r){ if(Math.hypot(x-s.x,z-s.z)<s.r+m) return true; } else if(x>s.x0-m&&x<s.x1+m&&z>s.z0-m&&z<s.z1+m) return true; }
   return false; }
+function milSector(list,x,z,m=0){ const dx=x-MIL.X, dz=z-MIL.Z, r=Math.hypot(dx,dz); const a=Math.atan2(dz,dx)*180/Math.PI; for(const b of list){ if(r<b.r0-m||r>b.r1+m) continue; let aa=a; while(aa<b.a0) aa+=360; while(aa>b.a1) aa-=360; if(aa>=b.a0&&aa<=b.a1) return true; } return false; }
+const milGround=(x,z)=>MIL.side&&milSector(MIL.side,x,z)?0.15:0;
+const milOff=(x,z)=>{ const r=Math.hypot(x-MIL.X,z-MIL.Z); if(r<266) return false; return !(x<MIL.X&&Math.abs(z-MIL.Z)<8.5); }; // fuori città e fuori dall'autostrada = campagna
 function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=performance.now();
   const grp=new THREE.Group(); MIL.group=grp; scene.add(grp); const S=MIL.S, CX=MIL.X, CZ=MIL.Z;
-  const parts={bw:[],b:[],road:[],water:[],green:[],side:[],mark:[]}; let seed=11; const rnd2=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647; };
+  const parts={wc:[],wm:[],wf:[],shop:[],furn:[],b:[],road:[],water:[],green:[],side:[],mark:[]}; let seed=11; const rnd2=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647; };
   const pick=a=>a[Math.floor(rnd2()*a.length)];
   const box=(w,h,d,x,y,z,col,ry=0,key='b')=>{ const g=new THREE.BoxGeometry(w,h,d); if(ry) g.rotateY(ry); g.translate(x,y,z); parts[key].push(paintGeo(g,col,true)); };
   const cyl=(r1,r2,h,x,y,z,col,seg=16,key='b')=>{ const g=new THREE.CylinderGeometry(r1,r2,h,seg); g.translate(x,y,z); parts[key].push(paintGeo(g,col,true)); };
@@ -667,22 +671,35 @@ function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=perf
   const bad=(x,z,r=0)=>{ for(const [ex,ey,er] of EXCL){ const [wx,wz]=milP(ex,ey); if(Math.hypot(x-wx,z-wz)<(er+r)*S) return true; } const [sx0,sz0]=milP(555,0), [sx1,sz1]=milP(665,218); if(x>sx0&&x<sx1&&z<sz1) return true; if(nearCanal(x,z)) return true; return false; };
   const angs=[-152.1,-90,-66.6,0,50.1,90,127.8,180].map(a=>(a+360)%360).sort((a,b)=>a-b);
   const bands=[['c',[[25,47],[50,72]]],['m',[[90,110],[113,133],[136,155]]],['f',[[170,193],[196,220],[223,251]]]];
-  const COLS={c:[0xe3b98c,0xe8c79f,0xd9a679,0xefd2ad,0xd99a6c],m:[0xf3dcc0,0xe9d3b6,0xf6e6cf,0xdcc6a8,0xead9c0,0xf0c9a0,0xcfe0e8],f:[0xd3d4d8,0xc9ccd3,0xdcdde1,0xcfd8df,0xe6d8c8]};
-  const HGT={c:[8,12],m:[10,15],f:[12,19]};
+  const COLS={c:[0xe3b98c,0xe8c79f,0xd9a679,0xefd2ad,0xd99a6c,0xf0cfa0,0xe2a77e],m:[0xf3dcc0,0xe9d3b6,0xf6e6cf,0xdcc6a8,0xead9c0,0xf0c9a0,0xcfe0e8,0xe7c3b0],f:[0xd3d4d8,0xc9ccd3,0xdcdde1,0xcfd8df,0xe6d8c8,0xd8cfc4]};
+  const HGT={c:[9,15],m:[11,18],f:[13,24]}, SWK=2.4; // altezze per zona · marciapiede largo 2,4 m
+  const uvGeo=(g,col,key)=>{ const pg=paintGeo(g.clone(),col,true); pg.setAttribute('uv',g.attributes.uv); parts[key].push(pg); };
+  MIL.side=[];
   for(const [zone,rings] of bands) for(const [r0,r1] of rings){ const rm=(r0+r1)/2;
-    for(let k=0;k<angs.length;k++){ const A0=angs[k], A1=k===angs.length-1?angs[0]+360:angs[k+1], span=A1-A0, len=THREE.MathUtils.degToRad(span)*rm, m=Math.max(1,Math.round(len/(zone==='c'?18:26)));
-      for(let j=0;j<m;j++){ const gap=2.4, da=(gap/rm)*180/Math.PI, side=(j===0?4.2:0)/rm*180/Math.PI, side2=(j===m-1?4.2:0)/rm*180/Math.PI; // vie strette tra gli isolati, più larghe accanto ai viali
+    for(let k=0;k<angs.length;k++){ const A0=angs[k], A1=k===angs.length-1?angs[0]+360:angs[k+1], span=A1-A0, len=THREE.MathUtils.degToRad(span)*rm, m=Math.max(1,Math.round(len/(zone==='c'?30:40)));
+      for(let j=0;j<m;j++){ const gap=2.4, da=(gap/rm)*180/Math.PI, side=(j===0?4.2:0)/rm*180/Math.PI, side2=(j===m-1?4.2:0)/rm*180/Math.PI; // vie tra gli isolati, più larghe accanto ai viali
         const a0=A0+span*j/m+da+side, a1=A0+span*(j+1)/m-da-side2, b0=r0+gap, b1=r1-gap; if(a1-a0<3||b1-b0<6) continue;
         const am=THREE.MathUtils.degToRad((a0+a1)/2), cx=CX+Math.cos(am)*rm, cz=CZ+Math.sin(am)*rm;
         if(bad(cx,cz,(r1-r0)/2.2/S)) continue; let ok=true; for(const t of [a0,a1]) for(const rr of [b0,b1]){ const q=THREE.MathUtils.degToRad(t); if(bad(CX+Math.cos(q)*rr,CZ+Math.sin(q)*rr)) ok=false; } if(!ok) continue;
         const ind=zone==='f' && cx>CX+120 && cz>CZ+60 && cz<CZ+190; // zona industriale a est
-        parts.side.push(paintGeo(sectorGeo(b0,b1,a0,a1,0.15),0xd8cdb6,true)); // marciapiede intorno all'isolato
-        MIL.blocks.push({r0:b0+1,r1:b1-1,a0:a0+0.6,a1:a1-0.6});
-        // 1-3 palazzi per isolato, altezze e colori diversi
-        const nb=ind?1:1+Math.floor(rnd2()*3); for(let q=0;q<nb;q++){ const qa0=a0+(a1-a0)*q/nb+0.6, qa1=a0+(a1-a0)*(q+1)/nb-(q===nb-1?0.6:0.15);
-          const h=ind?7+rnd2()*2:HGT[zone][0]+rnd2()*(HGT[zone][1]-HGT[zone][0]); const col=ind?pick([0xc3c6cc,0xb8bcc4]):pick(COLS[zone]);
-          { const g=sectorGeo(b0+1.2,b1-1.2,qa0,qa1,h,0.15), uv=g.attributes.uv; const pg=paintGeo(g.clone(),col,true); const g2=g.index?g.toNonIndexed():g; pg.setAttribute('uv',g2.attributes.uv); parts.bw.push(pg); }
-          parts.b.push(paintGeo(sectorGeo(b0+1.0,b1-1.0,qa0-0.1,qa1+0.1,0.5,h+0.15),new THREE.Color(col).multiplyScalar(0.82).getHex(),true)); } } } }
+        parts.side.push(paintGeo(sectorGeo(b0,b1,a0,a1,0.15),0xd9d2c4,true)); // marciapiede
+        parts.side.push(paintGeo(sectorGeo(b0-0.05,b0+0.3,a0-0.05*180/Math.PI/b0,a1+0.05*180/Math.PI/b0,0.17),0xb9b2a6,true)); parts.side.push(paintGeo(sectorGeo(b1-0.3,b1+0.05,a0,a1,0.17),0xb9b2a6,true)); // cordoli
+        MIL.side.push({r0:b0,r1:b1,a0,a1});
+        const ia0=a0+SWK/rm*180/Math.PI, ia1=a1-SWK/rm*180/Math.PI, i0=b0+SWK, i1=b1-SWK; MIL.blocks.push({r0:i0-0.2,r1:i1+0.2,a0:ia0-0.2,a1:ia1+0.2});
+        if(ind){ // capannoni: lamiera, tetto a shed
+          const h=7+rnd2()*2; parts.b.push(paintGeo(sectorGeo(i0,i1,ia0,ia1,h,0.15),pick([0xc3c6cc,0xb8bcc4,0xcfc9b8]),true));
+          const n=Math.max(2,Math.round((i1-i0)/4)); for(let t=0;t<n;t++){ const ra=i0+(i1-i0)*t/n, rb=i0+(i1-i0)*(t+1)/n; parts.b.push(paintGeo(sectorGeo(ra,rb-0.2,ia0,ia1,1.4,h+0.15),0x8d939c,true)); }
+          continue; }
+        // palazzi attaccati (alla milanese): larghezza 8-15 m, altezze diverse, negozi al piano terra, cornicione e tetto
+        const arc=THREE.MathUtils.degToRad(ia1-ia0)*rm, nb=Math.max(1,Math.round(arc/(8+rnd2()*7)));
+        for(let q=0;q<nb;q++){ const qa0=ia0+(ia1-ia0)*q/nb, qa1=ia0+(ia1-ia0)*(q+1)/nb;
+          const h=HGT[zone][0]+rnd2()*(HGT[zone][1]-HGT[zone][0]); const col=pick(COLS[zone]), dark=new THREE.Color(col).multiplyScalar(0.8).getHex();
+          const shop=zone!=='f'?rnd2()<0.75:rnd2()<0.3, base=shop?3.6:0;
+          uvGeo(sectorGeo(i0,i1,qa0,qa1,h-base,0.15+base),col,'w'+zone);
+          if(shop) uvGeo(sectorGeo(i0-0.12,i1+0.12,qa0-0.02,qa1+0.02,3.6,0.15),0xffffff,'shop');
+          parts.b.push(paintGeo(sectorGeo(i0-0.3,i1+0.3,qa0-0.04,qa1+0.04,0.45,h+0.15),dark,true)); // cornicione
+          if(zone==='c'||(zone==='m'&&rnd2()<0.5)){ const rr=(i1-i0)/2; for(let k2=0;k2<4;k2++){ const t0=k2/4, t1=(k2+1)/4; parts.b.push(paintGeo(sectorGeo(i0+rr*t0*0.9,i1-rr*t0*0.9,qa0,qa1,0.55,h+0.6+k2*0.55),pick([0xc0603f,0xb5583a,0xc76d48]),true)); } } // tetto a falde di coppi
+          else { parts.b.push(paintGeo(sectorGeo(i0+0.4,i1-0.4,qa0+0.05,qa1-0.05,0.25,h+0.6),0x8f8d8a,true)); if(rnd2()<0.6){ const tm=THREE.MathUtils.degToRad((qa0+qa1)/2), tr=(i0+i1)/2+(rnd2()-0.5)*3; box(1.6,1.1,1.6,CX+Math.cos(tm)*tr,h+1.4,CZ+Math.sin(tm)*tr,0xa9adb4); } } } } } }
   // ---- MONUMENTI (forme semplici, caricatura)
   const at=(px,py)=>milP(px,py);
   { const [x,z]=at(500,506); box(46,0.2,30,x,0.1,z,0xe9e1cf,0,'side'); // 1 Duomone e piazza
@@ -711,13 +728,40 @@ function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=perf
     for(let i=0;i<10;i++){ const a=rnd2()*Math.PI*2; addT(P2[0]+Math.cos(a)*10,P2[1]+Math.sin(a)*10); addT(P3[0]+Math.cos(a)*16,P3[1]+Math.sin(a)*8); }
     for(let i=2;i<NGR.length;i+=2){ const [x,z]=NGR[i]; addT(x,z-7.5); }
     for(const [x,z] of tr){ if(Math.hypot(x-milP(352,392)[0],z-milP(352,392)[1])<14) continue; cyl(0.25,0.3,2.2,x,1.1,z,0x8a5a3c,5); const g=new THREE.IcosahedronGeometry(1.7,0); g.translate(x,3.2,z); parts.green.push(paintGeo(g,pick([0x4fa64a,0x5cb85c,0x3f9a52]),true)); MIL.solids.push({x,z,r:0.4}); } }
+  // ---- STRADE: mezzerie tratteggiate, strisce pedonali, lampioni, viale alberato sui Bastioni
+  { const T=t=>THREE.MathUtils.degToRad(t); const nearRad=(R,a,w)=>MIL.RAD.some(ra=>{ let d=Math.abs(((a-ra)%360+540)%360-180); return d*Math.PI/180*R<w; });
+    const okAt=(x,z)=>!bad(x,z,0);
+    const flat=(w,l,x,z,rot,col,key='mark',y=0.055)=>{ const g=new THREE.PlaneGeometry(w,l); g.rotateX(-Math.PI/2); g.rotateY(rot); g.translate(x,y,z); parts[key].push(paintGeo(g,col,false)); };
+    const RINGS=[[48.5,7.8],[72.4,5.6],[89.6,5.6],[111.5,7.8],[134.5,7.8],[162,10],[194.5,7.8],[221.5,7.8],[258,14]];
+    // mezzerie tratteggiate sugli anelli (le corsie dei Bastioni e della circonvallazione sono già continue)
+    for(const [R,w] of RINGS){ if(R===162||R===258||R===72.4||R===89.6) continue; const n=Math.round(2*Math.PI*R/6); for(let i=0;i<n;i++){ const a=i/n*360; if(nearRad(R,a,6)) continue; const x=CX+Math.cos(T(a))*R, z=CZ+Math.sin(T(a))*R; if(!okAt(x,z)) continue; flat(0.25,3,x,z,-T(a),0xfffaf0); } }
+    // mezzerie sui viali a raggiera
+    for(const ra of MIL.RAD){ for(let r=94;r<252;r+=6){ if(RINGS.some(([R,w])=>Math.abs(r-R)<w/2+2.5)) continue; const x=CX+Math.cos(T(ra))*r, z=CZ+Math.sin(T(ra))*r; flat(0.25,3,x,z,Math.PI/2-T(ra),0xfffaf0); } }
+    // strisce pedonali: attraversano l'anello accanto a ogni viale, e il viale accanto a ogni anello
+    for(const ra of MIL.RAD) for(const [R,w] of RINGS){ if(R<70) continue; for(const sg of [-1,1]){ const da=(3.5+2.2)/R*180/Math.PI*sg, a=ra+da; for(let k=-w/2+0.6;k<=w/2-0.5;k+=1.1){ const r=R+k, x=CX+Math.cos(T(a))*r, z=CZ+Math.sin(T(a))*r; flat(0.55,2.6,x,z,-T(a),0xf4f1ea,'mark',0.06); } }
+      for(const sg of [-1,1]){ const r=R+sg*(w/2+2.0); if(r>252&&R!==258) continue; for(let k=-3.0;k<=3.0;k+=1.1){ const a=ra+k/r*180/Math.PI, x=CX+Math.cos(T(a))*r, z=CZ+Math.sin(T(a))*r; flat(0.55,2.6,x,z,Math.PI/2-T(ra),0xf4f1ea,'mark',0.06); } } }
+    // lampioni lungo gli anelli (un lato) e lungo i viali
+    const lamp=(x,z,yaw)=>{ const c=0x3a3d44; let g=new THREE.CylinderGeometry(0.07,0.1,4.6,6); g.translate(x,2.3,z); parts.furn.push(paintGeo(g,c,true)); g=new THREE.BoxGeometry(1.1,0.08,0.08); g.translate(0.5,0,0); g.rotateY(yaw); g.translate(x,4.55,z); parts.furn.push(paintGeo(g,c,true));
+      g=new THREE.BoxGeometry(0.5,0.16,0.26); g.translate(1.0,-0.05,0); g.rotateY(yaw); g.translate(x,4.55,z); parts.furn.push(paintGeo(g,0xfff1b8,false)); MIL.solids.push({x,z,r:0.15}); };
+    for(const [R,w] of RINGS){ if(R===258) continue; const rl=R-w/2-0.9, n=Math.round(2*Math.PI*rl/24); for(let i=0;i<n;i++){ const a=(i+0.5)/n*360; if(nearRad(rl,a,8)) continue; const x=CX+Math.cos(T(a))*rl, z=CZ+Math.sin(T(a))*rl; if(!okAt(x,z)||milHit(x,z,0.5)) continue; lamp(x,z,-T(a)); } }
+    for(const ra of MIL.RAD) for(let r=100;r<250;r+=22){ const off=4.4, x=CX+Math.cos(T(ra))*r-Math.sin(T(ra))*off, z=CZ+Math.sin(T(ra))*r+Math.cos(T(ra))*off; if(RINGS.some(([R,w])=>Math.abs(r-R)<w/2+3)||!okAt(x,z)||milHit(x,z,0.5)) continue; lamp(x,z,Math.atan2(Math.cos(T(ra)),Math.sin(T(ra)))); }
+    // Bastioni: due filari d'alberi sulle aiuole ai lati del viale
+    for(const rr of [154.9,169.5]){ const rs=[...MIL.RAD].map(a=>(a+360)%360).sort((a,b)=>a-b), gw=7.5/rr*180/Math.PI; for(let q=0;q<rs.length;q++){ const a0=rs[q]+gw, a1=(q===rs.length-1?rs[0]+360:rs[q+1])-gw; const gr=new THREE.RingGeometry(rr-2.1,rr+2.1,Math.ceil((a1-a0)/2),1,-T(a1),T(a1-a0)); gr.rotateX(-Math.PI/2); gr.translate(CX,0.07,CZ); parts.green.push(paintGeo(gr,0x86b862,false)); } const n=Math.round(2*Math.PI*rr/11); for(let i=0;i<n;i++){ const a=i/n*360; if(nearRad(rr,a,7)) continue; const x=CX+Math.cos(T(a))*rr, z=CZ+Math.sin(T(a))*rr; if(!okAt(x,z)) continue; cyl(0.22,0.28,2.4,x,1.2,z,0x7a5034,5,'furn'); const g=new THREE.IcosahedronGeometry(1.9,0); g.translate(x,3.6,z); parts.green.push(paintGeo(g,pick([0x4fa64a,0x5cb85c,0x3f9a52,0x6aae4c]),true)); MIL.solids.push({x,z,r:0.35}); } } }
   // ---- cartello all'ingresso
   { const x=CX-300, z=CZ-11; box(0.3,3,0.3,x-3,1.5,z,0x2a2233); box(0.3,3,0.3,x+3,1.5,z,0x2a2233); const sp=new THREE.Mesh(new THREE.PlaneGeometry(8,2.2),new THREE.MeshBasicMaterial({map:canvasTex(512,140,(g)=>{ g.fillStyle='#fffaf0'; g.fillRect(0,0,512,140); g.strokeStyle='#c43c2b'; g.lineWidth=14; g.strokeRect(7,7,498,126); g.fillStyle='#2a2233'; g.font='bold 74px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('MILANOPOLIS',256,74); })})); sp.position.set(x,3.6,z-0.2); sp.rotation.y=-Math.PI/2; grp.add(sp); const b2=sp.clone(); b2.rotation.y=Math.PI/2; b2.position.x+=0.02; grp.add(b2); }
   // ---- tutto in pochi pezzi (pochi disegni per fotogramma, leggero sul telefono)
   const mk=(list,cast,recv,ol)=>{ if(!list.length) return; const g=mergeGeometries(list); g.computeBoundingSphere(); const m=new THREE.Mesh(g,VC); m.castShadow=cast; m.receiveShadow=recv; if(ol&&!ECO) withOutline(m,0.04); grp.add(m); return m; };
-  { const winTex=canvasTex(64,64,(g,w,h)=>{ g.fillStyle='#fff'; g.fillRect(0,0,w,h); g.fillStyle='#b9c4d2'; g.fillRect(14,14,36,30); g.fillStyle='#e9eef4'; g.fillRect(14,14,36,5); g.fillStyle='#ddd6cc'; g.fillRect(0,58,w,6); }); winTex.wrapS=winTex.wrapT=THREE.RepeatWrapping; winTex.repeat.set(1/3.2,1/3.2);
-    const g=mergeGeometries(parts.bw); g.computeBoundingSphere(); const m=new THREE.Mesh(g,toon({vertexColors:true,map:winTex})); m.castShadow=m.receiveShadow=true; if(!ECO) withOutline(m,0.04); grp.add(m); }
+  { const tile=(draw,rx,ry)=>{ const t=canvasTex(128,128,draw); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(1/rx,1/ry); t.offset.y=1-1/ry; return t; };
+    const WIN={ // centro: finestre alte con persiane verdi · mezzo: balconi con ringhiera · fuori: finestre larghe moderne
+      wc:tile((g,w,h)=>{ g.fillStyle='#fff'; g.fillRect(0,0,w,h); g.fillStyle='#4f7a52'; g.fillRect(26,22,14,70); g.fillRect(88,22,14,70); g.fillStyle='#3d5f40'; for(let y=26;y<90;y+=6){ g.fillRect(27,y,12,2); g.fillRect(89,y,12,2); } g.fillStyle='#8fa3b8'; g.fillRect(42,24,44,66); g.fillStyle='#d9e4ee'; g.fillRect(42,24,44,8); g.fillStyle='#efe6d6'; g.fillRect(38,92,52,7); g.fillRect(38,16,52,6); g.fillStyle='rgba(0,0,0,.08)'; g.fillRect(0,118,w,10); },3.4,3.4),
+      wm:tile((g,w,h)=>{ g.fillStyle='#fff'; g.fillRect(0,0,w,h); g.fillStyle='#93a8bd'; g.fillRect(20,18,36,70); g.fillRect(72,18,36,70); g.fillStyle='#dfe8f0'; g.fillRect(20,18,36,8); g.fillRect(72,18,36,8); g.fillStyle='#cdbfae'; g.fillRect(10,88,108,8); g.fillStyle='#3b3a40'; g.fillRect(10,66,108,3); for(let x=12;x<118;x+=6) g.fillRect(x,66,2,22); g.fillStyle='rgba(0,0,0,.07)'; g.fillRect(0,120,w,8); },3.2,3.2),
+      wf:tile((g,w,h)=>{ g.fillStyle='#fff'; g.fillRect(0,0,w,h); g.fillStyle='#7f9bb8'; g.fillRect(8,24,112,62); g.fillStyle='#c9d8e6'; g.fillRect(8,24,112,10); g.fillStyle='#fff'; g.fillRect(62,24,4,62); g.fillStyle='rgba(0,0,0,.12)'; g.fillRect(0,96,w,6); },3.2,3.0) };
+    const shopTex=canvasTex(512,128,(g,w,h)=>{ const aw=['#c43c2b','#2f6b4f','#264b80','#d58a1f','#7a3b6b','#3b8a8a','#9a2f2f','#4a4f57']; for(let i=0;i<8;i++){ const x=i*64; g.fillStyle='#d6cfc3'; g.fillRect(x,0,64,128); g.fillStyle='#2d3440'; g.fillRect(x+6,46,36,74); g.fillStyle='#57708a'; g.fillRect(x+8,48,32,70); g.fillStyle='#3a3029'; g.fillRect(x+46,52,13,68); for(let k=0;k<6;k++){ g.fillStyle=k%2?'#f5efe4':aw[i]; g.fillRect(x+4+k*9.5,24,9.5,20); } g.fillStyle=aw[i]; g.fillRect(x+4,40,57,6); g.fillStyle='#efe6d6'; g.fillRect(x+6,6,52,13); g.fillStyle=aw[i]; g.fillRect(x+10,10,44,5); } });
+    shopTex.wrapS=shopTex.wrapT=THREE.RepeatWrapping; shopTex.repeat.set(1/32,1/3.6); shopTex.offset.y=1-1/3.6;
+    for(const k of ['wc','wm','wf','shop']){ if(!parts[k].length) continue; const g=mergeGeometries(parts[k]); g.computeBoundingSphere(); const m=new THREE.Mesh(g,toon({vertexColors:true,map:k==='shop'?shopTex:WIN[k]})); m.castShadow=m.receiveShadow=true; if(!ECO&&k!=='shop') withOutline(m,0.04); grp.add(m); } }
+  mk(parts.furn,false,false,false);
   mk(parts.green,true,true,false); mk(parts.road,false,true,false); mk(parts.mark,false,false,false); mk(parts.side,false,true,false); mk(parts.water,false,false,false); mk(parts.b,true,true,true);
+  MIL.grid=new Map(); for(const o of MIL.solids){ const x0=o.r?o.x-o.r:o.x0, x1=o.r?o.x+o.r:o.x1, z0=o.r?o.z-o.r:o.z0, z1=o.r?o.z+o.r:o.z1; for(let ix=Math.floor((x0-2)/8);ix<=Math.floor((x1+2)/8);ix++) for(let iz=Math.floor((z0-2)/8);iz<=Math.floor((z1+2)/8);iz++){ const k=ix*4096+iz; let c=MIL.grid.get(k); if(!c) MIL.grid.set(k,c=[]); c.push(o); } }
   grp.visible=false; console.log('Milanopolis costruita in',Math.round(performance.now()-T0),'ms ·',MIL.blocks.length,'isolati'); }
 // 🚗 il viaggio: scenetta durante il caricamento, poi sei all'ingresso di Milanopolis in auto
 function travelTo(dest){ const f=document.getElementById('fade'); HOME.busy=true;
@@ -1167,7 +1211,7 @@ const toW=(v,lx,lz)=>{ const s=Math.sin(v.yaw), c=Math.cos(v.yaw); return [v.x+l
 const spring=(x,vel,target,k,c,dt)=>{ vel+=(k*(target-x)-c*vel)*dt; return [x+vel*dt,vel]; };
 function updateVehicle(v,dt,inp){
   const thr=inp?-inp.y:0, st=inp?-inp.x:0;
-  const dmg=v.damage||0, off=ROAD.dist(v.x,v.z)>ROAD_W+0.3 && !inBlock(v.x,v.z) && !nearGarage(v.x,v.z) && !(v.z>PROM.z0&&v.z<PROM.z1), dry=v.name==='auto'&&HOME.fuel<=0, vmax=dry?0.01:dmg>=100?3:v.vmax*(1-0.55*dmg/100)*(off?0.7:1), acc=v.acc*(1-0.4*dmg/100);
+  const dmg=v.damage||0, off=MIL.on?milOff(v.x,v.z):(ROAD.dist(v.x,v.z)>ROAD_W+0.3 && !inBlock(v.x,v.z) && !nearGarage(v.x,v.z) && !(v.z>PROM.z0&&v.z<PROM.z1)), dry=v.name==='auto'&&HOME.fuel<=0, vmax=dry?0.01:dmg>=100?3:v.vmax*(1-0.55*dmg/100)*(off?0.7:1), acc=v.acc*(1-0.4*dmg/100);
   let a=0;
   if(thr>0.05) a = v.speed<-0.3 ? v.brake*thr : acc*thr*Math.max(0,1-Math.pow(Math.max(0,v.speed)/vmax,v.taperExp||1));
   else if(thr<-0.05) a = v.speed>0.3 ? -v.brake*(-thr) : -v.acc*0.6*(-thr)*Math.max(0,1-Math.max(0,-v.speed)/v.vrev);
