@@ -288,7 +288,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.091.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.091.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -313,6 +313,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.091.1',d:'27/11/2026',t:['🎓 Nell\'addestramento usi tutte e 4 le cure: 😄 battuta, 👂 ascoltare, 🌬️ respirare e 🗣️ verità, ognuna su una persona vera, più la 🍬 caramella. Alla fine un ripasso: quale icona, quale cura.']},
  {v:'0.091.0',d:'27/11/2026',t:['🩶 Il Grigio per terra è un po\' più scuro: si vede meglio.','🩶 Nell\'addestramento c\'è il Grigio vero: vedi la macchia che si allarga, la persona malata che lo sparge, e come la cura e i portatori di bene lo fanno sparire. Il tempo è infinito.']},
  {v:'0.090.4',d:'27/11/2026',t:['⛲ In paese si parte davanti alla fontana, ben in vista (prima sotto un albero).','🎥 Telecamera più vicina al personaggio.']},
  {v:'0.090.3',d:'27/11/2026',t:['🎓 Il riquadro dell\'addestramento ora è una colonna a sinistra: non copre più il personaggio.','🔭 Lo zoom indietro arriva meno in alto: non si vede più tutta la città (trovare i focolai era troppo facile).']},
@@ -2531,7 +2532,7 @@ function cure(id){ const p=nearPed(); if(!p||candyCD>0||gameOver) return; const 
 function applyCure(p,C){ candyCD=0.8; copMsgT=3; if(C.id && G.ch[C.id]>0) G.ch[C.id]--; /* la carica si consuma solo quando la cura arriva davvero (ascoltare interrotto non costa) */
   if(!p.kind){ startAct(p,'wave',1.6,player); addKarma(1,p.x,p.z); msg.innerHTML=C.e+' Stava già bene: un sorriso e via.'; return; }
   const right=p.kind===C.k, k=KINDS[KI[p.kind]];
-  if(right){ healOnly(p); p.owner='me'; startAct(p,'wave',2,player); addKarma(8,p.x,p.z); msg.innerHTML='✔️ <b>'+C.verb+'!</b> Gli è passato il '+k.name.toLowerCase()+'.'+(G.candies>0?' Dagli una 🍬 <b>caramella</b> e porterà il bene agli altri ✨':''); if(TR.on) trainCure(p,true); }
+  if(right){ healOnly(p); p.owner='me'; startAct(p,'wave',2,player); addKarma(8,p.x,p.z); msg.innerHTML='✔️ <b>'+C.verb+'!</b> Gli è passato il '+k.name.toLowerCase()+'.'+(G.candies>0&&!TR.on?' Dagli una 🍬 <b>caramella</b> e porterà il bene agli altri ✨':''); if(TR.on) trainCure(p,true); }
   else { p.lvl-=0.35; addKarma(2,p.x,p.z); if(p.lvl<=0){ p.kind=null; p.lvl=0; } startAct(p,'talk',1.2,player);
     const best=Object.values(CURE).find(c=>c.k===k.id); msg.innerHTML=C.e+' Un po\' aiuta… ma per il '+k.icon+' '+k.name.toLowerCase()+' serviva <b>'+best.name+'</b> '+best.e+'.'; if(TR.on) trainCure(p,false,k,best); } }
 function provoke(){ const p=nearPed(); if(!p||candyCD>0||gameOver) return; candyCD=1; faceTo(p); say('😤'); p.good=0; infect(p,'nervo',0.8); startAct(p,'fist',2.5,player); p.iconOverride='😠'; copMsgT=2.5;
@@ -2576,26 +2577,34 @@ const TRS=[
   go(){ const p=trPickPed(player.pos.x,player.pos.z,9,16); TR.xz=p?[p.x,p.z]:[player.pos.x+8,player.pos.z]; }, tgt:()=>TR.xz, ok:()=>Math.hypot(TR.xz[0]-player.pos.x,TR.xz[1]-player.pos.z)<2.2},
  {t:'🩶 Il Grigio',x:()=>'Guarda la <b>macchia colorata</b> per terra con la freccia: è il <b>Grigio</b>. Si allarga piano piano e chi ci cammina dentro si ammala. Le persone malate lo spargono ancora di più. Il riquadro conta quanto paese è ancora a colori 🎨. Qui il tempo è infinito ⏳∞: guarda come si muove, poi premi Avanti.',
   go(){ const p=trPickPed(player.pos.x,player.pos.z,8,20); TR.p1=p; if(p){ trSick(p,'nervo'); const c0=gCell(p.x,p.z); for(let di=-1;di<=1;di++) for(let dj=-1;dj<=1;dj++){ const n=c0+di+dj*GN, v=di===0&&dj===0?1:(di===0||dj===0)?0.8:0.55; if(n>=0&&n<GN*GN&&ACT[n]) GF[KI.nervo][n]=Math.max(GF[KI.nervo][n],v); } } }, tgt:()=>TR.p1, zoom:0.45, zt:3.2},
- {t:'🔴 Una persona nervosa',x:()=>'Al centro della macchia c\'è una persona con 😠 sopra la testa: è <b>nervosa</b>, ed è lei che sparge il Grigio. <b>Avvicinati a lei.</b>',
+ {t:'🔴 Una persona nervosa',x:()=>'Al centro della macchia c\'è una persona con 💢 sopra la testa: è <b>nervosa</b>, ed è lei che sparge il Grigio. <b>Avvicinati a lei.</b>',
   go(){ let p=TR.p1; if(!p||!p.kind){ p=trPickPed(player.pos.x,player.pos.z,7,20); TR.p1=p; if(p) trSick(p,'nervo'); } if(p) player.focusPed=p; }, tgt:()=>TR.p1, ok:()=>!TR.p1||Math.hypot(TR.p1.x-player.pos.x,TR.p1.z-player.pos.z)<3.6},
  {t:'😄 La cura giusta',x:()=>'Quando sei vicino a qualcuno compaiono i pulsanti delle <b>cure</b>. Per il nervosismo serve <b>😄 una battuta</b>: premi 😄'+trKey('1','X')+'.',
   go(){ trGlow(['c_joke']); }, tgt:()=>TR.p1, zoom:0, ok:()=>!TR.p1||TR.done||!TR.p1.kind},
- {t:'🔵 Una persona sola',x:()=>'Bravo! La cura giusta <b>guarisce quella persona</b>, il Grigio intorno a lei si ritira un po\' e ti dà <b>karma</b> 🪃 (i punti del gioco). Ora c\'è qualcuno di <b>solo</b> 😔: vai da lui.',
+ {t:'🔵 Una persona sola',x:()=>'Bravo! La cura giusta <b>guarisce quella persona</b>, il Grigio intorno a lei si ritira un po\' e ti dà <b>karma</b> 🪃 (i punti del gioco). Ora c\'è qualcuno di <b>solo</b>: ha 💧 sopra la testa e cammina piano. Vai da lui.',
   go(){ trGlow([]); const p=trPickPed(player.pos.x,player.pos.z,6,18,[TR.p1]); TR.p2=p; if(p){ trSick(p,'soli'); player.focusPed=p; } }, tgt:()=>TR.p2, ok:()=>!TR.p2||Math.hypot(TR.p2.x-player.pos.x,TR.p2.z-player.pos.z)<3.6},
  {t:'👂 Ascoltare',x:()=>'Chi è solo ha bisogno di essere <b>ascoltato</b>: premi 👂'+trKey('2','Y')+' e <b>resta fermo</b> vicino a lui finché non ha finito.',
   go(){ trGlow(['c_listen']); }, tgt:()=>TR.p2, zoom:0, ok:()=>!TR.p2||TR.done||!TR.p2.kind},
- {t:'🩹 Le 4 cure',x:()=>'Ogni male ha la sua cura:<br>😄 <b>battuta</b> → 🔴 nervosi · 👂 <b>ascoltare</b> → 🔵 soli<br>🌬️ <b>respirare</b> → 🟣 ansiosi · 🗣️ <b>verità</b> → 🟡 pettegoli<br>Il numero sul pulsante sono le <b>cariche</b>: ne torna una ogni 30 secondi. La cura sbagliata aiuta poco.',
+ {t:'🟣 Una persona ansiosa',x:()=>'Ottimo! Adesso cerca la persona <b>ansiosa</b>: ha ❗ sopra la testa, cammina a scatti e guarda il telefono. L\'ansia si attacca a chi le sta vicino. Vai da lei.',
+  go(){ trGlow([]); const p=trPickPed(player.pos.x,player.pos.z,6,18,[TR.p1,TR.p2]); TR.p3=p; if(p){ trSick(p,'ansia'); player.focusPed=p; } }, tgt:()=>TR.p3, ok:()=>!TR.p3||Math.hypot(TR.p3.x-player.pos.x,TR.p3.z-player.pos.z)<3.6},
+ {t:'🌬️ Respirare insieme',x:()=>'Per l\'ansia serve <b>🌬️ respirare insieme</b>: premi 🌬️'+trKey('3','B')+'.',
+  go(){ trGlow(['c_breathe']); }, tgt:()=>TR.p3, zoom:0, ok:()=>!TR.p3||TR.done||!TR.p3.kind},
+ {t:'🟢 Un pettegolo',x:()=>'Manca l\'ultimo male: il <b>pettegolezzo</b>. Il pettegolo ha 💬 sopra la testa e va in giro a raccontare voci. Vai da lui.',
+  go(){ trGlow([]); const p=trPickPed(player.pos.x,player.pos.z,6,18,[TR.p1,TR.p2,TR.p3]); TR.p4=p; if(p){ trSick(p,'gossip'); player.focusPed=p; } }, tgt:()=>TR.p4, ok:()=>!TR.p4||Math.hypot(TR.p4.x-player.pos.x,TR.p4.z-player.pos.z)<3.6},
+ {t:'🗣️ La verità',x:()=>'Contro il pettegolezzo serve <b>🗣️ la verità</b>: premi 🗣️'+trKey('4','RB')+'.',
+  go(){ trGlow(['c_truth']); }, tgt:()=>TR.p4, zoom:0, ok:()=>!TR.p4||TR.done||!TR.p4.kind},
+ {t:'🩹 Ripassiamo le 4 cure',x:()=>'Guarda l\'icona sopra la testa e scegli la cura:<br>💢 → 😄 <b>battuta</b> · 💧 → 👂 <b>ascoltare</b><br>❗ → 🌬️ <b>respirare</b> · 💬 → 🗣️ <b>verità</b><br>Il numero sul pulsante sono le <b>cariche</b>: ne torna una ogni 30 s.',
   go(){ trGlow([]); }},
- {t:'🍬 La caramella',x:()=>'Ora il trucco più importante. La cura guarisce solo quella persona. Ma se a chi <b>sta già bene</b> dai una 🍬 <b>caramella</b>, diventa un <b>portatore di bene</b> ✨ che guarisce gli altri da solo! Torna da lui e premi 🍬'+trKey('C','LB')+'.',
-  go(){ if(G.candies<1) G.candies=1; trGlow(['candy']); if(TR.p2) player.focusPed=TR.p2; }, tgt:()=>TR.p2, ok:()=>!TR.p2||TR.done||TR.p2.good>0, tick(){ if(G.candies<1 && TR.p2 && !(TR.p2.good>0)) G.candies=1; }},
+ {t:'🍬 La caramella',x:()=>'Ora il trucco più importante. La cura guarisce solo quella persona. Ma se a chi <b>sta già bene</b> dai una 🍬 <b>caramella</b>, diventa un <b>portatore di bene</b> ✨ che guarisce gli altri da solo! Dalla all\'ultima persona che hai guarito: premi 🍬'+trKey('C','LB')+'.',
+  go(){ if(G.candies<1) G.candies=1; trGlow(['candy']); TR.pc=[TR.p4,TR.p3,TR.p2,TR.p1].find(p=>p&&!p.kind)||null; if(TR.pc) player.focusPed=TR.pc; }, tgt:()=>TR.pc, ok:()=>!TR.pc||TR.done||TR.pc.good>0, tick(){ if(G.candies<1 && TR.pc && !(TR.pc.good>0)) G.candies=1; }},
  {t:'✨ La catena del bene',x:()=>'Guarda! Il portatore ✨ va dalle persone nervose e le guarisce, e chi guarisce diventa portatore a sua volta. <b>Una caramella = una catena di bene.</b> Dove passano i portatori ✨ il Grigio sparisce. Usale sulle persone in mezzo alla gente!',
-  go(){ trGlow([]); const c=TR.p2; if(!c){ TR.chain=[]; return; } c.trStop=false; const cand=PEDS.filter(p=>trFree(p)&&p!==TR.p1).map(p=>({p,d:Math.hypot(p.x-c.x,p.z-c.z)})).filter(o=>o.d>2.5&&o.d<20).sort((a,b)=>a.d-b.d); const L=[];
+  go(){ trGlow([]); const c=TR.pc; if(!c){ TR.chain=[]; return; } c.trStop=false; const cand=PEDS.filter(p=>trFree(p)&&![TR.p1,TR.p2,TR.p3,TR.p4].includes(p)).map(p=>({p,d:Math.hypot(p.x-c.x,p.z-c.z)})).filter(o=>o.d>2.5&&o.d<20).sort((a,b)=>a.d-b.d); const L=[];
     for(const o of cand){ if(L.length>=2) break; const from=L.length?L[L.length-1]:c; if(trLineFree(from.x,from.z,o.p.x,o.p.z)) L.push(o.p); }
     for(const o of cand){ if(L.length>=2) break; if(!L.includes(o.p)) L.push(o.p); }
     TR.chain=L; for(const p of L) trSick(p,'nervo'); if(L[0]) c.trWalk={p:L[0]}; TR.ct=0; },
-  tgt:()=>TR.p2, zoom:0.34, tick(dt){ const c=TR.p2; TR.ct+=dt; if(!c) return; { const w=TR.chain.find(p=>p.kind)||c; camFocus((c.x+w.x)/2,(c.z+w.z)/2,0.4,0.34); } const left=TR.chain.filter(p=>p.kind); if(left.length&&c.trWalk&&!c.trWalk.p.kind) c.trWalk={p:left[0]};
+  tgt:()=>TR.pc, zoom:0.34, tick(dt){ const c=TR.pc; TR.ct+=dt; if(!c) return; { const w=TR.chain.find(p=>p.kind)||c; camFocus((c.x+w.x)/2,(c.z+w.z)/2,0.4,0.34); } const left=TR.chain.filter(p=>p.kind); if(left.length&&c.trWalk&&!c.trWalk.p.kind) c.trWalk={p:left[0]};
     if(TR.ct>28) for(const p of left){ makeGood(p,1); p.owner='me'; } },
-  ok:()=>TR.chain.every(p=>!p.kind)&&TR.ct>1.5, end(){ trRelease(TR.p2); for(const p of TR.chain) trRelease(p); }},
+  ok:()=>TR.chain.every(p=>!p.kind)&&TR.ct>1.5, end(){ trRelease(TR.pc); for(const p of TR.chain) trRelease(p); }},
  {t:'🧭 Focolai, tempo e stelle',x:()=>'Nella partita vera il Grigio nasce da solo. Quando un quartiere si ammala, in alto la <b>bussola</b> 🧭 indica il <b>focolaio</b> e parte un conto alla rovescia (qui no: tempo infinito): corri lì e cura! In basso vedi ⏳ il <b>tempo</b> e 🎨 quanto paese è a colori: alla fine ⭐ 50% · ⭐⭐ 70% · ⭐⭐⭐ 90%.',
   go(){ trGlow(['compass']); }},
  {t:'🛒 Comprare caramelle',x:()=>'Le caramelle finiscono. Si comprano col <b>karma</b> alle <b>bancarelle</b> con il cartello 🍬 '+CANDY_PRICE+' in piazza. Raggiungi la freccia gialla.',
@@ -2605,7 +2614,7 @@ const TRS=[
  {t:'🏆 Sei pronto!',x:()=>'Ultimi consigli: ⚡ la barra del <b>fiato</b> cala se corri, si ricarica camminando e a casa. 🏠 ti riporta <b>a casa</b> (la partita va in pausa). Dal 📱 <b>telefono</b> trovi livelli, opzioni e aiuto. Occhio alle auto e alla polizia! 🚓',
   go(){ trGlow([]); }, last:true}];
 function trNum(){ TRD.num.textContent=(TR.step+1)+'/'+TRS.length+' · 🎨 '+Math.round(colorPct()*100)+'% · ⏳∞'; }
-function trShow(){ const S=TRS[TR.step]; TRD.title.textContent=S.t; trNum(); TRD.text.innerHTML=S.x(); TRD.bar.style.width=Math.round(TR.step/(TRS.length-1)*100)+'%';
+function trShow(){ const S=TRS[TR.step]; TRD.title.textContent=S.t; trNum(); if(!S.ok){ trMsgEl.hidden=true; trMsgT=0; } TRD.text.innerHTML=S.x(); TRD.bar.style.width=Math.round(TR.step/(TRS.length-1)*100)+'%';
   if(S.last){ trMsgEl.hidden=true; trMsgT=0; } { const jy=document.getElementById('joy'), jr=jy&&jy.offsetParent!==null?jy.getBoundingClientRect():null; TRD.card.style.maxHeight=Math.max(150,(jr?jr.top-14:innerHeight-120)-(parseFloat(getComputedStyle(TRD.card).top)||8))+'px'; }
   TRD.btns.innerHTML=S.last?'<button id="trPlay" type="button">▶ Gioca liv. '+LV.n+'</button><button id="trHome" class="ghost" type="button">🏠 Casa</button>':!S.ok?'<button id="trNext" type="button">Avanti ▶</button>':'';
   TRD.card.hidden=false; TRD.card.classList.remove('pop'); void TRD.card.offsetWidth; TRD.card.classList.add('pop'); }
@@ -2613,14 +2622,14 @@ function trGo(i){ const P=TRS[TR.step]; if(P&&P.end) P.end(); TR.step=i; TR.done
   /* zoomata sull'obiettivo (Teo, 27/11: "frecce, indicatori e zoomate sugli obiettivi") */ const t=S.tgt?S.tgt():null; if(t&&S.zoom!==0){ const x=Array.isArray(t)?t[0]:t.x, z=Array.isArray(t)?t[1]:t.z; if(x!==undefined && Math.hypot(x-player.pos.x,z-player.pos.z)>2.5) camFocus(x,z,S.zt||2.2,S.zoom||(Array.isArray(t)?0.42:0.34)); } }
 TRD.btns.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; if(b.id==='trNext') trGo(TR.step+1); else if(b.id==='trPlay'){ trainStop(); document.getElementById('restart').click(); copMsgT=4; msg.innerHTML='🎯 <b>Livello '+LV.n+'</b>: adesso si fa sul serio. Forza!'; } else if(b.id==='trHome') goHome(false); });
 document.getElementById('trExit').onclick=()=>{ goHome(false); };
-function trainCure(p,right,k,best){ const S=TRS[TR.step]; if(!S||!S.ok||(p!==TR.p1&&p!==TR.p2)) return; if(right){ TR.done=true; return; }
+function trainCure(p,right,k,best){ const S=TRS[TR.step]; if(!S||!S.ok||![TR.p1,TR.p2,TR.p3,TR.p4].includes(p)) return; if(right){ TR.done=true; return; }
   p.kind=p.trKind||p.kind; p.lvl=1; copMsgT=4; msg.innerHTML='🙂 <b>Quasi!</b> Per il '+k.icon+' '+k.name.toLowerCase()+' serve '+best.e+' <b>'+best.name+'</b>. Riprova!'; }
-function trainCandy(p){ if(p===TR.p2) TR.done=true; }
+function trainCandy(p){ if(p&&p===TR.pc) TR.done=true; }
 function trainBuy(){ if(TRS[TR.step]&&TRS[TR.step].t.startsWith('🍬 Compra')) TR.done=true; }
-function trainStart(){ document.getElementById('trAsk').hidden=true; closeTV(); TR.on=true; document.body.classList.add('training'); TR.save={karma:G.karma,candies:G.candies}; TR.p1=TR.p2=null; TR.chain=[];
+function trainStart(){ document.getElementById('trAsk').hidden=true; closeTV(); TR.on=true; document.body.classList.add('training'); TR.save={karma:G.karma,candies:G.candies}; TR.p1=TR.p2=TR.p3=TR.p4=TR.pc=null; TR.chain=[];
   const co=HOME.carOut; HOME.carOut=false; HOME.townPos=null; HOME.pendingLevel=false; goTown(); HOME.carOut=co; TR.starting=true; document.getElementById('restart').click(); TR.starting=false;
   G.karma=0; G.candies=1; controls.zoom=ZOOM_DEF; trGo(0); copMsgT=0; msg.innerHTML='🎓 <b>Addestramento</b>: segui le istruzioni in alto.'; }
-function trainStop(){ if(!TR.on) return; const P=TRS[TR.step]; if(P&&P.end) P.end(); for(const p of [TR.p1,TR.p2]) trRelease(p); TR.on=false; TR.step=-1; trGlow([]); document.body.classList.remove('training'); trMsgEl.hidden=true; for(const el of trPts) el.style.display='none'; TRD.card.hidden=true; TRD.card.style.visibility=''; TRD.arrow.style.display='none'; trMark.visible=false;
+function trainStop(){ if(!TR.on) return; const P=TRS[TR.step]; if(P&&P.end) P.end(); for(const p of [TR.p1,TR.p2,TR.p3,TR.p4]) trRelease(p); TR.on=false; TR.step=-1; trGlow([]); document.body.classList.remove('training'); trMsgEl.hidden=true; for(const el of trPts) el.style.display='none'; TRD.card.hidden=true; TRD.card.style.visibility=''; TRD.arrow.style.display='none'; trMark.visible=false;
   if(TR.save){ G.karma=TR.save.karma; G.candies=TR.save.candies; } HOME.pendingLevel=true; HOME.townPos=null; try{ localStorage.setItem('karmapolis_addestramento','1'); }catch(e){} }
 const _trV=new THREE.Vector3(), trMsgEl=document.getElementById('trMsg'), trPts=[document.getElementById('trP0'),document.getElementById('trP1')]; let trMsgT=0;
 // i messaggi del gioco (es. "Quasi! Riprova") finiscono dentro il riquadro dell'addestramento, così non ci sono due fumetti uno sopra l'altro
@@ -2633,7 +2642,7 @@ function trPointers(){ const ids=TR.glow||[]; let k=0; const H=innerHeight;
     P.style.display='block'; P.style.left=(x-22)+'px'; P.style.top=y+'px'; P.style.transform='rotate('+rot+'deg)'; }
   for(;k<trPts.length;k++) trPts[k].style.display='none'; }
 function updateTraining(dt){ const S=TRS[TR.step]; if(!S) return; if(S.tick) S.tick(dt); { const cov=!shopMenu.hidden||!copMenu.hidden; const vv=cov?'hidden':''; if(TRD.card.style.visibility!==vv) TRD.card.style.visibility=vv; } if(trMsgT>0){ trMsgT-=dt; if(trMsgT<=0) trMsgEl.hidden=true; } trPointers(); TR.numT=(TR.numT||0)-dt; if(TR.numT<=0){ TR.numT=0.5; trNum(); }
-  for(const p of [TR.p1,TR.p2]) if(p&&p.trStop&&p.trKind&&p.kind&&p.lvl<1) p.lvl=1; /* le persone dell'addestramento non guariscono da sole */
+  for(const p of [TR.p1,TR.p2,TR.p3,TR.p4]) if(p&&p.trStop&&p.trKind&&p.kind&&p.lvl<1) p.lvl=1; /* le persone dell'addestramento non guariscono da sole */
   if(S.ok && S.ok()){ TR.wait+=dt; if(TR.wait>0.9) trGo(TR.step+1); }
   // freccia gialla: sopra il punto o la persona da raggiungere, e sul bordo dello schermo se è fuori
   const t=S.tgt?S.tgt():null; let tx=null, tz=null; if(t){ if(Array.isArray(t)){ tx=t[0]; tz=t[1]; } else if(t.x!==undefined){ tx=t.x; tz=t.z; } }
@@ -2764,7 +2773,7 @@ function levelCfg(n){ const b=LEVELS[Math.min(n,LEVELS.length)-1], extra=Math.ma
 const LV={n:1,best:1,stars:{}}; try{ const sv=JSON.parse(localStorage.getItem('karmapolis_livelli')||'{}'); LV.n=sv.n||1; LV.best=sv.best||1; LV.stars=sv.stars||{}; }catch(e){}
 const saveLevels=()=>{ try{ localStorage.setItem('karmapolis_livelli',JSON.stringify({n:LV.n,best:LV.best,stars:LV.stars})); }catch(e){} };
 let LC=levelCfg(LV.n); const ACT=new Uint8Array(GN*GN); let ACTZ=ZONES;
-function setupLevel(){ LC=levelCfg(TR.on?1:LV.n); if(TR.on){ LC.emit=0.45; LC.time=9999; } const pz=ZONES.find(q=>q.name==='la piazza')||ZONES[0];
+function setupLevel(){ LC=levelCfg(TR.on?1:LV.n); if(TR.on){ LC.emit=0.45; LC.time=9999; LC.kinds=['nervo','soli','ansia','gossip']; } const pz=ZONES.find(q=>q.name==='la piazza')||ZONES[0];
   ACTZ=[...ZONES].sort((a,b)=>Math.hypot(a.cx-pz.cx,a.cz-pz.cz)-Math.hypot(b.cx-pz.cx,b.cz-pz.cz)).slice(0,LC.zones);
   ACT.fill(0); for(const q of ACTZ) for(const c of q.cells) ACT[c]=1; for(const q of ZONES) q.active=ACTZ.includes(q);
   G.levelT=LC.time; G.lvKarma=0; }
