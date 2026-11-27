@@ -65,6 +65,17 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #pcUI{position:fixed;inset:0;z-index:13;display:grid;place-items:center;background:rgba(20,15,30,.35);padding:16px}#pcUI[hidden]{display:none}#pcUI .card{width:min(440px,100%);max-height:calc(100vh - 32px);overflow:auto}
 #pcUI h3{margin:8px 0 4px;font:700 22px var(--display)}#pcUI p{color:var(--ink);font-size:14px}.abil{display:grid;gap:5px;margin:8px 0}.abil div{display:flex;gap:8px;align-items:baseline;font-size:13.5px}.abil span{flex:0 0 108px;font:600 14px var(--display)}.abil a{color:#d2402a}.pcbar{display:flex;gap:6px;align-items:center;font-size:12px;background:#ece4d6;border-radius:8px;padding:4px 8px}.pcbar span{color:#e0483e}.pcbar span+span{color:#ffd84d}.pcbar span+span+span{color:#3fa66b}.pcbar b{margin-left:6px;font-weight:600}
 .btnlink{flex:1;text-align:center;text-decoration:none;font:600 15px var(--display);background:var(--accent);color:#fff;border:2.5px solid var(--line);border-radius:999px;padding:7px 15px;box-shadow:2px 2px 0 var(--line)}
+#fade .trip{width:min(560px,92vw);text-align:center}
+#fade .tsky{height:70px;background:linear-gradient(#2a3d6b,#c9653f);border-radius:14px 14px 0 0;position:relative;overflow:hidden}
+#fade .tsky:before{content:'🏢🏙️🏛️🏢🌳🏙️🏢🏛️🏢🌳🏙️🏢🏛️';position:absolute;bottom:-6px;left:0;font-size:30px;white-space:nowrap;animation:tscroll 3s linear infinite}
+#fade .troad{height:46px;background:#3a3d44;border-radius:0 0 14px 14px;position:relative;overflow:hidden}
+#fade .troad:before{content:'';position:absolute;left:0;right:-80px;top:21px;height:4px;background:repeating-linear-gradient(90deg,#ffd84d 0 34px,transparent 34px 68px);animation:tdash .5s linear infinite}
+#fade .tcar{position:absolute;left:50%;bottom:6px;transform:translateX(-50%) scaleX(-1);font-size:40px;line-height:1;animation:tbob .35s ease-in-out infinite alternate}
+#fade .tcar:before{content:'🚗'}
+#fade .ttxt{margin-top:16px;font-size:24px}
+@keyframes tscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes tdash{from{transform:translateX(0)}to{transform:translateX(-68px)}}
+@keyframes tbob{from{transform:translateX(-50%) scaleX(-1) translateY(0)}to{transform:translateX(-50%) scaleX(-1) translateY(-3px)}}
 #fade{position:fixed;inset:0;z-index:30;background:#0d0b16;display:grid;place-items:center;color:#fffaf0;font:700 34px var(--display);transition:opacity .7s;opacity:0}
 #tvUI{position:fixed;inset:0;z-index:12;display:grid;place-items:center;align-content:center;gap:10px;background:rgba(20,15,30,.35);padding:16px}#tvUI[hidden]{display:none}
 #tvText{background:#fffaf0;border:2.5px solid #2a2233;border-radius:14px;box-shadow:3px 3px 0 #2a2233;padding:10px 14px;max-width:min(640px,calc(100vw - 32px));font:500 14.5px/1.45 var(--body);color:#2a2233;max-height:34vh;overflow:auto}#tvText small{font:700 12px var(--display);opacity:.55;margin-right:4px}#tvText[hidden]{display:none}
@@ -286,7 +297,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="compass" hidden role="img" aria-label="Bussola con la direzione del focolaio"><div class="ctrack"><div class="cmid"></div></div><div id="cinfo"></div></div>
 <div id="wanted" hidden aria-label="Livello di ricerca"></div>
 <div id="hp" hidden aria-label="Salute"><span>❤️</span><div class="bar"><div id="hpFill"></div></div></div>
-<div id="exitMenu" class="menuov" hidden><div class="card"><h3 id="exHead">🚪 Come esci?</h3><div class="exl"><button id="exWalk" type="button">🚶 A piedi <small>gratis, e ti tieni in forma</small></button><button id="exCar" type="button">🚗 In auto</button></div><button id="exNo" class="ghost" type="button">Resto a casa</button></div></div>
+<div id="exitMenu" class="menuov" hidden><div class="card"><h3 id="exHead">🚪 Come esci?</h3><div class="exl"><button id="exWalk" type="button">🚶 A piedi <small>gratis, e ti tieni in forma</small></button><button id="exCar" type="button">🚗 In auto</button><button id="exMil" type="button">🏙️ Milanopolis <small>anteprima · in auto</small></button></div><button id="exNo" class="ghost" type="button">Resto a casa</button></div></div>
 <div id="pcUI" hidden><div class="card"><div class="pcbar"><span>●</span><span>●</span><span>●</span><b>uno-come-voi.com</b></div>
   <h3>📖 Uno come Voi</h3><p>Il blog di crescita personale di Teo. <b>Karmapolis è fatto dei suoi articoli</b>: ogni abilità che usi in partita nasce da un articolo vero, e ogni articolo nuovo diventa una nuova abilità.</p>
   <div class="abil"><div><span>🍬 Caramella</span><a href="https://www.uno-come-voi.com/post/esperimento-della-caramella" target="_blank" rel="noopener">L'Esperimento della Caramella</a></div>
@@ -306,7 +317,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.094.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.095.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -331,6 +342,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.095.0',d:'27/11/2026',t:['🏙️ Prima anteprima di <b>Milanopolis</b>, la seconda città: dal garage scegli «Milanopolis», il viaggio costa il 10% di benzina e c\'è la scenetta dell\'auto in viaggio.','🗺️ La città è ancora vuota ma ci giri in auto e a piedi: circonvallazione, Bastioni, la Cerchia dei Navigli riaperta coi ponti, Naviglio Grande e Pavese, Darsena, isolati di case e palazzi con le finestre.','⛪ Monumenti in versione caricatura: il Duomone, la Galleria, il Teatro alla Scaletta, il Castello Sforzato, l\'Arco della Pacina, Porta Nuovissima, la Stazione Centralona, le Tre Torri, lo Stadio San Sirolo, la Bocconcina. Traffico, passanti e Grigio arrivano nella prossima tappa.','🪧 Il paese di partenza ora si chiama <b>Borgo Karma</b> (Karmapolis è il nome del gioco).']},
  {v:'0.094.0',d:'27/11/2026',t:['🏆 Punteggio di bravura a fine partita: conta quanto paese salvi, le stelle, i focolai spenti, le cure giuste (le sbagliate tolgono punti) e la catena del bene; più alto è il livello, più vale.','📱 Nuova app 🏆 Classifica nel telefono con i tuoi 10 migliori punteggi. La classifica tra giocatori e squadre arriverà con il multigiocatore.']},
  {v:'0.093.4',d:'27/11/2026',t:['🚗 Le auto si fermano per Leo, Carlo e Antony quando attraversano: niente più auto che passano attraverso Leo.','🚶 Sistemati i passanti che scivolavano sulla strada con le braccia alzate e le gambe ferme.']},
  {v:'0.093.3',d:'27/11/2026',t:['😠 Leo ha la sua voce vera: «Mia mamma mi ha fatto due mani!», «Porco diso!» e «Eh, ascolta, non rompere i… 🔇» (con il biip).']},
@@ -600,7 +612,127 @@ const PROM={x0:-60-SW,x1:60+SW,z0:52+SW,z1:SEA_Z}; // lungomare (marciapiede lar
 function height(x,z){ if(z>SEA_Z) return -Math.min(2,(z-SEA_Z)*0.22); if(inBlock(x,z) || (z>PROM.z0&&z<PROM.z1&&inRange(x,PROM.x0,PROM.x1))) return 0.15; return 0; }
 const ground=height;
 const BOXES=[]; const OBST=[];
-const hitBox=(x,z,m=0)=>BOXES.some(b=>x>b.x0-m&&x<b.x1+m&&z>b.z0-m&&z<b.z1+m);
+const hitBox=(x,z,m=0)=>MIL.on?milHit(x,z,m):BOXES.some(b=>x>b.x0-m&&x<b.x1+m&&z>b.z0-m&&z<b.z1+m);
+// ======================= 🏙️ MILANOPOLIS — tappa 1: la città vuota (27/11/2026, progetto 0.005.0 approvato da Teo) =======================
+// Caricatura di Milano: anelli e raggi, Cerchia dei Navigli riaperta, Navigli, isolati di case e palazzi, monumenti semplici.
+// Sta lontano da Borgo Karma (x = +1400), si costruisce la prima volta che ci vai. Niente traffico, pedoni e Grigio: arrivano nella tappa 2.
+const MIL={on:false,built:false,X:1400,Z:-250,S:0.6,blocks:[],solids:[],group:null};
+const milP=(px,py)=>[MIL.X+(px-500)*MIL.S, MIL.Z+(py-500)*MIL.S]; // dal disegno del progetto (0-1000) al mondo
+function milHit(x,z,m){ const dx=x-MIL.X, dz=z-MIL.Z, r=Math.hypot(dx,dz); let a=Math.atan2(dz,dx)*180/Math.PI;
+  if(Math.abs(r-81)<4+m){ let br=false; for(const ra of MIL.RAD){ const t=ra*Math.PI/180; if(Math.abs(-Math.sin(t)*dx+Math.cos(t)*dz)<4.2 && Math.cos(t)*dx+Math.sin(t)*dz>0) br=true; } if(!br) return true; }
+  if(MIL.canals && !(Math.abs(r-162)<7||Math.abs(r-258)<9)) for(const pl of MIL.canals) for(let i=0;i<pl.length-1;i++){ const [x0,z0]=pl[i],[x1,z1]=pl[i+1], ex=x1-x0, ez=z1-z0, L=ex*ex+ez*ez, t=Math.max(0,Math.min(1,((x-x0)*ex+(z-z0)*ez)/L)); if(Math.hypot(x-x0-ex*t,z-z0-ez*t)<3.3+m) return true; }
+  for(const b of MIL.blocks){ if(r<b.r0-m||r>b.r1+m) continue; const da=(m/Math.max(r,1))*180/Math.PI; let aa=a; while(aa<b.a0-da) aa+=360; while(aa>b.a1+da) aa-=360; if(aa>=b.a0-da&&aa<=b.a1+da) return true; }
+  for(const s of MIL.solids){ if(s.r){ if(Math.hypot(x-s.x,z-s.z)<s.r+m) return true; } else if(x>s.x0-m&&x<s.x1+m&&z>s.z0-m&&z<s.z1+m) return true; }
+  return false; }
+function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=performance.now();
+  const grp=new THREE.Group(); MIL.group=grp; scene.add(grp); const S=MIL.S, CX=MIL.X, CZ=MIL.Z;
+  const parts={bw:[],b:[],road:[],water:[],green:[],side:[],mark:[]}; let seed=11; const rnd2=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647; };
+  const pick=a=>a[Math.floor(rnd2()*a.length)];
+  const box=(w,h,d,x,y,z,col,ry=0,key='b')=>{ const g=new THREE.BoxGeometry(w,h,d); if(ry) g.rotateY(ry); g.translate(x,y,z); parts[key].push(paintGeo(g,col,true)); };
+  const cyl=(r1,r2,h,x,y,z,col,seg=16,key='b')=>{ const g=new THREE.CylinderGeometry(r1,r2,h,seg); g.translate(x,y,z); parts[key].push(paintGeo(g,col,true)); };
+  const solidBox=(x,z,w,d)=>MIL.solids.push({x0:x-w/2,x1:x+w/2,z0:z-d/2,z1:z+d/2});
+  // settore d'anello in pianta (raggi in metri, angoli in gradi), estruso fino all'altezza h
+  const sectorGeo=(r0,r1,a0,a1,h,y0=0)=>{ const sh=new THREE.Shape(), n=Math.max(2,Math.ceil((a1-a0)/5)); for(let i=0;i<=n;i++){ const a=THREE.MathUtils.degToRad(a0+(a1-a0)*i/n); const p=[Math.cos(a)*r1,Math.sin(a)*r1]; i?sh.lineTo(p[0],p[1]):sh.moveTo(p[0],p[1]); }
+    for(let i=n;i>=0;i--){ const a=THREE.MathUtils.degToRad(a0+(a1-a0)*i/n); sh.lineTo(Math.cos(a)*r0,Math.sin(a)*r0); }
+    const g=new THREE.ExtrudeGeometry(sh,{depth:h,bevelEnabled:false,curveSegments:1}); g.rotateX(Math.PI/2); g.translate(CX,h+y0,CZ); return g; };
+  // ---- terreno: campagna, città (asfalto delle vie), anelli
+  { const g=new THREE.CircleGeometry(470,64); g.rotateX(-Math.PI/2); g.translate(CX,0.01,CZ); parts.green.push(paintGeo(g,0xb7d08a,false));
+    const c=new THREE.CircleGeometry(272,96); c.rotateX(-Math.PI/2); c.translate(CX,0.02,CZ); parts.road.push(paintGeo(c,0x6f737b,false)); }
+  const ring=(r,w,col,key,y=0.03)=>{ const g=new THREE.RingGeometry(r-w/2,r+w/2,128); g.rotateX(-Math.PI/2); g.translate(CX,y,CZ); parts[key].push(paintGeo(g,col,false)); };
+  ring(258,14,0x5f636b,'road',0.035); ring(258,0.35,0xfffaf0,'mark',0.05); ring(162,10,0x5f636b,'road',0.035); ring(162,0.3,0xfffaf0,'mark',0.05);
+  ring(81,8,0x5aa8d8,'water',0.04); ring(76,1.6,0xd8cdb6,'side',0.12); ring(86,1.6,0xd8cdb6,'side',0.12); // la Cerchia: canale con le due sponde
+  // viali a raggiera (come nel progetto) e autostrada da ovest
+  const RAD=[-90,-66.6,0,50.1,90,127.8,-152.1,180]; MIL.RAD=RAD.filter(a=>a!==127.8);
+  for(const a of RAD){ const t=THREE.MathUtils.degToRad(a), r0=a===127.8?110:70, r1=a===127.8?115:265; if(a===127.8) continue; const L=r1-r0, g=new THREE.PlaneGeometry(L,7); g.rotateX(-Math.PI/2); g.rotateY(-t); g.translate(CX+Math.cos(t)*(r0+L/2),0.036,CZ+Math.sin(t)*(r0+L/2)); parts.road.push(paintGeo(g,0x5f636b,false));
+    const bm=new THREE.BoxGeometry(10,0.12,8); bm.rotateY(-t); bm.translate(CX+Math.cos(t)*81,0.06,CZ+Math.sin(t)*81); parts.b.push(paintGeo(bm,0xcfc6b4,true)); } // ponti sulla Cerchia
+  { const g=new THREE.PlaneGeometry(220,16); g.rotateX(-Math.PI/2); g.translate(CX-262-100,0.036,CZ); parts.road.push(paintGeo(g,0x55595f,false));
+    for(let i=0;i<18;i++){ const m=new THREE.PlaneGeometry(4,0.35); m.rotateX(-Math.PI/2); m.translate(CX-270-i*11,0.05,CZ); parts.mark.push(paintGeo(m,0xffd84d,false)); } }
+  // ---- acqua: Darsena e Navigli (strisce lungo curve)
+  const ribbon=(pts,w,col,key,y)=>{ const pos=[]; for(let i=0;i<pts.length-1;i++){ const [x0,z0]=pts[i],[x1,z1]=pts[i+1], dx=x1-x0, dz=z1-z0, l=Math.hypot(dx,dz)||1, nx=-dz/l*w/2, nz=dx/l*w/2;
+      pos.push(x0+nx,y,z0+nz, x1+nx,y,z1+nz, x0-nx,y,z0-nz, x1+nx,y,z1+nz, x1-nx,y,z1-nz, x0-nx,y,z0-nz); }
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.computeVertexNormals(); parts[key].push(paintGeo(g,col,false)); };
+  const bez=(p0,p1,p2,p3,n=24)=>{ const o=[]; for(let i=0;i<=n;i++){ const s=i/n, k=(1-s); o.push(milP(k*k*k*p0[0]+3*k*k*s*p1[0]+3*k*s*s*p2[0]+s*s*s*p3[0], k*k*k*p0[1]+3*k*k*s*p1[1]+3*k*s*s*p2[1]+s*s*s*p3[1])); } return o; };
+  const NGR=bez([352,650],[270,680],[170,705],[30,770]), NPV=bez([398,652],[410,760],[420,880],[432,1000]);
+  MIL.canals=[NGR,NPV]; ribbon(NGR,7,0x5aa8d8,'water',0.045); ribbon(NGR,11,0xd8cdb6,'side',0.03); ribbon(NPV,6,0x5aa8d8,'water',0.045); ribbon(NPV,10,0xd8cdb6,'side',0.03);
+  ribbon([milP(413,603),milP(382,640)],7,0x5aa8d8,'water',0.045);
+  { const [x,z]=milP(379,641); const g=new THREE.PlaneGeometry(38,15); g.rotateX(-Math.PI/2); g.rotateY(0.14); g.translate(x,0.046,z); parts.water.push(paintGeo(g,0x5aa8d8,false)); }
+  // ---- parchi
+  const park=(px,py,rx,rz,rot=0)=>{ const [x,z]=milP(px,py); const g=new THREE.CircleGeometry(1,40); g.scale(rx,rz,1); g.rotateZ(rot); g.rotateX(-Math.PI/2); g.translate(x,0.08,z); parts.green.push(paintGeo(g,0x8cc46e,false)); return [x,z]; };
+  const P1=park(365,388,44,24,0.66), P2=park(598,440,16,16), P3=park(175,270,22,13);
+  { const [x,z]=milP(352,392); const g=new THREE.CircleGeometry(1,28); g.scale(12,7,1); g.rotateX(-Math.PI/2); g.translate(x,0.1,z); parts.water.push(paintGeo(g,0x5aa8d8,false)); }
+  // ---- isolati: case e palazzi (come nel progetto: anelli divisi dai viali e dalle vie strette)
+  const EXCL=[[500,506,48],[500,462,22],[501,426,14],[406,432,40],[365,388,66],[334,349,18],[490,282,32],[610,232,56],[214,350,30],[150,430,60],[379,641,42],[487,693,26],[598,440,30],[175,270,42]];
+  const nearCanal=(x,z)=>{ for(const p of NGR.concat(NPV)) if(Math.hypot(x-p[0],z-p[1])<13) return true; return false; };
+  const bad=(x,z,r=0)=>{ for(const [ex,ey,er] of EXCL){ const [wx,wz]=milP(ex,ey); if(Math.hypot(x-wx,z-wz)<(er+r)*S) return true; } const [sx0,sz0]=milP(555,0), [sx1,sz1]=milP(665,218); if(x>sx0&&x<sx1&&z<sz1) return true; if(nearCanal(x,z)) return true; return false; };
+  const angs=[-152.1,-90,-66.6,0,50.1,90,127.8,180].map(a=>(a+360)%360).sort((a,b)=>a-b);
+  const bands=[['c',[[25,47],[50,72]]],['m',[[90,110],[113,133],[136,155]]],['f',[[170,193],[196,220],[223,251]]]];
+  const COLS={c:[0xe3b98c,0xe8c79f,0xd9a679,0xefd2ad,0xd99a6c],m:[0xf3dcc0,0xe9d3b6,0xf6e6cf,0xdcc6a8,0xead9c0,0xf0c9a0,0xcfe0e8],f:[0xd3d4d8,0xc9ccd3,0xdcdde1,0xcfd8df,0xe6d8c8]};
+  const HGT={c:[8,12],m:[10,15],f:[12,19]};
+  for(const [zone,rings] of bands) for(const [r0,r1] of rings){ const rm=(r0+r1)/2;
+    for(let k=0;k<angs.length;k++){ const A0=angs[k], A1=k===angs.length-1?angs[0]+360:angs[k+1], span=A1-A0, len=THREE.MathUtils.degToRad(span)*rm, m=Math.max(1,Math.round(len/(zone==='c'?18:26)));
+      for(let j=0;j<m;j++){ const gap=2.4, da=(gap/rm)*180/Math.PI, side=(j===0?4.2:0)/rm*180/Math.PI, side2=(j===m-1?4.2:0)/rm*180/Math.PI; // vie strette tra gli isolati, più larghe accanto ai viali
+        const a0=A0+span*j/m+da+side, a1=A0+span*(j+1)/m-da-side2, b0=r0+gap, b1=r1-gap; if(a1-a0<3||b1-b0<6) continue;
+        const am=THREE.MathUtils.degToRad((a0+a1)/2), cx=CX+Math.cos(am)*rm, cz=CZ+Math.sin(am)*rm;
+        if(bad(cx,cz,(r1-r0)/2.2/S)) continue; let ok=true; for(const t of [a0,a1]) for(const rr of [b0,b1]){ const q=THREE.MathUtils.degToRad(t); if(bad(CX+Math.cos(q)*rr,CZ+Math.sin(q)*rr)) ok=false; } if(!ok) continue;
+        const ind=zone==='f' && cx>CX+120 && cz>CZ+60 && cz<CZ+190; // zona industriale a est
+        parts.side.push(paintGeo(sectorGeo(b0,b1,a0,a1,0.15),0xd8cdb6,true)); // marciapiede intorno all'isolato
+        MIL.blocks.push({r0:b0+1,r1:b1-1,a0:a0+0.6,a1:a1-0.6});
+        // 1-3 palazzi per isolato, altezze e colori diversi
+        const nb=ind?1:1+Math.floor(rnd2()*3); for(let q=0;q<nb;q++){ const qa0=a0+(a1-a0)*q/nb+0.6, qa1=a0+(a1-a0)*(q+1)/nb-(q===nb-1?0.6:0.15);
+          const h=ind?7+rnd2()*2:HGT[zone][0]+rnd2()*(HGT[zone][1]-HGT[zone][0]); const col=ind?pick([0xc3c6cc,0xb8bcc4]):pick(COLS[zone]);
+          { const g=sectorGeo(b0+1.2,b1-1.2,qa0,qa1,h,0.15), uv=g.attributes.uv; const pg=paintGeo(g.clone(),col,true); const g2=g.index?g.toNonIndexed():g; pg.setAttribute('uv',g2.attributes.uv); parts.bw.push(pg); }
+          parts.b.push(paintGeo(sectorGeo(b0+1.0,b1-1.0,qa0-0.1,qa1+0.1,0.5,h+0.15),new THREE.Color(col).multiplyScalar(0.82).getHex(),true)); } } } }
+  // ---- MONUMENTI (forme semplici, caricatura)
+  const at=(px,py)=>milP(px,py);
+  { const [x,z]=at(500,506); box(46,0.2,30,x,0.1,z,0xe9e1cf,0,'side'); // 1 Duomone e piazza
+    box(26,11,9,x,5.5,z-2,0xf6f2ea); box(9,11,18,x+4,5.5,z-2,0xf6f2ea); box(9,13,9,x-12,6.5,z-2,0xfffaf0);
+    const sp=[]; for(let i=0;i<14;i++){ const ux=x-12+i*1.9; sp.push([ux,z-6.8],[ux,z+2.8]); } for(const [sx,sz] of sp) cyl(0.05,0.45,3.4,sx,12.7,sz,0xfffaf0,6);
+    cyl(0.2,1.6,9,x+2,15.5,z-2,0xfffaf0,8); cyl(0.5,0.5,1.6,x+2,20.6,z-2,0xf0b23a,8); MIL.solids.push({x0:x-17,x1:x+9,z0:z-11,z1:z+7}); }
+  { const [x,z]=at(500,462); box(22,7,5,x,3.5,z,0xf0dcb8); box(5,7,18,x,3.5,z,0xf0dcb8); cyl(4,4.2,9,x,4.5,z,0xcfe6f2,8); box(22.4,0.6,5.4,x,7.2,z,0xbfdcef); box(5.4,0.6,18.4,x,7.2,z,0xbfdcef); } // 2 Galleria (si attraversa a piedi)
+  { const [x,z]=at(501,426); box(11,10,8,x,5,z,0xf3d9a8); solidBox(x,z,11,8); } // 3 Teatro alla Scaletta
+  { const [x,z]=at(406,432); const c=0xc9653f; box(26,8,2.5,x,4,z-12,c); box(26,8,2.5,x,4,z+12,c); box(2.5,8,26,x-12,4,z,c); box(2.5,8,26,x+12,4,z,c); // 4 Castello Sforzato
+    for(const [dx,dz] of [[-12,-12],[12,-12],[-12,12],[12,12]]) cyl(3,3,11,x+dx,5.5,z+dz,0xb4532f,12); box(6,19,6,x,9.5,z+12,0xb4532f); box(4,1,4,x,19.5,z+12,0x8a3a22);
+    for(const [a,b,w,d] of [[0,-12,26,2.5],[0,12,26,2.5],[-12,0,2.5,26],[12,0,2.5,26]]) solidBox(x+a,z+b,w,d); }
+  { const [x,z]=at(334,349); box(3,10,4,x-4.5,5,z,0xfffaf0,0.66); box(3,10,4,x+4.5,5,z,0xfffaf0,0.66); box(13,3,4.4,x,11.5,z,0xfffaf0,0.66); cyl(0.6,0.6,2,x,14,z,0x6b5a3c,8); MIL.solids.push({x:x-3.6,z:z+2.6,r:2.6},{x:x+3.6,z:z-2.6,r:2.6}); } // 6 Arco della Pacina
+  { const [x,z]=at(490,282); box(10,46,10,x-10,23,z-6,0x5b7fb5); cyl(6,6,56,x+8,28,z-4,0x7aa0d6,20); box(9,34,9,x-2,17,z+12,0x9fb3c8); // 8 Porta Nuovissima (una torre col bosco)
+    for(let i=0;i<10;i++) cyl(1.6,1.6,1.4,x-2+(i%2?3.2:-3.2),4+i*3.2,z+12+(i%3-1)*2.8,0x4f9a45,8);
+    MIL.solids.push({x0:x-15,x1:x-5,z0:z-11,z1:z-1},{x:x+8,z:z-4,r:6},{x0:x-6.5,x1:x+2.5,z0:z+7.5,z1:z+16.5}); }
+  { const [x,z]=at(610,232); box(58,20,24,x,10,z,0xe0d6bf); for(const dx of [-16,0,16]) box(11,13,1,x+dx,6.5,z+12.2,0x8a8070); box(60,1.2,26,x,20.6,z,0xbfb39a); // 9 Stazione Centralona e binari
+    for(let i=0;i<5;i++){ const g=new THREE.PlaneGeometry(1.4,150); g.rotateX(-Math.PI/2); g.translate(x-18+i*9,0.05,z-12-75); parts.road.push(paintGeo(g,0x4a4d52,false)); } solidBox(x,z,58,24); }
+  { const [x,z]=at(214,350); box(9,62,9,x-12,31,z-6,0x7aa0d6); for(let i=0;i<16;i++) box(9,3,9,x+2,1.5+i*3,z+4,0x5b7fb5,i*0.06); for(let i=0;i<13;i++) box(8,3,8,x+12+Math.sin(i/12*Math.PI)*5,1.5+i*3,z-8,0x9fb9e2); // 10 Tre Torri: il Dritto, lo Storto, il Curvo
+    MIL.solids.push({x:x-12,z:z-6,r:6},{x:x+2,z:z+4,r:6.5},{x:x+14,z:z-8,r:6}); }
+  { const [x,z]=at(150,430); const g=new THREE.CylinderGeometry(1,1,13,40,1,true); g.scale(30,1,21); g.translate(x,6.5,z); parts.b.push(paintGeo(g,0xd8d2c2,true)); const g2=g.clone(); g2.scale(0.94,1,0.92); parts.b.push(paintGeo(g2,0xcfc6b4,true)); // 11 Stadio San Sirolo
+    box(40,0.1,26,x,0.12,z,0x6fbf5a,0,'green'); for(const [dx,dz] of [[-27,-18],[27,-18],[-27,18],[27,18]]) cyl(3,3,17,x+dx,8.5,z+dz,0xe0483e,14); MIL.solids.push({x,z,r:31}); }
+  { const [x,z]=at(487,693); box(22,10,15,x,5,z,0xf3d9a8); solidBox(x,z,22,15); } // 13 Bocconcina
+  { const [x,z]=at(830,712); box(16,6,9,x,3,z,0xffd84d); box(14,1.6,0.4,x,7.2,z+4.7,0x2a2233); solidBox(x,z,16,9); } // 14 concessionario
+  // ---- alberi nei parchi e lungo i Navigli
+  { const tr=[]; const addT=(x,z)=>{ tr.push([x,z]); }; for(let i=0;i<60;i++){ const a=rnd2()*Math.PI*2, r=Math.sqrt(rnd2()); addT(P1[0]+Math.cos(a)*r*40,P1[1]+Math.sin(a)*r*14); }
+    for(let i=0;i<10;i++){ const a=rnd2()*Math.PI*2; addT(P2[0]+Math.cos(a)*10,P2[1]+Math.sin(a)*10); addT(P3[0]+Math.cos(a)*16,P3[1]+Math.sin(a)*8); }
+    for(let i=2;i<NGR.length;i+=2){ const [x,z]=NGR[i]; addT(x,z-7.5); }
+    for(const [x,z] of tr){ if(Math.hypot(x-milP(352,392)[0],z-milP(352,392)[1])<14) continue; cyl(0.25,0.3,2.2,x,1.1,z,0x8a5a3c,5); const g=new THREE.IcosahedronGeometry(1.7,0); g.translate(x,3.2,z); parts.green.push(paintGeo(g,pick([0x4fa64a,0x5cb85c,0x3f9a52]),true)); MIL.solids.push({x,z,r:0.4}); } }
+  // ---- cartello all'ingresso
+  { const x=CX-300, z=CZ-11; box(0.3,3,0.3,x-3,1.5,z,0x2a2233); box(0.3,3,0.3,x+3,1.5,z,0x2a2233); const sp=new THREE.Mesh(new THREE.PlaneGeometry(8,2.2),new THREE.MeshBasicMaterial({map:canvasTex(512,140,(g)=>{ g.fillStyle='#fffaf0'; g.fillRect(0,0,512,140); g.strokeStyle='#c43c2b'; g.lineWidth=14; g.strokeRect(7,7,498,126); g.fillStyle='#2a2233'; g.font='bold 74px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('MILANOPOLIS',256,74); })})); sp.position.set(x,3.6,z-0.2); sp.rotation.y=-Math.PI/2; grp.add(sp); const b2=sp.clone(); b2.rotation.y=Math.PI/2; b2.position.x+=0.02; grp.add(b2); }
+  // ---- tutto in pochi pezzi (pochi disegni per fotogramma, leggero sul telefono)
+  const mk=(list,cast,recv,ol)=>{ if(!list.length) return; const g=mergeGeometries(list); g.computeBoundingSphere(); const m=new THREE.Mesh(g,VC); m.castShadow=cast; m.receiveShadow=recv; if(ol&&!ECO) withOutline(m,0.04); grp.add(m); return m; };
+  { const winTex=canvasTex(64,64,(g,w,h)=>{ g.fillStyle='#fff'; g.fillRect(0,0,w,h); g.fillStyle='#b9c4d2'; g.fillRect(14,14,36,30); g.fillStyle='#e9eef4'; g.fillRect(14,14,36,5); g.fillStyle='#ddd6cc'; g.fillRect(0,58,w,6); }); winTex.wrapS=winTex.wrapT=THREE.RepeatWrapping; winTex.repeat.set(1/3.2,1/3.2);
+    const g=mergeGeometries(parts.bw); g.computeBoundingSphere(); const m=new THREE.Mesh(g,toon({vertexColors:true,map:winTex})); m.castShadow=m.receiveShadow=true; if(!ECO) withOutline(m,0.04); grp.add(m); }
+  mk(parts.green,true,true,false); mk(parts.road,false,true,false); mk(parts.mark,false,false,false); mk(parts.side,false,true,false); mk(parts.water,false,false,false); mk(parts.b,true,true,true);
+  grp.visible=false; console.log('Milanopolis costruita in',Math.round(performance.now()-T0),'ms ·',MIL.blocks.length,'isolati'); }
+// 🚗 il viaggio: scenetta durante il caricamento, poi sei all'ingresso di Milanopolis in auto
+function travelTo(dest){ const f=document.getElementById('fade'); HOME.busy=true;
+  f.firstElementChild.innerHTML='<div class="trip"><div class="tsky"></div><div class="troad"><div class="tcar"><i></i></div></div><div class="ttxt">🚗 In viaggio verso <b>'+(dest==='milano'?'Milanopolis':'Borgo Karma')+'</b>…</div></div>'; f.hidden=false; f.style.opacity=1;
+  setTimeout(()=>{ try{ if(dest==='milano') buildMilanopolis(); }catch(e){ console.warn('Milanopolis',e); }
+    setTimeout(()=>{ enterMilano(); f.style.opacity=0; setTimeout(()=>{ f.hidden=true; f.firstElementChild.textContent='💤 Zzz…'; },700); },1600); },400); }
+function enterMilano(){ MIL.on=true; MIL.group.visible=true; HOME.active=false; HOME.busy=false; HOME.carOut=true; townVisible(false); for(const el of homeTopEls()) el.hidden=!['actCard','radioCard'].includes(el.id); homeCard.hidden=true;
+  document.getElementById('homeTown').hidden=false; compassEl.hidden=true; document.getElementById('greyHud').hidden=true; if(HOWTO_TOWN!==null) document.getElementById('howto').innerHTML=HOWTO_TOWN;
+  controls.ready=false; controls.zoom=Math.min(0.74,ZOOM_DEF); syncCar(); const c=carV(); if(c){ c.x=MIL.X-330; c.z=MIL.Z+4; c.yaw=Math.PI/2; c.speed=0; c.lastG=null; c.group.position.set(c.x,0,c.z); c.group.rotation.set(0,c.yaw,0); c.group.visible=true; player.pos.set(c.x,0.15,c.z+1.6); holder.position.copy(player.pos); enter(c); }
+  else { player.pos.set(MIL.X-330,0.15,MIL.Z+4); holder.position.copy(player.pos); }
+  copMsgT=7; msg.innerHTML='🏙️ <b>Benvenuto a Milanopolis!</b> È un\'anteprima: la città è ancora vuota (niente traffico, passanti e Grigio). Gira in auto o a piedi, cerca il Duomone, il Castello, le Tre Torri e i Navigli. 🏠 per tornare a casa.'; }
+const MIL_FUEL=10; // il viaggio costa il 10% di benzina (da tarare)
+function updateMilano(dt){ if(player.mode!=='foot') updateStamina(dt,'ride'); if(player.mode==='foot') updatePlayer(dt); else updateRider(dt); TT+=dt;
+  try{ updateDayCycle(dt); }catch(e){} try{ updateActionUI(); }catch(e){} talkCard.hidden=true; try{ updateDust(dt); }catch(e){} }
+function leaveMilano(){ if(!MIL.on) return false; MIL.on=false; if(MIL.group) MIL.group.visible=false; return true; }
+
 const boxDist=(b,x,z)=>Math.hypot(Math.max(b.x0-x,0,x-b.x1),Math.max(b.z0-z,0,z-b.z1));
 
 // ---------- texture disegnate al volo (asfalto, lastricato, mattonelle) ----------
@@ -822,7 +954,7 @@ function festoon(ax,az,bx,bz,h=5.4,sag=1.1){ const L=Math.hypot(bx-ax,bz-az), ya
     if(i%2) put('bunting',triG.clone(),mat4r(x,y-0.02,z,0,yaw),[0xe0483e,0xffd84d,0x2f7de1,0x3fa66b,0xff8fb1,0xf0a030][i%6]); else put('bulbs',new THREE.SphereGeometry(0.07,8,6),mat4(x,y-0.06,z),0xffffff); } }
 { const P=PZ, m=3; festoon(P.x0+m,P.z0+m,P.x1-m,P.z1-m); festoon(P.x1-m,P.z0+m,P.x0+m,P.z1-m); festoon(P.x0+m,P.z1-m,P.x1-m,P.z1-m,4.6,0.7); festoon(P.x0+m,P.z0+12,P.x1-m,P.z0+12,5,0.8); }
 // 5) il BORDO DEL PAESE: muretto in pietra con siepe e fiori, varchi con pilastri dove finiscono le strade, porte d'ingresso con l'insegna KARMAPOLIS
-const signTex=canvasTex(512,128,(g)=>{ g.fillStyle='#fffaf0'; g.fillRect(0,0,512,128); g.strokeStyle='#2a2233'; g.lineWidth=10; g.strokeRect(5,5,502,118); g.fillStyle='#ff6a4d'; g.font='bold 62px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('KARMAPOLIS',256,58); g.fillStyle='#2a2233'; g.font='600 22px Fredoka, sans-serif'; g.fillText('il paese dove il bene è contagioso',256,104); });
+const signTex=canvasTex(512,128,(g)=>{ g.fillStyle='#fffaf0'; g.fillRect(0,0,512,128); g.strokeStyle='#2a2233'; g.lineWidth=10; g.strokeRect(5,5,502,118); g.fillStyle='#ff6a4d'; g.font='bold 62px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('BORGO KARMA',256,58); g.fillStyle='#2a2233'; g.font='600 22px Fredoka, sans-serif'; g.fillText('il paese dove il bene è contagioso',256,104); });
 signTex.wrapS=signTex.wrapT=THREE.ClampToEdgeWrapping;
 const EDGE=70;
 function hedgeRun(ax,az,bx,bz){ const L=Math.hypot(bx-ax,bz-az); if(L<1) return; const yaw=Math.atan2(bx-ax,bz-az), cx=(ax+bx)/2, cz=(az+bz)/2;
@@ -1021,14 +1153,14 @@ function makeVehicle(cfg){ const v=Object.assign({group:new THREE.Group(),leanG:
 function addWheel(v,obj,parent,front,steerG){ const piv=new THREE.Group(); parent.add(piv); v.group.updateMatrixWorld(true);
   piv.position.copy(parent.worldToLocal(obj.getWorldPosition(new V3()))); piv.attach(obj); v.wheels.push({piv,obj,front,base:obj.quaternion.clone(),steerG}); }
 function vehCircles(v,x,z,yaw){ const s=Math.sin(yaw), c=Math.cos(yaw); return v.circles.map(([cx,cz,r])=>[x+cx*c+cz*s, z-cx*s+cz*c, r]); }
-function vehFree(v,x,z,yaw){ for(const [px,pz,r] of vehCircles(v,x,z,yaw)){
+function vehFree(v,x,z,yaw){ if(MIL.on){ for(const [px,pz,r] of vehCircles(v,x,z,yaw)) if(!inMap(px,pz)||milHit(px,pz,r)) return false; return true; } for(const [px,pz,r] of vehCircles(v,x,z,yaw)){
     if(height(px,pz)<-0.05 || !inMap(px,pz)) return false; for(const b of BOXES) if(boxDist(b,px,pz)<r) return false; for(const c of TRAFFIC) if(inVeh(c,px,pz,r) && (c.x-x)**2+(c.z-z)**2 <= (c.x-v.x)**2+(c.z-v.z)**2+1e-4) return false; for(const c of POLICE) if((c.x-px)**2+(c.z-pz)**2<(r+1.2)**2) return false;
     for(const o of OBST) if((o.x-px)**2+(o.z-pz)**2<(o.r+r)**2) return false;
     for(const w of veh) if(w!==v) for(const [qx,qz,qr] of vehCircles(w,w.group.position.x,w.group.position.z,w.yaw)) if((qx-px)**2+(qz-pz)**2<(qr+r)**2) return false; }
   return true; }
 window.__whyBlocked=(v,x,z,yaw)=>{ const R=[]; for(const [px,pz,r] of vehCircles(v,x,z,yaw)){ if(height(px,pz)<-0.05) R.push('buca/acqua '+px.toFixed(1)+','+pz.toFixed(1)); if(!inMap(px,pz)) R.push('fuori mappa'); for(const b of BOXES) if(boxDist(b,px,pz)<r) R.push('box '+JSON.stringify(b).slice(0,80)); for(const c of TRAFFIC) if(inVeh(c,px,pz,r)) R.push('traffico '+c.kind); for(const c of POLICE) if((c.x-px)**2+(c.z-pz)**2<(r+1.2)**2) R.push('polizia'); for(const o of OBST) if((o.x-px)**2+(o.z-pz)**2<(o.r+r)**2) R.push('ostacolo '+o.x.toFixed(1)+','+o.z.toFixed(1)+' r'+o.r); for(const w of veh) if(w!==v) for(const [qx,qz,qr] of vehCircles(w,w.group.position.x,w.group.position.z,w.yaw)) if((qx-px)**2+(qz-pz)**2<(qr+r)**2) R.push('veicolo '+w.name); } return R; };
 // quanto il veicolo è "dentro" pali, alberi, muri e altri veicoli fermi: se è già incastrato (es. spinto da un camion contro un palo) può sempre muoversi in un verso che non lo incastra di più
-function vehPen(v,x,z,yaw){ let s=0; for(const [px,pz,r] of vehCircles(v,x,z,yaw)){ for(const b of BOXES){ const d=boxDist(b,px,pz); if(d<r) s+=r-d; } for(const o of OBST){ const d=Math.hypot(o.x-px,o.z-pz); if(d<o.r+r) s+=o.r+r-d; }
+function vehPen(v,x,z,yaw){ let s=0; if(MIL.on) return 0; for(const [px,pz,r] of vehCircles(v,x,z,yaw)){ for(const b of BOXES){ const d=boxDist(b,px,pz); if(d<r) s+=r-d; } for(const o of OBST){ const d=Math.hypot(o.x-px,o.z-pz); if(d<o.r+r) s+=o.r+r-d; }
     for(const c of POLICE){ const d=Math.hypot(c.x-px,c.z-pz); if(d<r+1.2) s+=r+1.2-d; } for(const w of veh) if(w!==v) for(const [qx,qz,qr] of vehCircles(w,w.group.position.x,w.group.position.z,w.yaw)){ const d=Math.hypot(qx-px,qz-pz); if(d<qr+r) s+=qr+r-d; } } return s; }
 const toW=(v,lx,lz)=>{ const s=Math.sin(v.yaw), c=Math.cos(v.yaw); return [v.x+lx*c+lz*s, v.z-lx*s+lz*c]; };
 const spring=(x,vel,target,k,c,dt)=>{ vel+=(k*(target-x)-c*vel)*dt; return [x+vel*dt,vel]; };
@@ -2846,7 +2978,7 @@ function updateFocusTimer(dt){ if(TR.on){ timerSpr.visible=false; return; } if(!
   const sec=Math.ceil(q.timer), urgent=q.timer<20; musicTense(urgent||G.levelT<30?1:0); if(sec!==timerShown){ timerShown=sec; drawTimer(sec,urgent); }
   timerSpr.visible=true; timerSpr.position.set(TGT.sx,13.5+Math.sin(G.time*2)*0.4,TGT.sz); const sc=urgent?1+Math.max(0,Math.sin(G.time*8))*0.12:1; timerSpr.scale.set(6*sc,2.25*sc,1); }
 const _cA=new THREE.Vector3(), _cB=new THREE.Vector3();
-function updateCompass(dt){ if(!G.started){ compassEl.hidden=true; timerSpr.visible=false; return; } compassEl.hidden=false; updateFocusTimer(dt);
+function updateCompass(dt){ if(!G.started||MIL.on){ compassEl.hidden=true; timerSpr.visible=false; return; } compassEl.hidden=false; updateFocusTimer(dt);
   tgtT-=dt; if(tgtT<=0){ tgtT=1.5; const n=findTarget(); if(n){ if(!TGT||TGT.zone!==n.zone) TGT={...n,sx:TGT?TGT.sx:n.x,sz:TGT?TGT.sz:n.z}; else Object.assign(TGT,n); } else TGT=null; }
   const px=player.veh?player.veh.x:player.pos.x, pz=player.veh?player.veh.z:player.pos.z;
   const camYaw=Math.atan2(controls.look.x-camera.position.x,controls.look.z-camera.position.z), asp=canvas.clientWidth/Math.max(1,canvas.clientHeight);
@@ -3100,7 +3232,7 @@ function updateStamina(dt,mode){ if(!HOME.active) G.playT+=dt; if(mode==='sprint
 
 // ---------- movimento a piedi ----------
 const fwd=new THREE.Vector3(), right=new THREE.Vector3(), mv=new THREE.Vector3(), up=new THREE.Vector3(0,1,0);
-const inMap=(x,z)=>(typeof HOME!=='undefined'&&HOME.active)?(x>HX-8.6&&x<HX+14.6&&z>HZ0-5.6&&z<HZ0+7.6):(x>-112&&x<112&&z>-125&&z<SEA_Z-0.4);
+const inMap=(x,z)=>MIL.on?Math.hypot(x-MIL.X,z-MIL.Z)<462:(typeof HOME!=='undefined'&&HOME.active)?(x>HX-8.6&&x<HX+14.6&&z>HZ0-5.6&&z<HZ0+7.6):(x>-112&&x<112&&z>-125&&z<SEA_Z-0.4);
 const free=(x,z)=>inMap(x,z) && !hitBox(x,z,0.3) && !OBST.some(o=>(o.x-x)**2+(o.z-z)**2<(o.r+0.3)**2)
   && !veh.some(v=>vehCircles(v,v.x,v.z,v.yaw).some(([cx,cz,r])=>(cx-x)**2+(cz-z)**2<(r+0.25)**2))
   && !TRAFFIC.some(c=>inVeh(c,x,z,0.3)) && !POLICE.some(c=>(c.x-x)**2+(c.z-z)**2<2.3*2.3);
@@ -3128,7 +3260,7 @@ function updatePlayer(dt){ const c=chars[cur]; if(!c) return; const inp=readInpu
   if(bubT>0){ bubT-=dt; if(bubOn){ bubOn.position.y=2.2+Math.sin(Math.min(1,(2.4-bubT)*4)*Math.PI/2)*0.15; if(bubT<=0){ holder.remove(bubOn); bubOn=null; } } }
   where(player.pos.x,player.pos.z); }
 let lastPlace='';
-function where(x,z){ if(HOME.active) return; let p='il paese'; if(x>PZ.x0-SW&&x<PZ.x1+SW&&z>PZ.z0-SW&&z<PZ.z1+SW) p='la piazza'; else if(x>PK.x0&&x<PK.x1&&z>PK.z0&&z<PK.z1) p='il parco'; else if(z>PROM.z0-1) p='il lungomare'; else if(!(x>-66&&x<66&&z>-66)) p='la campagna';
+function where(x,z){ if(HOME.active||MIL.on) return; let p='il paese'; if(x>PZ.x0-SW&&x<PZ.x1+SW&&z>PZ.z0-SW&&z<PZ.z1+SW) p='la piazza'; else if(x>PK.x0&&x<PK.x1&&z>PK.z0&&z<PK.z1) p='il parco'; else if(z>PROM.z0-1) p='il lungomare'; else if(!(x>-66&&x<66&&z>-66)) p='la campagna';
   if(p!==lastPlace && !player.veh){ lastPlace=p; msg.innerHTML='Sei <b>'+({'il paese':'in paese','la piazza':'in piazza','il parco':'nel parco','il lungomare':'sul lungomare','la campagna':'in campagna'}[p]||p)+'</b>.'; } }
 
 // ⛶ schermo intero e orizzontale (sui telefoni Android; se il browser non lo permette, basta girare il telefono)
@@ -3181,6 +3313,7 @@ function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } i
   for(const v of veh){ let inp=null; if(player.veh===v && SHOP.auto){ autoGarage(v,dt); updateVehicle(v,dt,null); continue; } if(player.veh===v){ const cd=(raw.kb||raw.m>=0.12)?(player.moveTo=null):clickDrive(v); if(cd){ inp=cd; } else if(raw.kb){ v.thr=-raw.ky; inp={x:raw.kx,y:raw.ky,m:1}; } else if(raw.m<0.12){ v.thr=0; inp={x:0,y:0,m:0}; } else if(controls.z>0.35 && !SHOP.G) inp=isoDriveInput(v,raw); else { v.thr=-raw.y; inp={x:raw.x,y:raw.y,m:raw.m}; } } updateVehicle(v,dt,inp); }
   updateCarSpot();
   if(player.veh) controls.extra=THREE.MathUtils.damp(controls.extra||0,Math.min(34,Math.abs(player.veh.speed)*0.75),2,dt); else controls.extra=THREE.MathUtils.damp(controls.extra||0,0,2,dt);
+  if(MIL.on){ updateMilano(dt); return; }
   updatePolice(dt,clock.elapsedTime); updateShop(dt);
   if(player.safeT>0) player.safeT-=dt;
   try{ updateAnthony(dt); }catch(e){ console.warn('Anthony',e); } try{ updateLeo(dt); }catch(e){ console.warn('Leo',e); } try{ updateTrafficSound(dt); }catch(e){}
@@ -3351,8 +3484,8 @@ addEventListener('keydown',e=>{ if(HOME.active && (e.code==='KeyE'||e.code==='En
 const homeTopEls=()=>['compass','greyHud','buyCard','taxiCard','useCard','talkCard','actCard','radioCard'].map(id=>document.getElementById(id)).filter(Boolean);
 const HOWTO_HOME='🏠 <b>Casa:</b> muoviti come in paese (levetta, frecce o clic). Avvicinati agli oggetti e premi il pulsante che compare (o <b>E</b>): 📺 TV tutorial · 💻 PC col blog · 🏃 tapis roulant · 👕 armadio · 🚿 doccia · 🛏️ letto · ⛽ garage · 🚪 porta = esci a giocare.'; let HOWTO_TOWN=null;
 function townVisible(on){ for(const p of PEDS){ if(!on){ p.g.visible=false; if(p.icon) p.icon.visible=false; if(p.stars) p.stars.visible=false; } } for(const c of TRAFFIC) c.m.visible=on; for(const c of POLICE){ c.g.visible=on; } for(const v of veh) v.group.visible=on&&(v.name!=='auto'||HOME.carOut); }
-function goHome(first){ if(TR.on) trainStop(); SHOP.auto=null; if(!first&&HOME.carOut){ if(HOME.fuel<=0) callTow(true); else { if(player.veh&&player.veh.name==='auto'){ player.veh.speed=0; exit(); } HOME.carOut=false; } } townVisible(false); syncCar(); const hw=document.getElementById('howto'); if(HOWTO_TOWN===null) HOWTO_TOWN=hw.innerHTML; hw.innerHTML=HOWTO_HOME; if(player.taxi) leaveTaxi(); if(player.veh){ player.veh.speed=0; exit(); } if(player.ko>0){ player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,player.yaw,0); }
-  musicTense(0); if(!first) HOME.townPos=player.pos.clone(); HOME.active=true; player.moveTo=null; player.focusPed=null; HOLD.active=false; const [x,z]=HP(0,3.6); player.pos.set(x,0,z); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,player.yaw,0);
+function goHome(first){ if(TR.on) trainStop(); const wasMil=leaveMilano(); SHOP.auto=null; if(!first&&HOME.carOut){ if(HOME.fuel<=0) callTow(true); else { if(player.veh&&player.veh.name==='auto'){ player.veh.speed=0; exit(); } HOME.carOut=false; } } townVisible(false); syncCar(); const hw=document.getElementById('howto'); if(HOWTO_TOWN===null) HOWTO_TOWN=hw.innerHTML; hw.innerHTML=HOWTO_HOME; if(player.taxi) leaveTaxi(); if(player.veh){ player.veh.speed=0; exit(); } if(player.ko>0){ player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,player.yaw,0); }
+  musicTense(0); if(!first&&!wasMil) HOME.townPos=player.pos.clone(); HOME.active=true; player.moveTo=null; player.focusPed=null; HOLD.active=false; const [x,z]=HP(0,3.6); player.pos.set(x,0,z); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,player.yaw,0);
   controls.ready=false; HOME.zoomTown=controls.zoom; controls.zoom=0.35; controls.az=controls.azT=player.yaw+Math.PI; controls.userT=0; for(const el of homeTopEls()) el.hidden=true; document.getElementById('homeTown').hidden=true; timerSpr.visible=beam.visible=beamRing.visible=beamIcon.visible=false;
   msg.innerHTML=first?'🏠 <b>Sei a casa!</b> Gira per le stanze: ogni oggetto fa qualcosa. Quando sei pronto, esci dalla <b>porta</b> per giocare.':'🏠 <b>Di nuovo a casa.</b> La partita è in pausa: riposati, allenati o fai il pieno.'; copMsgT=5; lastHomeLbl='-'; }
 function goTown(){ if(TVHINT.el) TVHINT.el.style.display='none'; const goCar=HOME.carOut; if(HOME.readerBonus){ HOME.readerBonus=false; G.candies=Math.min(CANDY_MAX+1,G.candies+1); } HOME.active=false; townVisible(true); if(HOWTO_TOWN!==null) document.getElementById('howto').innerHTML=HOWTO_TOWN; homeCard.hidden=true; document.getElementById('homeTown').hidden=false; const p=HOME.townPos; if(p) player.pos.copy(p); else player.pos.set(0,0.15,5.4);
@@ -3460,9 +3593,10 @@ function updateTowUI(){ const c=carV(); const show=!HOME.active && HOME.carOut &
 const exitMenu=document.getElementById('exitMenu');
 function askExit(){ HOME.busy=true; const f=Math.round(HOME.fuel), b=document.getElementById('exCar');
   b.disabled=f<=0; b.innerHTML='🚗 In auto <small>⛽ '+f+'%'+(f<=0?' · serbatoio vuoto: passa dal garage':f<25?' · poca benzina!':'')+'</small>';
-  document.getElementById('exHead').innerHTML='🚪 Come esci?<small>L\'auto è un vantaggio raro: la benzina costa '+FUEL_PRICE+' karma per ogni 1% e se resti a secco il carro attrezzi ne costa '+TOW_PRICE+'. Hai 🪃 '+G.karma+' karma.</small>'; exitMenu.hidden=false; }
+  document.getElementById('exHead').innerHTML='🚪 Come esci?<small>L\'auto è un vantaggio raro: la benzina costa '+FUEL_PRICE+' karma per ogni 1% e se resti a secco il carro attrezzi ne costa '+TOW_PRICE+'. Hai 🪃 '+G.karma+' karma.</small>'; const mb=document.getElementById('exMil'); mb.disabled=f<MIL_FUEL; mb.innerHTML='🏙️ Milanopolis <small>anteprima · il viaggio costa ⛽ '+MIL_FUEL+'%'+(f<MIL_FUEL?' · non basta la benzina':'')+'</small>'; exitMenu.hidden=false; }
 document.getElementById('exWalk').onclick=()=>{ exitMenu.hidden=true; HOME.carOut=false; openDoor(); };
 document.getElementById('exCar').onclick=()=>{ if(HOME.fuel<=0) return; exitMenu.hidden=true; HOME.carOut=true; openDoor(); };
+document.getElementById('exMil').onclick=()=>{ if(HOME.fuel<MIL_FUEL) return; exitMenu.hidden=true; HOME.fuel=Math.max(0,HOME.fuel-MIL_FUEL); saveHome(); travelTo('milano'); };
 document.getElementById('exNo').onclick=()=>{ exitMenu.hidden=true; HOME.busy=false; };
 
 // --- ARMADIO
@@ -3848,7 +3982,7 @@ function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; f
   if(settle-->0) return;
   let np=PR; if(fps<FPS_CAP*0.93 && PR>PR_MIN) np=Math.max(PR_MIN,PR-0.1); else if(fps>FPS_CAP*0.99 && PR<PR_MAX) np=Math.min(PR_MAX,PR+0.05);
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
-window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={matchScore,BOARD,staRefillFx,openDoni,DONI_MESH,staCap,get hurt(){return G.hurt;},greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
+window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={MIL,milHit,buildMilanopolis,travelTo,askExit,camera,matchScore,BOARD,staRefillFx,openDoni,DONI_MESH,staCap,get hurt(){return G.hurt;},greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
 window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…');
 Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e)),umLoad('gente/').catch(e=>{ console.warn('gente non caricata, uso i corpi disegnati',e); window.__umErr=String(e&&e.message||e); }),carsLoad('auto/').catch(e=>console.warn('auto nuove non caricate, uso quelle di prima',e))]).then(()=>{
   if(!UM.ready) setTimeout(()=>{ try{ msg.innerHTML='⚠️ <b>Persone nuove non caricate</b> ('+(window.__umErr||'?')+'): mandami uno screenshot di questo messaggio.'; }catch(e){} },4000);
