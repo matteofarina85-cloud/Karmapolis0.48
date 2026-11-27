@@ -317,7 +317,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.096.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.097.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -333,6 +333,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
   <div class="card seg" id="anthCard" hidden><button id="anthBtn" type="button">💪 Proteine da Antony · 40</button></div>
   <div class="card seg" id="taxiCard" hidden><button id="taxiBtn" type="button">😗 Fischia al taxi</button><button id="taxiOut" class="ghost" type="button" hidden>🚪 Scendi</button></div>
   <div class="card seg" id="shopCard" hidden><button id="shopBtn" type="button" style="background:#2f7de1;color:#fff">🔧 Ripara</button><button id="shopOut" class="ghost" type="button" hidden>🚗 Esci</button></div>
+  <div class="card seg" id="fuelCard" hidden><button id="fuelBtn" type="button">⛽ Fai il pieno</button></div>
   <div class="card seg" id="actCard" hidden><button id="act" type="button">Sali</button></div>
   <div class="card seg" id="shootCard" hidden><button id="shoot" type="button" aria-label="Spara">🔫 Spara</button></div>
   <div class="card seg"><button id="phoneBtn" type="button" aria-label="Telefono"><svg viewBox="0 0 32 32" aria-hidden="true"><g class="pw"><path d="M7 9 q-3 7 0 14" /><path d="M25 9 q3 7 0 14" /></g><rect x="10" y="3" width="12" height="26" rx="3" fill="#fff" stroke="#2a2233" stroke-width="2"/><rect x="12" y="7" width="8" height="16" rx="1" fill="#3f8ae0"/><rect x="14" y="4.6" width="4" height="1.2" rx=".6" fill="#2a2233"/><circle cx="16" cy="26" r="1.2" fill="#2a2233"/><circle class="pdot" cx="23" cy="5" r="4" fill="#e9655a" stroke="#fff" stroke-width="1.5"/></svg></button><button id="homeTown" class="ghost" type="button" aria-label="Torna a casa" hidden>🏠</button><button id="full" class="ghost" type="button" aria-label="Schermo intero orizzontale">⛶</button><button id="rot" class="ghost" type="button" aria-label="Ruota la vista">↻</button><button id="zin" class="ghost" type="button" aria-label="Avvicina">＋</button><button id="zout" class="ghost" type="button" aria-label="Allontana">－</button></div>
@@ -342,6 +343,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.097.0',d:'28/11/2026',t:['⛽ <b>Benzinaio</b> a Borgo Karma (fuori dalla siepe a ovest, vicino alla carrozzeria) e a Milanopolis (a ovest, vicino all\'autostrada): fermati in auto sotto la pensilina e premi «Fai benzina» (3 karma per ogni 1%).','🗺️ Milanopolis rifatta a lotti: niente più asfalto vuoto, ogni pezzo tra le strade è un isolato di palazzi oppure un posto speciale con il suo marciapiede.','💧 Navigli dritti nei loro corridoi, con le alzaie e i ponti sulle strade; la Darsena è una vasca vera con le barchette, collegata alla Cerchia. Niente più canali in mezzo alle strade né alberi sull\'asfalto.','🏛️ Monumenti spostati al posto giusto, ognuno nel suo lotto: Galleria (si passa sotto), Teatro alla Scaletta, Castello Sforzato col suo prato, Parco Semplicione col laghetto e l\'Arco della Pacina, Stazione Centralona col fascio dei binari, Porta Nuovissima, Tre Torri, Bocconcina, concessionario; lo Stadio San Sirolo è fuori città in fondo al viale.','🏢 Più palazzi (146 isolati), dentro la Cerchia isolati regolari con vie strette, cortili verdi dentro gli isolati grandi.']},
  {v:'0.096.0',d:'28/11/2026',t:['🚗 A Milanopolis l\'auto non va più piano come sullo sterrato: in città e sull\'autostrada va a velocità piena.','🛣️ Strade rifatte: mezzerie tratteggiate, strisce pedonali a ogni incrocio, marciapiedi larghi con il cordolo (si sale e si scende), lampioni lungo anelli e viali, i Bastioni con due filari di alberi.','🏢 Palazzi alla milanese: uno attaccato all\'altro, larghi e alti diversi, con i negozi e le tende colorate al piano terra, il cornicione, i tetti di coppi in centro. Finestre diverse per zona: persiane verdi in centro, balconi con la ringhiera più fuori, finestre larghe in periferia. Capannoni con il tetto a shed nella zona industriale.']},
  {v:'0.095.1',d:'27/11/2026',t:['🔒 Milanopolis si sblocca al <b>livello 15</b>: prima il pulsante nel garage ha il lucchetto.','🧪 Beta: nel telefono, app 🎯 Livelli, ora puoi scegliere fino al livello 15, così sblocchi Milanopolis subito per provarla.']},
  {v:'0.095.0',d:'27/11/2026',t:['🏙️ Prima anteprima di <b>Milanopolis</b>, la seconda città: dal garage scegli «Milanopolis», il viaggio costa il 10% di benzina e c\'è la scenetta dell\'auto in viaggio.','🗺️ La città è ancora vuota ma ci giri in auto e a piedi: circonvallazione, Bastioni, la Cerchia dei Navigli riaperta coi ponti, Naviglio Grande e Pavese, Darsena, isolati di case e palazzi con le finestre.','⛪ Monumenti in versione caricatura: il Duomone, la Galleria, il Teatro alla Scaletta, il Castello Sforzato, l\'Arco della Pacina, Porta Nuovissima, la Stazione Centralona, le Tre Torri, lo Stadio San Sirolo, la Bocconcina. Traffico, passanti e Grigio arrivano nella prossima tappa.','🪧 Il paese di partenza ora si chiama <b>Borgo Karma</b> (Karmapolis è il nome del gioco).']},
@@ -615,141 +617,180 @@ function height(x,z){ if(MIL.on) return milGround(x,z); if(z>SEA_Z) return -Math
 const ground=height;
 const BOXES=[]; const OBST=[];
 const hitBox=(x,z,m=0)=>MIL.on?milHit(x,z,m):BOXES.some(b=>x>b.x0-m&&x<b.x1+m&&z>b.z0-m&&z<b.z1+m);
-// ======================= 🏙️ MILANOPOLIS — tappa 1: la città vuota (27/11/2026, progetto 0.005.0 approvato da Teo) =======================
-// Caricatura di Milano: anelli e raggi, Cerchia dei Navigli riaperta, Navigli, isolati di case e palazzi, monumenti semplici.
-// Sta lontano da Borgo Karma (x = +1400), si costruisce la prima volta che ci vai. Niente traffico, pedoni e Grigio: arrivano nella tappa 2.
-const MIL={on:false,built:false,X:1400,Z:-250,S:0.6,blocks:[],solids:[],group:null};
-const milP=(px,py)=>[MIL.X+(px-500)*MIL.S, MIL.Z+(py-500)*MIL.S]; // dal disegno del progetto (0-1000) al mondo
-function milHit(x,z,m){ const dx=x-MIL.X, dz=z-MIL.Z, r=Math.hypot(dx,dz); let a=Math.atan2(dz,dx)*180/Math.PI;
-  if(Math.abs(r-81)<4+m){ let br=false; for(const ra of MIL.RAD){ const t=ra*Math.PI/180; if(Math.abs(-Math.sin(t)*dx+Math.cos(t)*dz)<4.2 && Math.cos(t)*dx+Math.sin(t)*dz>0) br=true; } if(!br) return true; }
-  if(MIL.canals && !(Math.abs(r-162)<7||Math.abs(r-258)<9)) for(const pl of MIL.canals) for(let i=0;i<pl.length-1;i++){ const [x0,z0]=pl[i],[x1,z1]=pl[i+1], ex=x1-x0, ez=z1-z0, L=ex*ex+ez*ez, t=Math.max(0,Math.min(1,((x-x0)*ex+(z-z0)*ez)/L)); if(Math.hypot(x-x0-ex*t,z-z0-ez*t)<3.3+m) return true; }
-  for(const b of MIL.blocks){ if(r<b.r0-m||r>b.r1+m) continue; const da=(m/Math.max(r,1))*180/Math.PI; let aa=a; while(aa<b.a0-da) aa+=360; while(aa>b.a1+da) aa-=360; if(aa>=b.a0-da&&aa<=b.a1+da) return true; }
+// ======================= 🏙️ MILANOPOLIS (progetto 0.005.0 approvato da Teo il 27/11/2026) =======================
+// Caricatura di Milano: anelli e raggi, Cerchia dei Navigli riaperta, Darsena e Navigli, isolati di palazzi, monumenti semplici.
+// 28/11 (Teo: "il naviglio passa in mezzo alla strada, alberi in mezzo alla strada, è acerba"): rifatta "a lotti". Ogni pezzo di terreno tra le strade
+// è un isolato di palazzi oppure un lotto speciale (parco, piazza, stazione, Darsena, benzinaio…) con il suo marciapiede: niente più asfalto avanzato.
+// Sta lontano da Borgo Karma (x = +1400) e si costruisce la prima volta che ci vai. Traffico, passanti e Grigio arrivano nella tappa 2.
+const MIL={on:false,built:false,X:1400,Z:-250,blocks:[],solids:[],side:[],sideC:[],wet:[],canals:[],group:null};
+const MIL_RINGS=[[48.5,7.8],[72.4,5.6],[89.6,5.6],[111.5,7.8],[134.5,7.8],[162,10],[194.5,7.8],[221.5,7.8],[258,14]]; // strade ad anello: raggio, larghezza
+const MIL_RAD=[-90,-66.6,0,50.1,90,-152.1,180]; MIL.RAD=MIL_RAD; // viali a raggiera (gradi; z negativa = nord)
+const milPolar=(x,z)=>[Math.hypot(x-MIL.X,z-MIL.Z),Math.atan2(z-MIL.Z,x-MIL.X)*180/Math.PI];
+const milAngIn=(a,a0,a1)=>{ while(a<a0) a+=360; while(a>a0+360) a-=360; return a<=a1; };
+function milHit(x,z,m){ const [r,a]=milPolar(x,z), dx=x-MIL.X, dz=z-MIL.Z;
+  if(Math.abs(r-81)<4+m){ let br=false; for(const ra of MIL_RAD){ const t=ra*Math.PI/180; if(Math.abs(-Math.sin(t)*dx+Math.cos(t)*dz)<4.2 && Math.cos(t)*dx+Math.sin(t)*dz>0) br=true; } if(!br) return true; } // Cerchia: si passa solo sui ponti
+  for(const c of MIL.canals){ if(r<c.r0-m||r>c.r1+m) continue; let d=((a-c.a)%360+540)%360-180; if(Math.abs(Math.sin(d*Math.PI/180)*r)<3.5+m && !c.bridges.some(([R,w])=>Math.abs(r-R)<w/2-0.2)) return true; }
+  if(milSector(MIL.wet,x,z,m)) return true;
+  for(const b of MIL.blocks){ if(r<b.r0-m||r>b.r1+m) continue; const da=(m/Math.max(r,1))*180/Math.PI; if(milAngIn(a,b.a0-da,b.a1+da)) return true; }
   const cell=MIL.grid?MIL.grid.get(Math.floor(x/8)*4096+Math.floor(z/8)):MIL.solids; if(cell) for(const s of cell){ if(s.r){ if(Math.hypot(x-s.x,z-s.z)<s.r+m) return true; } else if(x>s.x0-m&&x<s.x1+m&&z>s.z0-m&&z<s.z1+m) return true; }
   return false; }
-function milSector(list,x,z,m=0){ const dx=x-MIL.X, dz=z-MIL.Z, r=Math.hypot(dx,dz); const a=Math.atan2(dz,dx)*180/Math.PI; for(const b of list){ if(r<b.r0-m||r>b.r1+m) continue; let aa=a; while(aa<b.a0) aa+=360; while(aa>b.a1) aa-=360; if(aa>=b.a0&&aa<=b.a1) return true; } return false; }
-const milGround=(x,z)=>MIL.side&&milSector(MIL.side,x,z)?0.15:0;
-const milOff=(x,z)=>{ const r=Math.hypot(x-MIL.X,z-MIL.Z); if(r<266) return false; return !(x<MIL.X&&Math.abs(z-MIL.Z)<8.5); }; // fuori città e fuori dall'autostrada = campagna
+function milSector(list,x,z,m=0){ const [r,a]=milPolar(x,z); for(const b of list){ if(r<b.r0-m||r>b.r1+m) continue; const da=(m/Math.max(r,1))*180/Math.PI; if(milAngIn(a,b.a0-da,b.a1+da)) return true; } return false; }
+const milGround=(x,z)=>(milSector(MIL.side,x,z)||MIL.sideC.some(c=>Math.hypot(x-c.x,z-c.z)<c.r))?0.15:0;
+const milOff=(x,z)=>{ const [r,a]=milPolar(x,z); if(r<266) return false; if(x<MIL.X&&Math.abs(z-MIL.Z)<8.5) return false; if(MIL.stadium&&Math.hypot(x-MIL.stadium[0],z-MIL.stadium[1])<52) return false; if(Math.abs(((a+152.1)%360+540)%360-180)*Math.PI/180*r<5 && r<300) return false; return true; }; // campagna = un po' più lenti
 function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=performance.now();
-  const grp=new THREE.Group(); MIL.group=grp; scene.add(grp); const S=MIL.S, CX=MIL.X, CZ=MIL.Z;
-  const parts={wc:[],wm:[],wf:[],shop:[],furn:[],b:[],road:[],water:[],green:[],side:[],mark:[]}; let seed=11; const rnd2=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647; };
-  const pick=a=>a[Math.floor(rnd2()*a.length)];
+  const grp=new THREE.Group(); MIL.group=grp; scene.add(grp); const CX=MIL.X, CZ=MIL.Z, RINGS=MIL_RINGS, RAD=MIL_RAD;
+  const parts={wc:[],wm:[],wf:[],shop:[],furn:[],b:[],road:[],mark:[],side:[],water:[],green:[],lot:[]};
+  let seed=11; const rnd2=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647; }; const pick=a=>a[Math.floor(rnd2()*a.length)];
+  const D=Math.PI/180, T=a=>a*D, P=(r,a)=>[CX+Math.cos(T(a))*r, CZ+Math.sin(T(a))*r];
   const box=(w,h,d,x,y,z,col,ry=0,key='b')=>{ const g=new THREE.BoxGeometry(w,h,d); if(ry) g.rotateY(ry); g.translate(x,y,z); parts[key].push(paintGeo(g,col,true)); };
   const cyl=(r1,r2,h,x,y,z,col,seg=16,key='b')=>{ const g=new THREE.CylinderGeometry(r1,r2,h,seg); g.translate(x,y,z); parts[key].push(paintGeo(g,col,true)); };
-  const solidBox=(x,z,w,d)=>MIL.solids.push({x0:x-w/2,x1:x+w/2,z0:z-d/2,z1:z+d/2});
-  // settore d'anello in pianta (raggi in metri, angoli in gradi), estruso fino all'altezza h
-  const sectorGeo=(r0,r1,a0,a1,h,y0=0)=>{ const sh=new THREE.Shape(), n=Math.max(2,Math.ceil((a1-a0)/5)); for(let i=0;i<=n;i++){ const a=THREE.MathUtils.degToRad(a0+(a1-a0)*i/n); const p=[Math.cos(a)*r1,Math.sin(a)*r1]; i?sh.lineTo(p[0],p[1]):sh.moveTo(p[0],p[1]); }
-    for(let i=n;i>=0;i--){ const a=THREE.MathUtils.degToRad(a0+(a1-a0)*i/n); sh.lineTo(Math.cos(a)*r0,Math.sin(a)*r0); }
+  const flat=(w,l,x,z,rot,col,key='mark',y=0.055)=>{ const g=new THREE.PlaneGeometry(w,l); g.rotateX(-Math.PI/2); g.rotateY(rot); g.translate(x,y,z); parts[key].push(paintGeo(g,col,false)); };
+  // riferimento locale in un punto (r,a): dx lungo l'anello (tangente), dr verso l'esterno · th = rotazione per i box (x locale = tangente)
+  const F=(r,a)=>{ const c=Math.cos(T(a)), s=Math.sin(T(a)); return { th:Math.atan2(-c,-s), at:(dx,dr)=>[CX+c*(r+dr)-s*dx, CZ+s*(r+dr)+c*dx] }; };
+  const boxF=(f,dx,dr,w,h,d,y,col,key='b')=>{ const [x,z]=f.at(dx,dr); box(w,h,d,x,y,z,col,f.th,key); return [x,z]; };
+  const solidF=(f,dx,dr,w,d)=>{ const n=Math.max(1,Math.round(Math.max(w,d)/Math.min(w,d))); const big=w>=d; for(let i=0;i<n;i++){ const t=(i+0.5)/n-0.5; const [x,z]=f.at(dx+(big?t*w:0),dr+(big?0:t*d)); MIL.solids.push({x,z,r:Math.min(w,d)/2*1.05+ (n>1?0:Math.abs(w-d)/2)}); } };
+  const sectorGeo=(r0,r1,a0,a1,h,y0=0)=>{ const sh=new THREE.Shape(), n=Math.max(2,Math.ceil((a1-a0)/4)); for(let i=0;i<=n;i++){ const a=T(a0+(a1-a0)*i/n); const p=[Math.cos(a)*r1,Math.sin(a)*r1]; i?sh.lineTo(p[0],p[1]):sh.moveTo(p[0],p[1]); }
+    for(let i=n;i>=0;i--){ const a=T(a0+(a1-a0)*i/n); sh.lineTo(Math.cos(a)*r0,Math.sin(a)*r0); }
     const g=new THREE.ExtrudeGeometry(sh,{depth:h,bevelEnabled:false,curveSegments:1}); g.rotateX(Math.PI/2); g.translate(CX,h+y0,CZ); return g; };
-  // ---- terreno: campagna, città (asfalto delle vie), anelli
+  const ringSeg=(r0,r1,a0,a1,y,col,key)=>{ const g=new THREE.RingGeometry(r0,r1,Math.max(3,Math.ceil((a1-a0)/2)),1,-T(a1),T(a1-a0)); g.rotateX(-Math.PI/2); g.translate(CX,y,CZ); parts[key].push(paintGeo(g,col,false)); };
+  const curb=(r0,r1,a0,a1)=>{ const e=0.3; parts.side.push(paintGeo(sectorGeo(r0,r0+e,a0,a1,0.17),0xb9b2a6,true)); parts.side.push(paintGeo(sectorGeo(r1-e,r1,a0,a1,0.17),0xb9b2a6,true)); const ea=e/r0/D; parts.side.push(paintGeo(sectorGeo(r0,r1,a0,a0+ea,0.17),0xb9b2a6,true)); parts.side.push(paintGeo(sectorGeo(r0,r1,a1-ea,a1,0.17),0xb9b2a6,true)); };
+  const nearRad=(r,a,w)=>RAD.some(ra=>Math.abs(((a-ra)%360+540)%360-180)*D*r<w);
+  // ---------- LOTTI SPECIALI (al posto degli isolati) ----------
+  const SITES=[
+    {k:'galleria',r0:22,r1:47,a0:-113.7,a1:-66.3,g:0xe6dccb}, {k:'scala',r0:50,r1:72,a0:-101.3,a1:-78.7,g:0xe6dccb},
+    {k:'castello',r0:92,r1:155,a0:-149.5,a1:-127,g:0x9ccc78}, {k:'sempione',r0:170,r1:252,a0:-150,a1:-117,g:0x8cc46e},
+    {k:'torri',r0:196,r1:252,a0:-178.2,a1:-154.2,g:0xdcd6cc}, {k:'stazione',r0:170,r1:193,a0:-87.8,a1:-68.8,g:0xe2d9c6}, {k:'binari',r0:196,r1:252,a0:-88.3,a1:-68.3,g:0xa89f92},
+    {k:'nuova',r0:170,r1:220,a0:-64.5,a1:-44,g:0xd8dde2}, {k:'giardini',r0:136,r1:155,a0:-40,a1:-22,g:0x8cc46e}, {k:'brera',r0:90,r1:110,a0:-122,a1:-110,g:0xe6dccb},
+    {k:'darsena',r0:170,r1:193,a0:103.5,a1:129.3,g:0xd3c7b0}, {k:'bocconi',r0:196,r1:220,a0:60,a1:76,g:0xe2d9c6},
+    {k:'concess',r0:223,r1:251,a0:26,a1:40,g:0x9a9ea6}, {k:'benzina',r0:196,r1:220,a0:160,a1:178.2,g:0x8f939a}];
+  const inSite=(x,z,m=0)=>{ const [r,a]=milPolar(x,z); return SITES.some(s=>r>s.r0-m&&r<s.r1+m&&milAngIn(a,s.a0-m/Math.max(r,1)/D,s.a1+m/Math.max(r,1)/D)) || r<23+m; };
+  // ---------- TERRENO E STRADE ----------
   { const g=new THREE.CircleGeometry(470,64); g.rotateX(-Math.PI/2); g.translate(CX,0.01,CZ); parts.green.push(paintGeo(g,0xb7d08a,false));
-    const c=new THREE.CircleGeometry(272,96); c.rotateX(-Math.PI/2); c.translate(CX,0.02,CZ); parts.road.push(paintGeo(c,0x6f737b,false)); }
-  const ring=(r,w,col,key,y=0.03)=>{ const g=new THREE.RingGeometry(r-w/2,r+w/2,128); g.rotateX(-Math.PI/2); g.translate(CX,y,CZ); parts[key].push(paintGeo(g,col,false)); };
-  ring(258,14,0x5f636b,'road',0.035); ring(258,0.35,0xfffaf0,'mark',0.05); ring(162,10,0x5f636b,'road',0.035); ring(162,0.3,0xfffaf0,'mark',0.05);
-  ring(81,8,0x5aa8d8,'water',0.04); ring(76,1.6,0xd8cdb6,'side',0.12); ring(86,1.6,0xd8cdb6,'side',0.12); // la Cerchia: canale con le due sponde
-  // viali a raggiera (come nel progetto) e autostrada da ovest
-  const RAD=[-90,-66.6,0,50.1,90,127.8,-152.1,180]; MIL.RAD=RAD.filter(a=>a!==127.8);
-  for(const a of RAD){ const t=THREE.MathUtils.degToRad(a), r0=a===127.8?110:70, r1=a===127.8?115:265; if(a===127.8) continue; const L=r1-r0, g=new THREE.PlaneGeometry(L,7); g.rotateX(-Math.PI/2); g.rotateY(-t); g.translate(CX+Math.cos(t)*(r0+L/2),0.036,CZ+Math.sin(t)*(r0+L/2)); parts.road.push(paintGeo(g,0x5f636b,false));
-    const bm=new THREE.BoxGeometry(10,0.12,8); bm.rotateY(-t); bm.translate(CX+Math.cos(t)*81,0.06,CZ+Math.sin(t)*81); parts.b.push(paintGeo(bm,0xcfc6b4,true)); } // ponti sulla Cerchia
-  { const g=new THREE.PlaneGeometry(220,16); g.rotateX(-Math.PI/2); g.translate(CX-262-100,0.036,CZ); parts.road.push(paintGeo(g,0x55595f,false));
-    for(let i=0;i<18;i++){ const m=new THREE.PlaneGeometry(4,0.35); m.rotateX(-Math.PI/2); m.translate(CX-270-i*11,0.05,CZ); parts.mark.push(paintGeo(m,0xffd84d,false)); } }
-  // ---- acqua: Darsena e Navigli (strisce lungo curve)
-  const ribbon=(pts,w,col,key,y)=>{ const pos=[]; for(let i=0;i<pts.length-1;i++){ const [x0,z0]=pts[i],[x1,z1]=pts[i+1], dx=x1-x0, dz=z1-z0, l=Math.hypot(dx,dz)||1, nx=-dz/l*w/2, nz=dx/l*w/2;
-      pos.push(x0+nx,y,z0+nz, x1+nx,y,z1+nz, x0-nx,y,z0-nz, x1+nx,y,z1+nz, x1-nx,y,z1-nz, x0-nx,y,z0-nz); }
-    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.computeVertexNormals(); parts[key].push(paintGeo(g,col,false)); };
-  const bez=(p0,p1,p2,p3,n=24)=>{ const o=[]; for(let i=0;i<=n;i++){ const s=i/n, k=(1-s); o.push(milP(k*k*k*p0[0]+3*k*k*s*p1[0]+3*k*s*s*p2[0]+s*s*s*p3[0], k*k*k*p0[1]+3*k*k*s*p1[1]+3*k*s*s*p2[1]+s*s*s*p3[1])); } return o; };
-  const NGR=bez([352,650],[270,680],[170,705],[30,770]), NPV=bez([398,652],[410,760],[420,880],[432,1000]);
-  MIL.canals=[NGR,NPV]; ribbon(NGR,7,0x5aa8d8,'water',0.045); ribbon(NGR,11,0xd8cdb6,'side',0.03); ribbon(NPV,6,0x5aa8d8,'water',0.045); ribbon(NPV,10,0xd8cdb6,'side',0.03);
-  ribbon([milP(413,603),milP(382,640)],7,0x5aa8d8,'water',0.045);
-  { const [x,z]=milP(379,641); const g=new THREE.PlaneGeometry(38,15); g.rotateX(-Math.PI/2); g.rotateY(0.14); g.translate(x,0.046,z); parts.water.push(paintGeo(g,0x5aa8d8,false)); }
-  // ---- parchi
-  const park=(px,py,rx,rz,rot=0)=>{ const [x,z]=milP(px,py); const g=new THREE.CircleGeometry(1,40); g.scale(rx,rz,1); g.rotateZ(rot); g.rotateX(-Math.PI/2); g.translate(x,0.08,z); parts.green.push(paintGeo(g,0x8cc46e,false)); return [x,z]; };
-  const P1=park(365,388,44,24,0.66), P2=park(598,440,16,16), P3=park(175,270,22,13);
-  { const [x,z]=milP(352,392); const g=new THREE.CircleGeometry(1,28); g.scale(12,7,1); g.rotateX(-Math.PI/2); g.translate(x,0.1,z); parts.water.push(paintGeo(g,0x5aa8d8,false)); }
-  // ---- isolati: case e palazzi (come nel progetto: anelli divisi dai viali e dalle vie strette)
-  const EXCL=[[500,506,48],[500,462,22],[501,426,14],[406,432,40],[365,388,66],[334,349,18],[490,282,32],[610,232,56],[214,350,30],[150,430,60],[379,641,42],[487,693,26],[598,440,30],[175,270,42]];
-  const nearCanal=(x,z)=>{ for(const p of NGR.concat(NPV)) if(Math.hypot(x-p[0],z-p[1])<13) return true; return false; };
-  const bad=(x,z,r=0)=>{ for(const [ex,ey,er] of EXCL){ const [wx,wz]=milP(ex,ey); if(Math.hypot(x-wx,z-wz)<(er+r)*S) return true; } const [sx0,sz0]=milP(555,0), [sx1,sz1]=milP(665,218); if(x>sx0&&x<sx1&&z<sz1) return true; if(nearCanal(x,z)) return true; return false; };
-  const angs=[-152.1,-90,-66.6,0,50.1,90,127.8,180].map(a=>(a+360)%360).sort((a,b)=>a-b);
+    const c=new THREE.CircleGeometry(266,120); c.rotateX(-Math.PI/2); c.translate(CX,0.02,CZ); parts.road.push(paintGeo(c,0x6a6e76,false)); }
+  const ring=(r,w,col,key,y=0.03)=>{ const g=new THREE.RingGeometry(r-w/2,r+w/2,160); g.rotateX(-Math.PI/2); g.translate(CX,y,CZ); parts[key].push(paintGeo(g,col,false)); };
+  ring(258,14,0x5c6068,'road',0.035); ring(258,0.35,0xfffaf0,'mark',0.05); ring(162,10,0x5c6068,'road',0.035); ring(162,0.3,0xfffaf0,'mark',0.05);
+  ring(81,8,0x4f9fd0,'water',0.04); ring(76,1.6,0xd8cdb6,'side',0.12); ring(86,1.6,0xd8cdb6,'side',0.12); // la Cerchia: canale con le sponde
+  for(const a of RAD){ const t=T(a), r0=70, r1=a===-152.1?300:265, L=r1-r0, g=new THREE.PlaneGeometry(L,7); g.rotateX(-Math.PI/2); g.rotateY(-t); g.translate(CX+Math.cos(t)*(r0+L/2),0.036,CZ+Math.sin(t)*(r0+L/2)); parts.road.push(paintGeo(g,0x5c6068,false));
+    const bm=new THREE.BoxGeometry(10,0.12,8); bm.rotateY(-t); bm.translate(CX+Math.cos(t)*81,0.06,CZ+Math.sin(t)*81); parts.b.push(paintGeo(bm,0xcfc6b4,true)); // ponti sulla Cerchia
+    for(const s of [-1,1]){ const [x,z]=[CX+Math.cos(t)*81-Math.sin(t)*4.2*s, CZ+Math.sin(t)*81+Math.cos(t)*4.2*s]; box(9.5,0.7,0.35,x,0.45,z,0xe9e1cf,-t); } }
+  { const g=new THREE.PlaneGeometry(220,16); g.rotateX(-Math.PI/2); g.translate(CX-262-100,0.036,CZ); parts.road.push(paintGeo(g,0x55595f,false)); // autostrada da Borgo Karma
+    for(let i=0;i<18;i++) flat(4,0.35,CX-272-i*11,CZ,0,0xffd84d); for(const s of [-1,1]) flat(214,0.25,CX-362,CZ+s*7.2,0,0xfffaf0); }
+  // piazza del Duomo (tonda, lastricata)
+  { const g=new THREE.CylinderGeometry(22.6,22.6,0.15,72); g.translate(CX,0.075,CZ); parts.lot.push(paintGeo(g,0xe9e1cf,true)); MIL.sideC.push({x:CX,z:CZ,r:22.6}); ring(22.6,0.5,0xb9b2a6,'side',0.16); }
+  // ---------- CANALI: il canale verso la Darsena, la Darsena, il Naviglio Grande e il Naviglio Pavese (dritti nei loro corridoi, con le alzaie e i ponti) ----------
+  const canal=(a,r0,r1)=>{ const t=T(a), c=Math.cos(t), s=Math.sin(t), br=RINGS.filter(([R])=>R>r0&&R<r1); MIL.canals.push({a,r0,r1,bridges:br});
+    const strip=(ra,rb,w,off,y,col,key,h=0)=>{ const L=rb-ra; if(L<=0.2) return; const m=(ra+rb)/2, x=CX+c*m-s*off, z=CZ+s*m+c*off; if(h){ box(L,h,w,x,y+h/2,z,col,-t,key); } else { const g=new THREE.PlaneGeometry(L,w); g.rotateX(-Math.PI/2); g.rotateY(-t); g.translate(x,y,z); parts[key].push(paintGeo(g,col,false)); } };
+    strip(r0,r1,7,0,0.05,0x4f9fd0,'water');
+    let cur=r0; const cuts=br.map(([R,w])=>[R-w/2,R+w/2]).concat([[r1,r1]]);
+    for(const [ca,cb] of cuts){ for(const sg of [-1,1]){ strip(cur,ca,2.6,sg*4.8,0,0xd3c7b0,'side',0.15); strip(cur,ca,0.25,sg*3.6,0.15,0xb9b2a6,'side',0.12); }
+      if(cb>ca){ strip(ca,cb,13.2,0,0.04,0x5c6068,'road',0.1); for(const sg of [-1,1]) strip(ca,cb,0.3,sg*3.7,0.14,0xe9e1cf,'b',0.6); } cur=cb; }
+    for(let r=Math.max(r0+6,270);r<r1-3;r+=9){ if(br.some(([R,w])=>Math.abs(r-R)<w/2+2)) continue; for(const sg of [-1,1]){ const x=CX+c*r-s*sg*5.6, z=CZ+s*r+c*sg*5.6; cyl(0.2,0.25,2.2,x,1.25,z,0x7a5034,5,'furn'); const g=new THREE.IcosahedronGeometry(1.6,0); g.translate(x,3.4,z); parts.green.push(paintGeo(g,pick([0x4fa64a,0x5cb85c,0x3f9a52]),true)); MIL.solids.push({x,z,r:0.3}); } } };
+  canal(127.8,85,172.4); canal(127.8,190.6,330); canal(105,190.6,330);
+  // ---------- ISOLATI DI PALAZZI ----------
+  const angs=RAD.concat([105,127.8]).map(a=>(a+360)%360).sort((a,b)=>a-b);
   const bands=[['c',[[25,47],[50,72]]],['m',[[90,110],[113,133],[136,155]]],['f',[[170,193],[196,220],[223,251]]]];
   const COLS={c:[0xe3b98c,0xe8c79f,0xd9a679,0xefd2ad,0xd99a6c,0xf0cfa0,0xe2a77e],m:[0xf3dcc0,0xe9d3b6,0xf6e6cf,0xdcc6a8,0xead9c0,0xf0c9a0,0xcfe0e8,0xe7c3b0],f:[0xd3d4d8,0xc9ccd3,0xdcdde1,0xcfd8df,0xe6d8c8,0xd8cfc4]};
-  const HGT={c:[9,15],m:[11,18],f:[13,24]}, SWK=2.4; // altezze per zona · marciapiede largo 2,4 m
+  const HGT={c:[10,16],m:[12,20],f:[14,27]}, SWK=2.4;
   const uvGeo=(g,col,key)=>{ const pg=paintGeo(g.clone(),col,true); pg.setAttribute('uv',g.attributes.uv); parts[key].push(pg); };
-  MIL.side=[];
+  const building=(zone,i0,i1,qa0,qa1,h)=>{ const col=pick(COLS[zone]), dark=new THREE.Color(col).multiplyScalar(0.8).getHex();
+    const shop=zone!=='f'?rnd2()<0.8:rnd2()<0.35, base=shop?3.6:0;
+    uvGeo(sectorGeo(i0,i1,qa0,qa1,h-base,0.15+base),col,'w'+zone);
+    if(shop) uvGeo(sectorGeo(i0-0.12,i1+0.12,qa0-0.02,qa1+0.02,3.6,0.15),0xffffff,'shop');
+    parts.b.push(paintGeo(sectorGeo(i0-0.3,i1+0.3,qa0-0.04,qa1+0.04,0.45,h+0.15),dark,true));
+    if(zone==='c'||(zone==='m'&&rnd2()<0.5)){ const rr=(i1-i0)/2; for(let k2=0;k2<4;k2++){ const t0=k2/4; parts.b.push(paintGeo(sectorGeo(i0+rr*t0*0.9,i1-rr*t0*0.9,qa0+0.05,qa1-0.05,0.55,h+0.6+k2*0.55),pick([0xc0603f,0xb5583a,0xc76d48]),true)); } }
+    else { parts.b.push(paintGeo(sectorGeo(i0+0.4,i1-0.4,qa0+0.05,qa1-0.05,0.25,h+0.6),0x8f8d8a,true)); if(rnd2()<0.6){ const tm=T((qa0+qa1)/2), tr=(i0+i1)/2+(rnd2()-0.5)*3; box(1.6,1.1,1.6,CX+Math.cos(tm)*tr,h+1.4,CZ+Math.sin(tm)*tr,0xa9adb4); } } };
+  let nBlk=0;
   for(const [zone,rings] of bands) for(const [r0,r1] of rings){ const rm=(r0+r1)/2;
-    for(let k=0;k<angs.length;k++){ const A0=angs[k], A1=k===angs.length-1?angs[0]+360:angs[k+1], span=A1-A0, len=THREE.MathUtils.degToRad(span)*rm, m=Math.max(1,Math.round(len/(zone==='c'?30:40)));
-      for(let j=0;j<m;j++){ const gap=2.4, da=(gap/rm)*180/Math.PI, side=(j===0?4.2:0)/rm*180/Math.PI, side2=(j===m-1?4.2:0)/rm*180/Math.PI; // vie tra gli isolati, più larghe accanto ai viali
-        const a0=A0+span*j/m+da+side, a1=A0+span*(j+1)/m-da-side2, b0=r0+gap, b1=r1-gap; if(a1-a0<3||b1-b0<6) continue;
-        const am=THREE.MathUtils.degToRad((a0+a1)/2), cx=CX+Math.cos(am)*rm, cz=CZ+Math.sin(am)*rm;
-        if(bad(cx,cz,(r1-r0)/2.2/S)) continue; let ok=true; for(const t of [a0,a1]) for(const rr of [b0,b1]){ const q=THREE.MathUtils.degToRad(t); if(bad(CX+Math.cos(q)*rr,CZ+Math.sin(q)*rr)) ok=false; } if(!ok) continue;
-        const ind=zone==='f' && cx>CX+120 && cz>CZ+60 && cz<CZ+190; // zona industriale a est
-        parts.side.push(paintGeo(sectorGeo(b0,b1,a0,a1,0.15),0xd9d2c4,true)); // marciapiede
-        parts.side.push(paintGeo(sectorGeo(b0-0.05,b0+0.3,a0-0.05*180/Math.PI/b0,a1+0.05*180/Math.PI/b0,0.17),0xb9b2a6,true)); parts.side.push(paintGeo(sectorGeo(b1-0.3,b1+0.05,a0,a1,0.17),0xb9b2a6,true)); // cordoli
-        MIL.side.push({r0:b0,r1:b1,a0,a1});
-        const ia0=a0+SWK/rm*180/Math.PI, ia1=a1-SWK/rm*180/Math.PI, i0=b0+SWK, i1=b1-SWK; MIL.blocks.push({r0:i0-0.2,r1:i1+0.2,a0:ia0-0.2,a1:ia1+0.2});
-        if(ind){ // capannoni: lamiera, tetto a shed
-          const h=7+rnd2()*2; parts.b.push(paintGeo(sectorGeo(i0,i1,ia0,ia1,h,0.15),pick([0xc3c6cc,0xb8bcc4,0xcfc9b8]),true));
-          const n=Math.max(2,Math.round((i1-i0)/4)); for(let t=0;t<n;t++){ const ra=i0+(i1-i0)*t/n, rb=i0+(i1-i0)*(t+1)/n; parts.b.push(paintGeo(sectorGeo(ra,rb-0.2,ia0,ia1,1.4,h+0.15),0x8d939c,true)); }
-          continue; }
-        // palazzi attaccati (alla milanese): larghezza 8-15 m, altezze diverse, negozi al piano terra, cornicione e tetto
-        const arc=THREE.MathUtils.degToRad(ia1-ia0)*rm, nb=Math.max(1,Math.round(arc/(8+rnd2()*7)));
-        for(let q=0;q<nb;q++){ const qa0=ia0+(ia1-ia0)*q/nb, qa1=ia0+(ia1-ia0)*(q+1)/nb;
-          const h=HGT[zone][0]+rnd2()*(HGT[zone][1]-HGT[zone][0]); const col=pick(COLS[zone]), dark=new THREE.Color(col).multiplyScalar(0.8).getHex();
-          const shop=zone!=='f'?rnd2()<0.75:rnd2()<0.3, base=shop?3.6:0;
-          uvGeo(sectorGeo(i0,i1,qa0,qa1,h-base,0.15+base),col,'w'+zone);
-          if(shop) uvGeo(sectorGeo(i0-0.12,i1+0.12,qa0-0.02,qa1+0.02,3.6,0.15),0xffffff,'shop');
-          parts.b.push(paintGeo(sectorGeo(i0-0.3,i1+0.3,qa0-0.04,qa1+0.04,0.45,h+0.15),dark,true)); // cornicione
-          if(zone==='c'||(zone==='m'&&rnd2()<0.5)){ const rr=(i1-i0)/2; for(let k2=0;k2<4;k2++){ const t0=k2/4, t1=(k2+1)/4; parts.b.push(paintGeo(sectorGeo(i0+rr*t0*0.9,i1-rr*t0*0.9,qa0,qa1,0.55,h+0.6+k2*0.55),pick([0xc0603f,0xb5583a,0xc76d48]),true)); } } // tetto a falde di coppi
-          else { parts.b.push(paintGeo(sectorGeo(i0+0.4,i1-0.4,qa0+0.05,qa1-0.05,0.25,h+0.6),0x8f8d8a,true)); if(rnd2()<0.6){ const tm=THREE.MathUtils.degToRad((qa0+qa1)/2), tr=(i0+i1)/2+(rnd2()-0.5)*3; box(1.6,1.1,1.6,CX+Math.cos(tm)*tr,h+1.4,CZ+Math.sin(tm)*tr,0xa9adb4); } } } } } }
-  // ---- MONUMENTI (forme semplici, caricatura)
-  const at=(px,py)=>milP(px,py);
-  { const [x,z]=at(500,506); box(46,0.2,30,x,0.1,z,0xe9e1cf,0,'side'); // 1 Duomone e piazza
-    box(26,11,9,x,5.5,z-2,0xf6f2ea); box(9,11,18,x+4,5.5,z-2,0xf6f2ea); box(9,13,9,x-12,6.5,z-2,0xfffaf0);
-    const sp=[]; for(let i=0;i<14;i++){ const ux=x-12+i*1.9; sp.push([ux,z-6.8],[ux,z+2.8]); } for(const [sx,sz] of sp) cyl(0.05,0.45,3.4,sx,12.7,sz,0xfffaf0,6);
-    cyl(0.2,1.6,9,x+2,15.5,z-2,0xfffaf0,8); cyl(0.5,0.5,1.6,x+2,20.6,z-2,0xf0b23a,8); MIL.solids.push({x0:x-17,x1:x+9,z0:z-11,z1:z+7}); }
-  { const [x,z]=at(500,462); box(22,7,5,x,3.5,z,0xf0dcb8); box(5,7,18,x,3.5,z,0xf0dcb8); cyl(4,4.2,9,x,4.5,z,0xcfe6f2,8); box(22.4,0.6,5.4,x,7.2,z,0xbfdcef); box(5.4,0.6,18.4,x,7.2,z,0xbfdcef); } // 2 Galleria (si attraversa a piedi)
-  { const [x,z]=at(501,426); box(11,10,8,x,5,z,0xf3d9a8); solidBox(x,z,11,8); } // 3 Teatro alla Scaletta
-  { const [x,z]=at(406,432); const c=0xc9653f; box(26,8,2.5,x,4,z-12,c); box(26,8,2.5,x,4,z+12,c); box(2.5,8,26,x-12,4,z,c); box(2.5,8,26,x+12,4,z,c); // 4 Castello Sforzato
-    for(const [dx,dz] of [[-12,-12],[12,-12],[-12,12],[12,12]]) cyl(3,3,11,x+dx,5.5,z+dz,0xb4532f,12); box(6,19,6,x,9.5,z+12,0xb4532f); box(4,1,4,x,19.5,z+12,0x8a3a22);
-    for(const [a,b,w,d] of [[0,-12,26,2.5],[0,12,26,2.5],[-12,0,2.5,26],[12,0,2.5,26]]) solidBox(x+a,z+b,w,d); }
-  { const [x,z]=at(334,349); box(3,10,4,x-4.5,5,z,0xfffaf0,0.66); box(3,10,4,x+4.5,5,z,0xfffaf0,0.66); box(13,3,4.4,x,11.5,z,0xfffaf0,0.66); cyl(0.6,0.6,2,x,14,z,0x6b5a3c,8); MIL.solids.push({x:x-3.6,z:z+2.6,r:2.6},{x:x+3.6,z:z-2.6,r:2.6}); } // 6 Arco della Pacina
-  { const [x,z]=at(490,282); box(10,46,10,x-10,23,z-6,0x5b7fb5); cyl(6,6,56,x+8,28,z-4,0x7aa0d6,20); box(9,34,9,x-2,17,z+12,0x9fb3c8); // 8 Porta Nuovissima (una torre col bosco)
-    for(let i=0;i<10;i++) cyl(1.6,1.6,1.4,x-2+(i%2?3.2:-3.2),4+i*3.2,z+12+(i%3-1)*2.8,0x4f9a45,8);
-    MIL.solids.push({x0:x-15,x1:x-5,z0:z-11,z1:z-1},{x:x+8,z:z-4,r:6},{x0:x-6.5,x1:x+2.5,z0:z+7.5,z1:z+16.5}); }
-  { const [x,z]=at(610,232); box(58,20,24,x,10,z,0xe0d6bf); for(const dx of [-16,0,16]) box(11,13,1,x+dx,6.5,z+12.2,0x8a8070); box(60,1.2,26,x,20.6,z,0xbfb39a); // 9 Stazione Centralona e binari
-    for(let i=0;i<5;i++){ const g=new THREE.PlaneGeometry(1.4,150); g.rotateX(-Math.PI/2); g.translate(x-18+i*9,0.05,z-12-75); parts.road.push(paintGeo(g,0x4a4d52,false)); } solidBox(x,z,58,24); }
-  { const [x,z]=at(214,350); box(9,62,9,x-12,31,z-6,0x7aa0d6); for(let i=0;i<16;i++) box(9,3,9,x+2,1.5+i*3,z+4,0x5b7fb5,i*0.06); for(let i=0;i<13;i++) box(8,3,8,x+12+Math.sin(i/12*Math.PI)*5,1.5+i*3,z-8,0x9fb9e2); // 10 Tre Torri: il Dritto, lo Storto, il Curvo
-    MIL.solids.push({x:x-12,z:z-6,r:6},{x:x+2,z:z+4,r:6.5},{x:x+14,z:z-8,r:6}); }
-  { const [x,z]=at(150,430); const g=new THREE.CylinderGeometry(1,1,13,40,1,true); g.scale(30,1,21); g.translate(x,6.5,z); parts.b.push(paintGeo(g,0xd8d2c2,true)); const g2=g.clone(); g2.scale(0.94,1,0.92); parts.b.push(paintGeo(g2,0xcfc6b4,true)); // 11 Stadio San Sirolo
-    box(40,0.1,26,x,0.12,z,0x6fbf5a,0,'green'); for(const [dx,dz] of [[-27,-18],[27,-18],[-27,18],[27,18]]) cyl(3,3,17,x+dx,8.5,z+dz,0xe0483e,14); MIL.solids.push({x,z,r:31}); }
-  { const [x,z]=at(487,693); box(22,10,15,x,5,z,0xf3d9a8); solidBox(x,z,22,15); } // 13 Bocconcina
-  { const [x,z]=at(830,712); box(16,6,9,x,3,z,0xffd84d); box(14,1.6,0.4,x,7.2,z+4.7,0x2a2233); solidBox(x,z,16,9); } // 14 concessionario
-  // ---- alberi nei parchi e lungo i Navigli
-  { const tr=[]; const addT=(x,z)=>{ tr.push([x,z]); }; for(let i=0;i<60;i++){ const a=rnd2()*Math.PI*2, r=Math.sqrt(rnd2()); addT(P1[0]+Math.cos(a)*r*40,P1[1]+Math.sin(a)*r*14); }
-    for(let i=0;i<10;i++){ const a=rnd2()*Math.PI*2; addT(P2[0]+Math.cos(a)*10,P2[1]+Math.sin(a)*10); addT(P3[0]+Math.cos(a)*16,P3[1]+Math.sin(a)*8); }
-    for(let i=2;i<NGR.length;i+=2){ const [x,z]=NGR[i]; addT(x,z-7.5); }
-    for(const [x,z] of tr){ if(Math.hypot(x-milP(352,392)[0],z-milP(352,392)[1])<14) continue; cyl(0.25,0.3,2.2,x,1.1,z,0x8a5a3c,5); const g=new THREE.IcosahedronGeometry(1.7,0); g.translate(x,3.2,z); parts.green.push(paintGeo(g,pick([0x4fa64a,0x5cb85c,0x3f9a52]),true)); MIL.solids.push({x,z,r:0.4}); } }
-  // ---- STRADE: mezzerie tratteggiate, strisce pedonali, lampioni, viale alberato sui Bastioni
-  { const T=t=>THREE.MathUtils.degToRad(t); const nearRad=(R,a,w)=>MIL.RAD.some(ra=>{ let d=Math.abs(((a-ra)%360+540)%360-180); return d*Math.PI/180*R<w; });
-    const okAt=(x,z)=>!bad(x,z,0);
-    const flat=(w,l,x,z,rot,col,key='mark',y=0.055)=>{ const g=new THREE.PlaneGeometry(w,l); g.rotateX(-Math.PI/2); g.rotateY(rot); g.translate(x,y,z); parts[key].push(paintGeo(g,col,false)); };
-    const RINGS=[[48.5,7.8],[72.4,5.6],[89.6,5.6],[111.5,7.8],[134.5,7.8],[162,10],[194.5,7.8],[221.5,7.8],[258,14]];
-    // mezzerie tratteggiate sugli anelli (le corsie dei Bastioni e della circonvallazione sono già continue)
-    for(const [R,w] of RINGS){ if(R===162||R===258||R===72.4||R===89.6) continue; const n=Math.round(2*Math.PI*R/6); for(let i=0;i<n;i++){ const a=i/n*360; if(nearRad(R,a,6)) continue; const x=CX+Math.cos(T(a))*R, z=CZ+Math.sin(T(a))*R; if(!okAt(x,z)) continue; flat(0.25,3,x,z,-T(a),0xfffaf0); } }
-    // mezzerie sui viali a raggiera
-    for(const ra of MIL.RAD){ for(let r=94;r<252;r+=6){ if(RINGS.some(([R,w])=>Math.abs(r-R)<w/2+2.5)) continue; const x=CX+Math.cos(T(ra))*r, z=CZ+Math.sin(T(ra))*r; flat(0.25,3,x,z,Math.PI/2-T(ra),0xfffaf0); } }
-    // strisce pedonali: attraversano l'anello accanto a ogni viale, e il viale accanto a ogni anello
-    for(const ra of MIL.RAD) for(const [R,w] of RINGS){ if(R<70) continue; for(const sg of [-1,1]){ const da=(3.5+2.2)/R*180/Math.PI*sg, a=ra+da; for(let k=-w/2+0.6;k<=w/2-0.5;k+=1.1){ const r=R+k, x=CX+Math.cos(T(a))*r, z=CZ+Math.sin(T(a))*r; flat(0.55,2.6,x,z,-T(a),0xf4f1ea,'mark',0.06); } }
-      for(const sg of [-1,1]){ const r=R+sg*(w/2+2.0); if(r>252&&R!==258) continue; for(let k=-3.0;k<=3.0;k+=1.1){ const a=ra+k/r*180/Math.PI, x=CX+Math.cos(T(a))*r, z=CZ+Math.sin(T(a))*r; flat(0.55,2.6,x,z,Math.PI/2-T(ra),0xf4f1ea,'mark',0.06); } } }
-    // lampioni lungo gli anelli (un lato) e lungo i viali
-    const lamp=(x,z,yaw)=>{ const c=0x3a3d44; let g=new THREE.CylinderGeometry(0.07,0.1,4.6,6); g.translate(x,2.3,z); parts.furn.push(paintGeo(g,c,true)); g=new THREE.BoxGeometry(1.1,0.08,0.08); g.translate(0.5,0,0); g.rotateY(yaw); g.translate(x,4.55,z); parts.furn.push(paintGeo(g,c,true));
-      g=new THREE.BoxGeometry(0.5,0.16,0.26); g.translate(1.0,-0.05,0); g.rotateY(yaw); g.translate(x,4.55,z); parts.furn.push(paintGeo(g,0xfff1b8,false)); MIL.solids.push({x,z,r:0.15}); };
-    for(const [R,w] of RINGS){ if(R===258) continue; const rl=R-w/2-0.9, n=Math.round(2*Math.PI*rl/24); for(let i=0;i<n;i++){ const a=(i+0.5)/n*360; if(nearRad(rl,a,8)) continue; const x=CX+Math.cos(T(a))*rl, z=CZ+Math.sin(T(a))*rl; if(!okAt(x,z)||milHit(x,z,0.5)) continue; lamp(x,z,-T(a)); } }
-    for(const ra of MIL.RAD) for(let r=100;r<250;r+=22){ const off=4.4, x=CX+Math.cos(T(ra))*r-Math.sin(T(ra))*off, z=CZ+Math.sin(T(ra))*r+Math.cos(T(ra))*off; if(RINGS.some(([R,w])=>Math.abs(r-R)<w/2+3)||!okAt(x,z)||milHit(x,z,0.5)) continue; lamp(x,z,Math.atan2(Math.cos(T(ra)),Math.sin(T(ra)))); }
-    // Bastioni: due filari d'alberi sulle aiuole ai lati del viale
-    for(const rr of [154.9,169.5]){ const rs=[...MIL.RAD].map(a=>(a+360)%360).sort((a,b)=>a-b), gw=7.5/rr*180/Math.PI; for(let q=0;q<rs.length;q++){ const a0=rs[q]+gw, a1=(q===rs.length-1?rs[0]+360:rs[q+1])-gw; const gr=new THREE.RingGeometry(rr-2.1,rr+2.1,Math.ceil((a1-a0)/2),1,-T(a1),T(a1-a0)); gr.rotateX(-Math.PI/2); gr.translate(CX,0.07,CZ); parts.green.push(paintGeo(gr,0x86b862,false)); } const n=Math.round(2*Math.PI*rr/11); for(let i=0;i<n;i++){ const a=i/n*360; if(nearRad(rr,a,7)) continue; const x=CX+Math.cos(T(a))*rr, z=CZ+Math.sin(T(a))*rr; if(!okAt(x,z)) continue; cyl(0.22,0.28,2.4,x,1.2,z,0x7a5034,5,'furn'); const g=new THREE.IcosahedronGeometry(1.9,0); g.translate(x,3.6,z); parts.green.push(paintGeo(g,pick([0x4fa64a,0x5cb85c,0x3f9a52,0x6aae4c]),true)); MIL.solids.push({x,z,r:0.35}); } } }
-  // ---- cartello all'ingresso
+    const AG=zone!=='c'?angs:(r0<30?[0,1,2,3,4,5].map(i=>((-120+i*60)%360+360)%360):[...Array(12).keys()].map(i=>((-105+i*30)%360+360)%360)).sort((a,b)=>a-b); // dentro la Cerchia niente viali: isolati regolari con vie strette
+    for(let k=0;k<AG.length;k++){ const A0=AG[k], A1=k===AG.length-1?AG[0]+360:AG[k+1], span=A1-A0, len=T(span)*rm, m=zone==='c'?1:Math.max(1,Math.round(len/36));
+      for(let j=0;j<m;j++){ const gap=2.4, da=gap/rm/D, sw=zone==='c'?1.5:4.2, side=(j===0?sw:0)/rm/D, side2=(j===m-1?sw:0)/rm/D;
+        const a0=A0+span*j/m+da+side, a1=A0+span*(j+1)/m-da-side2, b0=r0+gap, b1=r1-gap; if(a1-a0<2.5||b1-b0<6) continue;
+        const [cx,cz]=P(rm,(a0+a1)/2); if(inSite(cx,cz,2)) continue; let ok=true; for(const t of [a0,a1]) for(const rr of [b0,b1]){ const [x,z]=P(rr,t); if(inSite(x,z,-0.5)) ok=false; } if(!ok) continue;
+        const ind=zone==='f' && milAngIn((a0+a1)/2,-5,48) && rm>190; // zona industriale a est
+        parts.side.push(paintGeo(sectorGeo(b0,b1,a0,a1,0.15),0xd9d2c4,true)); curb(b0,b1,a0,a1); MIL.side.push({r0:b0,r1:b1,a0,a1}); nBlk++;
+        const ia0=a0+SWK/rm/D, ia1=a1-SWK/rm/D, i0=b0+SWK, i1=b1-SWK; MIL.blocks.push({r0:i0-0.2,r1:i1+0.2,a0:ia0-0.2,a1:ia1+0.2});
+        if(ind){ const h=7+rnd2()*2; parts.b.push(paintGeo(sectorGeo(i0,i1,ia0,ia1,h,0.15),pick([0xc3c6cc,0xb8bcc4,0xcfc9b8]),true));
+          const n=Math.max(2,Math.round((i1-i0)/4)); for(let t=0;t<n;t++){ const ra=i0+(i1-i0)*t/n, rb=i0+(i1-i0)*(t+1)/n; parts.b.push(paintGeo(sectorGeo(ra,rb-0.2,ia0,ia1,1.4,h+0.15),0x8d939c,true)); } continue; }
+        // corte interna (come i palazzi milanesi) negli isolati profondi: si vede dall'alto il cortile verde
+        const deep=i1-i0>13 && rnd2()<0.7, arc=T(ia1-ia0)*rm, nb=Math.max(1,Math.round(arc/(7+rnd2()*6)));
+        for(let q=0;q<nb;q++){ const qa0=ia0+(ia1-ia0)*q/nb, qa1=ia0+(ia1-ia0)*(q+1)/nb, h=HGT[zone][0]+rnd2()*(HGT[zone][1]-HGT[zone][0]);
+          if(deep && q>0 && q<nb-1){ building(zone,i0,i0+5.5,qa0,qa1,h); building(zone,i1-5.5,i1,qa0,qa1,h*0.9+1); }
+          else building(zone,i0,i1,qa0,qa1,h); }
+        if(deep && nb>2){ const ca0=ia0+(ia1-ia0)/nb, ca1=ia0+(ia1-ia0)*(nb-1)/nb; parts.green.push(paintGeo(sectorGeo(i0+5.6,i1-5.6,ca0+0.1,ca1-0.1,0.1,0.15),0x93c46f,true)); } } } }
+  // ---------- LOTTI SPECIALI: terreno con cordolo e quello che ci sta sopra ----------
+  for(const s of SITES){ const q0=s.r0+2.4, q1=s.r1-2.4; parts.lot.push(paintGeo(sectorGeo(q0,q1,s.a0,s.a1,0.15),s.g,true)); curb(q0,q1,s.a0,s.a1); MIL.side.push({r0:q0,r1:q1,a0:s.a0,a1:s.a1}); }
+  const S=k=>SITES.find(s=>s.k===k), mid=s=>[(s.r0+s.r1)/2,(s.a0+s.a1)/2];
+  const tree=(x,z,sz=1.7)=>{ cyl(0.22,0.28,2.2,x,1.25,z,0x7a5034,5,'furn'); const g=new THREE.IcosahedronGeometry(sz,0); g.translate(x,1.3+sz*1.15,z); parts.green.push(paintGeo(g,pick([0x4fa64a,0x5cb85c,0x3f9a52,0x6aae4c]),true)); MIL.solids.push({x,z,r:0.35}); };
+  const treesIn=(s,n,mar=4,avoid=()=>false)=>{ for(let i=0;i<n;i++){ const r=s.r0+mar+rnd2()*(s.r1-s.r0-2*mar), a=s.a0+(mar/r)/D+rnd2()*(s.a1-s.a0-2*mar/r/D), [x,z]=P(r,a); if(avoid(x,z)) continue; tree(x,z,1.4+rnd2()*0.8); } };
+  // 1 Duomone (al centro della piazza, facciata verso sud-ovest) e la Madonnina
+  { const f=F(0.01,90), c=0xf6f2ea; boxF(f,0,-2,9,12,30,6,c); boxF(f,0,-2,22,12,9,6,c); boxF(f,0,12,12,15,7,7.5,0xfffaf0); boxF(f,0,-16,10,11,6,5.5,c);
+    for(let i=0;i<11;i++) for(const sx of [-5,5]){ const [x,z]=f.at(sx,-15+i*2.7); cyl(0.05,0.45,3.6,x,13.8,z,0xfffaf0,6); }
+    for(let i=0;i<6;i++){ const [x,z]=f.at(-10+i*4,12+3.6); cyl(0.05,0.4,4,x,17,z,0xfffaf0,6); }
+    const [x,z]=f.at(0,-2); cyl(0.2,1.8,10,x,17,z,0xfffaf0,8); cyl(0.5,0.5,1.7,x,22.8,z,0xf0b23a,8);
+    for(let i=-15;i<=12;i+=3){ const [qx,qz]=f.at(0,i); MIL.solids.push({x:qx,z:qz,r:4.7}); } for(const dx of [-9,-5,5,9]){ const [qx,qz]=f.at(dx,-2); MIL.solids.push({x:qx,z:qz,r:4.6}); } for(const dx of [-4,4]){ const [qx,qz]=f.at(dx,12); MIL.solids.push({x:qx,z:qz,r:3.6}); }
+    for(let i=0;i<10;i++){ const a=i/10*360; if(milAngIn(a,60,120)) continue; const [tx,tz]=P(19.5,a); cyl(0.07,0.1,3.8,tx,1.9+0.15,tz,0x3a3d44,6,'furn'); box(0.45,0.3,0.45,tx,4.1,tz,0xfff1b8,0,'furn'); MIL.solids.push({x:tx,z:tz,r:0.15}); } }
+  // 2 Galleria (a croce, si attraversa a piedi) · 3 Teatro alla Scaletta con la sua piazzetta
+  { const f=F(35.5,-90); for(const [dx,dr] of [[-7.5,-6],[7.5,-6],[-7.5,6],[7.5,6]]){ boxF(f,dx,dr,9,9.5,7,4.9,0xf0dcb8); boxF(f,dx,dr,9.4,0.5,7.4,9.9,0xd8c09a); solidF(f,dx,dr,9,7); }
+    boxF(f,0,0,25,0.35,4.2,9.8,0xbfdcef); boxF(f,0,0,6.2,0.35,19,9.8,0xbfdcef); const [x,z]=f.at(0,0); cyl(3.2,3.4,3,x,11.3,z,0xcfe6f2,12); }
+  { const s=S('scala'); const f=F(mid(s)[0]+3,mid(s)[1]); boxF(f,0,0,15,11,10,5.65,0xf3d9a8); boxF(f,0,-5.4,15,1,1.2,8.5,0xe6c88f); for(let i=0;i<6;i++) boxF(f,-6+i*2.4,-5.6,0.6,6,0.6,3.15,0xfff6e4); solidF(f,0,0,15,10); }
+  // 7 Brera: piazzetta con alberi e vicoli (per Antony, più avanti)
+  { const s=S('brera'); treesIn(s,8,3.5); const [r,a]=mid(s), f=F(r,a); boxF(f,0,0,8,9,8,4.65,0xd99a6c); solidF(f,0,0,8,8); }
+  // 4 Castello Sforzato (nel suo prato)
+  { const s=S('castello'), f=F(124,-138.5), c=0xc9653f; for(const [dx,dr,w,d] of [[0,-13,28,2.6],[0,13,28,2.6],[-13,0,2.6,28],[13,0,2.6,28]]){ boxF(f,dx,dr,w,8,d,4.15,c); solidF(f,dx,dr,w,d); }
+    for(const [dx,dr] of [[-13,-13],[13,-13],[-13,13],[13,13]]){ const [x,z]=f.at(dx,dr); cyl(3.2,3.2,11,x,5.65,z,0xb4532f,14); MIL.solids.push({x,z,r:3.3}); }
+    boxF(f,0,-13,6.5,20,6.5,10.15,0xb4532f); boxF(f,0,-13,4.4,1.2,4.4,20.6,0x8a3a22); for(let i=-5;i<=5;i++){ boxF(f,i*2.5,-14.2,0.9,0.9,0.9,8.6,c); boxF(f,i*2.5,14.2,0.9,0.9,0.9,8.6,c); }
+    treesIn(s,18,4,(x,z)=>{ const [qx,qz]=f.at(0,0); return Math.hypot(x-qx,z-qz)<24; }); }
+  // 5 Parco Semplicione con il laghetto · 6 Arco della Pacina in fondo
+  { const s=S('sempione'), f=F(204,-133); const [lx,lz]=f.at(-6,0); const g=new THREE.CircleGeometry(1,28); g.scale(11,6.5,1); g.rotateZ(-f.th); g.rotateX(-Math.PI/2); g.translate(lx,0.17,lz); parts.water.push(paintGeo(g,0x4f9fd0,false)); MIL.solids.push({x:lx,z:lz,r:5.5});
+    for(let i=0;i<16;i++){ const [x,z]=f.at(-26+i*3.4,0); flat(3.5,3,x,z,-f.th+Math.PI/2,0xd8cdb6,'mark',0.17); } // vialetto
+    treesIn(s,75,4,(x,z)=>Math.hypot(x-lx,z-lz)<14);
+    const fa=F(240,-133.5); boxF(fa,-4.5,0,3,11,4,5.65,0xfffaf0); boxF(fa,4.5,0,3,11,4,5.65,0xfffaf0); boxF(fa,0,0,13.5,3,4.4,12.65,0xfffaf0); const [ax,az]=fa.at(0,0); cyl(0.7,0.7,2.4,ax,15.3,az,0x6b5a3c,8); solidF(fa,-4.5,0,3,4); solidF(fa,4.5,0,3,4); }
+  // 10 Tre Torri: il Dritto, lo Storto, il Curvo
+  { const s=S('torri'), f=F(224,-166.5); let [x,z]=f.at(-12,6); box(9,64,9,x,32.15,z,0x7aa0d6); MIL.solids.push({x,z,r:6.4}); [x,z]=f.at(1,-8); for(let i=0;i<17;i++) box(9,3,9,x,1.65+i*3,z,0x5b7fb5,i*0.06); MIL.solids.push({x,z,r:6.6});
+    [x,z]=f.at(13,6); for(let i=0;i<14;i++){ const [bx,bz]=f.at(13+Math.sin(i/13*Math.PI)*4,6); box(8,3,8,bx,1.65+i*3,bz,0x9fb9e2); } MIL.solids.push({x,z,r:6.3}); treesIn(s,10,3,(qx,qz)=>[[-12,6],[1,-8],[13,6]].some(([a,b])=>{ const [px,pz]=f.at(a,b); return Math.hypot(qx-px,qz-pz)<9; })); }
+  // 9 Stazione Centralona (facciata verso il centro) e il fascio dei binari dietro
+  { const f=F(184,-78.5); boxF(f,0,0,46,20,14,10.15,0xe0d6bf); for(const dx of [-15,0,15]) boxF(f,dx,-7.1,10,13,0.6,6.65,0x8a8070); boxF(f,0,0,48,1.2,16,20.7,0xbfb39a); boxF(f,-20,-1,6,24,6,12.15,0xd5c9ae); boxF(f,20,-1,6,24,6,12.15,0xd5c9ae); solidF(f,0,0,46,14);
+    const s=S('binari'); for(let i=0;i<7;i++){ const a=s.a0+2+i*(s.a1-s.a0-4)/6, t=T(a), L=s.r1-s.r0-3, m=s.r0+L/2; for(const o of [-0.75,0.75]){ const g=new THREE.PlaneGeometry(L,0.15); g.rotateX(-Math.PI/2); g.rotateY(-t); g.translate(CX+Math.cos(t)*m-Math.sin(t)*o,0.2,CZ+Math.sin(t)*m+Math.cos(t)*o); parts.mark.push(paintGeo(g,0xcfd2d8,false)); }
+      const [bx,bz]=P(s.r1-2.5,a); box(2.2,1,0.8,bx,0.65,bz,0xd9483e,-t+Math.PI/2); } for(let k=0;k<3;k++){ const a=s.a0+4+k*5, [x,z]=P(212+k*9,a); box(3,3.4,20,x,1.85,z,pick([0xd9483e,0x2f7de1,0xe9e1cf]),-T(a)+Math.PI/2); MIL.solids.push({x,z,r:1.6}); } }
+  // 8 Porta Nuovissima: la torre con la guglia, il Bosco in verticale e la piazza
+  { const f=F(195,-52); let [x,z]=f.at(-8,-6); cyl(6,6,52,x,26.15,z,0x7aa0d6,20); cyl(0.3,1.5,14,x,59,z,0xdfe8f0,8); MIL.solids.push({x,z,r:6.2}); [x,z]=f.at(8,8); box(9,40,9,x,20.15,z,0x9fb3c8); for(let i=0;i<12;i++){ const [bx,bz]=f.at(8+(i%2?3.4:-3.4),8+(i%3-1)*3); cyl(1.7,1.7,1.5,bx,4+i*3.1,bz,0x4f9a45,8,'green'); } MIL.solids.push({x,z,r:6.5});
+    [x,z]=f.at(-6,12); box(8,28,8,x,14.15,z,0x5b7fb5); MIL.solids.push({x,z,r:5.8}); const [px,pz]=f.at(6,-10); const g=new THREE.CircleGeometry(6,32); g.rotateX(-Math.PI/2); g.translate(px,0.17,pz); parts.water.push(paintGeo(g,0x8fd0ee,false)); }
+  // giardini con la fontana
+  { const s=S('giardini'); treesIn(s,22,3.5); }
+  // 12 Darsena (vasca grande) con le alzaie
+  { const s=S('darsena'), w={r0:172.4,r1:190.6,a0:103.9,a1:128.9}; parts.water.push(paintGeo(sectorGeo(w.r0,w.r1,w.a0,w.a1,0.05,0.12),0x4f9fd0,false)); MIL.wet.push(w); 
+    for(let i=0;i<4;i++){ const [x,z]=P(181.5,110+i*4.5); box(1.4,0.5,3.6,x,0.35,z,pick([0xe0483e,0xfffaf0,0x2f7de1]),-T(110+i*4.5)); } } // barchette ormeggiate
+  // 13 Università Bocconcina
+  { const f=F(208,68); boxF(f,0,2,26,12,9,6.15,0xf3d9a8); boxF(f,-11,-3,6,12,4,6.15,0xead1a0); solidF(f,0,2,26,9); solidF(f,-11,-3,6,4); }
+  // 14 concessionario (vetrine, auto in esposizione) e zona industriale
+  { const f=F(237,33); boxF(f,0,6,20,6,9,3.15,0xfaf7f0); boxF(f,0,1.4,20,4,0.2,2.9,0x9fc7e6); boxF(f,0,6,21,1.6,10,6.9,0xffd84d); solidF(f,0,6,20,9);
+    for(let i=0;i<4;i++){ const [x,z]=f.at(-8+i*5.3,-6); box(1.8,1.2,3.8,x,0.75,z,pick([0xe0483e,0x2f7de1,0x2b2b31,0xf0f0f0]),f.th+Math.PI/2); MIL.solids.push({x,z,r:1.5}); } }
+  // ⛽ benzinaio (si fa il pieno con il karma)
+  { const f=F(208,169); boxF(f,0,-1,18,0.5,12,5.4,0xfaf7f0); boxF(f,0,-1,18.2,1,12.2,5.9,0x2f9b5a); for(const [dx,dr] of [[-7,-5],[7,-5],[-7,3],[7,3]]){ const [x,z]=f.at(dx,dr); box(0.45,5.2,0.45,x,2.75,z,0xd9d2c4); MIL.solids.push({x,z,r:0.3}); }
+    for(const dx of [-3,3]){ const [x,z]=f.at(dx,-1); box(0.9,1.7,1.4,x,1,z,0xe0483e,f.th); MIL.solids.push({x,z,r:0.8}); } boxF(f,0,9,8,3.6,5,1.95,0xf4efe6); solidF(f,0,9,8,5);
+    const [px,pz]=f.at(0,-1); MIL.fuel={x:px,z:pz,r:9};
+    const [sx,sz]=f.at(10.5,-8); box(0.3,4.5,0.3,sx,2.4,sz,0x2a2233); box(2.4,1.6,0.3,sx,5.1,sz,0x2f9b5a,f.th); }
+  // 11 Stadio San Sirolo: fuori città in fondo al viale, con il parcheggio
+  { const [x,z]=P(330,-152.1); MIL.stadium=[x,z]; const pg=new THREE.CylinderGeometry(50,50,0.15,48); pg.translate(x,0.075,z); parts.lot.push(paintGeo(pg,0x7d8088,true)); MIL.sideC.push({x,z,r:50});
+    const g=new THREE.CylinderGeometry(1,1,15,40,1,true); g.scale(31,1,22); g.rotateY(-T(-152.1)); g.translate(x,7.65,z); parts.b.push(paintGeo(g,0xd8d2c2,true)); const g2=g.clone(); g2.scale(0.94,1,0.92); parts.b.push(paintGeo(g2,0xcfc6b4,true));
+    const pf=new THREE.PlaneGeometry(40,26); pf.rotateX(-Math.PI/2); pf.rotateY(-T(-152.1)); pf.translate(x,0.2,z); parts.green.push(paintGeo(pf,0x6fbf5a,false));
+    const f=F(330,-152.1); for(const [dx,dr] of [[-18,-27],[18,-27],[-18,27],[18,27]]){ const [tx,tz]=f.at(dx,dr); cyl(3,3,19,tx,9.65,tz,0xe0483e,14); MIL.solids.push({x:tx,z:tz,r:3.1}); } MIL.solids.push({x,z,r:31});
+    for(let i=0;i<10;i++){ const [qx,qz]=f.at(-36+i*8,-38); flat(0.2,5,qx,qz,-f.th,0xfffaf0,'mark',0.17); } }
+  // ---------- STRADE: mezzerie, strisce pedonali, lampioni, viale alberato sui Bastioni ----------
+  { const okAt=(x,z)=>!inSite(x,z,1) && !MIL.canals.some(c=>{ const [r,a]=milPolar(x,z); return r>c.r0-1&&r<c.r1+1&&Math.abs(Math.sin((((a-c.a)%360+540)%360-180)*D)*r)<7.5; });
+    for(const [R,w] of RINGS){ if(R===162||R===258||R===72.4||R===89.6) continue; const n=Math.round(2*Math.PI*R/6); for(let i=0;i<n;i++){ const a=i/n*360; if(nearRad(R,a,6)) continue; const [x,z]=P(R,a); if(!okAt(x,z)) continue; flat(0.25,3,x,z,-T(a),0xfffaf0); } }
+    for(const ra of RAD){ for(let r=94;r<(ra===-152.1?296:252);r+=6){ if(RINGS.some(([R,w])=>Math.abs(r-R)<w/2+2.5)) continue; const [x,z]=P(r,ra); flat(0.25,3,x,z,Math.PI/2-T(ra),0xfffaf0); } }
+    for(const ra of RAD) for(const [R,w] of RINGS){ if(R<70) continue; for(const sg of [-1,1]){ const a=ra+(3.5+2.2)/R/D*sg, [cx,cz]=P(R,a); if(!okAt(cx,cz)&&R!==162&&R!==258) continue; for(let k=-w/2+0.6;k<=w/2-0.5;k+=1.1){ const [x,z]=P(R+k,a); flat(0.55,2.6,x,z,-T(a),0xf4f1ea,'mark',0.06); } }
+      for(const sg of [-1,1]){ const r=R+sg*(w/2+2.0); if(r>252&&R!==258) continue; for(let k=-3.0;k<=3.0;k+=1.1){ const [x,z]=P(r,ra+k/r/D); flat(0.55,2.6,x,z,Math.PI/2-T(ra),0xf4f1ea,'mark',0.06); } } }
+    const lamp=(x,z,yaw)=>{ const c=0x3a3d44; let g=new THREE.CylinderGeometry(0.07,0.1,4.6,6); g.translate(x,2.45,z); parts.furn.push(paintGeo(g,c,true)); g=new THREE.BoxGeometry(1.1,0.08,0.08); g.translate(0.5,0,0); g.rotateY(yaw); g.translate(x,4.7,z); parts.furn.push(paintGeo(g,c,true));
+      g=new THREE.BoxGeometry(0.5,0.16,0.26); g.translate(1.0,-0.05,0); g.rotateY(yaw); g.translate(x,4.7,z); parts.furn.push(paintGeo(g,0xfff1b8,false)); MIL.solids.push({x,z,r:0.15}); };
+    for(const [R,w] of RINGS){ if(R===258) continue; const rl=R-w/2-0.9, n=Math.round(2*Math.PI*rl/24); for(let i=0;i<n;i++){ const a=(i+0.5)/n*360; if(nearRad(rl,a,8)) continue; const [x,z]=P(rl,a); if(!milSector(MIL.side,x,z)||inSite(x,z,0.5)||milHit(x,z,0.6)) continue; lamp(x,z,-T(a)); } }
+    for(const ra of RAD) for(let r=100;r<250;r+=22){ const off=4.4, x=CX+Math.cos(T(ra))*r-Math.sin(T(ra))*off, z=CZ+Math.sin(T(ra))*r+Math.cos(T(ra))*off; if(RINGS.some(([R,w])=>Math.abs(r-R)<w/2+3)||!milSector(MIL.side,x,z)||milHit(x,z,0.6)) continue; lamp(x,z,Math.atan2(Math.cos(T(ra)),Math.sin(T(ra)))); }
+    for(const rr of [154.9,169.5]){ const rs=[...RAD,127.8].map(a=>(a+360)%360).sort((a,b)=>a-b), gw=7.5/rr/D; for(let q=0;q<rs.length;q++){ const a0=rs[q]+gw, a1=(q===rs.length-1?rs[0]+360:rs[q+1])-gw; ringSeg(rr-2.1,rr+2.1,a0,a1,0.07,0x86b862,'green'); }
+      const n=Math.round(2*Math.PI*rr/11); for(let i=0;i<n;i++){ const a=i/n*360; if(nearRad(rr,a,7)||Math.abs(((a-127.8)%360+540)%360-180)*D*rr<8) continue; const [x,z]=P(rr,a); tree(x,z,1.9); } } }
+  // ---------- cartello all'ingresso ----------
   { const x=CX-300, z=CZ-11; box(0.3,3,0.3,x-3,1.5,z,0x2a2233); box(0.3,3,0.3,x+3,1.5,z,0x2a2233); const sp=new THREE.Mesh(new THREE.PlaneGeometry(8,2.2),new THREE.MeshBasicMaterial({map:canvasTex(512,140,(g)=>{ g.fillStyle='#fffaf0'; g.fillRect(0,0,512,140); g.strokeStyle='#c43c2b'; g.lineWidth=14; g.strokeRect(7,7,498,126); g.fillStyle='#2a2233'; g.font='bold 74px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('MILANOPOLIS',256,74); })})); sp.position.set(x,3.6,z-0.2); sp.rotation.y=-Math.PI/2; grp.add(sp); const b2=sp.clone(); b2.rotation.y=Math.PI/2; b2.position.x+=0.02; grp.add(b2); }
-  // ---- tutto in pochi pezzi (pochi disegni per fotogramma, leggero sul telefono)
+  // ---------- tutto in pochi pezzi (pochi disegni per fotogramma, leggero sul telefono) ----------
   const mk=(list,cast,recv,ol)=>{ if(!list.length) return; const g=mergeGeometries(list); g.computeBoundingSphere(); const m=new THREE.Mesh(g,VC); m.castShadow=cast; m.receiveShadow=recv; if(ol&&!ECO) withOutline(m,0.04); grp.add(m); return m; };
   { const tile=(draw,rx,ry)=>{ const t=canvasTex(128,128,draw); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(1/rx,1/ry); t.offset.y=1-1/ry; return t; };
     const WIN={ // centro: finestre alte con persiane verdi · mezzo: balconi con ringhiera · fuori: finestre larghe moderne
@@ -759,10 +800,9 @@ function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=perf
     const shopTex=canvasTex(512,128,(g,w,h)=>{ const aw=['#c43c2b','#2f6b4f','#264b80','#d58a1f','#7a3b6b','#3b8a8a','#9a2f2f','#4a4f57']; for(let i=0;i<8;i++){ const x=i*64; g.fillStyle='#d6cfc3'; g.fillRect(x,0,64,128); g.fillStyle='#2d3440'; g.fillRect(x+6,46,36,74); g.fillStyle='#57708a'; g.fillRect(x+8,48,32,70); g.fillStyle='#3a3029'; g.fillRect(x+46,52,13,68); for(let k=0;k<6;k++){ g.fillStyle=k%2?'#f5efe4':aw[i]; g.fillRect(x+4+k*9.5,24,9.5,20); } g.fillStyle=aw[i]; g.fillRect(x+4,40,57,6); g.fillStyle='#efe6d6'; g.fillRect(x+6,6,52,13); g.fillStyle=aw[i]; g.fillRect(x+10,10,44,5); } });
     shopTex.wrapS=shopTex.wrapT=THREE.RepeatWrapping; shopTex.repeat.set(1/32,1/3.6); shopTex.offset.y=1-1/3.6;
     for(const k of ['wc','wm','wf','shop']){ if(!parts[k].length) continue; const g=mergeGeometries(parts[k]); g.computeBoundingSphere(); const m=new THREE.Mesh(g,toon({vertexColors:true,map:k==='shop'?shopTex:WIN[k]})); m.castShadow=m.receiveShadow=true; if(!ECO&&k!=='shop') withOutline(m,0.04); grp.add(m); } }
-  mk(parts.furn,false,false,false);
-  mk(parts.green,true,true,false); mk(parts.road,false,true,false); mk(parts.mark,false,false,false); mk(parts.side,false,true,false); mk(parts.water,false,false,false); mk(parts.b,true,true,true);
+  mk(parts.furn,false,false,false); mk(parts.green,true,true,false); mk(parts.road,false,true,false); mk(parts.lot,false,true,false); mk(parts.mark,false,false,false); mk(parts.side,false,true,false); mk(parts.water,false,false,false); mk(parts.b,true,true,true);
   MIL.grid=new Map(); for(const o of MIL.solids){ const x0=o.r?o.x-o.r:o.x0, x1=o.r?o.x+o.r:o.x1, z0=o.r?o.z-o.r:o.z0, z1=o.r?o.z+o.r:o.z1; for(let ix=Math.floor((x0-2)/8);ix<=Math.floor((x1+2)/8);ix++) for(let iz=Math.floor((z0-2)/8);iz<=Math.floor((z1+2)/8);iz++){ const k=ix*4096+iz; let c=MIL.grid.get(k); if(!c) MIL.grid.set(k,c=[]); c.push(o); } }
-  grp.visible=false; console.log('Milanopolis costruita in',Math.round(performance.now()-T0),'ms ·',MIL.blocks.length,'isolati'); }
+  grp.visible=false; console.log('Milanopolis costruita in',Math.round(performance.now()-T0),'ms ·',nBlk,'isolati'); }
 // 🚗 il viaggio: scenetta durante il caricamento, poi sei all'ingresso di Milanopolis in auto
 function travelTo(dest){ const f=document.getElementById('fade'); HOME.busy=true;
   f.firstElementChild.innerHTML='<div class="trip"><div class="tsky"></div><div class="troad"><div class="tcar"><i></i></div></div><div class="ttxt">🚗 In viaggio verso <b>'+(dest==='milano'?'Milanopolis':'Borgo Karma')+'</b>…</div></div>'; f.hidden=false; f.style.opacity=1;
@@ -775,7 +815,15 @@ function enterMilano(){ MIL.on=true; MIL.group.visible=true; HOME.active=false; 
   copMsgT=7; msg.innerHTML='🏙️ <b>Benvenuto a Milanopolis!</b> È un\'anteprima: la città è ancora vuota (niente traffico, passanti e Grigio). Gira in auto o a piedi, cerca il Duomone, il Castello, le Tre Torri e i Navigli. 🏠 per tornare a casa.'; }
 const MIL_FUEL=10, MIL_LV=15; // Milanopolis si sblocca al livello 15 (Teo, 27/11) // il viaggio costa il 10% di benzina (da tarare)
 function updateMilano(dt){ if(player.mode!=='foot') updateStamina(dt,'ride'); if(player.mode==='foot') updatePlayer(dt); else updateRider(dt); TT+=dt;
-  try{ updateDayCycle(dt); }catch(e){} try{ updateActionUI(); }catch(e){} talkCard.hidden=true; try{ updateDust(dt); }catch(e){} }
+  try{ updateDayCycle(dt); }catch(e){} try{ updateActionUI(); updateFuelUI(); }catch(e){} talkCard.hidden=true; try{ updateDust(dt); }catch(e){} }
+// ⛽ benzinai: a Borgo Karma e a Milanopolis. In auto, fermo sotto la pensilina → "Fai il pieno" (3 karma per ogni 1%)
+const fuelCard=document.getElementById('fuelCard'), fuelBtn=document.getElementById('fuelBtn'); let fuelLbl='-';
+function atFuel(){ const v=player.veh; if(!v||v.name!=='auto'||Math.abs(v.speed)>2) return false; if(MIL.on) return !!MIL.fuel&&Math.hypot(v.x-MIL.fuel.x,v.z-MIL.fuel.z)<MIL.fuel.r; return Math.hypot(v.x+83,v.z-38)<7; }
+function updateFuelUI(){ let t=''; if(atFuel()){ const need=Math.ceil(100-HOME.fuel); t=need<=0?'⛽ Serbatoio pieno':'⛽ Fai benzina · '+Math.min(need*FUEL_PRICE,Math.floor(G.karma/FUEL_PRICE)*FUEL_PRICE)+' karma'; }
+  fuelCard.hidden=!t; if(t!==fuelLbl){ fuelLbl=t; fuelBtn.textContent=t; } }
+fuelBtn.onclick=()=>{ if(!atFuel()) return; const need=Math.ceil(100-HOME.fuel); if(need<=0) return; const n=Math.min(need,Math.floor(G.karma/FUEL_PRICE));
+  if(n<=0){ copMsgT=3; msg.innerHTML='⛽ Ti servono almeno <b>'+FUEL_PRICE+' karma</b> per 1% di benzina (ne hai '+Math.round(G.karma)+').'; return; }
+  G.karma-=n*FUEL_PRICE; HOME.fuel=Math.min(100,HOME.fuel+n); saveHome(); try{ sfx('coin'); }catch(e){} fuelLbl='-'; copMsgT=4; msg.innerHTML='⛽ <b>+'+n+'% di benzina</b> per '+(n*FUEL_PRICE)+' karma. Serbatoio: '+Math.round(HOME.fuel)+'%'+(HOME.fuel<100?' (il karma non bastava per il pieno)':'')+'.'; };
 function leaveMilano(){ if(!MIL.on) return false; MIL.on=false; if(MIL.group) MIL.group.visible=false; return true; }
 
 const boxDist=(b,x,z)=>Math.hypot(Math.max(b.x0-x,0,x-b.x1),Math.max(b.z0-z,0,z-b.z1));
@@ -955,7 +1003,7 @@ for(const G of GARAGES){ const yaw=Math.PI/2, W=9, Dp=13, H=5.2; // porta verso 
   tex.wrapS=tex.wrapT=THREE.ClampToEdgeWrapping; const sg=new THREE.Mesh(new THREE.PlaneGeometry(6,1.5),new THREE.MeshBasicMaterial({map:tex})); const [sx,sz]=loc(G.x,G.z,yaw,0,Dp/2+0.22); sg.position.set(sx,H+0.9,sz); sg.rotation.y=yaw; scene.add(sg);
   const [ix,iz]=loc(G.x,G.z,yaw,0,-0.5); G.ix=ix; G.iz=iz; }
 flush('garage',{outline:0.04});
-const nearGarage=(x,z)=>GARAGES.some(G=>Math.hypot(G.x-x,G.z-z)<16 || (Math.abs(G.z-z)<6 && x>G.x && x<-56));
+const nearGarage=(x,z)=>Math.hypot(-84-x,38-z)<12 || (Math.abs(38-z)<5 && x>-84 && x<-56) || GARAGES.some(G=>Math.hypot(G.x-x,G.z-z)<16 || (Math.abs(G.z-z)<6 && x>G.x && x<-56));
 
 // ---------- campagna intorno al paese ----------
 for(let n=0,g=0;n<(LOW?60:110)&&g<4000;g++){ const x=-120+rnd()*240, z=-130+rnd()*190; if((x>-70&&x<70&&z>-70) || nearGarage(x,z)) continue; n++; (rnd()<0.4?pine:tree)(x,z,0,0.8+rnd()*0.6); }
@@ -979,6 +1027,14 @@ const nearAny=(x,z,list,r)=>list.some(([a,b])=>Math.hypot(a-x,b-z)<r);
   ST.forEach(([x,z],i)=>{ if(!inBlock(x,z) || (PK&&x>PK.x0-SW&&x<PK.x1+SW&&z>PK.z0-SW&&z<PK.z1+SW) || nearAny(x,z,KIOSK,4) || (LOW&&i%2)) return;
     put('decal',new THREE.BoxGeometry(1.3,0.03,1.3),mat4(x,0.18,z),0x6b4a32); /* terra dell'aiuola 1,5 cm sopra il marciapiede (prima alla stessa altezza: sfarfallava a strisce) */ for(const [ox,oz,w,d] of [[0,0.68,1.42,0.08],[0,-0.68,1.42,0.08],[0.68,0,0.08,1.42],[-0.68,0,0.08,1.42]]) put('decal',new THREE.BoxGeometry(w,0.06,d),mat4(x+ox,0.17,z+oz),0x8f8a80);
     tree(x,z,0.15,0.62+drnd()*0.12); }); }
+// ⛽ BENZINAIO di Borgo Karma (Teo, 28/11): fuori dalla siepe a ovest, accanto alla carrozzeria; si fa il pieno pagando il karma
+{ const X=-84, Z=38; const pl=(w,d,x,z,y,col)=>{ const g=new THREE.PlaneGeometry(w,d); g.rotateX(-Math.PI/2); put('fuelst',g,mat4(x,y,z),col); };
+  pl(22,16,X,Z,0.025,0x8f939a); pl(16,7,X+15,Z,0.022,0x5a5f6c); for(let i=0;i<5;i++) pl(0.2,2.4,X-6+i*3,Z-6.2,0.03,0xfffaf0);
+  put('fuelst',new THREE.BoxGeometry(13,0.5,9.5),mat4(X+1,5.2,Z),0xfaf7f0); put('fuelst',new THREE.BoxGeometry(13.2,1,9.7),mat4(X+1,5.7,Z),0x2f9b5a);
+  for(const [dx,dz] of [[-4.5,-3.8],[6.5,-3.8],[-4.5,3.8],[6.5,3.8]]){ put('fuelst',new THREE.BoxGeometry(0.45,5,0.45),mat4(X+dx,2.5,Z+dz),0xd9d2c4); OBST.push({x:X+dx,z:Z+dz,r:0.3}); }
+  for(const dz of [-1.8,1.8]){ put('fuelst',new THREE.BoxGeometry(1.3,1.7,0.9),mat4(X+1,0.85,Z+dz),0xe0483e); put('fuelst',new THREE.BoxGeometry(0.9,0.5,0.95),mat4(X+1,1.35,Z+dz),0xfaf7f0); OBST.push({x:X+1,z:Z+dz,r:0.75}); }
+  put('fuelst',new THREE.BoxGeometry(4.5,3.2,5.5),mat4(X-8.5,1.6,Z),0xf4efe6); put('fuelst',new THREE.BoxGeometry(4.7,0.4,5.7),mat4(X-8.5,3.4,Z),0x2f9b5a); BOXES.push({x0:X-10.75,x1:X-6.25,z0:Z-2.75,z1:Z+2.75});
+  put('fuelst',new THREE.BoxGeometry(0.3,4.5,0.3),mat4(X+9,2.25,Z-7),0x2a2233); put('fuelst',new THREE.BoxGeometry(0.3,1.8,2.6),mat4(X+9,5.1,Z-7),0x2f9b5a);  flush('fuelst',{outline:0.04}); }
 // 2) cestini accanto a un lampione sì e uno no, e chiusini sulle strade
 { let k=0; for(const vx of VX) for(let z=-56;z<=50;z+=14){ if(HZ.some(h=>Math.abs(h-z)<8)) continue; if((k++)%2) continue; const x=vx+SW+0.6, zz=z+1.3; if(!inBlock(x,zz)) continue;
     put('bins',new THREE.CylinderGeometry(0.26,0.22,0.78,12),mat4(x,0.15+0.39,zz),0x3f7a52); put('bins',new THREE.CylinderGeometry(0.29,0.29,0.06,12),mat4(x,0.15+0.8,zz),0x2f4a3a); OBST.push({x,z:zz,r:0.3}); }
@@ -1016,7 +1072,7 @@ function edgeLine(fixed,isX,from,to,gaps){ // isX: la linea corre lungo x (bordo
   const G=[...gaps].sort((a,b)=>a[0]-b[0]); let cur=from; for(const [c,h] of G){ const a=c-h, b=c+h; if(a>cur) { isX?hedgeRun(cur,fixed,a,fixed):hedgeRun(fixed,cur,fixed,a); } if(a>from && a<to) isX?pillar(a,fixed):pillar(fixed,a); if(b<to) isX?pillar(b,fixed):pillar(fixed,b); cur=Math.max(cur,b); }
   if(cur<to) isX?hedgeRun(cur,-EDGE,to,-EDGE):hedgeRun(fixed,cur,fixed,to); }
 { const roadGaps=HZ.filter(h=>h<50).map(h=>[h,5.2]);
-  edgeLine(-EDGE,false,-EDGE,PROM.z0-1,[...roadGaps,...GARAGES.map(G=>[G.z,6.5])]); // ovest (varchi anche per officina e carrozzeria)
+  edgeLine(-EDGE,false,-EDGE,PROM.z0-1,[...roadGaps,...GARAGES.map(G=>[G.z,6.5]),[38,8]]); // ovest (varchi anche per officina e carrozzeria)
   edgeLine(EDGE,false,-EDGE,PROM.z0-1,[...roadGaps,[-40,4.5]]); // est
   edgeLine(-EDGE,true,-EDGE,EDGE,VX.map(v=>[v,5.2])); // nord
   gateArch(-EDGE,-20,false); gateArch(EDGE,20,false); gateArch(-20,-EDGE,true); gateArch(20,-EDGE,true); }
@@ -3364,7 +3420,7 @@ function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } i
   try{ updateAnthony(dt); }catch(e){ console.warn('Anthony',e); } try{ updateLeo(dt); }catch(e){ console.warn('Leo',e); } try{ updateTrafficSound(dt); }catch(e){}
   if(player.mode!=='foot'||player.taxi||player.ko>0||player.arrestT>0) updateStamina(dt,'ride');
   if(player.arrestT>0 && !player.taxi) updateArrest(dt); else if(player.taxi) updateTaxiRide(dt); else if(player.ko>0) updatePlayerKO(dt); else if(player.mode==='foot') updatePlayer(dt); else updateRider(dt);
-  TT+=dt; updateWeather(dt); updateDayCycle(dt); updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); } if(TR.on) updateTraining(dt); updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
+  TT+=dt; updateWeather(dt); updateDayCycle(dt); updateAmbulance(dt); updateLights(TT); updateTraffic(dt,TT); updatePeds(dt); updateGrigio(dt); if(player.taxi||player.ko>0||player.arrestT>0){ talkCard.hidden=true; actCard.hidden=true; lastAct='-'; } else { updateTalkUI(dt); updateActionUI(); updateFuelUI(); } if(TR.on) updateTraining(dt); updateTaxiUI(); updateTowUI(); updateCharges(dt); updateDust(dt); }
 
 // ======================= 🏠 CASA = IL MENU DEL GIOCO (alla GTA): giri per casa e ogni oggetto è una voce =======================
 // TV = tutorial · tapis roulant = minigioco del cardio (stamina più lunga) · armadio = vestiti · doccia e letto = stamina · garage = pieno di benzina · porta = esci a giocare
@@ -3526,7 +3582,7 @@ function updateDoor(dt){ if(HOME.doorT===undefined) return; HOME.doorT+=dt; cons
 homeBtn.onclick=()=>{ const s=HOME.spot; if(!s||HOME.busy) return; ({tv:openTV,tread:startTread,wardrobe:()=>openEditor('wardrobe'),mirror:()=>openEditor('mirror'),shower:takeShower,bed:sleepBed,car:goFuel,door:()=>{ HOME.viaGarage=false; askExit(); },gdoor:()=>{ HOME.viaGarage=true; askExit(); },pc:openPC,doni:()=>openDoni(-1)})[s.id](); };
 addEventListener('keydown',e=>{ if(HOME.active && (e.code==='KeyE'||e.code==='Enter') && !e.repeat && !HOME.busy) homeBtn.onclick(); });
 // --- entrare / uscire
-const homeTopEls=()=>['compass','greyHud','buyCard','taxiCard','useCard','talkCard','actCard','radioCard'].map(id=>document.getElementById(id)).filter(Boolean);
+const homeTopEls=()=>['compass','greyHud','buyCard','taxiCard','useCard','talkCard','actCard','radioCard','fuelCard'].map(id=>document.getElementById(id)).filter(Boolean);
 const HOWTO_HOME='🏠 <b>Casa:</b> muoviti come in paese (levetta, frecce o clic). Avvicinati agli oggetti e premi il pulsante che compare (o <b>E</b>): 📺 TV tutorial · 💻 PC col blog · 🏃 tapis roulant · 👕 armadio · 🚿 doccia · 🛏️ letto · ⛽ garage · 🚪 porta = esci a giocare.'; let HOWTO_TOWN=null;
 function townVisible(on){ for(const p of PEDS){ if(!on){ p.g.visible=false; if(p.icon) p.icon.visible=false; if(p.stars) p.stars.visible=false; } } for(const c of TRAFFIC) c.m.visible=on; for(const c of POLICE){ c.g.visible=on; } for(const v of veh) v.group.visible=on&&(v.name!=='auto'||HOME.carOut); }
 function goHome(first){ if(TR.on) trainStop(); const wasMil=leaveMilano(); SHOP.auto=null; if(!first&&HOME.carOut){ if(HOME.fuel<=0) callTow(true); else { if(player.veh&&player.veh.name==='auto'){ player.veh.speed=0; exit(); } HOME.carOut=false; } } townVisible(false); syncCar(); const hw=document.getElementById('howto'); if(HOWTO_TOWN===null) HOWTO_TOWN=hw.innerHTML; hw.innerHTML=HOWTO_HOME; if(player.taxi) leaveTaxi(); if(player.veh){ player.veh.speed=0; exit(); } if(player.ko>0){ player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,player.yaw,0); }
@@ -4027,7 +4083,7 @@ function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; f
   if(settle-->0) return;
   let np=PR; if(fps<FPS_CAP*0.93 && PR>PR_MIN) np=Math.max(PR_MIN,PR-0.1); else if(fps>FPS_CAP*0.99 && PR<PR_MAX) np=Math.min(PR_MAX,PR+0.05);
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
-window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={MIL,milHit,buildMilanopolis,travelTo,askExit,camera,matchScore,BOARD,staRefillFx,openDoni,DONI_MESH,staCap,get hurt(){return G.hurt;},greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
+window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={MIL,milHit,renderer,scene,buildMilanopolis,travelTo,askExit,camera,matchScore,BOARD,staRefillFx,openDoni,DONI_MESH,staCap,get hurt(){return G.hurt;},greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
 window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…');
 Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e)),umLoad('gente/').catch(e=>{ console.warn('gente non caricata, uso i corpi disegnati',e); window.__umErr=String(e&&e.message||e); }),carsLoad('auto/').catch(e=>console.warn('auto nuove non caricate, uso quelle di prima',e))]).then(()=>{
   if(!UM.ready) setTimeout(()=>{ try{ msg.innerHTML='⚠️ <b>Persone nuove non caricate</b> ('+(window.__umErr||'?')+'): mandami uno screenshot di questo messaggio.'; }catch(e){} },4000);
