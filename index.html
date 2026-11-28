@@ -23,8 +23,8 @@
   --display:"Fredoka", system-ui, sans-serif; --body:"Inter", system-ui, sans-serif; }
 html,body{height:100%}
 body{background:#bfe6ff;color:var(--ink);font-family:var(--body);margin:0;overflow:hidden}
-#c{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
-#vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 58%,rgba(30,20,50,.22) 100%)}
+#c{position:fixed;top:0;right:0;bottom:0;left:0;width:100%;height:100%;display:block;touch-action:none}
+#vig{position:fixed;top:0;right:0;bottom:0;left:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 58%,rgba(30,20,50,.22) 100%)}
 .hud{position:fixed;left:0;right:0;pointer-events:none;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .top{top:0;padding-top:calc(14px + env(safe-area-inset-top,0px))}
@@ -49,7 +49,7 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 .right{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;align-items:flex-end;z-index:3}
 .top .row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start}
 #msg{max-width:440px}
-#load{position:fixed;inset:0;display:grid;place-items:center;background:#c9ecff;z-index:5;font:600 20px var(--display);transition:opacity .5s}
+#load{position:fixed;top:0;right:0;bottom:0;left:0;display:grid;place-items:center;background:#c9ecff;z-index:5;font:600 20px var(--display);transition:opacity .5s}
 #hp{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(26px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;align-items:center;z-index:4;background:var(--paper);border:2.5px solid var(--line);border-radius:999px;padding:4px 12px;box-shadow:3px 3px 0 var(--line)}
 #hp .bar{width:140px;height:12px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
 #wanted{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(66px + env(safe-area-inset-bottom,0px));z-index:4;background:var(--paper);border:2.5px solid var(--line);border-radius:999px;padding:3px 12px;font-size:18px;box-shadow:3px 3px 0 var(--line)}
@@ -60,9 +60,9 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #greyHud{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(172px + env(safe-area-inset-bottom,0px));z-index:3;background:var(--paper);border:2.5px solid var(--line);border-radius:999px;padding:4px 12px;font-size:14px;box-shadow:3px 3px 0 var(--line)}
 .tools{display:grid!important;grid-template-columns:repeat(3,auto);gap:6px}.tools button{padding:6px 10px;font-size:17px}
 #fps{position:fixed;right:max(10px,env(safe-area-inset-right,0px));top:calc(48px + env(safe-area-inset-top,0px));z-index:6;font:600 11px var(--body);color:#2a2233;background:rgba(255,250,240,.75);border-radius:999px;padding:2px 8px;pointer-events:none}
-.menuov{position:fixed;inset:0;z-index:13;display:grid;place-items:center;background:rgba(20,15,30,.35);padding:16px}.menuov[hidden]{display:none}.menuov .card{width:min(400px,100%)}.menuov h3{margin:0 0 10px;font:700 20px var(--display)}.menuov h3 small{display:block;font:500 13px var(--body);opacity:.8;margin-top:4px}
+.menuov{position:fixed;top:0;right:0;bottom:0;left:0;z-index:13;display:grid;place-items:center;background:rgba(20,15,30,.35);padding:16px}.menuov[hidden]{display:none}.menuov .card{width:min(400px,100%)}.menuov h3{margin:0 0 10px;font:700 20px var(--display)}.menuov h3 small{display:block;font:500 13px var(--body);opacity:.8;margin-top:4px}
 .exl{display:grid;gap:8px;margin-bottom:10px}.exl button{display:flex;flex-direction:column;align-items:flex-start;text-align:left;border-radius:14px;padding:10px 14px}.exl button small{font:500 12.5px var(--body);opacity:.9}.exl button:disabled{opacity:.45}#exWalk{background:#3fa66b}
-#pcUI{position:fixed;inset:0;z-index:13;display:grid;place-items:center;background:rgba(20,15,30,.35);padding:16px}#pcUI[hidden]{display:none}#pcUI .card{width:min(440px,100%);max-height:calc(100vh - 32px);overflow:auto}
+#pcUI{position:fixed;top:0;right:0;bottom:0;left:0;z-index:13;display:grid;place-items:center;background:rgba(20,15,30,.35);padding:16px}#pcUI[hidden]{display:none}#pcUI .card{width:min(440px,100%);max-height:calc(100vh - 32px);overflow:auto}
 #pcUI h3{margin:8px 0 4px;font:700 22px var(--display)}#pcUI p{color:var(--ink);font-size:14px}.abil{display:grid;gap:5px;margin:8px 0}.abil div{display:flex;gap:8px;align-items:baseline;font-size:13.5px}.abil span{flex:0 0 108px;font:600 14px var(--display)}.abil a{color:#d2402a}.pcbar{display:flex;gap:6px;align-items:center;font-size:12px;background:#ece4d6;border-radius:8px;padding:4px 8px}.pcbar span{color:#e0483e}.pcbar span+span{color:#ffd84d}.pcbar span+span+span{color:#3fa66b}.pcbar b{margin-left:6px;font-weight:600}
 .btnlink{flex:1;text-align:center;text-decoration:none;font:600 15px var(--display);background:var(--accent);color:#fff;border:2.5px solid var(--line);border-radius:999px;padding:7px 15px;box-shadow:2px 2px 0 var(--line)}
 /* 💬 abilità nella nuvoletta a fumetto sopra la persona (Teo 28/11) */
@@ -103,21 +103,21 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 @keyframes tscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes tdash{from{transform:translateX(0)}to{transform:translateX(-68px)}}
 @keyframes tbob{from{transform:translateX(-50%) scaleX(-1) translateY(0)}to{transform:translateX(-50%) scaleX(-1) translateY(-3px)}}
-#fade{position:fixed;inset:0;z-index:30;background:#0d0b16;display:grid;place-items:center;color:#fffaf0;font:700 34px var(--display);transition:opacity .7s;opacity:0}
-#tvUI{position:fixed;inset:0;z-index:12;display:grid;place-items:center;align-content:center;gap:10px;background:rgba(20,15,30,.35);padding:16px}#tvUI[hidden]{display:none}
+#fade{position:fixed;top:0;right:0;bottom:0;left:0;z-index:30;background:#0d0b16;display:grid;place-items:center;color:#fffaf0;font:700 34px var(--display);transition:opacity .7s;opacity:0}
+#tvUI{position:fixed;top:0;right:0;bottom:0;left:0;z-index:12;display:grid;place-items:center;align-content:center;gap:10px;background:rgba(20,15,30,.35);padding:16px}#tvUI[hidden]{display:none}
 #tvText{background:#fffaf0;border:2.5px solid #2a2233;border-radius:14px;box-shadow:3px 3px 0 #2a2233;padding:10px 14px;max-width:min(640px,calc(100vw - 32px));font:500 14.5px/1.45 var(--body);color:#2a2233;max-height:34vh;overflow:auto}#tvText small{font:700 12px var(--display);opacity:.55;margin-right:4px}#tvText[hidden]{display:none}
 @media (orientation:landscape) and (max-height:520px){#tvUI{grid-template-columns:auto 1fr;align-items:center;justify-items:center;column-gap:12px}#tvUI .tvb{grid-column:1 / span 2}#tvText{font-size:12.5px;max-height:62vh;max-width:none}#tvFrame canvas{width:min(48vw,calc((100vh - 90px)*1.7))!important}}
 #tvFrame canvas{display:block;width:min(560px,calc(100vw - 48px),calc((100vh - 230px)*1.7));height:auto;border:12px solid #22252e;border-radius:14px;box-shadow:0 0 0 3px #2a2233,6px 6px 0 #2a2233}.tvb{display:flex;gap:8px;justify-content:center}
-#fuelUI{position:fixed;inset:0;z-index:12;display:grid;place-items:center;pointer-events:none}#fuelUI .card{text-align:center;padding:12px 18px}#fuelUI p{margin:4px 0 0;font:600 15px var(--display);color:var(--ink)}
+#fuelUI{position:fixed;top:0;right:0;bottom:0;left:0;z-index:12;display:grid;place-items:center;pointer-events:none}#fuelUI .card{text-align:center;padding:12px 18px}#fuelUI p{margin:4px 0 0;font:600 15px var(--display);color:var(--ink)}
 #treadUI{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:12;width:min(460px,calc(100vw - 32px))}#treadUI .card{max-width:none;padding:10px 12px}
 #tInfo{font:500 14px var(--body);margin-bottom:8px}.hrbar{position:relative;height:18px;border:2.5px solid var(--line);border-radius:999px;background:linear-gradient(90deg,#cfe8ff,#ffe1d6);overflow:hidden;margin-bottom:8px}
 #tZone{position:absolute;top:0;bottom:0;background:rgba(63,166,107,.55);border-left:2px solid #2d7a4e;border-right:2px solid #2d7a4e}#tMark{position:absolute;top:-2px;bottom:-2px;width:6px;margin-left:-3px;background:#2a2233;border-radius:3px}
 .tbtn{display:flex;gap:8px;justify-content:center}.tbtn button{flex:1}
-#shopMenu{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:rgba(30,25,40,.35);padding:16px}#shopMenu[hidden]{display:none}
+#shopMenu{position:fixed;top:0;right:0;bottom:0;left:0;z-index:20;display:grid;place-items:center;background:rgba(30,25,40,.35);padding:16px}#shopMenu[hidden]{display:none}
 #shopMenu .card{width:min(360px,100%);background:var(--paper);border:2.5px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);padding:14px}
 #shopMenu h3{margin:0 0 10px;font:700 20px var(--display)}#shopMenu h3 small{display:block;font:500 13px var(--body,inherit);opacity:.75;margin-top:2px}
 #shopList{display:grid;gap:6px;margin-bottom:10px}#shopList button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:600 15px inherit;cursor:pointer;box-shadow:none}#shopList button:disabled{opacity:.45;cursor:default}
-#taxiMenu{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:rgba(30,25,40,.35);padding:16px}#taxiMenu[hidden]{display:none}
+#taxiMenu{position:fixed;top:0;right:0;bottom:0;left:0;z-index:20;display:grid;place-items:center;background:rgba(30,25,40,.35);padding:16px}#taxiMenu[hidden]{display:none}
 #taxiMenu .card{width:min(420px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--paper);border:2.5px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);padding:14px}
 #taxiMenu h3{margin:0 0 10px;font:700 20px var(--display)}#taxiMenu h3 small{display:block;font:500 13px var(--body,inherit);opacity:.75;margin-top:2px}
 #taxiList{display:grid;gap:6px;margin-bottom:10px}#taxiList button{display:flex;justify-content:space-between;gap:10px;align-items:center;width:100%;text-align:left;padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:#fff;font:600 15px inherit;cursor:pointer}
@@ -138,7 +138,7 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 .top{padding-top:calc(78px + env(safe-area-inset-top,0px))!important}
 .hud .card:not(.seg){pointer-events:none} #greyHud{pointer-events:none}
 #hpFill{height:100%;width:100%;background:#e0483e;transition:width .2s}
-#over{position:fixed;inset:0;display:grid;place-items:center;background:rgba(20,15,40,.55);z-index:6;padding:16px}
+#over{position:fixed;top:0;right:0;bottom:0;left:0;display:grid;place-items:center;background:rgba(20,15,40,.55);z-index:6;padding:16px}
 #over .card{max-width:380px;text-align:center} #over h2{font-family:var(--display);font-size:28px;margin:4px 0 8px} #over p{margin:0 0 14px}
 [hidden]{display:none!important}
 @keyframes boing{0%{transform:scale(.3) translateY(14px);opacity:0}45%{transform:scale(1.2) translateY(-6px);opacity:1}62%{transform:scale(.9)}78%{transform:scale(1.06) translateY(-2px)}100%{transform:scale(1)}}
@@ -181,8 +181,13 @@ body.gp #phoneBtn::after{content:'View ⧉'}body.gp #homeTown::after{content:'St
 @media (orientation:landscape) and (max-height:520px){#alarm{font-size:22px;padding:8px 16px;top:42%}#alarm small{font-size:13px}}
 #compass.ping .ctrack{animation:cping .5s ease-out 2}@keyframes cping{50%{transform:scale(1.12);box-shadow:0 0 0 6px rgba(224,72,62,.5),3px 3px 0 var(--line)}}
 /* 📋 Novità della versione (beta): compare all'avvio, prima di giocare */
-#news{position:fixed;inset:0;z-index:150;display:grid;place-items:center;background:rgba(28,36,80,.55);padding:max(10px,env(safe-area-inset-top,0px)) 12px}
+#news{position:fixed;top:0;right:0;bottom:0;left:0;z-index:150;display:grid;place-items:center;background:rgba(28,36,80,.55);padding:max(10px,env(safe-area-inset-top,0px)) 12px}
 #news[hidden]{display:none}
+#compatBlock{position:fixed;top:0;right:0;bottom:0;left:0;z-index:300;display:grid;place-items:center;background:#1c2450;padding:16px;overflow:auto}
+#compatBlock .cbox{background:#fffaf0;border:2.5px solid #2a2233;border-radius:18px;box-shadow:4px 4px 0 #2a2233;max-width:560px;padding:14px 18px;font:500 15px/1.4 system-ui,sans-serif;color:#2a2233}
+#compatBlock h2{margin:0 0 6px;font:700 22px system-ui,sans-serif}#compatBlock small{display:block;margin-top:10px;opacity:.6;font-size:11px;word-break:break-word}
+.cbtn{display:inline-block;margin:6px 0;padding:8px 14px;background:#ffd84d;color:#2a2233;border:2.5px solid #2a2233;border-radius:999px;font:700 15px system-ui,sans-serif;text-decoration:none;box-shadow:2px 2px 0 #2a2233}
+#news .inapp{margin-top:6px;padding:6px 10px;background:#fff1b8;border:2px solid #2a2233;border-radius:12px;font:500 13px/1.35 var(--body)}#news .inapp p{margin:4px 0 0}
 #news .nbox{background:var(--paper);border:2.5px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);width:min(620px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
 #news .nhead{padding:12px 16px 6px;border-bottom:2px dashed rgba(0,0,0,.15)}
 #news .nhead h2{font:700 22px var(--display);margin:0}
@@ -206,9 +211,9 @@ body.phoneOn .hud.top,body.phoneOn #compass,body.phoneOn #greyHud,body.phoneOn #
 #helpBtn[hidden]{display:none!important}
 #phone{position:fixed;z-index:60;left:57%;bottom:-14vh;height:118vh;aspect-ratio:720/920;pointer-events:none;isolation:isolate;transform:translate(-50%,105%);transition:transform .26s cubic-bezier(.2,1.1,.35,1.06)}
 body.phoneOn #phone{transform:translate(-50%,0)}
-#phone>img{position:absolute;inset:0;width:100%;height:100%;user-select:none}
-#phone .skin{position:absolute;inset:0;background:var(--skin,#d9a27a);mix-blend-mode:multiply;-webkit-mask:url(telefono/mano-maschera.png?v=0791) 0 0/100% 100% no-repeat;mask:url(telefono/mano-maschera.png?v=0791) 0 0/100% 100% no-repeat}
-#phone .handTop{position:absolute;inset:0;background:url(telefono/telefono-mano.webp?v=0791) 0 0/100% 100% no-repeat;-webkit-mask:url(telefono/mano-sopra.png) 0 0/100% 100% no-repeat;mask:url(telefono/mano-sopra.png) 0 0/100% 100% no-repeat;pointer-events:none}
+#phone>img{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;user-select:none}
+#phone .skin{position:absolute;top:0;right:0;bottom:0;left:0;background:var(--skin,#d9a27a);mix-blend-mode:multiply;-webkit-mask:url(telefono/mano-maschera.png?v=0791) 0 0/100% 100% no-repeat;mask:url(telefono/mano-maschera.png?v=0791) 0 0/100% 100% no-repeat}
+#phone .handTop{position:absolute;top:0;right:0;bottom:0;left:0;background:url(telefono/telefono-mano.webp?v=0791) 0 0/100% 100% no-repeat;-webkit-mask:url(telefono/mano-sopra.png) 0 0/100% 100% no-repeat;mask:url(telefono/mano-sopra.png) 0 0/100% 100% no-repeat;pointer-events:none}
 #phone .skinTop{pointer-events:none}
 #phone .scr{position:absolute;left:0;top:0;width:260px;height:480px;transform-origin:0 0;background:#14121c;border-radius:6px;overflow:hidden;pointer-events:auto;display:flex;flex-direction:column;color:#f4f1ea;font:500 15px/1.35 var(--body)}
 #phone .sbar{display:flex;justify-content:space-between;padding:5px 12px 3px;font:600 12px var(--body);opacity:.8}
@@ -256,8 +261,8 @@ body.training #greyHud{display:none!important}
 .trGlow{animation:trglow 1s ease-in-out infinite!important;outline:4px solid #ffd84d!important;outline-offset:2px}
 @keyframes trglow{0%,100%{outline-offset:1px;outline-color:#ffd84d}50%{outline-offset:7px;outline-color:#ff9f1c}}
 #trArrow,.trPoint{position:fixed;left:0;top:0;z-index:29;width:44px;height:58px;pointer-events:none;display:none;transform-origin:50% 0}
-#trArrow i,.trPoint i{position:absolute;inset:0;background:#2a2233;clip-path:polygon(50% 0,100% 48%,70% 48%,70% 100%,30% 100%,30% 48%,0 48%)}
-#trArrow i::after,.trPoint i::after{content:'';position:absolute;inset:0;background:#ffd84d;clip-path:polygon(50% 9%,89% 44%,63% 44%,63% 93%,37% 93%,37% 44%,11% 44%)}
+#trArrow i,.trPoint i{position:absolute;top:0;right:0;bottom:0;left:0;background:#2a2233;clip-path:polygon(50% 0,100% 48%,70% 48%,70% 100%,30% 100%,30% 48%,0 48%)}
+#trArrow i::after,.trPoint i::after{content:'';position:absolute;top:0;right:0;bottom:0;left:0;background:#ffd84d;clip-path:polygon(50% 9%,89% 44%,63% 44%,63% 93%,37% 93%,37% 44%,11% 44%)}
 #trMsg{margin-top:6px!important;background:#fff1c9;border:2px solid #e8c45a;border-radius:10px;padding:4px 8px;font-size:13.5px}#trMsg[hidden]{display:none}#trMsg b{color:#d2402a}
 body.training #msg,body.training #cinfo,body.training #fsHint{display:none!important}
 #doniUI .card{max-height:calc(100vh - 32px);overflow:auto}#doniList .dr{display:flex;align-items:center;gap:10px;padding:8px;border-radius:12px;margin-bottom:6px;border:2px solid transparent}#doniList .dr.sel{border-color:#ffd84d;background:#fff6d6}#doniList .di{font-size:28px}#doniList .dt{flex:1;font-size:13px;line-height:1.3}#doniList .dt b{font-size:15px;display:block}#doniList a{flex:0 0 auto;text-decoration:none}
@@ -284,7 +289,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 #tvHint .tb{background:#fffaf0;border:2.5px solid var(--line);border-radius:16px;box-shadow:3px 3px 0 var(--line);padding:6px 12px;font:600 15px var(--display);white-space:nowrap;animation:tvbob 1.4s ease-in-out infinite}
 #tvHint .ta{position:absolute;left:50%;top:100%;width:0;height:0;margin-left:-11px;border:11px solid transparent;border-top:14px solid var(--accent);transform-origin:50% 0;filter:drop-shadow(1px 1px 0 var(--line))}
 @keyframes tvbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-#rotate{display:none;position:fixed;inset:0;z-index:200;background:#1c2450;color:#fffaf0;place-items:center;text-align:center;padding:24px;font:600 20px var(--display)}
+#rotate{display:none;position:fixed;top:0;right:0;bottom:0;left:0;z-index:200;background:#1c2450;color:#fffaf0;place-items:center;text-align:center;padding:24px;font:600 20px var(--display)}
 #rotate .ph{font-size:64px;display:inline-block;animation:rot 2s ease-in-out infinite}@keyframes rot{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
 #rotate button{margin-top:18px;font-size:16px;padding:10px 18px}
 @media (orientation:portrait) and (pointer:coarse){#rotate{display:grid}} /* sul telefono si gioca solo in orizzontale */
@@ -353,7 +358,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.105.4</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.106.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -381,6 +386,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.106.0',d:'28/11/2026',t:['📱 Compatibilità con più telefoni: il gioco ora parte anche su browser più vecchi (prima su Chrome vecchi, Samsung Internet vecchi e iPhone con iOS 15 si bloccava subito all\'avvio) e sui telefoni senza WebGL2.','🐢 Se l\'ultima volta il gioco si era bloccato durante il caricamento, riparte da solo con la grafica minima. Sui telefoni con poca memoria la grafica minima è già accesa (si spegne da 📱 → Opzioni).','⚠️ Se il gioco non può partire ti spiega perché e cosa fare. Se lo apri dentro Instagram, Facebook o TikTok ti propone di aprirlo nel browser. In caso di errore ci sono i pulsanti «Riprova» e «Riprova con la grafica minima».']},
  {v:'0.105.4',d:'28/11/2026',t:['💡 A casa di notte i lampadari sono accesi: luce calda nelle stanze e aloni sotto le lampade.','🚗 In garage di notte la tua auto ha i fari spenti.','📳 Il joypad vibra: quando vieni investito, negli urti in auto, sull\'aquaplaning, con il taser, quando suona l\'allarme del focolaio, quando squilla il telefono, con le proteine di Antony e quando compri; un colpetto leggero con la cura giusta, uno più forte con quella sbagliata.']},
  {v:'0.105.3',d:'28/11/2026',t:['🎮 Joypad: nel telefono, nella finestra dell\'addestramento e nella scelta finale (Gioca / Casa) ora scegli con la croce e confermi con A; nel telefono B torna indietro.','🎮 Con il joypad collegato spariscono i pulsanti ↻ ＋ － (visuale e zoom si fanno con la levetta destra o con la croce); sotto 📱 e 🏠 compare il tasto da premere: View apre il telefono, Start ti porta a casa.','💪 Antony a inizio partita si mette vicino alla piazza, così lo trovi subito (poi gira per il paese come prima).']},
  {v:'0.105.1',d:'28/11/2026',t:['🖥️ Su PC la barra della stamina, i poteri sotto e la barra del livello con le stelline sono molto più grandi.','📱 Sul telefono i nomi sopra Leo e Antony sono più grandi e si leggono bene.']},
@@ -480,10 +486,10 @@ document.addEventListener('DOMContentLoaded',function(){ fill(); var g=document.
 })();
 </script>
 <script>/* se qualcosa va storto (soprattutto su iPhone/Safari) lo scrivo sullo schermo, così si può fare uno screenshot */
-(function(){ function show(t){ try{ var L=document.getElementById('load'); if(!L){ L=document.createElement('div'); L.id='load'; document.body.appendChild(L); } L.dataset.err='1'; L.style.display='grid'; L.hidden=false; L.style.zIndex=99; L.style.fontSize='15px'; L.style.padding='20px'; L.style.textAlign='center'; L.innerHTML='⚠️ Errore: '+String(t).slice(0,220).replace(/</g,'&lt;')+'<br><br><small>'+navigator.userAgent.replace(/</g,'')+'</small><br><br>📸 Fai uno screenshot e mandalo a Teo!'; }catch(e){} }
+(function(){ function show(t){ try{ var L=document.getElementById('load'); if(!L){ L=document.createElement('div'); L.id='load'; document.body.appendChild(L); } L.dataset.err='1'; L.style.display='grid'; L.hidden=false; L.style.zIndex=99; L.style.fontSize='15px'; L.style.padding='20px'; L.style.textAlign='center'; L.innerHTML='⚠️ Errore: '+String(t).slice(0,220).replace(/</g,'&lt;')+'<br><br><small>'+(window.__devLine?window.__devLine():'')+'<br>'+navigator.userAgent.replace(/</g,'')+'</small><br><br>📸 Fai uno screenshot e mandalo a Teo!<br><br><button type="button" onclick="location.reload()" style="font:700 15px system-ui;padding:8px 14px;border-radius:999px;border:2.5px solid #2a2233;background:#fff">🔄 Riprova</button> <button type="button" onclick="try{localStorage.setItem(\'karmapolis_gfxmin\',\'1\')}catch(e){};location.reload()" style="font:700 15px system-ui;padding:8px 14px;border-radius:999px;border:2.5px solid #2a2233;background:#ffd84d">🐢 Riprova con la grafica minima</button>'; }catch(e){} }
   window.addEventListener('error',function(e){ show((e.message||'errore')+(e.filename?' ('+e.filename.split('/').pop()+':'+e.lineno+')':'')); });
   window.addEventListener('unhandledrejection',function(e){ show(e.reason&&e.reason.message||e.reason); });
-  document.addEventListener('DOMContentLoaded',function(){ var c=document.getElementById('c'); if(c) c.addEventListener('webglcontextlost',function(){ show('la grafica 3D si è bloccata (memoria del telefono piena)'); }); });
+  document.addEventListener('DOMContentLoaded',function(){ var c=document.getElementById('c'); if(c) c.addEventListener('webglcontextlost',function(e){ try{ e.preventDefault(); localStorage.setItem('karmapolis_gfxmin','1'); }catch(x){} show('la grafica 3D si è bloccata (memoria del telefono piena). Ho acceso la grafica minima: tocca «Riprova».'); }); });
   window.__showErr=show;
   /* diario di avvio: se il telefono si blocca o ricarica la pagina, la volta dopo dico a che punto era arrivato */
   var KB='karmapolis_boot', prev=null; try{ prev=localStorage.getItem(KB); }catch(e){}
@@ -493,6 +499,37 @@ document.addEventListener('DOMContentLoaded',function(){ fill(); var g=document.
   window.__stage('pagina aperta');
   window.__bootWd=setTimeout(function(){ var st='?'; try{ st=localStorage.getItem(KB); }catch(e){} show('il gioco non è partito dopo 60 secondi. Punto raggiunto: '+st); var L=document.getElementById('load'); if(L) L.dataset.err='1'; },60000);
   })();
+</script>
+<script>/* 📱 COMPATIBILITÀ (28/11/2026, il gioco gira tra amici di amici con telefoni di ogni marca): funzioni che mancano sui browser vecchi, controllo della grafica 3D, browser dentro le app */
+(function(){
+  /* 1) funzioni mancanti: disegno di riquadri arrotondati (manca su Chrome < 99, Samsung Internet < 18, iPhone < iOS 16: prima il gioco si bloccava all'avvio) e .at() */
+  var C=window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C&&!C.roundRect) C.roundRect=function(x,y,w,h,r){ if(r==null) r=0; if(typeof r==='object') r=(r.length!==undefined?r[0]:r.x)||0; if(typeof r==='object') r=r.x||0; r=Math.max(0,Math.min(+r||0,Math.abs(w)/2,Math.abs(h)/2)); this.moveTo(x+r,y); this.lineTo(x+w-r,y); this.arcTo(x+w,y,x+w,y+r,r); this.lineTo(x+w,y+h-r); this.arcTo(x+w,y+h,x+w-r,y+h,r); this.lineTo(x+r,y+h); this.arcTo(x,y+h,x,y+h-r,r); this.lineTo(x,y+r); this.arcTo(x,y,x+r,y,r); this.closePath(); };
+  function at(n){ n=Math.trunc(n)||0; if(n<0) n+=this.length; return (n<0||n>=this.length)?undefined:this[n]; }
+  [Array,String].forEach(function(K){ if(!K.prototype.at) Object.defineProperty(K.prototype,'at',{value:at,writable:true,configurable:true}); });
+  ['Int8Array','Uint8Array','Uint8ClampedArray','Int16Array','Uint16Array','Int32Array','Uint32Array','Float32Array','Float64Array'].forEach(function(k){ var K=window[k]; if(K&&!K.prototype.at) Object.defineProperty(K.prototype,'at',{value:at,writable:true,configurable:true}); });
+  /* 2) cosa sa fare questo telefono (serve anche per gli screenshot di errore) */
+  var ua=navigator.userAgent||'', D={gl:0,gpu:'?',mem:navigator.deviceMemory||'?',cpu:navigator.hardwareConcurrency||'?',scr:screen.width+'×'+screen.height+' @'+(window.devicePixelRatio||1)};
+  try{ var cv=document.createElement('canvas'), g=cv.getContext('webgl2'); if(g) D.gl=2; else { g=cv.getContext('webgl')||cv.getContext('experimental-webgl'); if(g) D.gl=1; }
+    if(g){ var di=g.getExtension('WEBGL_debug_renderer_info'); D.gpu=di?g.getParameter(di.UNMASKED_RENDERER_WEBGL):g.getParameter(g.RENDERER); var lo=g.getExtension('WEBGL_lose_context'); if(lo) lo.loseContext(); } }catch(e){}
+  var js=true; try{ new Function('var a=null; return a??1'); }catch(e){ js=false; }
+  /* browser dentro le app (Instagram, Facebook, TikTok, Snapchat…): poca memoria, niente schermo intero, a volte niente audio */
+  var app=/Instagram/i.test(ua)?'Instagram':/FBAN|FBAV|FB_IAB|FBIOS/.test(ua)?'Facebook':/musical_ly|Bytedance|TikTok/i.test(ua)?'TikTok':/Snapchat/i.test(ua)?'Snapchat':/\bLine\//.test(ua)?'Line':/Twitter/i.test(ua)?'X/Twitter':/LinkedInApp/i.test(ua)?'LinkedIn':'';
+  D.app=app; D.ua=ua; window.__dev=D;
+  window.__devLine=function(){ return 'WebGL'+(D.gl||'✗')+' · '+String(D.gpu).slice(0,60)+' · RAM '+D.mem+' GB · '+D.cpu+' core · '+D.scr+(app?' · app '+app:''); };
+  var ANDROID=/Android/i.test(ua), IOS=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  function openOut(){ if(ANDROID) return '<a class="cbtn" href="intent://'+location.host+location.pathname+'#Intent;scheme=https;package=com.android.chrome;end">🌐 Apri in Chrome</a>'; return '<p><b>Tocca ⋯ (o ⎋) in alto e scegli «Apri nel browser» / «Apri in Safari».</b></p>'; }
+  function block(title,html){ document.addEventListener('DOMContentLoaded',function(){ window.__blocked=true; var d=document.createElement('div'); d.id='compatBlock'; d.innerHTML='<div class="cbox"><h2>'+title+'</h2>'+html+'<small>'+window.__devLine().replace(/</g,'')+'</small></div>'; document.body.appendChild(d); var n=document.getElementById('news'); if(n) n.hidden=true; var L=document.getElementById('load'); if(L) L.style.display='none'; }); }
+  var how=(app?'<p>Stai usando il browser interno di <b>'+app+'</b>, che spesso non ha la grafica 3D.</p>'+openOut():'')+'<p>Cosa provare:</p><ul><li>apri il gioco in <b>Chrome</b> (Android) o <b>Safari</b> (iPhone);</li><li>aggiorna il browser e il telefono;</li><li>in Chrome: ⋮ → Impostazioni → Sistema → attiva <b>«Usa l\'accelerazione hardware»</b> (sul PC);</li><li>chiudi le altre app e riprova.</li></ul>';
+  if(!js) block('😕 Browser troppo vecchio','<p>Questo browser non capisce il codice del gioco.</p>'+how);
+  else if(!D.gl) block('😕 Niente grafica 3D','<p>Il browser non riesce ad accendere la grafica 3D (WebGL), che serve al gioco.</p>'+how);
+  /* 3) se l'ultima volta il gioco si era bloccato a metà caricamento (memoria piena), riparto con la grafica minima */
+  try{ var pb=localStorage.getItem('karmapolis_boot'); if(pb && pb!=='pagina aperta' && localStorage.getItem('karmapolis_gfxmin')!=='0'){ localStorage.setItem('karmapolis_gfxmin','1'); window.__safeBoot=pb; } }catch(e){}
+  if(D.gl===1||D.mem!=='?'&&D.mem<=2){ try{ if(localStorage.getItem('karmapolis_gfxmin')===null) localStorage.setItem('karmapolis_gfxmin','1'); }catch(e){} window.__weak=true; }
+  if(window.__safeBoot) document.addEventListener('DOMContentLoaded',function(){ var b=document.querySelector('#news .nhead'); if(!b) return; var w=document.createElement('div'); w.className='inapp'; w.innerHTML='🐢 L\'ultima volta il gioco si è fermato durante il caricamento («'+String(window.__safeBoot).replace(/</g,'')+'»): ho acceso la <b>grafica minima</b>. Si spegne da 📱 → Opzioni.'; b.appendChild(w); });
+  /* 4) avviso per i browser dentro le app (non blocca) */
+  if(app && D.gl) document.addEventListener('DOMContentLoaded',function(){ var b=document.querySelector('#news .nhead'); if(!b) return; var w=document.createElement('div'); w.className='inapp'; w.innerHTML='⚠️ Stai giocando dentro <b>'+app+'</b>: può andare lento e senza schermo intero. Meglio aprirlo nel browser.'+openOut(); b.appendChild(w); });
+})();
 </script>
 <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js"></script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
@@ -517,16 +554,21 @@ let seed=11; const rnd=()=>{ seed=(seed*16807)%2147483647; return seed/214748364
 // ---------- renderer ----------
 const canvas=document.getElementById('c');
 const IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1); // su iPhone Safari ha poca memoria per la grafica: si parte più leggeri
-const renderer=new THREE.WebGLRenderer({canvas,antialias:!IOS,powerPreference:'high-performance'});
+const renderer=(()=>{ const tries=[{antialias:!IOS&&!window.__weak,powerPreference:'high-performance'},{antialias:false},{antialias:false,precision:'mediump'}]; let err; for(const o of tries){ try{ return new THREE.WebGLRenderer({canvas,...o}); }catch(e){ err=e; } } throw err; })(); /* 28/11: se la grafica non parte con le impostazioni migliori riprova più semplice (telefoni di ogni marca) */
+const GL2=renderer.capabilities.isWebGL2;
+if(!GL2){ /* telefoni vecchi senza WebGL2: three.js 0.160 anima i personaggi con funzioni solo WebGL2; qui uso la versione compatibile (texture delle ossa a misura fissa 32×32, fino a 256 ossa) */
+  THREE.ShaderChunk.skinning_pars_vertex='#ifdef USE_SKINNING\n uniform mat4 bindMatrix;\n uniform mat4 bindMatrixInverse;\n uniform highp sampler2D boneTexture;\n mat4 getBoneMatrix( const in float i ){ float j=i*4.0; float x=mod(j,32.0); float y=floor(j/32.0); float d=1.0/32.0; y=d*(y+0.5); vec4 v1=texture2D(boneTexture,vec2(d*(x+0.5),y)); vec4 v2=texture2D(boneTexture,vec2(d*(x+1.5),y)); vec4 v3=texture2D(boneTexture,vec2(d*(x+2.5),y)); vec4 v4=texture2D(boneTexture,vec2(d*(x+3.5),y)); return mat4(v1,v2,v3,v4); }\n#endif';
+  THREE.Skeleton.prototype.computeBoneTexture=function(){ const S=32, bm=new Float32Array(S*S*4); bm.set(this.boneMatrices.subarray(0,Math.min(this.boneMatrices.length,bm.length))); const t=new THREE.DataTexture(bm,S,S,THREE.RGBAFormat,THREE.FloatType); t.needsUpdate=true; this.boneMatrices=bm; this.boneTexture=t; return this; }; }
+const FMT1=GL2?THREE.RedFormat:THREE.LuminanceFormat; /* texture a un canale: in WebGL1 «Red» non esiste */
 const PR_MAX=Math.min(devicePixelRatio,LOW?1.4:2); let PR_MIN=LOW?0.9:1, ECO=LOW; let PR=IOS?1:(LOW?Math.min(PR_MAX,1.3):PR_MAX); renderer.setPixelRatio(PR);
 renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFShadowMap; renderer.shadowMap.autoUpdate=!LOW;
 const scene=new THREE.Scene(); scene.fog=new THREE.Fog(0xc9ecff,90,230);
 const camera=new THREE.PerspectiveCamera(30,1,1,600);
 // ---------- materiali cartone ----------
 // luce morbida (Teo, 26/11: "luci morbide, non secche"): passaggio luce/ombra sfumato invece dei 4 gradini netti
-const gm=new THREE.DataTexture(new Uint8Array([84,96,118,146,176,204,226,242,252,255]),10,1,THREE.RedFormat); gm.minFilter=gm.magFilter=THREE.LinearFilter; gm.needsUpdate=true;
+const gm=new THREE.DataTexture(new Uint8Array([84,96,118,146,176,204,226,242,252,255]),10,1,FMT1); gm.minFilter=gm.magFilter=THREE.LinearFilter; gm.needsUpdate=true;
 // vernice auto: solo 2 toni morbidi (con 4 bande il modello alleggerito si riempiva di chiazze)
-const gmCar=new THREE.DataTexture(new Uint8Array([160,185,215,240]),4,1,THREE.RedFormat); gmCar.minFilter=gmCar.magFilter=THREE.LinearFilter; gmCar.needsUpdate=true;
+const gmCar=new THREE.DataTexture(new Uint8Array([160,185,215,240]),4,1,FMT1); gmCar.minFilter=gmCar.magFilter=THREE.LinearFilter; gmCar.needsUpdate=true;
 // mappa del GRIGIO: una piccola texture sopra il paese (8 m per cella); ogni materiale cartone la legge e perde colore dove serve
 const GN=32, GSZ=256; const greyData=new Uint8Array(GN*GN*4); const greyTex=new THREE.DataTexture(greyData,GN,GN,THREE.RGBAFormat); greyTex.magFilter=greyTex.minFilter=THREE.LinearFilter; greyTex.needsUpdate=true;
 const GREYU={uGrey:{value:greyTex}};
@@ -576,7 +618,7 @@ function withOutline(mesh,t=0.05){ const o=new THREE.Mesh(mesh.geometry,outlineM
 // geometrie unite in un solo oggetto (pochissime chiamate di disegno = leggero)
 const bins={};
 function put(key,geo,m4,color,shade){ const g=geo.clone(); g.applyMatrix4(m4); const n=g.attributes.position.count, c=new THREE.Color(color), a=new Float32Array(n*3), nr=g.attributes.normal, ps=g.attributes.position, t=new THREE.Color();
-  for(let i=0;i<n;i++){ t.copy(c); if(shade) shade(t,nr.getY(i),ps.getY(i),ps.getX(i),ps.getZ(i)); a[i*3]=t.r; a[i*3+1]=t.g; a[i*3+2]=t.b; } g.setAttribute('color',new THREE.BufferAttribute(a,3)); const e=m4.elements, ck=key+'#'+Math.floor((e[12]+256)/64)+'_'+Math.floor((e[14]+256)/64); (bins[ck]??=[]).push(g); }
+  for(let i=0;i<n;i++){ t.copy(c); if(shade) shade(t,nr.getY(i),ps.getY(i),ps.getX(i),ps.getZ(i)); a[i*3]=t.r; a[i*3+1]=t.g; a[i*3+2]=t.b; } g.setAttribute('color',new THREE.BufferAttribute(a,3)); const e=m4.elements, ck=key+'#'+Math.floor((e[12]+256)/64)+'_'+Math.floor((e[14]+256)/64); (bins[ck]=bins[ck]||[]).push(g); }
 function flush(key,{outline=0.05,shadow=true,receive=true,mat=VC}={}){ const out=[];
   for(const k of Object.keys(bins)){ if(k.split('#')[0]!==key) continue; const g=mergeGeometries(bins[k]); delete bins[k]; g.computeBoundingSphere();
     const m=new THREE.Mesh(g,mat); m.castShadow=shadow; m.receiveShadow=receive; if(outline) withOutline(m,outline); scene.add(m); out.push(m); }
@@ -1645,8 +1687,8 @@ function buildCar(g,x,z,yaw){ const v=makeVehicle({name:'auto',bike:false,x,z,ya
     else m=toon({color:CARMAT[n]??o.material.color.getHex(),spec:/chrome/.test(n)?0.45:0,gradientMap:/Body_Color|Ferrari_Yellow/.test(n)?gmCar:gm,side:THREE.DoubleSide});
     o.material=m; o.castShadow=!/Glass/.test(n); o.receiveShadow=false; /* niente auto-ombra: sul modello alleggerito faceva le chiazze scure */ if(!/Glass/.test(n)) add.push(o);
     let q=o, onWheel=false; while(q){ if(/^wheel_/.test(q.name||'')) onWheel=true; q=q.parent; }
-    if(!/Glass|Tires/.test(n) && !onWheel){ const pa=o.geometry.attributes.position; const orig=new Float32Array(pa.count*3); for(let i=0;i<pa.count;i++){ orig[i*3]=pa.getX(i); orig[i*3+1]=pa.getY(i); orig[i*3+2]=pa.getZ(i); } (v.deform??=[]).push({m:o,orig}); }
-    if(/Body_Color/.test(n)) (v.paint??=[]).push({m,base:m.color.clone()}); });
+    if(!/Glass|Tires/.test(n) && !onWheel){ const pa=o.geometry.attributes.position; const orig=new Float32Array(pa.count*3); for(let i=0;i<pa.count;i++){ orig[i*3]=pa.getX(i); orig[i*3+1]=pa.getY(i); orig[i*3+2]=pa.getZ(i); } (v.deform=v.deform||[]).push({m:o,orig}); }
+    if(/Body_Color/.test(n)) (v.paint=v.paint||[]).push({m,base:m.color.clone()}); });
   /* versione alleggerita: niente contorno, faccette piatte */
   v.group.position.set(x,height(x,z),z); v.group.rotation.y=yaw;
   for(const n of ['wheel_fl','wheel_fr','wheel_rl','wheel_rr']){ const w=model.getObjectByName(n); addWheel(v,w,v.group,n.includes('_f')); }
@@ -1666,7 +1708,7 @@ function buildSmart(x,z,yaw,col=0x1f4fbf){ const D3=CARS3D.ready&&(CARS3D.geo[LO
   const paint=toon({color:col,spec:0.18,gradientMap:gmCar}), dark=toon({color:0x2e2a33,spec:0.3});
   const glass=toon({color:0x2a3a50,transparent:true,opacity:0.5,depthWrite:false,side:THREE.DoubleSide});
   const add=(geo,mat,px=0,py=0,pz=0,ol=0.02,deform=true)=>{ const m=new THREE.Mesh(geo,mat); m.position.set(px,py,pz); m.castShadow=mat!==glass; if(ol) withOutline(m,ol); v.body.add(m);
-    if(deform && mat!==glass){ const pa=m.geometry.attributes.position, o=new Float32Array(pa.array); (v.deform??=[]).push({m,orig:o}); } return m; };
+    if(deform && mat!==glass){ const pa=m.geometry.attributes.position, o=new Float32Array(pa.array); (v.deform=v.deform||[]).push({m,orig:o}); } return m; };
   v.paint=[{m:paint,base:paint.color.clone()}]; // un solo materiale di vernice: danni e riverniciatura lo cambiano
   // il modello di Blender diviso in tre: vernice, vetri (trasparenti: si vede chi guida), resto (fari, fanali, plastiche, cromature)
   { const G=D3.g, n=G.attributes.position.count, sel={paint:[],glass:[],rest:[]};
@@ -1694,7 +1736,7 @@ function buildSmartOld(x,z,yaw,col=0xff6a4d){ const W=1.56, L=2.7, H=1.58, belt=
   const paint=toon({color:col,spec:0.5,gradientMap:gmCar}), dark=toon({color:0x2e2a33,spec:0.3}), cell=toon({color:0xc9ccd2,spec:0.6}), trim=toon({color:0x3a3a42});
   const glass=toon({color:0x2a3a50,transparent:true,opacity:0.38,depthWrite:false,side:THREE.DoubleSide});
   const add=(geo,mat,px=0,py=0,pz=0,ol=0.02,deform=true)=>{ const m=new THREE.Mesh(geo,mat); m.position.set(px,py,pz); m.castShadow=mat!==glass; if(ol) withOutline(m,ol); v.body.add(m);
-    if(deform && mat!==glass){ const pa=m.geometry.attributes.position, o=new Float32Array(pa.array); (v.deform??=[]).push({m,orig:o}); } return m; };
+    if(deform && mat!==glass){ const pa=m.geometry.attributes.position, o=new Float32Array(pa.array); (v.deform=v.deform||[]).push({m,orig:o}); } return m; };
   v.paint=[{m:paint,base:paint.color.clone()}]; // un solo materiale di vernice: danni e riverniciatura lo cambiano
   // scocca bassa (porte, musetto corto, coda tronca) estrusa di lato con bordi arrotondati
   const s=new THREE.Shape(); s.moveTo(zr+0.1,0.3); s.lineTo(zf-0.18,0.3); s.quadraticCurveTo(zf+0.02,0.3,zf,0.52); s.quadraticCurveTo(zf-0.02,0.78,zf-0.2,0.84); s.quadraticCurveTo(ws+0.1,belt-0.02,ws,belt); s.lineTo(zr+0.05,belt); s.quadraticCurveTo(zr-0.03,belt-0.1,zr,0.6); s.quadraticCurveTo(zr-0.02,0.32,zr+0.1,0.3);
@@ -2018,7 +2060,7 @@ const TL_CYCLE=20, TLN={}; let TT=0; // orologio del traffico (avanza col gioco)
 for(const n of NODES){ if(NB[key(n.x,n.z)].length>=3) TLN[key(n.x,n.z)]={g:(VX.indexOf(n.x)+HZ.indexOf(n.z))%2}; }
 function tlState(k,axis,t){ const N=TLN[k]; if(!N) return 'g'; const ph=((t+N.g*TL_CYCLE/2)%TL_CYCLE+TL_CYCLE)%TL_CYCLE; const xs=ph<8?'g':ph<10?'y':'r', zs=ph<10?'r':ph<18?'g':'y'; return axis==='x'?xs:zs; }
 // pali e lanterne: una lanterna per ogni direzione da cui arrivano le auto, sul marciapiede a destra prima dell'incrocio
-const TLGEO={}; const tlLamp=(g,axis,col,geo)=>{ (TLGEO[g+axis+col]??=[]).push(geo); };
+const TLGEO={}; const tlLamp=(g,axis,col,geo)=>{ (TLGEO[g+axis+col]=TLGEO[g+axis+col]||[]).push(geo); };
 for(const n of NODES){ const k=key(n.x,n.z), N=TLN[k]; if(!N) continue;
   for(const m of NB[k]){ const dx=Math.sign(n.x-m.x), dz=Math.sign(n.z-m.z); // auto che arrivano da m verso n
     const rx=-dz, rz=dx, px=n.x-dx*(SW+1.0)+rx*(SW+0.7), pz=n.z-dz*(SW+1.0)+rz*(SW+0.7), axis=dx?'x':'z', yaw=Math.atan2(-dx,-dz);
@@ -2507,7 +2549,7 @@ async function loadExtraAnims(){ try{ const j=await (await fetch('anims.json?v='
 const LOCO={soli:{idle:['Sad Idle'],walk:['Sad Walk',0.8]}, nervo:{walk:['Dwarf Walk',1.6]}, ansia:{idle:['Nervously Look Around'],run:['Running',3.6]}};
 const ACTCLIP={argue:['Standing Arguing','Angry Gesture','Yelling','Pointing'],fist:['Shake Fist'],talk:['Talking','Talking (1)'],phone:['Texting While Standing'],sad:['Sad Idle'],
   startle:['Dodging','Terrified'],wave:['Waving','Clapping','Laughing','Shrugging'],dance:['Salsa Dancing'],look:['Nervously Look Around','Terrified']};
-function exAction(h,name){ const c=EXA[name]; if(!c) return null; h.ex??={}; let a=h.ex[name]; if(!a){ a=h.mixer.clipAction(c); a.play(); a.setEffectiveWeight(0); a.w=0; h.ex[name]=a; } return a; }
+function exAction(h,name){ const c=EXA[name]; if(!c) return null; h.ex=h.ex||{}; let a=h.ex[name]; if(!a){ a=h.mixer.clipAction(c); a.play(); a.setEffectiveWeight(0); a.w=0; h.ex[name]=a; } return a; }
 function animHuman(h,speed,dt,vis){ const tw={idle:speed<0.3?1:0,run:THREE.MathUtils.smoothstep(speed,2,3.4)}; tw.walk=Math.max(0,1-tw.idle-tw.run);
   const L=(h.kind&&LOCO[h.kind])||{}; const act=h.actClip&&speed<0.6?exAction(h,h.actClip):null; const aw=act?1:0; /* Teo 27/11: un gesto (spavento, litigio…) non deve bloccare le gambe di chi sta camminando o attraversando */ const T=new Map();
   if(act && h.lastAct!==h.actClip){ act.time=0; } h.lastAct=h.actClip;
@@ -3400,7 +3442,7 @@ const KIND_OK=id=>LC.kinds.includes(id);
 function colorPct(){ let n=0, ok=0; for(const q of ACTZ) for(const c of q.cells){ n++; if(cellSum(c)<0.45) ok++; } return n?ok/n:1; }
 function levelLabel(){ return 'Livello '+LC.n+' · '+LC.kinds.map(k=>KINDS[KI[k]].dot+' '+KINDS[KI[k]].name).join(', ')+(LC.zones<ZONES.length?' · '+(LC.zones===3?'piazza e 2 quartieri':'piazza e '+(LC.zones-1)+' quartieri'):' · tutto il paese'); }
 function endLevel(pct,early){ const st=pct>=STAR_AT[2]?3:pct>=STAR_AT[1]?2:pct>=STAR_AT[0]?1:0; const n=LC.n;
-  if(st>0){ const bonus=[0,20,40,70][st]+(n-1)*10; addKarma(bonus); LV.stars[n]=Math.max(LV.stars[n]||0,st); LV.best=Math.max(LV.best,n+1); saveLevels(); saveHome?.(); }
+  if(st>0){ const bonus=[0,20,40,70][st]+(n-1)*10; addKarma(bonus); LV.stars[n]=Math.max(LV.stars[n]||0,st); LV.best=Math.max(LV.best,n+1); saveLevels(); if(typeof saveHome==='function') saveHome(); }
   endGame(st>0?(early?'🌈 Paese tutto a colori!':'⏰ Tempo! Livello '+n+' superato'):'⏰ Tempo! Livello '+n+' non superato',
     (st>0?'Il paese è a colori al '+Math.round(pct*100)+'%. Bonus: +'+([0,20,40,70][st]+(n-1)*10)+' karma. ':'Il paese è a colori solo al '+Math.round(pct*100)+'%: serve almeno il 50%. ')+'Karma guadagnato in partita: '+G.lvKarma+'.',st); }
 document.getElementById('goNext').onclick=()=>{ LV.n=Math.min(LV.best,LV.n+1); saveLevels(); document.getElementById('restart').click(); };
@@ -4341,7 +4383,7 @@ function phRender(){ const a=PH.app, B=PH.body; let t='Karmapolis', h='';
   else if(a==='karma'){ t='Karma'; h='<div class="row"><span>🪃 Karma</span><b>'+Math.round(G.karma)+'</b></div><div class="row"><span>🍬 Caramelle</span><b>'+(G.candies|0)+'</b></div><div class="row"><span>⛽ Benzina</span><b>'+Math.round(HOME.fuel)+'%</b></div>'; }
   else if(a==='news'){ t='Novità'; const N=window.__NEWS||[]; h=N.map(n=>'<h4>'+n.v+' <small style="opacity:.6;font-weight:500">'+n.d+'</small></h4><ul>'+n.t.map(x=>'<li>'+x+'</li>').join('')+'</ul>').join(''); }
   else if(a==='help'){ t='Comandi'; h=document.getElementById('howto').innerHTML+'<p class="note">📱 Telefono: pulsante 📱, tasto P, joypad View.</p><p class="note">🎮 Joypad: levetta sinistra = muoversi · levetta destra = girare la visuale, su/giù = zoom · croce ⬆️⬇️ = zoom · vicino a una persona la croce sceglie la cura nella nuvoletta e <b>A</b> la usa (oppure X 😄 · Y 👂 · B 🌬️ · RB 🗣️ · LB 🍬).</p>'; }
-  else if(a==='set'){ t='Opzioni'; h='<div class="row"><span>🔊 Suoni</span><button type="button" class="tog'+(soundOn?' on':'')+'" data-do="snd">'+(soundOn?'Sì':'No')+'</button></div><div class="row"><span>🎵 Musica</span><button type="button" class="tog'+(AUD.music?' on':'')+'" data-do="mus">'+(AUD.music?'Sì':'No')+'</button></div><div class="row"><span>⛶ Schermo intero</span><button type="button" class="tog" data-do="full">Apri</button></div><div class="row"><span>🎨 Grafica minima<br><small style="opacity:.6">per telefoni lenti</small></span><button type="button" class="tog'+(GFX_MIN?' on':'')+'" data-do="gfx">'+(GFX_MIN?'Sì':'No')+'</button></div><div class="note">'+((document.getElementById('devTitle')||{}).textContent||'')+' · versione di prova</div>'; }
+  else if(a==='set'){ t='Opzioni'; h='<div class="row"><span>🔊 Suoni</span><button type="button" class="tog'+(soundOn?' on':'')+'" data-do="snd">'+(soundOn?'Sì':'No')+'</button></div><div class="row"><span>🎵 Musica</span><button type="button" class="tog'+(AUD.music?' on':'')+'" data-do="mus">'+(AUD.music?'Sì':'No')+'</button></div><div class="row"><span>⛶ Schermo intero</span><button type="button" class="tog" data-do="full">Apri</button></div><div class="row"><span>🎨 Grafica minima<br><small style="opacity:.6">per telefoni lenti</small></span><button type="button" class="tog'+(GFX_MIN?' on':'')+'" data-do="gfx">'+(GFX_MIN?'Sì':'No')+'</button></div><div class="note">'+((document.getElementById('devTitle')||{}).textContent||'')+' · versione di prova</div><div class="note" style="font-size:10px;opacity:.7;word-break:break-word">📱 '+(window.__devLine?window.__devLine():'').replace(/</g,'')+'</div>'; }
   else if(a==='friends'){ t='Amici'; const L=PH.lobby||(PH.lobby={me:false,t0:performance.now(),people:[['Antony','💪',1.2],['Carlo','😄',3.5],['Leo','😠',7]]}); const el=(performance.now()-L.t0)/1000;
     h='<h4>👥 Partita con gli amici</h4><div class="pl"><span class="av">🙂</span><b>Tu</b><span class="st'+(L.me?' ok':'')+'">'+(L.me?'PRONTO':'non pronto')+'</span></div>'+
       L.people.map(([n,e,d])=>'<div class="pl"><span class="av">'+e+'</span><b>'+n+'</b><span class="st'+(el>d?' ok':'')+'">'+(el>d?'PRONTO':(n==='Leo'?'sta arrivando…':'…'))+'</span></div>').join('');
