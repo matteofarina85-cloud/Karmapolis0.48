@@ -341,7 +341,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.104.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.104.3</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -369,6 +369,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.104.3',d:'28/11/2026',t:['🏍️ Motociclisti rifatti: seduti sulla sella, piegati in avanti, mani sul manubrio e piedi sulle pedane (prima sembravano in piedi).']},
  {v:'0.104.2',d:'28/11/2026',t:['🚦 Borgo Karma: le auto in coda al semaforo non passano più una dentro l\'altra. Il trucco che sblocca gli ingorghi (dopo 8 secondi fermi le auto passavano "di traverso") scattava anche nelle code normali al rosso.']},
  {v:'0.104.1',d:'28/11/2026',t:['🔧 Il gioco restava bloccato su "Sto costruendo il paese": un errore di battitura nella 0.104.0 (un commento messo in mezzo a una riga). Corretto.']},
  {v:'0.104.0',d:'28/11/2026',t:['🏍️ I motociclisti del traffico ora sono persone vere del gioco, sedute in moto con le mani sul manubrio, i piedi sulle pedane e il casco (prima c\'era un omino finto e fisso).','🚗 Stesso traffico su telefono e PC (24 auto a Borgo Karma, 70 a Milanopolis): nel multigiocatore tutti vedranno le stesse auto.','🚧 Milanopolis: le auto si fermano guardando tutta la lunghezza di chi hanno davanti (autobus e camion compresi): meno auto che si compenetrano.']},
@@ -1910,10 +1911,12 @@ function motoGeo(col,jacket,helmet,noRider){ const parts=[];
   for(const sx of [-1,1]){ const arm=new THREE.CapsuleGeometry(0.06,0.42,3,6); arm.rotateX(1.15); parts.push(P(arm,jacket,sx*0.24,1.32,0.24)); const thigh=new THREE.CapsuleGeometry(0.08,0.36,3,6); thigh.rotateX(1.35); parts.push(P(thigh,0x2f4f86,sx*0.17,0.95,-0.05)); const shin=new THREE.CapsuleGeometry(0.07,0.36,3,6); shin.rotateX(-0.3); parts.push(P(shin,0x2f4f86,sx*0.2,0.62,0.14)); } }
   return {geo:mergeGeometries(parts.map(g=>{ for(const k of Object.keys(g.attributes)) if(!['position','normal','color'].includes(k)) g.deleteAttribute(k); return g; })),len:2.1,vmax:10,w:0.8,bike:true}; }
 // 🏍️ pilota vero sulle moto del traffico (Teo 28/11: "il motociclista fallo bene, hai lasciato un pippottino fisso"): una persona del gioco, seduta con le mani sul manubrio e i piedi sulle pedane, casco in testa
-function addMotoRider(m,i){ const h=makeHuman({av:avRandom(900+i*7)},null); if(h.g.parent) h.g.parent.remove(h.g); m.add(h.g); h.g.position.set(0,0.38,-0.3); h.g.rotation.set(0,0,0);
-  const seat=new THREE.Object3D(); seat.position.set(0,0.38,-0.3); m.add(seat); const grips=[1,-1].map(s2=>{ const o=new THREE.Object3D(); o.position.set(0.3*s2,1.08,0.45); m.add(o); return o; });
-  const fv={seat,grips,pose:{foot:[0.2,0.08,0.42],knee:[0.24,0.5,0.62],elbow:[0.55,-0.1,-0.1],lean:0.42}};
-  const B2=h.bones; if(B2&&B2.Head){ const hel=new THREE.Mesh(new THREE.SphereGeometry(0.15,14,10,0,Math.PI*2,0,Math.PI*0.62),toon({color:[0xffffff,0xffd84d,0xe0483e,0x2a2a33][i%4]})); hel.position.set(0,0.11,0.01); hel.scale.setScalar(1/(B2.Head.getWorldScale(new THREE.Vector3()).x||1)); B2.Head.add(hel); }
+function addMotoRider(m,i){ const h=makeHuman({av:avRandom(900+i*7)},null); h.g.position.set(0,0,0); h.g.updateMatrixWorld(true);
+  const B2=h.bones, hipY=B2.Hips?B2.Hips.getWorldPosition(new THREE.Vector3()).y:0.95; if(h.g.parent) h.g.parent.remove(h.g); m.add(h.g);
+  const SEAT_Y=1.02, SEAT_Z=-0.28; h.g.position.set(0,SEAT_Y-hipY,SEAT_Z); h.g.rotation.set(0,0,0); // il bacino appoggiato sulla sella
+  const seat=new THREE.Object3D(); seat.position.set(0,SEAT_Y,SEAT_Z); m.add(seat); const grips=[1,-1].map(s2=>{ const o=new THREE.Object3D(); o.position.set(0.31*s2,1.1,0.47); m.add(o); return o; });
+  const fv={seat,grips,pose:{foot:[0.21,-0.6,0.3],knee:[0.24,-0.06,0.5],elbow:[0.6,-0.25,-0.15],lean:0.55}}; // piedi sulle pedane, ginocchia avanti, busto piegato verso il manubrio
+  if(B2&&B2.Head){ const hel=new THREE.Mesh(new THREE.SphereGeometry(0.15,14,10,0,Math.PI*2,0,Math.PI*0.62),toon({color:[0xffffff,0xffd84d,0xe0483e,0x2a2a33][i%4]})); hel.position.set(0,0.11,0.01); hel.scale.setScalar(1/(B2.Head.getWorldScale(new THREE.Vector3()).x||1)); B2.Head.add(hel); }
   m.userData.rider={h,fv,posed:false}; }
 function poseMotoRider(m){ const R=m.userData.rider; if(!R||R.posed) return; m.updateMatrixWorld(true); try{ posture(R.fv,R.h); }catch(e){} R.posed=true; }
 // lampeggianti (accesi a intermittenza solo ogni tanto: la polizia e l'ambulanza fanno solo "presenza")
