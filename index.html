@@ -317,7 +317,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.100.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.101.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -344,6 +344,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.101.0',d:'28/11/2026',t:['🎨 Prova di <b>grafica dipinta</b> a Borgo Karma: case di mattoni rossi con le fughe, intonaco vissuto con lo sporco in basso, tetti di coppi, tetti piani scuri con il bordo, i condizionatori e le bocchette.','🛣️ Strade più vissute: caditoie lungo i marciapiedi, segni di frenata vicino agli incroci, cassonetti e scatoloni all\'imbocco dei vicoletti.','☀️ Luce di giorno più contrastata, ombre più profonde.','📱 Telefono: un po\' meno punti da disegnare e meno pezzi separati, per tenere più facilmente i 60 fps.']},
  {v:'0.100.1',d:'28/11/2026',t:['🔊 Audio: sul telefono i suoni e la musica del gioco potevano restare muti (dopo lo schermo spento, un cambio di app o una chiamata) mentre le voci registrate si sentivano ancora. Ora l\'audio si risveglia al primo tocco e quando torni nel gioco.']},
  {v:'0.100.0',d:'28/11/2026',t:['🚋 <b>Tram arancioni</b> sui Bastioni, in tutti e due i sensi, sui binari in mezzo alle auto, con 7 fermate e le pensiline: a piedi vicino alla fermata premi «Sali sul tram» (5 karma), poi «Scendi alla prossima fermata».','⛵ <b>Barche sulla Cerchia dei Navigli</b>: il canale ora è più basso della strada, con i muri, e le barche passano sotto i ponti. 4 pontili con la scaletta: «Sali sulla barca» (8 karma).','🚗 Molto più traffico: 70 auto (45 sui telefoni), che si fermano anche dietro ai tram. Più passanti.','🏙️ Strade sistemate: i marciapiedi arrivano fino al bordo dei viali (niente più palazzi e semafori in mezzo alla strada, niente asfalto avanzato), gli isolati vicino a parchi e piazze vengono tagliati invece di sparire.','🌳 Dettagli: viali alberati con le aiuole, alberi e cestini lungo gli anelli, marciapiede lungo la circonvallazione, edicole nelle piazze, campagna intorno con campi coltivati, filari di pioppi, cascine e alberi.','⚙️ fps: il gioco non scende a 30 per i rallentamenti di un attimo (caricamenti, viaggi) e, se è a 30 fissi, ogni tanto riprova i 60 e ci resta se il telefono li regge.']},
  {v:'0.099.0',d:'28/11/2026',t:['🚗 <b>Traffico a Milanopolis</b>: auto, taxi, furgoni, moto, camion e autobus girano su anelli e viali, tengono la destra, <b>si fermano al rosso</b> e ripartono col verde, girano agli incroci e non si tamponano.','📯 Se ti metti davanti si fermano e suonano il clacson; la tua auto non passa attraverso di loro.','🚶 <b>Passanti</b> sui marciapiedi intorno agli isolati: si fermano se gli passi davanti (a piedi o in auto).','📱 Sui telefoni più lenti meno auto e passanti (22 e 14 invece di 36 e 26). Il Grigio a Milanopolis arriva nella prossima versione.']},
@@ -465,7 +466,7 @@ let seed=11; const rnd=()=>{ seed=(seed*16807)%2147483647; return seed/214748364
 const canvas=document.getElementById('c');
 const IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1); // su iPhone Safari ha poca memoria per la grafica: si parte più leggeri
 const renderer=new THREE.WebGLRenderer({canvas,antialias:!IOS,powerPreference:'high-performance'});
-const PR_MAX=Math.min(devicePixelRatio,LOW?1.5:2); let PR_MIN=LOW?0.9:1, ECO=LOW; let PR=IOS?1:(LOW?Math.min(PR_MAX,1.3):PR_MAX); renderer.setPixelRatio(PR);
+const PR_MAX=Math.min(devicePixelRatio,LOW?1.4:2); let PR_MIN=LOW?0.9:1, ECO=LOW; let PR=IOS?1:(LOW?Math.min(PR_MAX,1.3):PR_MAX); renderer.setPixelRatio(PR);
 renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFShadowMap; renderer.shadowMap.autoUpdate=!LOW;
 const scene=new THREE.Scene(); scene.fog=new THREE.Fog(0xc9ecff,90,230);
 const camera=new THREE.PerspectiveCamera(30,1,1,600);
@@ -478,8 +479,24 @@ const gmCar=new THREE.DataTexture(new Uint8Array([160,185,215,240]),4,1,THREE.Re
 const GN=32, GSZ=256; const greyData=new Uint8Array(GN*GN*4); const greyTex=new THREE.DataTexture(greyData,GN,GN,THREE.RGBAFormat); greyTex.magFilter=greyTex.minFilter=THREE.LinearFilter; greyTex.needsUpdate=true;
 const GREYU={uGrey:{value:greyTex}};
 const RIM={uRimCol:{value:new THREE.Color(0xfff2d6)}};
-function richToon(m,spec){ m.onBeforeCompile=sh=>{ sh.uniforms.uRimCol=RIM.uRimCol; sh.uniforms.uGrey=GREYU.uGrey;
-    sh.vertexShader='varying vec3 vWP;\n'+sh.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\n vWP=(modelMatrix*vec4(transformed,1.0)).xyz;');
+const PAINT_GLSL=`float h21(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+float vn2(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(h21(i),h21(i+vec2(1.0,0.0)),f.x),mix(h21(i+vec2(0.0,1.0)),h21(i+vec2(1.0,1.0)),f.x),f.y); }
+vec3 paintDetail(vec3 c,vec3 n,vec3 wp){ float lum=dot(c,vec3(0.3,0.59,0.11)); float d=1.0;
+  if(abs(n.y)<0.45){ vec2 p=vec2(abs(n.x)>abs(n.z)?wp.z:wp.x, wp.y);
+    float isBrick=step(lum,0.5)*step(0.2,c.r-c.b);
+    vec2 b=p/vec2(0.27,0.09); b.x+=0.5*mod(floor(b.y),2.0); vec2 f=fract(b); float mort=max(1.0-smoothstep(0.0,0.07,f.x),1.0-smoothstep(0.0,0.16,f.y));
+    float brick=(0.84+0.24*h21(floor(b)))*(1.0-0.34*mort);
+    float pl=0.95+0.07*vn2(p*1.8)+0.035*vn2(p*9.0);
+    float dirt=1.0-0.13*(1.0-smoothstep(0.15,1.2,wp.y))-0.07*smoothstep(0.62,1.0,vn2(vec2(p.x*0.9,p.y*0.12)));
+    d=mix(pl,brick,isBrick)*dirt; }
+  else if(n.y<0.985){ vec2 sd=normalize(n.xz+vec2(1e-4)); float s=dot(wp.xz,sd), q=dot(wp.xz,vec2(-sd.y,sd.x)); float rr=floor(s/0.34);
+    float row=fract(s/0.34), col=fract(q/0.42+0.5*mod(rr,2.0)); d=(0.78+0.22*smoothstep(0.0,0.4,row))*(1.0-0.14*(1.0-smoothstep(0.0,0.09,col)))*(0.93+0.12*h21(vec2(floor(q/0.42),rr))); }
+  else { d=0.9+0.12*vn2(wp.xz*2.5)+0.05*vn2(wp.xz*13.0); }
+  return c*d; }
+`;
+function richToon(m,spec,paint){ m.onBeforeCompile=sh=>{ sh.uniforms.uRimCol=RIM.uRimCol; sh.uniforms.uGrey=GREYU.uGrey;
+    sh.vertexShader='varying vec3 vWP;'+(paint?'varying vec3 vWN;':'')+'\n'+sh.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\n vWP=(modelMatrix*vec4(transformed,1.0)).xyz;'+(paint?' vWN=normalize(mat3(modelMatrix)*objectNormal);':''));
+    if(paint) sh.fragmentShader='varying vec3 vWN;\n'+PAINT_GLSL+sh.fragmentShader.replace('#include <color_fragment>','#include <color_fragment>\n diffuseColor.rgb=paintDetail(diffuseColor.rgb,normalize(vWN),vWP);');
     sh.fragmentShader='uniform vec3 uRimCol; uniform sampler2D uGrey; varying vec3 vWP;\n'+sh.fragmentShader.replace('#include <opaque_fragment>',`
     #if NUM_DIR_LIGHTS > 0
       vec3 vdir=normalize(vViewPosition); vec3 nn=normalize(normal);
@@ -490,8 +507,9 @@ function richToon(m,spec){ m.onBeforeCompile=sh=>{ sh.uniforms.uRimCol=RIM.uRimC
     #endif
       { vec4 gq=texture2D(uGrey,(vWP.xz+128.0)/256.0); float gL=dot(outgoingLight,vec3(0.3,0.59,0.11)); outgoingLight=mix(outgoingLight,vec3(gL)*mix(vec3(1.0),gq.rgb,0.5)*0.7,gq.a); /* Teo 27/11: grigio un po' più scuro (era 0.82) */ }
     #include <opaque_fragment>`); };
-  m.customProgramCacheKey=()=>'rich'+(spec||0); return m; }
-const toon=(o={})=>{ const {spec,...r}=o; return richToon(new THREE.MeshToonMaterial({gradientMap:gm,...r}),spec); };
+  m.customProgramCacheKey=()=>'rich'+(spec||0)+(paint?'p':''); return m; }
+const toon=(o={})=>{ const {spec,paint,...r}=o; return richToon(new THREE.MeshToonMaterial({gradientMap:gm,...r}),spec,paint); };
+const PAINTMAT=toon({vertexColors:true,paint:true}); // 🎨 prova "grafica dipinta" (Teo 28/11, ispirata a uno screenshot): mattoni, intonaco vissuto, coppi
 const VC=toon({vertexColors:true}); const LEAFMAT=toon({vertexColors:true}); // chiome con un materiale tutto loro: di notte si schiariscono un po' (prima diventavano macchie nere)
 const olCache={};
 function outlineMat(t){ if(olCache[t]) return olCache[t];
@@ -506,7 +524,7 @@ function withOutline(mesh,t=0.05){ const o=new THREE.Mesh(mesh.geometry,outlineM
 // geometrie unite in un solo oggetto (pochissime chiamate di disegno = leggero)
 const bins={};
 function put(key,geo,m4,color,shade){ const g=geo.clone(); g.applyMatrix4(m4); const n=g.attributes.position.count, c=new THREE.Color(color), a=new Float32Array(n*3), nr=g.attributes.normal, ps=g.attributes.position, t=new THREE.Color();
-  for(let i=0;i<n;i++){ t.copy(c); if(shade) shade(t,nr.getY(i),ps.getY(i),ps.getX(i),ps.getZ(i)); a[i*3]=t.r; a[i*3+1]=t.g; a[i*3+2]=t.b; } g.setAttribute('color',new THREE.BufferAttribute(a,3)); const e=m4.elements, ck=key+'#'+Math.floor((e[12]+256)/32)+'_'+Math.floor((e[14]+256)/32); (bins[ck]??=[]).push(g); }
+  for(let i=0;i<n;i++){ t.copy(c); if(shade) shade(t,nr.getY(i),ps.getY(i),ps.getX(i),ps.getZ(i)); a[i*3]=t.r; a[i*3+1]=t.g; a[i*3+2]=t.b; } g.setAttribute('color',new THREE.BufferAttribute(a,3)); const e=m4.elements, ck=key+'#'+Math.floor((e[12]+256)/64)+'_'+Math.floor((e[14]+256)/64); (bins[ck]??=[]).push(g); }
 function flush(key,{outline=0.05,shadow=true,receive=true,mat=VC}={}){ const out=[];
   for(const k of Object.keys(bins)){ if(k.split('#')[0]!==key) continue; const g=mergeGeometries(bins[k]); delete bins[k]; g.computeBoundingSphere();
     const m=new THREE.Mesh(g,mat); m.castShadow=shadow; m.receiveShadow=receive; if(outline) withOutline(m,outline); scene.add(m); out.push(m); }
@@ -1087,15 +1105,17 @@ for(const b of BLOCKS){ const piazza=b.i===1&&b.j===1; slab(b.x0,b.x1,b.z0,b.z1,
 slab(PROM.x0,PROM.x1,PROM.z0,PROM.z1,paveTex,4,1.2);
 
 // ---------- case: file di palazzine colorate lungo i bordi degli isolati ----------
-const PASTEL=[0xf3c98b,0xe9a17a,0xf5d6a8,0xf2b8a8,0xfbe7b5,0xcfe0c3,0xbfd8e8,0xf6efe2,0xe8c4a0,0xd9a88a];
-const ROOFC=[0xc8553d,0xb24a35,0xd06a45,0x9a4a3a];
+const PASTEL=[0xb0543a,0xa24a35,0xbd6446,0x9a4634,0xb85c3e,0xe8b97c,0xdf9466,0xf0d2a0,0xd9c6a0,0x9fb59a,0xf2e6cf,0xc98d6a]; // 28/11: metà mattoni rossi, metà intonaco caldo
+const ROOFC=[0x5a5552,0x4e4a48,0x6a5f58,0xa8503a,0x8f4434];
 function house(cx,cz,w,d,yaw,floors,opts={}){ // facciata verso +Z locale ruotata di yaw
   const wall=PASTEL[Math.floor(rnd()*PASTEL.length)], roofc=ROOFC[Math.floor(rnd()*ROOFC.length)], H=floors*2.9+0.4, base=0.15;
   const P=(key,geo,lx,ly,lz,col,rx=0,sx=1,sy=1,sz=1,shade)=>{ const [x,z]=loc(cx,cz,yaw,lx,lz); put(key,geo,mat4r(x,base+ly,z,rx,yaw,sx,sy,sz),col,shade); };
   P('house',new THREE.BoxGeometry(w,H,d),0,H/2,0,wall);
   P('house',new THREE.BoxGeometry(w+0.12,0.35,d+0.12),0,0.17,0,0xb8ab98); // zoccolo
   for(let f=1;f<floors;f++) P('house',new THREE.BoxGeometry(w+0.1,0.14,d+0.1),0,f*2.9+0.2,0,0xffffff,0,1,1,1); // marcapiano
-  if(opts.flat || rnd()<0.3){ P('house',new THREE.BoxGeometry(w+0.2,0.45,d+0.2),0,H+0.2,0,0xffffff); P('house',new THREE.BoxGeometry(w-0.4,0.2,d-0.4),0,H+0.12,0,0x9c9387); }
+  if(opts.flat || rnd()<0.45){ P('house',new THREE.BoxGeometry(w+0.2,0.45,d+0.2),0,H+0.2,0,0xd8cbb4); P('house',new THREE.BoxGeometry(w-0.5,0.06,d-0.5),0,H+0.45,0,0x57534f);
+    const nac=1+Math.floor(rnd()*2); for(let k=0;k<nac;k++){ const ax=(rnd()-0.5)*(w-2.2), az=(rnd()-0.5)*(d-2.2); P('house',new THREE.BoxGeometry(1.25,0.75,1.0),ax,H+0.6,az,0xc9ccd2); P('house',new THREE.CylinderGeometry(0.36,0.36,0.04,14),ax,H+0.99,az,0x3a3d44); P('house',new THREE.BoxGeometry(0.7,0.03,0.06),ax,H+1.02,az,0x8a8f98); }
+    if(rnd()<0.7){ const vx=(rnd()-0.5)*(w-1.5), vz=(rnd()-0.5)*(d-1.5); P('house',new THREE.CylinderGeometry(0.14,0.14,0.7,8),vx,H+0.55,vz,0x8a8f98); P('house',new THREE.CylinderGeometry(0.22,0.14,0.12,8),vx,H+0.95,vz,0x6e737c); } }
   else { const gable=new THREE.CylinderGeometry(d/2/0.866,d/2/0.866,w,3); gable.rotateX(-Math.PI/2); gable.rotateY(Math.PI/2);
     P('house',gable,0,H+d*0.15,0,wall,0,1,0.52,1);
     const sl=Math.hypot(d/2,d*0.45), ang=Math.atan2(d*0.45,d/2);
@@ -1288,6 +1308,14 @@ for(const [x0,x1,z0,z1,tx] of FIELDS){ const f=flat(x1-x0,z1-z0,tx,(x0+x1)/2,0.0
 // 7) colline lontane tutt'intorno (fanno da cornice e si perdono nella foschia)
 for(let i=0;i<18;i++){ const a=Math.PI*0.08+i/17*Math.PI*1.84, R=185+drnd()*45; const x=Math.sin(a+Math.PI)*R*1.05, z=Math.cos(a+Math.PI)*R-40; if(z>40) continue;
   put('hills',BLOB[i%3],mat4r(x,-4,z,0,drnd()*6,45+drnd()*30,14+drnd()*16,40+drnd()*25),[0x6fae5c,0x5f9e55,0x7ab865][i%3],LEAF); }
+{ let k=0; for(const vx of VX) for(let z=-56;z<=50;z+=10){ if(HZ.some(h=>Math.abs(h-z)<6)) continue; for(const sg of [-1,1]){ if((k++)%2) continue; const x=vx+sg*(SW-0.35); put('decal',new THREE.BoxGeometry(0.42,0.02,0.85),mat4(x,0.025,z),0x2c2f36); for(let q=0;q<4;q++) put('decal',new THREE.BoxGeometry(0.34,0.025,0.06),mat4(x,0.03,z-0.3+q*0.2),0x5b606b); } }
+  for(const hz of HZ){ if(hz===52) continue; for(let x=-56;x<=56;x+=10){ if(VX.some(v=>Math.abs(v-x)<6)) continue; for(const sg of [-1,1]){ if((k++)%2) continue; const z=hz+sg*(SW-0.35); put('decal',new THREE.BoxGeometry(0.85,0.02,0.42),mat4(x,0.025,z),0x2c2f36); for(let q=0;q<4;q++) put('decal',new THREE.BoxGeometry(0.06,0.025,0.34),mat4(x-0.3+q*0.2,0.03,z),0x5b606b); } } }
+  // segni di frenata vicino ad alcuni incroci
+  for(let i=0;i<7;i++){ const n=NODES[(i*5+2)%NODES.length]; const a0=drnd()*Math.PI*2, R=5+drnd()*3, cx=n.x+(drnd()-0.5)*4, cz=n.z+(drnd()-0.5)*4; for(const off of [-0.8,0.8]) for(let q=0;q<9;q++){ const a=a0+q*0.12, x=cx+Math.cos(a)*(R+off), z=cz+Math.sin(a)*(R+off); put('decal',new THREE.BoxGeometry(0.22,0.012,0.8),mat4r(x,0.026,z,0,-a,1,1,1),0x3a3d46); } }
+  // cassonetti e scatoloni all'imbocco dei vicoletti
+  for(const al of ALLEYS){ for(const zz of [al.z0+2.6,al.z1-2.6]){ const x=al.x+ALLEY_W/2-0.55; if(drnd()<0.5){ put('bins',new THREE.BoxGeometry(0.9,1.0,1.5),mat4(x-0.05,0.7,zz),0x3f7a52); put('bins',new THREE.BoxGeometry(0.95,0.12,1.55),mat4(x-0.05,1.26,zz),0x2f5f3f); OBST.push({x:x-0.05,z:zz,r:0.6}); }
+      else { for(let q=0;q<3;q++) put('bins',new THREE.BoxGeometry(0.5,0.38,0.5),mat4r(x,0.35+(q===2?0.38:0),zz-0.3+(q%2)*0.55,0,drnd()*0.5,1,1,1),0xb88a55); OBST.push({x,z:zz,r:0.5}); } } }
+}
 flush('decal',{outline:0,shadow:false}); flush('bins',{outline:0.02}); flush('bunting',{outline:0,shadow:false,mat:toon({vertexColors:true,side:THREE.DoubleSide})});
 flush('hedge',{outline:0.03}); flush('gate',{outline:0.03}); flush('fence',{outline:0.015}); flush('hay',{outline:0.025}); flush('hills',{outline:0,shadow:false,receive:false});
 
@@ -1325,7 +1353,7 @@ const water=new THREE.Mesh(new THREE.PlaneGeometry(600,300),new THREE.ShaderMate
     #include <colorspace_fragment>
   }`})); water.rotation.x=-Math.PI/2; water.position.set(0,-0.25,SEA_Z+150); scene.add(water);
 flush('trunks',{outline:0.05}); flush('leaves',{outline:0.06,mat:LEAFMAT}); flush('bushes',{outline:0.04,mat:LEAFMAT}); flush('flowers',{outline:0,shadow:false});
-flush('house',{outline:0.035});
+flush('house',{outline:0.035,mat:PAINTMAT});
 const winMat=new THREE.MeshBasicMaterial({vertexColors:true,color:0x9ccfe8}); flush('wins',{outline:0.02,shadow:false,mat:winMat});
 
 // ---------- gabbiani ----------
@@ -4031,7 +4059,7 @@ function updateHome(dt){ updateTvHint(); if(HOME.editor){ const c=chars[cur]; if
 
 // ---------- ora del giorno ----------
 const PRESET={
-  giorno:{bg:0xc9ecff,sun:[0.45,0.8,0.3],sc:0xfff3d6,si:2.1,hs:0xcfe9ff,hg:0x6b8f4e,hi:1.05,fog:0xc9ecff,deep:0x1e8fd0,sh:0x4fdbd6,night:0},
+  giorno:{bg:0xc9ecff,sun:[0.45,0.8,0.3],sc:0xfff0d0,si:2.35,hs:0xc6dff5,hg:0x5d7a48,hi:0.88,fog:0xc9ecff,deep:0x1e8fd0,sh:0x4fdbd6,night:0},
   tramonto:{bg:0xffb98a,sun:[-0.8,0.35,0.4],sc:0xffb070,si:1.8,hs:0xffb48a,hg:0x4a3a5a,hi:0.85,fog:0xf7a57c,deep:0x31508f,sh:0xf09a7c,night:0.3},
   notte:{bg:0x1c2450,sun:[-0.3,0.75,-0.5],sc:0x9fb6ff,si:0.6,hs:0x5a6cb0,hg:0x1a2036,hi:0.55,fog:0x1c2450,deep:0x0d1a44,sh:0x22507e,night:1}
 };
