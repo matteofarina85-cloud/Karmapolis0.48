@@ -10,7 +10,7 @@ G.addEventListener=(...a)=>w.addEventListener(...a); G.atob=(x)=>Buffer.from(x,'
 G.fetch=async(p)=>{ p=p.split('?')[0]; const f='/home/claude/karmapolis0.48/'+p.replace(/^assets\//,''); if(!fs.existsSync(f)) return {ok:false}; const t=fs.readFileSync(f,'utf8'); return {ok:true,json:async()=>JSON.parse(t),text:async()=>t,arrayBuffer:async()=>{ const b=fs.readFileSync(f); return b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength); }}; };
 G.self=G; G.MutationObserver=w.MutationObserver; for(const el of w.document.querySelectorAll('[id]')) if(!(el.id in G)) G[el.id]=el; G.Image=w.Image; G.ImageData=w.ImageData;
 const C2=w.CanvasRenderingContext2D; if(C2 && C2.prototype && !C2.prototype.roundRect) C2.prototype.roundRect=function(x,y,ww,h){ this.rect(x,y,ww,h); };
-w.HTMLElement.prototype.animate=undefined;
+w.HTMLElement.prototype.animate=undefined; G.Audio=w.Audio=class{ constructor(){ this.preload=''; } load(){} play(){ return Promise.resolve(); } pause(){} addEventListener(){} }; G.speechSynthesis=w.speechSynthesis=undefined;
 for(const k of ['setPointerCapture','releasePointerCapture']) w.HTMLElement.prototype[k]=()=>{};
 w.HTMLCanvasElement.prototype.getBoundingClientRect=()=>({left:0,top:0,width:900,height:420,right:900,bottom:420});
 G.__step=(n,dtms=50)=>{ for(let i=0;i<n;i++){ NOW+=dtms; w.__frame(); } };

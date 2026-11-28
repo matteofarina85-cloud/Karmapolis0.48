@@ -2,7 +2,7 @@
 // uso: node bot2.mjs "1,2,3,4,10" [partite per livello=3] [bravura=1 | 0.7 principiante]
 await import('./run.mjs');
 const w=W, S=w.__sim, $=id=>w.document.getElementById(id);
-const LVS=(process.argv[2]||'1,2,3,4').split(',').map(Number), RUNS=+process.argv[3]||3, SK=+process.argv[4]||1;
+const LVS=(process.argv[2]||'1,2,3,4').split(',').map(Number), RUNS=+process.argv[3]||3, SK=+process.argv[4]||1, ERR=+(process.argv[5]||0);
 const D=(a,b)=>Math.hypot(a.x-b.x,a.z-b.z);
 const out=[]; let first=true;
 for(const lv of LVS){ const R=[];
@@ -21,11 +21,11 @@ for(const lv of LVS){ const R=[];
       // 3) curo il malato più vicino (prima il focolaio) con la cura giusta se ho cariche
       let best=null,bd=1e9; const T=S.TGT; for(const p of S.PEDS){ if(!p.kind||p.ko>0||p.fly||p.goto||p.gone) continue; const id=Object.keys(S.CURE).find(k=>S.CURE[k].k===p.kind); if(S.G.ch[id]<=0) continue; let d=D(p,P); if(T&&T.zone&&!(p.x>T.zone.x0&&p.x<T.zone.x1&&p.z>T.zone.z0&&p.z<T.zone.z1)) d+=25; if(d<bd){ bd=d; best=p; } }
       if(!best){ busy=0.5; continue; }
-      if(goTo(best)){ S.player.focusPed=best; const id=Object.keys(S.CURE).find(k=>S.CURE[k].k===best.kind); S.cure(id); st.cure++; busy=(S.CURE[id].hold?0:0.6)/SK; } }
+      if(goTo(best)){ S.player.focusPed=best; let id=Object.keys(S.CURE).find(k=>S.CURE[k].k===best.kind); if(Math.random()<ERR){ const o=Object.keys(S.CURE).filter(k=>k!==id&&S.G.ch[k]>0); if(o.length){ id=o[Math.floor(Math.random()*o.length)]; st.wrong=(st.wrong||0)+1; } } S.cure(id); st.cure++; busy=(S.CURE[id].hold?0:0.6)/SK; } }
     if(S.LEO.victims) st.leoHit=S.LEO.victims.length;
     R.push({stars:($('goStars').textContent.match(/⭐/g)||[]).length, win:($('goStars').textContent.match(/⭐/g)||[]).length>0, pct:Math.round(S.colorPct()*100), k:Math.round(S.G.karma-k0), maxCarriers, ...st}); }
   const avg=k=>(R.reduce((a,x)=>a+(+x[k]),0)/R.length);
-  const row={liv:lv,partite:R.length,vinte:R.filter(x=>x.win).length,stelle:avg('stars').toFixed(1),colori:Math.round(avg('pct'))+'%',karma:Math.round(avg('k')),cure:Math.round(avg('cure')),caramelle:avg('candy').toFixed(1),comprate:avg('buy').toFixed(1),portatori_max:Math.round(avg('maxCarriers')),carlo:avg('carlo').toFixed(1),leo_vittime:avg('leoHit').toFixed(1)};
+  const row={liv:lv,partite:R.length,vinte:R.filter(x=>x.win).length,stelle:avg('stars').toFixed(1),colori:Math.round(avg('pct'))+'%',karma:Math.round(avg('k')),cure:Math.round(avg('cure')),caramelle:avg('candy').toFixed(1),comprate:avg('buy').toFixed(1),portatori_max:Math.round(avg('maxCarriers')),carlo:avg('carlo').toFixed(1),leo_vittime:avg('leoHit').toFixed(1),sbagliate:R.length?(R.reduce((a,x)=>a+(x.wrong||0),0)/R.length).toFixed(1):0};
   out.push(row); console.log(JSON.stringify(row)); }
 console.log('\n| '+Object.keys(out[0]).join(' | ')+' |'); for(const r of out) console.log('| '+Object.values(r).join(' | ')+' |');
 process.exit(0);
