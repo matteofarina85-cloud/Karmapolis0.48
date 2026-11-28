@@ -157,6 +157,12 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
   #greyHud{bottom:calc(14px + env(safe-area-inset-bottom,0px))}
   #sta{bottom:calc(54px + env(safe-area-inset-bottom,0px))}
   .right{flex-direction:row;flex-wrap:wrap-reverse;justify-content:flex-end;align-items:flex-end;max-width:52vw;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+  /* 28/11 Teo: su PC stamina, poteri e barra del livello molto più grandi */
+  #sta{padding:5px 16px!important;gap:10px;font-size:22px;border-width:3px}
+  #sta .sbar{width:260px!important;height:20px!important;border-width:3px}
+  #chMini{font-size:19px;padding:4px 12px;border-radius:16px;border-width:2.5px}
+  #chMini b{margin-right:9px}
+  #greyHud{font-size:20px;padding:7px 18px;border-width:3px}
 }
 #avEd{position:fixed;right:max(10px,env(safe-area-inset-right,0px));top:calc(8px + env(safe-area-inset-top,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));width:min(390px,50vw);z-index:14;display:flex;flex-direction:column;background:var(--paper);border:2.5px solid var(--line);border-radius:18px;box-shadow:4px 4px 0 var(--line);overflow:hidden}
 body.editing .hud,body.editing #joy,body.editing #sta,body.editing #homeCard,body.editing .right{display:none!important}
@@ -344,7 +350,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.105.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.105.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -372,6 +378,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.105.1',d:'28/11/2026',t:['🖥️ Su PC la barra della stamina, i poteri sotto e la barra del livello con le stelline sono molto più grandi.','📱 Sul telefono i nomi sopra Leo e Antony sono più grandi e si leggono bene.']},
  {v:'0.105.0',d:'28/11/2026',t:['🤕 Quando vieni investito ora ti <b>rialzi davvero</b>: dopo il volo resti a terra con le stelline, poi ti tiri su seduto, in ginocchio e in piedi (animazione «Getting Up» di Mixamo scaricata da Teo). Anche i passanti investiti si rialzano così.']},
  {v:'0.104.4',d:'28/11/2026',t:['🖥️ Sul PC lo stesso schermo del telefono: barra del fiato e riassunto delle cariche in alto a destra; il contatore degli fps piccolino in basso al centro.']},
  {v:'0.104.3',d:'28/11/2026',t:['🏍️ Motociclisti rifatti: seduti sulla sella, piegati in avanti, mani sul manubrio e piedi sulle pedane (prima sembravano in piedi).']},
@@ -4231,7 +4238,7 @@ const LEO={speed:1.1 /* più lento (Teo e il vero Carletto, 26/11: "più verosim
 const CARLO={code:'KP1-m200000000031010e0f00e0f0e000b130f401f024' /* fatto da Teo con l'editor, 26/11 */,h:null,state:'off',called:false,price:60,path:null,replan:0,target:null,work:0,deck:null};
 function nameTag(txt,col){ const t=canvasTex(512,128,(g)=>{ g.fillStyle=col||'rgba(255,250,240,.95)'; g.beginPath(); g.roundRect(8,14,496,100,50); g.fill(); g.strokeStyle='#2a2233'; g.lineWidth=8; g.stroke(); g.fillStyle='#2a2233'; g.font='bold 64px Fredoka, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(txt,256,66); });
   // dimensione fissa sullo schermo (Teo, 27/11: "si leggono poco"): leggibile anche da lontano
-  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false,transparent:true,sizeAttenuation:false})); sp.scale.set(0.17,0.0425,1); sp.position.y=2.35; sp.renderOrder=5; return sp; }
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false,transparent:true,sizeAttenuation:false})); const k=matchMedia('(pointer:coarse)').matches?2.1:1; /* 28/11 Teo: sul telefono i nomi si devono vedere meglio */ sp.scale.set(0.17*k,0.0425*k,1); sp.position.y=2.35; sp.renderOrder=5; return sp; }
 function mkSpecial(seed,over,tag,col){ const av=typeof seed==='string'?avDecode(seed):{...avRandom(seed),sex:'m',...over}; const h=makeHuman({av},null); h.g.add(nameTag(tag,col)); h.g.visible=false; return h; }
 function farNode(x,z,dmin,dmax){ let best=null; for(let k=0;k<40;k++){ const n=WALKN[Math.floor(Math.random()*WALKN.length)], d=Math.hypot(n[0]-x,n[1]-z); if(d>=dmin&&d<=dmax){ best=n; break; } if(!best||Math.abs(d-dmin)<Math.abs(Math.hypot(best[0]-x,best[1]-z)-dmin)) best=n; } return best; }
 function stepTo(h,path,tx,tz,sp,dt){ // cammina lungo il percorso (mai attraverso le case); se il percorso è finito va dritto verso il bersaglio vicino
