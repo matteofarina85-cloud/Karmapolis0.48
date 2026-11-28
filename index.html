@@ -80,6 +80,7 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #talkCard.bubble button{font-size:38px;line-height:1;padding:11px 12px 8px;min-width:82px;border-radius:16px;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative;background:#fff;color:#2a2233;border:2.5px solid #2a2233;box-shadow:0 3px 0 #2a2233}
 #talkCard.bubble button[hidden]{display:none}
 #talkCard.bubble button .n{font:800 16px var(--display,sans-serif);opacity:.85}
+#talkCard.bubble button.gpsel{outline:4px solid #2f7de1;outline-offset:2px}
 #talkCard.bubble button.dim{opacity:.4!important;transform:scale(.85)}#talkCard.bubble button.dim2{opacity:.55!important}#talkCard.bubble button.hl{background:#fff3b8;border-color:#e0a000;box-shadow:0 3px 0 #2a2233,0 0 0 4px rgba(255,216,77,.6)}
 #talkCard.bubble button .k{position:absolute;top:-8px;right:-7px;font:800 11px sans-serif;background:#ffd84d;border:2px solid #2a2233;border-radius:8px;padding:1px 5px;display:none}
 @media (pointer:fine){ #talkCard.bubble button .k{display:block} }
@@ -340,7 +341,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.103.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.104.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -368,6 +369,8 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.104.0',d:'28/11/2026',t:['🏍️ I motociclisti del traffico ora sono persone vere del gioco, sedute in moto con le mani sul manubrio, i piedi sulle pedane e il casco (prima c\'era un omino finto e fisso).','🚗 Stesso traffico su telefono e PC (24 auto a Borgo Karma, 70 a Milanopolis): nel multigiocatore tutti vedranno le stesse auto.','🚧 Milanopolis: le auto si fermano guardando tutta la lunghezza di chi hanno davanti (autobus e camion compresi): meno auto che si compenetrano.']},
+ {v:'0.103.2',d:'28/11/2026',t:['🎮 Joypad: con la nuvoletta aperta le <b>frecce della croce</b> scelgono la cura (riquadro blu) e <b>A</b> la usa. Restano anche X 😄 · Y 👂 · B 🌬️ · RB 🗣️ · LB 🍬.','🔍 Joypad: <b>zoom</b> con la croce ⬆️ (avvicina) e ⬇️ (allontana), oltre alla levetta destra su/giù. Tutti i comandi sono scritti in 📱 → Aiuto.']},
  {v:'0.103.1',d:'28/11/2026',t:['💬 La nuvoletta si apre solo quando sei proprio vicino alla persona e ti fermi, e si chiude subito appena muovi la levetta (o i tasti) per andartene.','👥 In mezzo alla gente la nuvoletta resta su chi hai davanti (se sono più d\'uno, prima chi sta male) e non salta da una persona all\'altra.']},
  {v:'0.103.0',d:'28/11/2026',t:['💪 <b>Persone ostinate</b>: dal livello 5 alcune persone vogliono 2 o 3 cure giuste dello stesso tipo. Sopra la testa vedi tante icone quante cure servono ancora (💢💢), e nella nuvoletta c\'è scritto. Più sali, più ce ne sono.','😬 <b>La cura sbagliata peggiora le cose</b>: se a chi si sente solo fai la battuta, si arrabbia, perdi 3 karma e ora gli serve una cura in più. Bisogna capire cosa gli serve davvero.','🔋 Dal livello 10 hai 4 cariche per ogni cura invece di 3.','⚖️ Livelli rifatti col giocatore finto: il Grigio accelera sempre meno salendo di livello, la difficoltà vera ora sono le persone ostinate. Livello 10 e 15 vincibili per chi gioca bene; chi sbaglia spesso perde.','🎓 Addestramento: il pettegolo è ostinato (2 cure), e il ripasso spiega nuvoletta, cariche, cura sbagliata e persone ostinate.']},
  {v:'0.102.2',d:'28/11/2026',t:['💬 Nuvoletta <b>quadrata</b>: 2 cure sopra e 2 sotto, la caramella tonda sull\'angolo.','🧭 La nuvoletta si mette <b>a destra</b> della persona; se lì non c\'è posto (bordo dello schermo, vicoletto, sopra di te, sulla levetta o sui pulsanti) si sposta a sinistra, sopra o sotto, con la codina sempre verso la persona.']},
@@ -939,7 +942,7 @@ function mEdgePos(e,u){ const D=Math.PI/180; let x,z,hx,hz; if(e.kind==='ring'){
   const lane=Math.min(2.2,e.w/4); return {x:x-hz*lane, z:z+hx*lane, hx, hz}; }
 function mBez(a,b,c,u){ const k=1-u; return {x:k*k*a.x+2*k*u*b.x+u*u*c.x, z:k*k*a.z+2*k*u*b.z+u*u*c.z}; }
 function milSpawnLife(){ if(MLIFE.ready) return; MLIFE.ready=true; milGraph(); const E=MLIFE.edges;
-  const NC=ECO?45:70; for(let i=0;i<NC;i++){ const e=E[(i*37+11)%E.length]; const MF=['berlina','taxi','suv','wagon','citycar','sportiva','furgone','moto','berlina','taxi','camion','wagon','suv','citycar','bus','moto']; const V=makeTrafficVehicle(MF[i%MF.length],i+40);
+  const NC=70; // stesso numero su telefono e PC (multigiocatore) for(let i=0;i<NC;i++){ const e=E[(i*37+11)%E.length]; const MF=['berlina','taxi','suv','wagon','citycar','sportiva','furgone','moto','berlina','taxi','camion','wagon','suv','citycar','bus','moto']; const V=makeTrafficVehicle(MF[i%MF.length],i+40);
     MLIFE.cars.push({...V,e,u:0.1+((i*0.37)%0.8),mode:'lane',speed:0,x:0,z:0,yaw:0,lean:0,vmax:Math.min(V.vmax||8.5,9.5)}); }
   const B=MIL.bside||[], NP=ECO?20:34; for(let i=0;i<NP&&B.length;i++){ const b=B[(i*13+5)%B.length]; const av=avRandom(i+301); const h=makeHuman({av},null); h.A.walk.time=Math.random()*1.5;
     const rI=b.r0+1.2, rO=b.r1-1.2, D=Math.PI/180, aI0=b.a0+1.2/rI/D, aI1=b.a1-1.2/rI/D, aO0=b.a0+1.2/rO/D, aO1=b.a1-1.2/rO/D;
@@ -957,7 +960,7 @@ function milLife(dt){ if(!MLIFE.ready) return; mFrame++; const cars=MLIFE.cars, 
   for(const c of cars){ const fx=Math.sin(c.yaw), fz=Math.cos(c.yaw); let target=c.mode==='turn'?4.5:c.vmax, block=false, meBlock=false;
     // chi ho davanti? (altre auto, la tua auto, tu a piedi)
     const look=7.5+(c.len||4.2)/2;
-    for(const o of cars){ if(o===c) continue; const dx=o.x-c.x, dz=o.z-c.z; if(dx*dx+dz*dz>look*look+40) continue; const f=dx*fx+dz*fz, l=Math.abs(dx*fz-dz*fx); if(f>0.5&&f<look&&l<1.7){ const same=Math.sin(o.yaw)*fx+Math.cos(o.yaw)*fz>0.3; if(same||o.mode==='turn'||c.mode==='turn'){ block=true; break; } } }
+    const front=(c.len||4.2)/2; for(const o of cars){ if(o===c) continue; const dx=o.x-c.x, dz=o.z-c.z; if(dx*dx+dz*dz>(look+8)*(look+8)) continue; let hitO=false; for(const [px,pz] of vehPts(o)){ const qx=px-c.x, qz=pz-c.z, f=qx*fx+qz*fz, l=Math.abs(qx*fz-qz*fx); if(f>front-0.6&&f<look+1.5&&l<(o.w||1.8)/2+1.0){ hitO=true; break; } } if(hitO){ const same=Math.sin(o.yaw)*fx+Math.cos(o.yaw)*fz>0.3; if(same||o.mode==='turn'||c.mode==='turn'){ block=true; break; } } }
     { const tx=me?me.x:PX, tz=me?me.z:PZ, dx=tx-c.x, dz=tz-c.z, f=dx*fx+dz*fz, l=Math.abs(dx*fz-dz*fx); if(f>0.3&&f<look&&l<(me?2.1:1.4)){ block=true; meBlock=true; } }
     if(!block&&TRANSIT.ready) for(const t of TRANSIT.list){ if(t.kind!=='tram') continue; for(const sg of t.segs){ const dx=sg.position.x-c.x, dz=sg.position.z-c.z, f=dx*fx+dz*fz, l=Math.abs(dx*fz-dz*fx); if(f>0.5&&f<look+3&&l<1.9){ block=true; break; } } if(block) break; }
     if(block) target=0;
@@ -978,7 +981,7 @@ function milLife(dt){ if(!MLIFE.ready) return; mFrame++; const cars=MLIFE.cars, 
     const d2=(c.x-PX)**2+(c.z-PZ)**2, vis=d2<170*170; c.m.visible=vis; if(!vis) continue;
     { const fw=c.m.userData.fw; if(fw&&fw.length) for(const f of fw) f.w.rotation.x+=c.speed*dt/f.r; }
     try{ trafficHits(c); }catch(e){}
-    c.m.position.set(c.x,0,c.z); c.m.rotation.set(-THREE.MathUtils.clamp((target-c.speed)*0.004,-0.03,0.03),c.yaw,0,'YXZ'); }
+    c.m.position.set(c.x,0,c.z); c.m.rotation.set(-THREE.MathUtils.clamp((target-c.speed)*0.004,-0.03,0.03),c.yaw,0,'YXZ'); if(c.m.userData.rider&&!c.m.userData.rider.posed) poseMotoRider(c.m); }
   // passanti: girano intorno al loro isolato sul marciapiede; si fermano se gli passi davanti
   for(const p of MLIFE.peds){ const d2=(p.x-PX)**2+(p.z-PZ)**2, near=d2<90*90; p.g.visible=d2<140*140; if(!p.g.visible&&mFrame%8) continue;
     const [nx,nz]=mPedPos(p,p.t+p.dir*0.6); let sp=p.speed; const tx=me?me.x:PX, tz=me?me.z:PZ; if(Math.hypot(nx-tx,nz-tz)<(me?3:1.3)) sp=0;
@@ -1471,7 +1474,7 @@ if(HAS_TOUCH){ let joyT=null; const findT=l=>{ for(let i=0;i<l.length;i++) if(l[
 addEventListener('keydown',e=>{ keys[e.code]=true; if(e.code.startsWith('Arrow')) e.preventDefault(); });
 addEventListener('keyup',e=>{ keys[e.code]=false; });
 // ---------- 🎮 JOYPAD (Xbox, PlayStation, generici; anche via Bluetooth sul telefono) ----------
-// levetta sinistra = muoversi (tutta in fondo = scatto) · levetta destra = gira la visuale · A = azione (sali, usa, compra…) · X 😄 · Y 👂 · B 🌬️ · RB 🗣️ · LB 🍬
+// levetta sinistra = muoversi (tutta in fondo = scatto) · levetta destra = gira la visuale (su/giù = zoom) · croce su/giù = zoom; con la nuvoletta aperta la croce sceglie la cura e A la usa · A = azione (sali, usa, compra…) · X 😄 · Y 👂 · B 🌬️ · RB 🗣️ · LB 🍬
 // in auto: RT gas, LT freno/retromarcia, levetta sinistra sterzo · Start = 🏠 casa · nei menu: croce per scegliere, A conferma, B chiude
 const PAD={on:false,x:0,y:0,drive:null,prev:[],sel:-1};
 const DZ=v=>Math.abs(v)<0.18?0:(v-Math.sign(v)*0.18)/0.82;
@@ -1492,6 +1495,15 @@ function pollPad(dt){ const gps=navigator.getGamepads?navigator.getGamepads():[]
   PAD.sel=-1; document.querySelectorAll('.gpsel').forEach(e=>e.classList.remove('gpsel'));
   PAD.x=DZ(g.axes[0]||0); PAD.y=DZ(g.axes[1]||0);
   const rx=DZ(g.axes[2]||0), ry=DZ(g.axes[3]||0); if(rx){ controls.azT-=rx*dt*2.4; controls.userT=0; } if(ry && typeof zoom==='function') zoom(1+ry*dt*1.2);
+  // 28/11 Teo: con la nuvoletta aperta la croce sceglie la cura (A la usa); a nuvoletta chiusa la croce su/giù fa lo zoom (anche la levetta destra su/giù)
+  const bubOpen=!talkCard.hidden;
+  if(bubOpen){ const ids=['c_joke','c_listen','c_breathe','c_truth','candy'], POS={c_joke:[0,0],c_listen:[1,0],c_breathe:[0,1],c_truth:[1,1],candy:[1,-1]};
+    if(!PAD.bsel||!ids.includes(PAD.bsel)) PAD.bsel=candyBtn.classList.contains('hl')?'candy':'c_joke';
+    const mv=hit(12)?[0,-1]:hit(13)?[0,1]:hit(14)?[-1,0]:hit(15)?[1,0]:null;
+    if(mv){ const [x0,y0]=POS[PAD.bsel]; const nx=Math.max(0,Math.min(1,x0+mv[0])), ny=Math.max(-1,Math.min(1,y0+mv[1])); const k=Object.keys(POS).find(id=>POS[id][0]===nx&&POS[id][1]===ny)||(ny===-1?'candy':PAD.bsel); PAD.bsel=k; }
+    document.querySelectorAll('#talkCard .gpsel').forEach(e=>{ if(e.id!==PAD.bsel) e.classList.remove('gpsel'); }); document.getElementById(PAD.bsel).classList.add('gpsel');
+    if(hit(0)){ document.getElementById(PAD.bsel).click(); PAD.prev=g.buttons.map(b=>b.pressed); return; } }
+  else { if(PAD.bsel){ document.querySelectorAll('#talkCard .gpsel').forEach(e=>e.classList.remove('gpsel')); PAD.bsel=null; } if(B(12)) zoom(1-dt*1.4); if(B(13)) zoom(1+dt*1.4); }
   PAD.drive=player.veh&&player.veh.name!=='monopattino'?{gas:V(7),brake:V(6)}:null;
   if(hit(0)){ const order=['trNext','homeBtn','act','use','buyBtn','taxiBtn','towBtn','shopBtn','yes']; for(const id of order){ const b=document.getElementById(id); if(b && !b.hidden && b.offsetParent!==null && !(b.closest('.card')&&b.closest('.card').hidden)){ b.click(); break; } } }
   if(!talkCard.hidden){ if(hit(2)) cure('joke'); if(hit(3)) cure('listen'); if(hit(1)) cure('breathe'); if(hit(5)) cure('truth'); if(hit(4)) giveCandy(); }
@@ -1885,16 +1897,23 @@ function busGeo(col){ const parts=[], W=2.5, L=9.4;
   parts.push(P(new THREE.BoxGeometry(1.0,0.25,0.06),0x2a2233,0,2.95,L/2+0.01,false)); const fr=[]; wheelSet(parts,W,[L/2-1.6,-L/2+2.0],0.5,0.34,fr); lights(parts,W,0.75,L/2+0.01,-L/2-0.01,0.4);
   return {geo:mergeGeometries(parts),len:L,vmax:6,w:W,fronts:fr,wb:L-3.6}; }
 // moto con pilota (casco, giubbotto) disegnata a pezzi
-function motoGeo(col,jacket,helmet){ const parts=[];
+function motoGeo(col,jacket,helmet,noRider){ const parts=[];
   for(const z of [0.72,-0.68]){ const t=new THREE.TorusGeometry(0.3,0.09,8,18); t.rotateY(Math.PI/2); parts.push(P(t,0x24242a,0,0.39,z,false)); }
   const tank=new THREE.SphereGeometry(0.28,14,10); tank.scale(0.75,0.7,1.5); parts.push(P(tank,col,0,0.86,0.2)); parts.push(P(_rb(0.32,0.18,0.75,0.07),0x2a2233,0,0.88,-0.3));
   parts.push(P(_rb(0.3,0.3,0.9,0.08),col,0,0.58,-0.05)); const fork=new THREE.CylinderGeometry(0.035,0.035,0.75,6); fork.rotateX(-0.35); parts.push(P(fork,0x9aa0a8,0,0.72,0.6,false));
   const bar=new THREE.CylinderGeometry(0.025,0.025,0.7,6); bar.rotateZ(Math.PI/2); parts.push(P(bar,0x2a2233,0,1.08,0.48,false)); parts.push(P(new THREE.SphereGeometry(0.09,8,6),0xfff4c2,0,0.95,0.78,false));
   // pilota
-  const torso=new THREE.CapsuleGeometry(0.2,0.42,4,10); torso.rotateX(0.5); parts.push(P(torso,jacket,0,1.28,-0.12)); parts.push(P(new THREE.SphereGeometry(0.17,14,10),helmet,0,1.72,0.06)); 
+  if(!noRider){ const torso=new THREE.CapsuleGeometry(0.2,0.42,4,10); torso.rotateX(0.5); parts.push(P(torso,jacket,0,1.28,-0.12)); parts.push(P(new THREE.SphereGeometry(0.17,14,10),helmet,0,1.72,0.06)); 
   const visor=new THREE.SphereGeometry(0.172,14,8,-Math.PI*0.35,Math.PI*0.7,Math.PI*0.35,Math.PI*0.3); parts.push(P(visor,0x23324a,0,1.72,0.06,false));
-  for(const sx of [-1,1]){ const arm=new THREE.CapsuleGeometry(0.06,0.42,3,6); arm.rotateX(1.15); parts.push(P(arm,jacket,sx*0.24,1.32,0.24)); const thigh=new THREE.CapsuleGeometry(0.08,0.36,3,6); thigh.rotateX(1.35); parts.push(P(thigh,0x2f4f86,sx*0.17,0.95,-0.05)); const shin=new THREE.CapsuleGeometry(0.07,0.36,3,6); shin.rotateX(-0.3); parts.push(P(shin,0x2f4f86,sx*0.2,0.62,0.14)); }
+  for(const sx of [-1,1]){ const arm=new THREE.CapsuleGeometry(0.06,0.42,3,6); arm.rotateX(1.15); parts.push(P(arm,jacket,sx*0.24,1.32,0.24)); const thigh=new THREE.CapsuleGeometry(0.08,0.36,3,6); thigh.rotateX(1.35); parts.push(P(thigh,0x2f4f86,sx*0.17,0.95,-0.05)); const shin=new THREE.CapsuleGeometry(0.07,0.36,3,6); shin.rotateX(-0.3); parts.push(P(shin,0x2f4f86,sx*0.2,0.62,0.14)); } }
   return {geo:mergeGeometries(parts.map(g=>{ for(const k of Object.keys(g.attributes)) if(!['position','normal','color'].includes(k)) g.deleteAttribute(k); return g; })),len:2.1,vmax:10,w:0.8,bike:true}; }
+// 🏍️ pilota vero sulle moto del traffico (Teo 28/11: "il motociclista fallo bene, hai lasciato un pippottino fisso"): una persona del gioco, seduta con le mani sul manubrio e i piedi sulle pedane, casco in testa
+function addMotoRider(m,i){ const h=makeHuman({av:avRandom(900+i*7)},null); if(h.g.parent) h.g.parent.remove(h.g); m.add(h.g); h.g.position.set(0,0.38,-0.3); h.g.rotation.set(0,0,0);
+  const seat=new THREE.Object3D(); seat.position.set(0,0.38,-0.3); m.add(seat); const grips=[1,-1].map(s2=>{ const o=new THREE.Object3D(); o.position.set(0.3*s2,1.08,0.45); m.add(o); return o; });
+  const fv={seat,grips,pose:{foot:[0.2,0.08,0.42],knee:[0.24,0.5,0.62],elbow:[0.55,-0.1,-0.1],lean:0.42}};
+  const B2=h.bones; if(B2&&B2.Head){ const hel=new THREE.Mesh(new THREE.SphereGeometry(0.15,14,10,0,Math.PI*2,0,Math.PI*0.62),toon({color:[0xffffff,0xffd84d,0xe0483e,0x2a2a33][i%4]})); hel.position.set(0,0.11,0.01); hel.scale.setScalar(1/(B2.Head.getWorldScale(new THREE.Vector3()).x||1)); B2.Head.add(hel); }
+  m.userData.rider={h,fv,posed:false}; }
+function poseMotoRider(m){ const R=m.userData.rider; if(!R||R.posed) return; m.updateMatrixWorld(true); try{ posture(R.fv,R.h); }catch(e){} R.posed=true; }
 // lampeggianti (accesi a intermittenza solo ogni tanto: la polizia e l'ambulanza fanno solo "presenza")
 function addLightbar(m,y,z,colA,colB){ const a=new THREE.MeshBasicMaterial({color:0x551010}), b=new THREE.MeshBasicMaterial({color:0x112255}); const la=new THREE.Mesh(new THREE.BoxGeometry(0.45,0.14,0.3),a), lb=new THREE.Mesh(new THREE.BoxGeometry(0.45,0.14,0.3),b);
   la.position.set(-0.28,y,z); lb.position.set(0.28,y,z); m.add(la,lb); return {a,b,colA,colB}; }
@@ -1921,7 +1940,7 @@ function updateHeadlights(n){ const k=THREE.MathUtils.smoothstep(n,0.2,0.6); HL.
 function makeTrafficVehicle(kind,i){ const col=VCOL[(i*5+3)%VCOL.length]; let B, extra=null;
   if(kind==='camion') B=truckGeo([0xe0483e,0x2f7de1,0x3fa66b,0xf6f2ea][i%4],[0xf6f2ea,0xe8e4da,0xd9d2c5][i%3]);
   else if(kind==='bus') B=busGeo(0xf0a030);
-  else if(kind==='moto') B=motoGeo([0xe0483e,0x2a2a33,0x2f7de1][i%3],[0x2a2a33,0x7a4e34,0x3fa66b][i%3],[0xffffff,0xffd84d,0xe0483e][i%3]);
+  else if(kind==='moto') B=motoGeo([0xe0483e,0x2a2a33,0x2f7de1][i%3],[0x2a2a33,0x7a4e34,0x3fa66b][i%3],[0xffffff,0xffd84d,0xe0483e][i%3],!!(chars&&chars.xlo));
   else { const T=kind==='taxi'||kind==='polizia'?'berlina':kind==='ambulanza'?'furgone':kind;
     const c=kind==='taxi'?0xffd84d:kind==='polizia'?0x1f3a7a:kind==='ambulanza'?0xf6f2ea:col; const opt=kind==='polizia'?{stripe:0xffffff}:kind==='ambulanza'?{stripe:0xe0483e}:{};
     const ty=CARTYPES[T]; const gg=realCarGeo(T,c,{...opt,frontSep:true}); B={geo:gg,fronts:gg.userData.fronts,wb:ty.L-(ty.ax?ty.ax[0]+ty.ax[1]:1.53),len:ty.L,vmax:T==='sportiva'?9.5:T==='furgone'?7.5:8.5,w:ty.W};
@@ -1931,6 +1950,7 @@ function makeTrafficVehicle(kind,i){ const col=VCOL[(i*5+3)%VCOL.length]; let B,
   const m=new THREE.Mesh(B.geo,toon({vertexColors:true,spec:CARS3D.ready?0.22:0.5})); /* riflessi più leggeri: sulle auto nuove facevano macchie bianche */ m.castShadow=true; withOutline(m,B.bike?0.015:0.03); if(extra) extra(m); scene.add(m);
   const fw=(B.fronts||[]).map(f=>{ const piv=new THREE.Group(); piv.position.set(f.x,f.y,f.z); const w=new THREE.Mesh(wheelGeo(f.r,f.w),WHEELMAT); w.castShadow=true; piv.add(w); m.add(piv); return {piv,w,r:f.r}; }); m.userData.fw=fw; m.userData.wb=B.wb||2.6;
   addHeadlights(m,B.len,B.w||1.8,B.bike?0.95:kind==='bus'||kind==='camion'?0.85:0.72,!!B.bike);
+  if(kind==='moto' && chars&&chars.xlo) try{ addMotoRider(m,i); }catch(e){ console.warn('pilota moto',e); }
   return {m,kind,len:B.len,vmax:B.vmax,w:B.w,bike:!!B.bike}; }
 const WHEELMAT=toon({vertexColors:true}), WGC={};
 function wheelGeo(r,w){ const k=r+'_'+w; if(WGC[k]) return WGC[k]; const t=new THREE.CylinderGeometry(r,r,w,16); t.rotateZ(Math.PI/2); const h=new THREE.CylinderGeometry(r*0.58,r*0.58,w+0.02,12); h.rotateZ(Math.PI/2); const sp=new THREE.BoxGeometry(w+0.03,r*0.9,0.06);
@@ -2019,7 +2039,7 @@ function updateTraffic(dt,t){ for(const c of TRAFFIC){ let target=c.mode==='turn
     { const fw=c.m.userData.fw; if(fw&&fw.length){ const py0=c.prevYaw??c.yaw, yr0=Math.atan2(Math.sin(c.yaw-py0),Math.cos(c.yaw-py0))/Math.max(dt,1e-3); c.steer=THREE.MathUtils.damp(c.steer||0,THREE.MathUtils.clamp(yr0*c.m.userData.wb/Math.max(c.speed,1.5),-0.6,0.6),10,dt); for(const f of fw){ f.piv.rotation.y=c.steer; f.w.rotation.x+=c.speed*dt/f.r; } } }
     const py=c.prevYaw??c.yaw, yr=Math.atan2(Math.sin(c.yaw-py),Math.cos(c.yaw-py))/Math.max(dt,1e-3); c.prevYaw=c.yaw; c.lean=THREE.MathUtils.damp(c.lean,c.bike?THREE.MathUtils.clamp(-yr*c.speed*0.05,-0.45,0.45):0,6,dt);
     trafficHits(c);
-    c.m.position.set(c.x,0,c.z); c.m.rotation.set(-THREE.MathUtils.clamp((target-c.speed)*0.004,-0.03,0.03),c.yaw,c.lean,'YXZ');
+    c.m.position.set(c.x,0,c.z); c.m.rotation.set(-THREE.MathUtils.clamp((target-c.speed)*0.004,-0.03,0.03),c.yaw,c.lean,'YXZ'); if(c.m.userData.rider&&!c.m.userData.rider.posed) poseMotoRider(c.m);
     const lb=c.m.userData.lb; if(lb){ const on=!!c.mission||c.sirenT>0||Math.sin((t||0)*0.25+c.x)>0.85, bl=Math.floor((t||0)*5)%2; lb.a.color.set(on&&bl?0xff2a2a:0x551010); lb.b.color.set(on&&!bl?0x3a6bff:0x112255); } } }
 
 // ---------- PEDONI: camminano sui marciapiedi, si scansano (non si possono investire) ----------
@@ -4284,7 +4304,7 @@ function phRender(){ const a=PH.app, B=PH.body; let t='Karmapolis', h='';
   else if(a==='board'){ t='Classifica'; h='<h4>🏆 I tuoi record</h4>'+(BOARD.list.length?BOARD.list.map((r,i)=>'<div class="row"'+(i===0?' style="background:rgba(255,216,77,.14)"':'')+'><span>'+(['🥇','🥈','🥉'][i]||(i+1)+'.')+' <b>'+r.score.toLocaleString('it-IT')+'</b></span><span style="font-size:12px;opacity:.85">liv. '+r.n+' · '+('⭐'.repeat(r.stars)||'—')+' · '+r.pct+'% · '+r.d+'</span></div>').join(''):'<p>Ancora nessuna partita finita: gioca un livello e qui comparirà il tuo punteggio.</p>')+'<div class="note" style="margin-top:8px;opacity:.85;font-size:12px">Il punteggio premia la <b>bravura</b>: quanto paese salvi, le stelle, i focolai spenti, le cure giuste (quelle sbagliate tolgono punti) e la catena del bene. Più alto è il livello, più vale. Per ora la classifica è sul tuo telefono: quella tra giocatori e squadre arriverà con il multigiocatore.</div>'; }
   else if(a==='karma'){ t='Karma'; h='<div class="row"><span>🪃 Karma</span><b>'+Math.round(G.karma)+'</b></div><div class="row"><span>🍬 Caramelle</span><b>'+(G.candies|0)+'</b></div><div class="row"><span>⛽ Benzina</span><b>'+Math.round(HOME.fuel)+'%</b></div>'; }
   else if(a==='news'){ t='Novità'; const N=window.__NEWS||[]; h=N.map(n=>'<h4>'+n.v+' <small style="opacity:.6;font-weight:500">'+n.d+'</small></h4><ul>'+n.t.map(x=>'<li>'+x+'</li>').join('')+'</ul>').join(''); }
-  else if(a==='help'){ t='Comandi'; h=document.getElementById('howto').innerHTML+'<p class="note">📱 Telefono: pulsante 📱, tasto P, joypad View.</p>'; }
+  else if(a==='help'){ t='Comandi'; h=document.getElementById('howto').innerHTML+'<p class="note">📱 Telefono: pulsante 📱, tasto P, joypad View.</p><p class="note">🎮 Joypad: levetta sinistra = muoversi · levetta destra = girare la visuale, su/giù = zoom · croce ⬆️⬇️ = zoom · vicino a una persona la croce sceglie la cura nella nuvoletta e <b>A</b> la usa (oppure X 😄 · Y 👂 · B 🌬️ · RB 🗣️ · LB 🍬).</p>'; }
   else if(a==='set'){ t='Opzioni'; h='<div class="row"><span>🔊 Suoni</span><button type="button" class="tog'+(soundOn?' on':'')+'" data-do="snd">'+(soundOn?'Sì':'No')+'</button></div><div class="row"><span>🎵 Musica</span><button type="button" class="tog'+(AUD.music?' on':'')+'" data-do="mus">'+(AUD.music?'Sì':'No')+'</button></div><div class="row"><span>⛶ Schermo intero</span><button type="button" class="tog" data-do="full">Apri</button></div><div class="row"><span>🎨 Grafica minima<br><small style="opacity:.6">per telefoni lenti</small></span><button type="button" class="tog'+(GFX_MIN?' on':'')+'" data-do="gfx">'+(GFX_MIN?'Sì':'No')+'</button></div><div class="note">'+((document.getElementById('devTitle')||{}).textContent||'')+' · versione di prova</div>'; }
   else if(a==='friends'){ t='Amici'; const L=PH.lobby||(PH.lobby={me:false,t0:performance.now(),people:[['Antony','💪',1.2],['Carlo','😄',3.5],['Leo','😠',7]]}); const el=(performance.now()-L.t0)/1000;
     h='<h4>👥 Partita con gli amici</h4><div class="pl"><span class="av">🙂</span><b>Tu</b><span class="st'+(L.me?' ok':'')+'">'+(L.me?'PRONTO':'non pronto')+'</span></div>'+
@@ -4383,7 +4403,7 @@ Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{ye
   for(const v of veh){ v.home={x:v.x,z:v.z,yaw:v.yaw}; if(v.paint) for(const p of v.paint) p.orig=p.base.clone(); if(v.name==='auto' && v.group) addHeadlights(v.group,CARS3D.ready?4.03:2.7,CARS3D.ready?1.6:1.5,CARS3D.ready?0.72:0.62); }
   player.pos.set(0,0.15,5.4); player.yaw=Math.PI*0.75; useChar('xbot'); holder.position.copy(player.pos); holder.rotation.y=player.yaw; dressPlayer(0);
   controls.target.set(player.pos.x,1,player.pos.z); controls.update();
-  loadExtraAnims(); spawnTraffic(LOW?16:24); spawnPeds(LOW?38:56); spawnOfficers(2); spawnMechs(); crowdK(); PEDS.forEach((p,i)=>initMood(p,i));
+  loadExtraAnims(); spawnTraffic(24); /* 28/11 Teo: stesso traffico su telefono e PC (servirà al multigiocatore: tutti devono vedere le stesse auto) */ spawnPeds(LOW?38:56); spawnOfficers(2); spawnMechs(); crowdK(); PEDS.forEach((p,i)=>initMood(p,i));
   if(POLIZIA){ spawnCop(-30,(PROM.z0+PROM.z1)/2,Math.PI/2); spawnCop(VX[3]+SW+2.6,-40,0); }
   if(ARMI) for(const k of ['xbot'].filter(k=>chars[k])){ const B={}; chars[k].model.traverse(o=>{ if(o.isBone) B[o.name.replace('mixamorig','').replace(':','')]=o; }); attachGun(B); }
   if(!LOW) document.getElementById('howto').innerHTML='WASD o frecce per muoverti. Vicino all\'auto o allo scooter premi <b>E</b>. In guida: <b>↑ gas, ↓ freno e retromarcia, ← → sterzo</b>. Rotellina per lo zoom, ↻ ruota la vista. Trascina col mouse per girare la visuale. Officina 🔧 e carrozzeria 🎨 fuori paese, lato ovest. <b>Karmapolis:</b> vicino a un passante <b>C</b> caramella, <b>1</b> battuta (nervosi), <b>2</b> ascolta (solitari), <b>3</b> respira (ansiosi), <b>4</b> la verità (pettegoli); <b>R</b> usa campane, fontana e panchine. Clic per andare, <b>doppio clic per lo scatto</b> (consuma stamina ⚡).';
