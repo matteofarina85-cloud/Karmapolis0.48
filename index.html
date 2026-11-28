@@ -171,7 +171,10 @@ body.editing .hud,body.editing #joy,body.editing #sta,body.editing #homeCard,bod
 #avEd .edRow button{padding:2px 10px;font-size:14px;box-shadow:none}#avEd .sw{display:flex;flex-wrap:wrap;gap:4px;flex:1}#avEd .sw button{width:24px;height:24px;padding:0;border-radius:50%;border:2px solid var(--line)}#avEd .sw button.on{outline:3px solid #ffd84d;outline-offset:1px}
 #avEd .edFoot{display:flex;flex-wrap:wrap;gap:5px;padding:8px;border-top:2px solid #e8dfcf}#avEd .edFoot button{font-size:13px;padding:5px 10px}#avEd textarea{width:100%;font:12px monospace;margin-top:6px}
 @media (max-height:520px){#avEd .edRow{margin:3px 0}#avEd .edRow>span{flex-basis:78px;font-size:12px}#avEd .sw button{width:20px;height:20px}#avEd .edTabs button{font-size:12px;padding:3px 7px}}
-body.gp #joy{display:none}body.gp #candy::after{content:' LB';font-size:10px;opacity:.75}body.gp #c_joke::after{content:' X';font-size:10px;opacity:.75}body.gp #c_listen::after{content:' Y';font-size:10px;opacity:.75}body.gp #c_breathe::after{content:' B';font-size:10px;opacity:.75}body.gp #c_truth::after{content:' RB';font-size:10px;opacity:.75}body.gp #act::after,body.gp #use::after,body.gp #homeBtn::after,body.gp #buyBtn::after,body.gp #taxiBtn::after,body.gp #shopBtn::after,body.gp #towBtn::after{content:' Ⓐ';opacity:.8}
+body.gp #joy{display:none}body.gp #rot,body.gp #zin,body.gp #zout{display:none!important} /* 28/11 Teo: col joypad la visuale e lo zoom si fanno con la levetta destra */
+body.gp #phoneBtn,body.gp #homeTown{position:relative;overflow:visible}
+body.gp #phoneBtn::after,body.gp #homeTown::after{position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);font:800 9px sans-serif;background:#ffd84d;color:#2a2233;border:1.5px solid #2a2233;border-radius:6px;padding:0 3px;white-space:nowrap;pointer-events:none}
+body.gp #phoneBtn::after{content:'View ⧉'}body.gp #homeTown::after{content:'Start ☰'}body.gp #candy::after{content:' LB';font-size:10px;opacity:.75}body.gp #c_joke::after{content:' X';font-size:10px;opacity:.75}body.gp #c_listen::after{content:' Y';font-size:10px;opacity:.75}body.gp #c_breathe::after{content:' B';font-size:10px;opacity:.75}body.gp #c_truth::after{content:' RB';font-size:10px;opacity:.75}body.gp #act::after,body.gp #use::after,body.gp #homeBtn::after,body.gp #buyBtn::after,body.gp #taxiBtn::after,body.gp #shopBtn::after,body.gp #towBtn::after{content:' Ⓐ';opacity:.8}
 .gpsel{outline:4px solid #ffd84d!important;outline-offset:2px}
 #alarm{position:fixed;left:50%;top:38%;z-index:40;pointer-events:none;transform:translate(-50%,-50%);background:var(--paper);border:3px solid var(--line);border-radius:22px;box-shadow:5px 5px 0 var(--line);padding:12px 22px;text-align:center;font:700 30px var(--display);color:var(--ink);white-space:nowrap;opacity:0}
 #alarm small{display:block;font:600 16px var(--body);opacity:.85;margin-top:2px}
@@ -350,7 +353,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.105.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.105.3</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -378,6 +381,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.105.3',d:'28/11/2026',t:['🎮 Joypad: nel telefono, nella finestra dell\'addestramento e nella scelta finale (Gioca / Casa) ora scegli con la croce e confermi con A; nel telefono B torna indietro.','🎮 Con il joypad collegato spariscono i pulsanti ↻ ＋ － (visuale e zoom si fanno con la levetta destra o con la croce); sotto 📱 e 🏠 compare il tasto da premere: View apre il telefono, Start ti porta a casa.','💪 Antony a inizio partita si mette vicino alla piazza, così lo trovi subito (poi gira per il paese come prima).']},
  {v:'0.105.1',d:'28/11/2026',t:['🖥️ Su PC la barra della stamina, i poteri sotto e la barra del livello con le stelline sono molto più grandi.','📱 Sul telefono i nomi sopra Leo e Antony sono più grandi e si leggono bene.']},
  {v:'0.105.0',d:'28/11/2026',t:['🤕 Quando vieni investito ora ti <b>rialzi davvero</b>: dopo il volo resti a terra con le stelline, poi ti tiri su seduto, in ginocchio e in piedi (animazione «Getting Up» di Mixamo scaricata da Teo). Anche i passanti investiti si rialzano così.']},
  {v:'0.104.4',d:'28/11/2026',t:['🖥️ Sul PC lo stesso schermo del telefono: barra del fiato e riassunto delle cariche in alto a destra; il contatore degli fps piccolino in basso al centro.']},
@@ -1494,7 +1498,14 @@ addEventListener('keyup',e=>{ keys[e.code]=false; });
 const PAD={on:false,x:0,y:0,drive:null,prev:[],sel:-1};
 const DZ=v=>Math.abs(v)<0.18?0:(v-Math.sign(v)*0.18)/0.82;
 const OVERLAYS=['avEd','copMenu','over','exitMenu','shopMenu','taxiMenu','tvUI','pcUI','treadUI'];
-function padMenuButtons(){ for(const id of OVERLAYS){ const o=document.getElementById(id); if(o && !o.hidden) return [...o.querySelectorAll('button,a.btnlink')].filter(b=>!b.disabled && !b.hidden && b.offsetParent!==null); } return null; }
+function padMenuButtons(){ const vis=b=>!b.disabled && !b.hidden && b.offsetParent!==null;
+  /* 28/11 Teo: col joypad nel telefono, nelle finestre dell'addestramento e nella scelta finale si deve poter scegliere con la croce */
+  if(typeof PH!=='undefined' && PH.on){ const l=[...document.querySelectorAll('#phone .pbody button,#phone .pbody a.btnlink'),document.getElementById('phBack')].filter(vis); if(l.length){ PAD.ctx='phone'; return l; } }
+  PAD.ctx='';
+  for(const id of OVERLAYS){ const o=document.getElementById(id); if(o && !o.hidden) return [...o.querySelectorAll('button,a.btnlink')].filter(vis); }
+  for(const o of document.querySelectorAll('.menuov')){ if(!o.hidden && getComputedStyle(o).display!=='none'){ const l=[...o.querySelectorAll('button,a.btnlink')].filter(vis); if(l.length) return l; } }
+  const tc=document.getElementById('trCard'); if(tc && !tc.hidden){ const l=[...document.querySelectorAll('#trBtns button')].filter(vis); if(l.length>=2) return l; }
+  return null; }
 function pollPad(dt){ const gps=navigator.getGamepads?navigator.getGamepads():[]; let g=null; for(const p of gps) if(p&&p.connected){ g=p; break; } if(!g){ if(PAD.on){ PAD.on=false; document.body.classList.remove('gp'); } PAD.x=PAD.y=0; PAD.drive=null; return; }
   const B=i=>!!(g.buttons[i]&&g.buttons[i].pressed), V=i=>g.buttons[i]?g.buttons[i].value:0, hit=i=>B(i)&&!PAD.prev[i];
   const any=g.buttons.some(b=>b.pressed)||g.axes.some(a=>Math.abs(a)>0.4); if(any && !PAD.on){ PAD.on=true; document.body.classList.add('gp'); try{ audioInit(); }catch(e){} }
@@ -1504,8 +1515,8 @@ function pollPad(dt){ const gps=navigator.getGamepads?navigator.getGamepads():[]
     if(PAD.sel<0||PAD.sel>=menu.length) PAD.sel=0; const ax=DZ(g.axes[0]||0), ay=DZ(g.axes[1]||0);
     if(hit(13)||hit(15)||(ay>0.6||ax>0.6)&&!PAD.stickHeld) PAD.sel=(PAD.sel+1)%menu.length; else if(hit(12)||hit(14)||(ay<-0.6||ax<-0.6)&&!PAD.stickHeld) PAD.sel=(PAD.sel-1+menu.length)%menu.length;
     PAD.stickHeld=Math.abs(ax)>0.6||Math.abs(ay)>0.6;
-    document.querySelectorAll('.gpsel').forEach(e=>e.classList.remove('gpsel')); menu[PAD.sel].classList.add('gpsel');
-    if(hit(0)) menu[PAD.sel].click(); else if(hit(1)){ const no=menu.find(b=>b.classList.contains('ghost'))||menu[menu.length-1]; no.click(); }
+    document.querySelectorAll('.gpsel').forEach(e=>e.classList.remove('gpsel')); menu[PAD.sel].classList.add('gpsel'); if(PAD.lastSel!==menu[PAD.sel]){ PAD.lastSel=menu[PAD.sel]; try{ menu[PAD.sel].scrollIntoView({block:'nearest'}); }catch(e){} }
+    if(hit(0)) menu[PAD.sel].click(); else if(hit(1) && PAD.ctx==='phone') document.getElementById('phBack').click(); else if(hit(1)){ const no=menu.find(b=>b.classList.contains('ghost'))||menu[menu.length-1]; no.click(); }
     PAD.prev=g.buttons.map(b=>b.pressed); return; }
   PAD.sel=-1; document.querySelectorAll('.gpsel').forEach(e=>e.classList.remove('gpsel'));
   PAD.x=DZ(g.axes[0]||0); PAD.y=DZ(g.axes[1]||0);
@@ -4205,7 +4216,7 @@ function anthPoof(p){ for(let i=0;i<10;i++){ const m=new THREE.Mesh(new THREE.Sp
 // sceglie il prossimo posto (non troppo lontano) e ci va A PIEDI (Teo: "si sposta ogni minuto e lo fa a piedi, non sparendo")
 function anthNext(){ const h=ANTH.h, p=h.g.position; let best=-1, bd=1e9; for(let k=0;k<12;k++){ const i=Math.floor(Math.random()*ANTH.spots.length); if(i===ANTH.spot) continue; const [x,z]=ANTH.spots[i], d=Math.hypot(x-p.x,z-p.z); if(d>8 && d<bd){ bd=d; best=i; } } if(best<0) return;
   const [x,z]=ANTH.spots[best]; const wp=walkPath(p.x,p.z,x,z); ANTH.t=0; if(!wp){ ANTH.t=ANTH.stay-5; return; } /* nessuna strada libera: riprova tra poco con un altro posto (mai in linea retta attraverso le case) */ ANTH.walk={to:best,pts:[...wp,[x,z]]}; }
-function anthSpot(){ let i, n=0; do{ i=Math.floor(Math.random()*ANTH.spots.length); n++; } while(n<20 && (i===ANTH.spot || Math.hypot(ANTH.spots[i][0]-player.pos.x,ANTH.spots[i][1]-player.pos.z)<25)); ANTH.spot=i; const [x,z,y]=ANTH.spots[i]; ANTH.h.g.position.set(x,0.15,z); ANTH.h.g.rotation.y=y; ANTH.t=0; }
+function anthSpot(){ let i, n=0; if(ANTH.spot<0){ /* 28/11 Teo non lo trovava più: la prima volta si mette vicino alla piazza (circa 25-35 m), così lo incontri subito */ let bd=1e9; ANTH.spots.forEach((q,k)=>{ const e=Math.abs(Math.hypot(q[0]-player.pos.x,q[1]-player.pos.z)-28); if(e<bd){ bd=e; i=k; } }); ANTH.spot=i; const [x,z,y]=ANTH.spots[i]; ANTH.h.g.position.set(x,0.15,z); ANTH.h.g.rotation.y=y; ANTH.t=0; return; } do{ i=Math.floor(Math.random()*ANTH.spots.length); n++; } while(n<20 && (i===ANTH.spot || Math.hypot(ANTH.spots[i][0]-player.pos.x,ANTH.spots[i][1]-player.pos.z)<25)); ANTH.spot=i; const [x,z,y]=ANTH.spots[i]; ANTH.h.g.position.set(x,0.15,z); ANTH.h.g.rotation.y=y; ANTH.t=0; }
 function initAnthony(){ if(ANTH.h) return; const h=makeHuman({av:avDecode(ANTH.code)},null); ANTH.h=h; h.anthony=true;
   const sp=nameTag('💪 Antony','rgba(190,240,200,.95)'); h.g.add(sp); ANTH.tag=sp; anthSpot(); }
 // posa appoggiata: schiena un po' indietro, braccia incrociate, piede destro contro il palo
