@@ -316,6 +316,12 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
   #hp{bottom:calc(10px + env(safe-area-inset-bottom,0px))}
 }
 @media (max-width:560px){#greyHud{max-width:calc(100% - 230px);font-size:12px;border-radius:14px;line-height:1.35}.top .card p{display:none}.card h1{font-size:18px}button{font-size:14px;padding:6px 12px}}
+/* 📱 28/11 Teo: sul telefono la barra del livello non sta più sopra la levetta ma in alto a sinistra, in colonna; «Sei in piazza» e i messaggi vanno sotto la bussola */
+@media (pointer:coarse){
+  #greyHud{top:calc(6px + env(safe-area-inset-top,0px))!important;bottom:auto!important;left:max(8px,env(safe-area-inset-left,0px))!important;max-width:none!important;padding:4px 9px!important;border-radius:12px!important;font-size:12px!important;line-height:1.45;box-shadow:2px 2px 0 var(--line)}
+  #greyHud .sep{display:none}#greyHud .gi{display:block;white-space:nowrap}
+  body:not(:has(#compass[hidden])) #msg{position:fixed!important;left:50%!important;transform:translateX(-50%);top:calc(58px + env(safe-area-inset-top,0px));max-width:min(46vw,360px)!important;text-align:center;z-index:4}
+}
 </style>
 
 <canvas id="c" aria-label="Paesino in 3D visto dall'alto, stile cartone animato"></canvas>
@@ -358,7 +364,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.106.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.106.3</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -386,6 +392,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.106.3',d:'28/11/2026',t:['📱 HUD del telefono: la barra del livello (tempo, colori e stelle, karma, malati, portatori) è in alto a sinistra, in colonna, e non copre più la levetta. «Sei in piazza» e i messaggi stanno sotto la bussola.']},
  {v:'0.106.2',d:'28/11/2026',t:['📳 Vibrazione anche sul telefono (Android): quando ti investono, negli urti, sull\'aquaplaning, col taser, al focolaio, quando squilla il telefono, con le cure. Si spegne da 📱 → Opzioni → Vibrazione (vale anche per il joypad).']},
  {v:'0.106.1',d:'28/11/2026',t:['🎮 Col joypad ora A compra le proteine da Antony (e fa benzina, sale su tram e barche).','🚕 Un\'azione alla volta: «Fischia al taxi» sparisce quando vicino c\'è altro da fare (Antony, bancarella, fontana, benzinaio…) e torna appena ti allontani.']},
  {v:'0.106.0',d:'28/11/2026',t:['📱 Compatibilità con più telefoni: il gioco ora parte anche su browser più vecchi (prima su Chrome vecchi, Samsung Internet vecchi e iPhone con iOS 15 si bloccava subito all\'avvio) e sui telefoni senza WebGL2.','🐢 Se l\'ultima volta il gioco si era bloccato durante il caricamento, riparte da solo con la grafica minima. Sui telefoni con poca memoria la grafica minima è già accesa (si spegne da 📱 → Opzioni).','⚠️ Se il gioco non può partire ti spiega perché e cosa fare. Se lo apri dentro Instagram, Facebook o TikTok ti propone di aprirlo nel browser. In caso di errore ci sono i pulsanti «Riprova» e «Riprova con la grafica minima».']},
@@ -3109,7 +3116,7 @@ function updateGrigio(dt){ if(gameOver) return; if(!G.started) seedGrigio(); G.t
   if(lost<(st.warned||0)) st.warned=lost;
   if(TR.on){ greyHud.innerHTML='🎓 <b>Addestramento</b> · passo '+(TR.step+1)+'/'+TRS.length+' · 🪃 '+G.karma+' · 🍬 '+G.candies; return; }
   G.levelT-=T; const pct=colorPct(); st.pct=pct; const tl=Math.max(0,G.levelT), sNow=pct>=STAR_AT[2]?3:pct>=STAR_AT[1]?2:pct>=STAR_AT[0]?1:0;
-  greyHud.innerHTML='🎯 <b>Liv. '+LC.n+'</b> · ⏳ <b'+(tl<30?' style="color:#e0483e"':'')+'>'+fmtT(tl)+'</b> · 🎨 Colori '+Math.round(pct*100)+'% '+('⭐'.repeat(sNow)||'☆')+' · 🪃 '+G.karma+' · '+KINDS.filter(k=>KIND_OK(k.id)).map(k=>k.dot+st.counts[KI[k.id]]).join(' ')+' · ✨'+st.good;
+  { const S='<i class="sep"> · </i>'; const gh='<span class="gi">🎯 <b>Liv. '+LC.n+'</b> ⏳ <b'+(tl<30?' style="color:#e0483e"':'')+'>'+fmtT(tl)+'</b></span>'+S+'<span class="gi">🎨 Colori '+Math.round(pct*100)+'% '+('⭐'.repeat(sNow)||'☆')+'</span>'+S+'<span class="gi">🪃 '+G.karma+' · '+KINDS.filter(k=>KIND_OK(k.id)).map(k=>k.dot+st.counts[KI[k.id]]).join(' ')+' · ✨'+st.good+'</span>'; if(greyHud._h!==gh){ greyHud._h=gh; greyHud.innerHTML=gh; } } /* 28/11 Teo: sul telefono in colonna in alto a sinistra */
   if(G.levelT<=0){ endLevel(pct,false); return; }
   if(lost>=ACTZ.length) endGame('🩶 Il paese è diventato grigio','Il grigio ha spento tutti i quartieri prima della fine del tempo. Riprova: la cura giusta al momento giusto può cambiare tutto.',0);
   // 🎬 il regista: la partita dura tutto il tempo. Ogni tanto nasce un nuovo "paziente zero" (più spesso nei livelli alti); se il paese è pulito, arriva prima
