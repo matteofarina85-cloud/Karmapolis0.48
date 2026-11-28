@@ -89,6 +89,9 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #chMini{position:fixed;left:0;top:0;z-index:9;pointer-events:none;background:rgba(255,250,240,.92);border:2px solid #2a2233;border-radius:12px;padding:2px 7px;font:700 12px sans-serif;color:#2a2233;white-space:nowrap}
 #chMini b{font-weight:800;margin-right:5px}#chMini .z{opacity:.4}
 @media (max-width:900px){ #talkCard.bubble button{font-size:31px;min-width:66px;padding:9px 9px 6px} #talkCard.bubble button .n{font-size:14px} #talkCard.bubble{gap:7px;padding:12px} #talkCard.bubble #candy{width:54px;height:54px;font-size:24px} }
+/* 28/11 Teo: anche sul PC come sul telefono: fiato e cariche in alto a destra, fps piccolino in basso al centro */
+#sta{bottom:auto!important;left:auto!important;top:calc(10px + env(safe-area-inset-top,0px))!important;right:max(12px,env(safe-area-inset-right,0px))!important;padding:1px 8px}
+#fps{top:auto!important;right:auto!important;left:50%!important;transform:translateX(-50%);bottom:calc(3px + env(safe-area-inset-bottom,0px));font-size:9px!important;padding:1px 6px;opacity:.75}
 #fade .trip{width:min(560px,92vw);text-align:center}
 #fade .tsky{height:70px;background:linear-gradient(#2a3d6b,#c9653f);border-radius:14px 14px 0 0;position:relative;overflow:hidden}
 #fade .tsky:before{content:'🏢🏙️🏛️🏢🌳🏙️🏢🏛️🏢🌳🏙️🏢🏛️';position:absolute;bottom:-6px;left:0;font-size:30px;white-space:nowrap;animation:tscroll 3s linear infinite}
@@ -341,7 +344,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.104.3</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.104.4</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -369,6 +372,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.104.4',d:'28/11/2026',t:['🖥️ Sul PC lo stesso schermo del telefono: barra del fiato e riassunto delle cariche in alto a destra; il contatore degli fps piccolino in basso al centro.']},
  {v:'0.104.3',d:'28/11/2026',t:['🏍️ Motociclisti rifatti: seduti sulla sella, piegati in avanti, mani sul manubrio e piedi sulle pedane (prima sembravano in piedi).']},
  {v:'0.104.2',d:'28/11/2026',t:['🚦 Borgo Karma: le auto in coda al semaforo non passano più una dentro l\'altra. Il trucco che sblocca gli ingorghi (dopo 8 secondi fermi le auto passavano "di traverso") scattava anche nelle code normali al rosso.']},
  {v:'0.104.1',d:'28/11/2026',t:['🔧 Il gioco restava bloccato su "Sto costruendo il paese": un errore di battitura nella 0.104.0 (un commento messo in mezzo a una riga). Corretto.']},
