@@ -333,6 +333,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="trCard" hidden role="dialog" aria-live="polite"><div class="trh"><span id="trTitle">🎓 Addestramento</span><span class="trn" id="trNum"></span><button id="trExit" class="trx" type="button" aria-label="Esci dall'addestramento">✕</button></div><div class="trbody"><p id="trText"></p><p id="trMsg" hidden></p></div><div class="trb" id="trBtns"></div><div class="trdots"><i id="trBar" style="width:0"></i></div></div>
 <div id="trArrow"><i></i></div><div class="trPoint" id="trP0"><i></i></div><div class="trPoint" id="trP1"><i></i></div>
 <div id="doniUI" class="menuov" hidden role="dialog" aria-label="Quadri della solidarietà"><div class="card"><h3>❤️ Quadri della solidarietà<small>Quattro realtà che fanno del bene davvero. Il pulsante apre il loro sito ufficiale: la donazione va direttamente a loro.</small></h3><div id="doniList"></div><button id="doniNo" class="ghost" type="button">Chiudi</button></div></div>
+<div id="anthMenu" class="menuov" hidden role="dialog" aria-label="Proteine da Antony"><div class="card"><h3>💪 Proteine da Antony<small id="anthInfo"></small></h3><div class="col"><button id="anthYes" class="big" type="button">💪 Compra</button><button id="anthNo" class="ghost" type="button">✕ No, grazie</button></div></div></div>
 <div id="trAsk" class="menuov" hidden role="dialog" aria-label="Addestramento"><div class="card"><h3>🎓 Addestramento<small>Impari giocando: io ti dico cosa fare, tu lo fai. Circa 3 minuti, senza fretta: niente tempo e niente grigio che corre.</small></h3><div class="col"><button id="trGo" class="big" type="button">▶ Inizia l'addestramento</button><button id="trCards" class="ghost" type="button">📺 Guarda le schede in TV</button><button id="trNo" class="ghost" type="button">✕ Non ora</button></div></div></div>
 <div id="tvHint" aria-live="polite"><div class="tb">📺 Tocca la TV: addestramento!</div><div class="ta"></div></div>
 <div id="news" role="dialog" aria-label="Novità della versione"><div class="nbox"><div class="nhead"><h2 id="newsTitle">📋 Novità</h2><p>Karmapolis è in prova (beta): ecco cosa è cambiato.</p></div><div class="nbody" id="newsBody"></div><div class="nfoot"><small id="newsWait">Sto costruendo il paese…</small><button id="newsGo" type="button" disabled>▶ Gioca</button></div></div></div>
@@ -364,7 +365,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.106.3</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.106.4</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -392,6 +393,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.106.4',d:'28/11/2026',t:['💪 Da Antony ora scegli: si apre una finestra con prezzo, karma che hai e i pulsanti «Compra» e «No, grazie» (anche col joypad: croce e A, B per dire no).']},
  {v:'0.106.3',d:'28/11/2026',t:['📱 HUD del telefono: la barra del livello (tempo, colori e stelle, karma, malati, portatori) è in alto a sinistra, in colonna, e non copre più la levetta. «Sei in piazza» e i messaggi stanno sotto la bussola.']},
  {v:'0.106.2',d:'28/11/2026',t:['📳 Vibrazione anche sul telefono (Android): quando ti investono, negli urti, sull\'aquaplaning, col taser, al focolaio, quando squilla il telefono, con le cure. Si spegne da 📱 → Opzioni → Vibrazione (vale anche per il joypad).']},
  {v:'0.106.1',d:'28/11/2026',t:['🎮 Col joypad ora A compra le proteine da Antony (e fa benzina, sale su tram e barche).','🚕 Un\'azione alla volta: «Fischia al taxi» sparisce quando vicino c\'è altro da fare (Antony, bancarella, fontana, benzinaio…) e torna appena ti allontani.']},
@@ -4290,7 +4292,14 @@ function anthPose(h){ const B=h.bones, g=h.g; g.updateMatrixWorld(true); const f
   if(B.RightUpLeg&&B.RightLeg&&B.RightFoot){ aimW(B.RightUpLeg,B.RightLeg,down.clone().addScaledVector(f,0.35).addScaledVector(r,0.05).normalize(),1); aimW(B.RightLeg,B.RightFoot,down.clone().addScaledVector(f,-0.9).normalize(),1); }
   if(B.LeftUpLeg&&B.LeftLeg){ aimW(B.LeftUpLeg,B.LeftLeg,down.clone().addScaledVector(f,0.12).normalize(),1); } }
 const anthCard=document.getElementById('anthCard');
-document.getElementById('anthBtn').onclick=()=>{ copMsgT=4; if(ANTH.boost>0){ msg.innerHTML='💪 Antony: "Piano, campione! Una alla volta."'; return; }
+/* 28/11 Teo: comprando da Antony si deve poter scegliere compra / non compra */
+const anthMenu=document.getElementById('anthMenu');
+document.getElementById('anthBtn').onclick=()=>{ if(ANTH.boost>0){ copMsgT=4; msg.innerHTML='💪 Antony: "Piano, campione! Una alla volta."'; return; }
+  const ok=G.karma>=ANTH.price; document.getElementById('anthInfo').innerHTML='«Ehi campione! Con queste corri <b>1 minuto</b> senza mai stancarti.»<br>Costano <b>'+ANTH.price+' karma</b> · ne hai <b>'+G.karma+'</b>'+(ok?'':'<br>⚠️ Non ti bastano: torna quando hai fatto del bene.');
+  const y=document.getElementById('anthYes'); y.disabled=!ok; y.textContent=ok?'💪 Compra · '+ANTH.price+' karma':'💪 Compra (karma insufficiente)'; anthMenu.hidden=false; };
+document.getElementById('anthNo').onclick=()=>{ anthMenu.hidden=true; copMsgT=3; msg.innerHTML='💪 Antony: "Come vuoi, io sono qui."'; };
+document.getElementById('anthYes').onclick=()=>{ anthMenu.hidden=true; anthBuy(); };
+function anthBuy(){ copMsgT=4; if(ANTH.boost>0){ msg.innerHTML='💪 Antony: "Piano, campione! Una alla volta."'; return; }
   if(G.karma<ANTH.price){ msg.innerHTML='💪 Antony: "Le proteine costano <b>'+ANTH.price+' karma</b>, torna quando hai fatto del bene."'; return; }
   G.karma-=ANTH.price; floatText('-'+ANTH.price,player.pos.x,player.pos.z); ANTH.boost=60; player.tired=false; player.sta=staCap(); powerUpSfx(); staEl.classList.add('boost','boostIn'); setTimeout(()=>staEl.classList.remove('boostIn'),900);
   msg.innerHTML='💪 <b>Proteine!</b> Per 1 minuto puoi scattare quanto vuoi: la barra brilla.'; };
@@ -4376,7 +4385,7 @@ function updateAnthony(dt){ if(!UM.ready || !G.started) return; if(!ANTH.h) init
     else { const sp=1.35; h.g.position.x+=dx/dd*Math.min(dd,sp*dt); h.g.position.z+=dz/dd*Math.min(dd,sp*dt); const yw=Math.atan2(dx,dz); let dy=((yw-h.g.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI; h.g.rotation.y+=dy*Math.min(1,dt*8); } }
   else if(ANTH.t>ANTH.stay) anthNext(); // dopo un minuto si incammina verso un altro lampione o vicoletto
   h.g.visible=d<90; if(h.g.visible){ const wk=!!ANTH.walk; for(const k of ['idle','walk','run']) h.A[k].setEffectiveWeight(k===(wk?'walk':'idle')?1:0); h.mixer.update(dt); if(!wk) anthPose(h); }
-  const at=d<3.2 && !player.veh && !player.taxi && !(player.ko>0) && !HOME.active; if(anthCard.hidden===at) anthCard.hidden=!at;
+  const at=d<3.2 && !player.veh && !player.taxi && !(player.ko>0) && !HOME.active; if(anthCard.hidden===at) anthCard.hidden=!at; if(!at && !anthMenu.hidden) anthMenu.hidden=true;
   if(at && h.g.visible && !ANTH.walk){ const tgt=Math.atan2(player.pos.x-h.g.position.x,player.pos.z-h.g.position.z); if(h.bones.Head){ const dy=((tgt-h.g.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI; h.bones.Head.rotation.y+=THREE.MathUtils.clamp(dy,-0.9,0.9); } }
   if(ANTH.boost>0){ ANTH.boost-=dt; player.sta=staCap(); player.tired=false; staEl.classList.add('boost'); if(ANTH.boost<=0){ staEl.classList.remove('boost'); copMsgT=3; msg.innerHTML='💪 L\'effetto delle proteine è finito.'; } } }
 // ======================= 📱 IL TELEFONO (Teo, 26/11/2026: "come GTA 6, zoomata veloce sulla mano col cellulare") =======================
