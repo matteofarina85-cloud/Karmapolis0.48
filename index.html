@@ -365,7 +365,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.106.6</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.107.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -393,6 +393,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.107.0',d:'28/11/2026',t:['🎓 Addestramento: 3 passi nuovi su <b>Leo e Carlo</b> (che arrivano nei livelli avanzati, dal 10). Vedi Leo che rende di nuovo nervoso chi hai guarito, chiami Carlo dal telefono e lo guardi spingere a terra Leo e rimettere a posto le persone.']},
  {v:'0.106.6',d:'28/11/2026',t:['🏠 A casa si parte più dentro il soggiorno, lontano dalla porta: premendo «Gioca» non si esce più per sbaglio.']},
  {v:'0.106.5',d:'28/11/2026',t:['😵 Quando ti investono resti stordito a terra con le stelline per 5 secondi, poi ti rialzi.']},
  {v:'0.106.4',d:'28/11/2026',t:['💪 Da Antony ora scegli: si apre una finestra con prezzo, karma che hai e i pulsanti «Compra» e «No, grazie» (anche col joypad: croce e A, B per dire no).']},
@@ -3276,6 +3277,18 @@ const TRS=[
   tgt:()=>TR.pc, zoom:0.34, tick(dt){ const c=TR.pc; TR.ct+=dt; if(!c) return; { const w=TR.chain.find(p=>p.kind)||c; camFocus((c.x+w.x)/2,(c.z+w.z)/2,0.4,0.34); } const left=TR.chain.filter(p=>p.kind); if(left.length&&c.trWalk&&!c.trWalk.p.kind) c.trWalk={p:left[0]};
     if(TR.ct>28) for(const p of left){ makeGood(p,1); p.owner='me'; } },
   ok:()=>TR.chain.every(p=>!p.kind)&&TR.ct>1.5, end(){ trRelease(TR.pc); for(const p of TR.chain) trRelease(p); }},
+ {t:'😠 Leo (livelli avanzati)',x:()=>'Questo succede nei <b>livelli più avanzati</b>, dal <b>livello 10</b>: arriva <b>Leo</b> 😠. Cerca le persone che <b>hai guarito tu</b> e le fa diventare di nuovo <b>nervose</b> 💢. Guarda cosa combina!',
+  go(){ trGlow([]); TR.leo=true; leoReset(); TR.lt=0; }, tgt:()=>LEO.h&&LEO.h.g.visible?[LEO.h.g.position.x,LEO.h.g.position.z]:null, zoom:0,
+  tick(dt){ TR.lt+=dt; if(LEO.h&&LEO.h.g.visible){ const lp=LEO.h.g.position, t=LEO.tgt; camFocus(t?(lp.x+t.x)/2:lp.x,t?(lp.z+t.z)/2:lp.z,0.4,0.36); }
+    if(TR.lt>32 && !LEO.victims.length){ const v=PEDS.find(p=>!p.kind&&p.owner==='me'&&!p.gone); if(v){ infect(v,'nervo',0.75); v.owner=null; v.leoHit=true; LEO.victims.push(v); floatText('😠',v.x,v.z); } } },
+  ok:()=>LEO.victims.length>0 && TR.lt>2},
+ {t:'📞 Chiama Carlo',x:()=>'Per fermare Leo c\'è <b>Carlo</b> 😄, il collega sempre allegro. Si chiama dal <b>📱 telefono</b>'+trKey('P','View')+' → app <b>📞 Carlo</b>. Costa <b>'+CARLO.price+' karma</b> e si chiama <b>una volta a partita</b>. Chiamalo adesso (il karma te lo regalo io 😉).',
+  go(){ if(G.karma<CARLO.price) G.karma=CARLO.price; trGlow(['phoneBtn']); }, tgt:()=>LEO.h&&LEO.h.g.visible?[LEO.h.g.position.x,LEO.h.g.position.z]:null, ok:()=>CARLO.called},
+ {t:'😄 Carlo',x:()=>'Carlo arriva in <b>monopattino</b> (bisogna aspettarlo), <b>spinge a terra Leo</b> che resta fuori gioco per tutta la partita, poi rimette a posto <b>uno a uno</b> chi Leo aveva fatto innervosire. Guarda!',
+  go(){ trGlow([]); TR.ct2=0; }, zoom:0, tgt:()=>CARLO.h&&CARLO.h.g.visible?[CARLO.h.g.position.x,CARLO.h.g.position.z]:null,
+  tick(dt){ TR.ct2+=dt; const C=CARLO.h; if(C&&C.g.visible){ const cp=C.g.position, L=LEO.h&&LEO.h.g.visible&&!LEO.out?LEO.h.g.position:(CARLO.target||cp); camFocus((cp.x+L.x)/2,(cp.z+L.z)/2,0.4,0.36); }
+    if(TR.ct2>50){ if(!LEO.out){ LEO.out=true; LEO.ko=3; } for(const p of LEO.victims) if(p.kind) healOnly(p); } },
+  ok:()=>LEO.out && LEO.victims.every(p=>!p.kind) && TR.ct2>2},
  {t:'🧭 Focolai, tempo e stelle',x:()=>'Nella partita vera il Grigio nasce da solo. Quando un quartiere si ammala, in alto la <b>bussola</b> 🧭 indica il <b>focolaio</b> e parte un conto alla rovescia (qui no: tempo infinito): corri lì e cura! In basso vedi ⏳ il <b>tempo</b> e 🎨 quanto paese è a colori: alla fine ⭐ 50% · ⭐⭐ 70% · ⭐⭐⭐ 90%.',
   go(){ trGlow(['compass']); }},
  {t:'🛒 Comprare caramelle',x:()=>'Le caramelle finiscono. Si comprano col <b>karma</b> alle <b>bancarelle</b> con il cartello 🍬 '+CANDY_PRICE+' in piazza. Raggiungi la freccia gialla.',
@@ -3302,7 +3315,7 @@ function trainBuy(){ if(TRS[TR.step]&&TRS[TR.step].t.startsWith('🍬 Compra')) 
 function trainStart(){ document.getElementById('trAsk').hidden=true; closeTV(); TR.on=true; document.body.classList.add('training'); TR.save={karma:G.karma,candies:G.candies}; TR.p1=TR.p2=TR.p3=TR.p4=TR.pc=null; TR.chain=[];
   const co=HOME.carOut; HOME.carOut=false; HOME.townPos=null; HOME.pendingLevel=false; goTown(); HOME.carOut=co; TR.starting=true; document.getElementById('restart').click(); TR.starting=false;
   G.karma=0; G.candies=1; controls.zoom=ZOOM_DEF; trGo(0); copMsgT=0; msg.innerHTML='🎓 <b>Addestramento</b>: segui le istruzioni in alto.'; }
-function trainStop(){ if(!TR.on) return; const P=TRS[TR.step]; if(P&&P.end) P.end(); for(const p of [TR.p1,TR.p2,TR.p3,TR.p4]) trRelease(p); TR.on=false; TR.step=-1; trGlow([]); document.body.classList.remove('training'); trMsgEl.hidden=true; for(const el of trPts) el.style.display='none'; TRD.card.hidden=true; TRD.card.style.visibility=''; TRD.arrow.style.display='none'; trMark.visible=false;
+function trainStop(){ if(!TR.on) return; if(TR.leo){ TR.leo=false; try{ leoReset(); }catch(e){} } const P=TRS[TR.step]; if(P&&P.end) P.end(); for(const p of [TR.p1,TR.p2,TR.p3,TR.p4]) trRelease(p); TR.on=false; TR.step=-1; trGlow([]); document.body.classList.remove('training'); trMsgEl.hidden=true; for(const el of trPts) el.style.display='none'; TRD.card.hidden=true; TRD.card.style.visibility=''; TRD.arrow.style.display='none'; trMark.visible=false;
   if(TR.save){ G.karma=TR.save.karma; G.candies=TR.save.candies; } HOME.pendingLevel=true; HOME.townPos=null; try{ localStorage.setItem('karmapolis_addestramento','1'); }catch(e){} }
 const _trV=new THREE.Vector3(), trMsgEl=document.getElementById('trMsg'), trPts=[document.getElementById('trP0'),document.getElementById('trP1')]; let trMsgT=0;
 // i messaggi del gioco (es. "Quasi! Riprova") finiscono dentro il riquadro dell'addestramento, così non ci sono due fumetti uno sopra l'altro
@@ -4354,12 +4367,12 @@ function leoReset(){ for(const o of [LEO,CARLO]) if(o.h) o.h.g.visible=false; Ob
 function carloAvail(){ return LEO.on && !LEO.out && !CARLO.called; }
 function callCarlo(){ if(!carloAvail()) return; if(G.karma<CARLO.price){ copMsgT=3.5; msg.innerHTML='📞 Carlo costa <b>'+CARLO.price+' karma</b> e ne hai '+Math.round(G.karma)+'. Semina ancora un po\' di bene!'; return false; }
   G.karma-=CARLO.price; CARLO.called=true; if(!CARLO.h){ CARLO.h=mkSpecial(CARLO.code,null,'😄 Carlo','rgba(255,236,150,.95)'); const deck=new THREE.Group(); const b=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.05,0.8),toon({color:0x2a2a33})); b.position.y=0.1; const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.025,0.025,1.05,6),toon({color:0x9aa0a8})); pole.position.set(0,0.62,0.36); const bar=new THREE.Mesh(new THREE.CylinderGeometry(0.02,0.02,0.45,6),toon({color:0x2a2a33})); bar.rotation.z=Math.PI/2; bar.position.set(0,1.14,0.36); for(const zz of [-0.34,0.36]){ const w=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,0.05,10),toon({color:0x24242a})); w.rotation.z=Math.PI/2; w.position.set(0,0.08,zz); deck.add(w); } deck.add(b,pole,bar); CARLO.h.g.add(deck); CARLO.deck=deck; }
-  const lp=LEO.h.g.position, n=farNode(lp.x,lp.z,30,55); CARLO.h.g.position.set(n[0],0.15,n[1]); CARLO.h.g.rotation.set(0,0,0); CARLO.h.g.visible=true; CARLO.deck.visible=true; CARLO.state='go'; CARLO.replan=0;
+  const lp=LEO.h.g.position, n=TR.on?farNode(lp.x,lp.z,14,22):farNode(lp.x,lp.z,30,55); CARLO.h.g.position.set(n[0],0.15,n[1]); CARLO.h.g.rotation.set(0,0,0); CARLO.h.g.visible=true; CARLO.deck.visible=true; CARLO.state='go'; CARLO.replan=0;
   copMsgT=4.5; msg.innerHTML='📞 <b>Carlo:</b> «Arrivo, arrivo! Prendo il monopattino…» 😄 Aspettalo: sta venendo da Leo.'; if(!voxPlay('voci/carlo2.mp3')){ carloLaugh(); setTimeout(()=>speak('Arrivo, arrivo!',1.3,1.1),800); } return true; } /* "Arrivo, arrivo!" registrato dal vero Carletto (26/11) */
 function updateLeo(dt){ if(!UM.ready) return;
   if(!G.started || HOME.active || gameOver){ if(!G.started && (LEO.on||CARLO.state!=='off')) leoReset(); return; }
-  if(LV.n<10) return;
-  if(!LEO.on){ if(G.time<LEO.spawnAt) return; if(!LEO.h) LEO.h=mkSpecial(LEO.code,null,'😠 Leo','rgba(255,190,180,.95)'); const n=farNode(player.pos.x,player.pos.z,28,50); LEO.h.g.position.set(n[0],0.15,n[1]); LEO.h.g.rotation.set(0,0,0); LEO.h.g.visible=true; LEO.on=true; leoGrowl(); setTimeout(()=>leoShout(1,'Mia mamma mi ha fatto due mani!'),600);
+  if(LV.n<10 && !TR.leo) return;
+  if(!LEO.on){ if(G.time<LEO.spawnAt && !TR.leo) return; if(!LEO.h) LEO.h=mkSpecial(LEO.code,null,'😠 Leo','rgba(255,190,180,.95)'); const n=TR.leo?farNode(player.pos.x,player.pos.z,9,15):farNode(player.pos.x,player.pos.z,28,50); LEO.h.g.position.set(n[0],0.15,n[1]); LEO.h.g.rotation.set(0,0,0); LEO.h.g.visible=true; LEO.on=true; leoGrowl(); setTimeout(()=>leoShout(1,'Mia mamma mi ha fatto due mani!'),600);
     if(typeof showAlarm==='function'){ try{ showAlarm('😠 Arriva Leo!','rende di nuovo nervosi quelli che hai guarito'); }catch(e){} } copMsgT=6; msg.innerHTML='😠 <b>Arriva Leo!</b> Rende di nuovo nervosi quelli che hai guarito. Se hai '+CARLO.price+' karma, chiama <b>😄 Carlo</b> dal 📱 telefono.'; try{ phoneRing('Carlo','ti scrive: «Se Leo ti dà fastidio, chiamami!»'); }catch(e){} }
   const L=LEO.h, lp=L.g.position;
   if(LEO.out){ if(LEO.ko>0){ LEO.ko-=dt; if(LEO.ko<=0){ anthPoof(lp); L.g.visible=false; } } }
