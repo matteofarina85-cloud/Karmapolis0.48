@@ -317,7 +317,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.099.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.100.0</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -333,6 +333,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
   <div class="card seg" id="anthCard" hidden><button id="anthBtn" type="button">💪 Proteine da Antony · 40</button></div>
   <div class="card seg" id="taxiCard" hidden><button id="taxiBtn" type="button">😗 Fischia al taxi</button><button id="taxiOut" class="ghost" type="button" hidden>🚪 Scendi</button></div>
   <div class="card seg" id="shopCard" hidden><button id="shopBtn" type="button" style="background:#2f7de1;color:#fff">🔧 Ripara</button><button id="shopOut" class="ghost" type="button" hidden>🚗 Esci</button></div>
+  <div class="card seg" id="rideCard" hidden><button id="rideBtn" type="button">🚋</button></div>
   <div class="card seg" id="fuelCard" hidden><button id="fuelBtn" type="button">⛽ Fai il pieno</button></div>
   <div class="card seg" id="actCard" hidden><button id="act" type="button">Sali</button></div>
   <div class="card seg" id="shootCard" hidden><button id="shoot" type="button" aria-label="Spara">🔫 Spara</button></div>
@@ -343,6 +344,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.100.0',d:'28/11/2026',t:['🚋 <b>Tram arancioni</b> sui Bastioni, in tutti e due i sensi, sui binari in mezzo alle auto, con 7 fermate e le pensiline: a piedi vicino alla fermata premi «Sali sul tram» (5 karma), poi «Scendi alla prossima fermata».','⛵ <b>Barche sulla Cerchia dei Navigli</b>: il canale ora è più basso della strada, con i muri, e le barche passano sotto i ponti. 4 pontili con la scaletta: «Sali sulla barca» (8 karma).','🚗 Molto più traffico: 70 auto (45 sui telefoni), che si fermano anche dietro ai tram. Più passanti.','🏙️ Strade sistemate: i marciapiedi arrivano fino al bordo dei viali (niente più palazzi e semafori in mezzo alla strada, niente asfalto avanzato), gli isolati vicino a parchi e piazze vengono tagliati invece di sparire.','🌳 Dettagli: viali alberati con le aiuole, alberi e cestini lungo gli anelli, marciapiede lungo la circonvallazione, edicole nelle piazze, campagna intorno con campi coltivati, filari di pioppi, cascine e alberi.','⚙️ fps: il gioco non scende a 30 per i rallentamenti di un attimo (caricamenti, viaggi) e, se è a 30 fissi, ogni tanto riprova i 60 e ci resta se il telefono li regge.']},
  {v:'0.099.0',d:'28/11/2026',t:['🚗 <b>Traffico a Milanopolis</b>: auto, taxi, furgoni, moto, camion e autobus girano su anelli e viali, tengono la destra, <b>si fermano al rosso</b> e ripartono col verde, girano agli incroci e non si tamponano.','📯 Se ti metti davanti si fermano e suonano il clacson; la tua auto non passa attraverso di loro.','🚶 <b>Passanti</b> sui marciapiedi intorno agli isolati: si fermano se gli passi davanti (a piedi o in auto).','📱 Sui telefoni più lenti meno auto e passanti (22 e 14 invece di 36 e 26). Il Grigio a Milanopolis arriva nella prossima versione.']},
  {v:'0.098.0',d:'28/11/2026',t:['🚦 <b>Semafori</b> a Milanopolis agli incroci tra viali e anelli: funzionano davvero (10 secondi verde, 2 giallo, poi tocca all\'altra strada). Serviranno al traffico della prossima tappa.','🪑 Panchine, cestini e <b>fontane</b>: in piazza del Duomo, davanti al Castello (la fontana tonda con le panchine intorno), lungo il vialetto del Parco Semplicione, nei giardini, nelle piazze e sui Bastioni.','🏢 Palazzi con le facciate dritte, più stretti e un po\' sfalsati: niente più palazzi a fetta di torta.','📱 Città più leggera da disegnare: è divisa in quadranti e il telefono disegna (anche le ombre) solo la parte che hai intorno.','🌳 Il laghetto del parco non è più attraversato dal vialetto.']},
  {v:'0.097.0',d:'28/11/2026',t:['⛽ <b>Benzinaio</b> a Borgo Karma (fuori dalla siepe a ovest, vicino alla carrozzeria) e a Milanopolis (a ovest, vicino all\'autostrada): fermati in auto sotto la pensilina e premi «Fai benzina» (3 karma per ogni 1%).','🗺️ Milanopolis rifatta a lotti: niente più asfalto vuoto, ogni pezzo tra le strade è un isolato di palazzi oppure un posto speciale con il suo marciapiede.','💧 Navigli dritti nei loro corridoi, con le alzaie e i ponti sulle strade; la Darsena è una vasca vera con le barchette, collegata alla Cerchia. Niente più canali in mezzo alle strade né alberi sull\'asfalto.','🏛️ Monumenti spostati al posto giusto, ognuno nel suo lotto: Galleria (si passa sotto), Teatro alla Scaletta, Castello Sforzato col suo prato, Parco Semplicione col laghetto e l\'Arco della Pacina, Stazione Centralona col fascio dei binari, Porta Nuovissima, Tre Torri, Bocconcina, concessionario; lo Stadio San Sirolo è fuori città in fondo al viale.','🏢 Più palazzi (146 isolati), dentro la Cerchia isolati regolari con vie strette, cortili verdi dentro gli isolati grandi.']},
@@ -665,16 +667,20 @@ function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=perf
     {k:'nuova',r0:170,r1:220,a0:-64.5,a1:-44,g:0xd8dde2}, {k:'giardini',r0:136,r1:155,a0:-40,a1:-22,g:0x8cc46e}, {k:'brera',r0:90,r1:110,a0:-122,a1:-110,g:0xe6dccb},
     {k:'darsena',r0:170,r1:193,a0:103.5,a1:129.3,g:0xd3c7b0}, {k:'bocconi',r0:196,r1:220,a0:60,a1:76,g:0xe2d9c6},
     {k:'concess',r0:223,r1:251,a0:26,a1:40,g:0x9a9ea6}, {k:'benzina',r0:196,r1:220,a0:160,a1:178.2,g:0x8f939a}];
+  for(const s2 of SITES){ if(s2.k==='darsena') continue; const rin=s2.r0+2.4, mid=(s2.a0+s2.a1)/2; for(const k of ['a0','a1']){ for(const ra of RAD.concat([105,127.8])){ const d=((s2[k]-ra)%360+540)%360-180; if(Math.abs(d)<4.5){ const m=([105,127.8].includes(ra)?6.6:3.5)/rin/D, side=(((mid-ra)%360+540)%360-180)>=0?1:-1; let nv=ra+side*m; nv+=360*Math.round((s2[k]-nv)/360); s2[k]=nv; } } } }
   MIL.sites=SITES; MIL.bside=[];
   const inSite=(x,z,m=0)=>{ const [r,a]=milPolar(x,z); return SITES.some(s=>r>s.r0-m&&r<s.r1+m&&milAngIn(a,s.a0-m/Math.max(r,1)/D,s.a1+m/Math.max(r,1)/D)) || r<23+m; };
   // ---------- TERRENO E STRADE ----------
-  { const g=new THREE.CircleGeometry(470,64); g.rotateX(-Math.PI/2); g.translate(CX,0.01,CZ); parts.green.push(paintGeo(g,0xb7d08a,false));
-    const c=new THREE.CircleGeometry(266,120); c.rotateX(-Math.PI/2); c.translate(CX,0.02,CZ); parts.road.push(paintGeo(c,0x6a6e76,false)); }
+  { const g=new THREE.RingGeometry(266,470,96); g.rotateX(-Math.PI/2); g.translate(CX,0.01,CZ); parts.green.push(paintGeo(g,0xb7d08a,false));
+    const c=new THREE.RingGeometry(85,266,160); c.rotateX(-Math.PI/2); c.translate(CX,0.02,CZ); parts.road.push(paintGeo(c,0x6a6e76,false)); const c2=new THREE.CircleGeometry(77,96); c2.rotateX(-Math.PI/2); c2.translate(CX,0.02,CZ); parts.road.push(paintGeo(c2,0x6a6e76,false));
+    // muri della Cerchia (2 m) e acqua in basso
+    const wm=toon({color:0xcfc3a8,side:THREE.DoubleSide}); for(const R of [77,85]){ const w=new THREE.CylinderGeometry(R,R,1.75,160,1,true); w.translate(CX,-0.75,CZ); const m=new THREE.Mesh(w,wm); m.receiveShadow=true; grp.add(m); }
+    const wg=new THREE.RingGeometry(77,85,160); wg.rotateX(-Math.PI/2); wg.translate(CX,-1.6,CZ); parts.water.push(paintGeo(wg,0x3f8fc0,false)); }
   const ring=(r,w,col,key,y=0.03)=>{ const g=new THREE.RingGeometry(r-w/2,r+w/2,160); g.rotateX(-Math.PI/2); g.translate(CX,y,CZ); parts[key].push(paintGeo(g,col,false)); };
   ring(258,14,0x5c6068,'road',0.035); ring(258,0.35,0xfffaf0,'mark',0.05); ring(162,10,0x5c6068,'road',0.035); ring(162,0.3,0xfffaf0,'mark',0.05);
-  ring(81,8,0x4f9fd0,'water',0.04); ring(76,1.6,0xd8cdb6,'side',0.12); ring(86,1.6,0xd8cdb6,'side',0.12); // la Cerchia: canale con le sponde
+  ring(76,1.6,0xd8cdb6,'side',0.12); ring(86,1.6,0xd8cdb6,'side',0.12); // la Cerchia: canale con le sponde
   for(const a of RAD){ const t=T(a), r0=70, r1=a===-152.1?300:265, L=r1-r0, g=new THREE.PlaneGeometry(L,7); g.rotateX(-Math.PI/2); g.rotateY(-t); g.translate(CX+Math.cos(t)*(r0+L/2),0.036,CZ+Math.sin(t)*(r0+L/2)); parts.road.push(paintGeo(g,0x5c6068,false));
-    const bm=new THREE.BoxGeometry(10,0.12,8); bm.rotateY(-t); bm.translate(CX+Math.cos(t)*81,0.06,CZ+Math.sin(t)*81); parts.b.push(paintGeo(bm,0xcfc6b4,true)); // ponti sulla Cerchia
+    const bm=new THREE.BoxGeometry(10,0.12,8.6); bm.rotateY(-t); bm.translate(CX+Math.cos(t)*81,0.06,CZ+Math.sin(t)*81); parts.road.push(paintGeo(bm,0x5c6068,true)); const ar=new THREE.BoxGeometry(10.4,0.42,8.6); ar.rotateY(-t); ar.translate(CX+Math.cos(t)*81,-0.22,CZ+Math.sin(t)*81); parts.b.push(paintGeo(ar,0xcfc3a8,true)); // ponti sulla Cerchia
     for(const s of [-1,1]){ const [x,z]=[CX+Math.cos(t)*81-Math.sin(t)*4.2*s, CZ+Math.sin(t)*81+Math.cos(t)*4.2*s]; box(9.5,0.7,0.35,x,0.45,z,0xe9e1cf,-t); } }
   { const g=new THREE.PlaneGeometry(220,16); g.rotateX(-Math.PI/2); g.translate(CX-262-100,0.036,CZ); parts.road.push(paintGeo(g,0x55595f,false)); // autostrada da Borgo Karma
     for(let i=0;i<18;i++) flat(4,0.35,CX-272-i*11,CZ,0,0xffd84d); for(const s of [-1,1]) flat(214,0.25,CX-362,CZ+s*7.2,0,0xfffaf0); }
@@ -688,7 +694,7 @@ function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=perf
     for(const [ca,cb] of cuts){ for(const sg of [-1,1]){ strip(cur,ca,2.6,sg*4.8,0,0xd3c7b0,'side',0.15); strip(cur,ca,0.25,sg*3.6,0.15,0xb9b2a6,'side',0.12); }
       if(cb>ca){ strip(ca,cb,13.2,0,0.04,0x5c6068,'road',0.1); for(const sg of [-1,1]) strip(ca,cb,0.3,sg*3.7,0.14,0xe9e1cf,'b',0.6); } cur=cb; }
     for(let r=Math.max(r0+6,270);r<r1-3;r+=9){ if(br.some(([R,w])=>Math.abs(r-R)<w/2+2)) continue; for(const sg of [-1,1]){ const x=CX+c*r-s*sg*5.6, z=CZ+s*r+c*sg*5.6; cyl(0.2,0.25,2.2,x,1.25,z,0x7a5034,5,'furn'); const g=new THREE.IcosahedronGeometry(1.6,0); g.translate(x,3.4,z); parts.green.push(paintGeo(g,pick([0x4fa64a,0x5cb85c,0x3f9a52]),true)); MIL.solids.push({x,z,r:0.3}); } } };
-  canal(127.8,85,172.4); canal(127.8,190.6,330); canal(105,190.6,330);
+  canal(127.8,86.8,172.4); { const t=T(127.8); box(0.9,2.1,8,CX+Math.cos(t)*86.2,-0.65,CZ+Math.sin(t)*86.2,0x6b4a32,-t); box(0.2,0.6,8,CX+Math.cos(t)*86.9,0.5,CZ+Math.sin(t)*86.9,0x3a3d44,-t); } canal(127.8,190.6,330); canal(105,190.6,330);
   // ---------- ISOLATI DI PALAZZI ----------
   const angs=RAD.concat([105,127.8]).map(a=>(a+360)%360).sort((a,b)=>a-b);
   const bands=[['c',[[25,47],[50,72]]],['m',[[90,110],[113,133],[136,155]]],['f',[[170,193],[196,220],[223,251]]]];
@@ -706,12 +712,16 @@ function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=perf
   for(const [zone,rings] of bands) for(const [r0,r1] of rings){ const rm=(r0+r1)/2;
     const AG=zone!=='c'?angs:(r0<30?[0,1,2,3,4,5].map(i=>((-120+i*60)%360+360)%360):[...Array(12).keys()].map(i=>((-105+i*30)%360+360)%360)).sort((a,b)=>a-b); // dentro la Cerchia niente viali: isolati regolari con vie strette
     for(let k=0;k<AG.length;k++){ const A0=AG[k], A1=k===AG.length-1?AG[0]+360:AG[k+1], span=A1-A0, len=T(span)*rm, m=zone==='c'?1:Math.max(1,Math.round(len/36));
-      for(let j=0;j<m;j++){ const gap=2.4, da=gap/rm/D, sw=zone==='c'?1.5:4.2, side=(j===0?sw:0)/rm/D, side2=(j===m-1?sw:0)/rm/D;
-        const a0=A0+span*j/m+da+side, a1=A0+span*(j+1)/m-da-side2, b0=r0+gap, b1=r1-gap; if(a1-a0<2.5||b1-b0<6) continue;
+      const swOf=A=>zone==='c'?1.5:([105,127.8].some(c=>Math.abs(((A-c)%360+540)%360-180)<0.01)?4.2:1.1);
+      for(let j=0;j<m;j++){ const gap=2.4, b0=r0+gap, b1=r1-gap, da=gap/b0/D, side=(j===0?swOf(A0):0)/b0/D, side2=(j===m-1?swOf(A1):0)/b0/D;
+        let a0=A0+span*j/m+da+side, a1=A0+span*(j+1)/m-da-side2;
+        for(const s2 of SITES){ if(!(s2.r0<b1-1&&s2.r1>b0+1)) continue; const g2=4.8/b0/D, sp=a1-a0, sa=((s2.a0-a0)%360+360)%360, sb=sa+(s2.a1-s2.a0); // il lotto speciale taglia l'isolato invece di cancellarlo
+          if(sb>360){ a0+=sb-360+g2; } else if(sa<sp){ if(sb>=sp) a1=a0+sa-g2; else { if(sa>sp-sb){ a1=a0+sa-g2; } else { a0=a0+sb+g2; } } } }
+        if(a1-a0<2.5||b1-b0<6) continue;
         const [cx,cz]=P(rm,(a0+a1)/2); if(inSite(cx,cz,2)) continue; let ok=true; for(const t of [a0,a1]) for(const rr of [b0,b1]){ const [x,z]=P(rr,t); if(inSite(x,z,-0.5)) ok=false; } if(!ok) continue;
         const ind=zone==='f' && milAngIn((a0+a1)/2,-5,48) && rm>190; // zona industriale a est
         parts.side.push(paintGeo(sectorGeo(b0,b1,a0,a1,0.15),0xd9d2c4,true)); curb(b0,b1,a0,a1); MIL.side.push({r0:b0,r1:b1,a0,a1}); MIL.bside.push({r0:b0,r1:b1,a0,a1}); nBlk++;
-        const ia0=a0+SWK/rm/D, ia1=a1-SWK/rm/D, i0=b0+SWK, i1=b1-SWK; MIL.blocks.push({r0:i0-0.2,r1:i1+0.2,a0:ia0-0.2,a1:ia1+0.2});
+        const ia0=a0+SWK/b0/D, ia1=a1-SWK/b0/D, i0=b0+SWK, i1=b1-SWK; MIL.blocks.push({r0:i0-0.2,r1:i1+0.2,a0:ia0-0.2,a1:ia1+0.2});
         if(ind){ const h=7+rnd2()*2; parts.b.push(paintGeo(sectorGeo(i0,i1,ia0,ia1,h,0.15),pick([0xc3c6cc,0xb8bcc4,0xcfc9b8]),true));
           const n=Math.max(2,Math.round((i1-i0)/4)); for(let t=0;t<n;t++){ const ra=i0+(i1-i0)*t/n, rb=i0+(i1-i0)*(t+1)/n; parts.b.push(paintGeo(sectorGeo(ra,rb-0.2,ia0,ia1,1.4,h+0.15),0x8d939c,true)); } continue; }
         // corte interna (come i palazzi milanesi) negli isolati profondi: si vede dall'alto il cortile verde
@@ -791,6 +801,33 @@ function buildMilanopolis(){ if(MIL.built) return; MIL.built=true; const T0=perf
     for(const ra of RAD) for(let r=100;r<250;r+=22){ const off=4.4, x=CX+Math.cos(T(ra))*r-Math.sin(T(ra))*off, z=CZ+Math.sin(T(ra))*r+Math.cos(T(ra))*off; if(RINGS.some(([R,w])=>Math.abs(r-R)<w/2+3)||!milSector(MIL.side,x,z)||milHit(x,z,0.6)) continue; lamp(x,z,Math.atan2(Math.cos(T(ra)),Math.sin(T(ra)))); }
     for(const rr of [154.9,169.5]){ const rs=[...RAD,127.8].map(a=>(a+360)%360).sort((a,b)=>a-b), gw=7.5/rr/D; for(let q=0;q<rs.length;q++){ const a0=rs[q]+gw, a1=(q===rs.length-1?rs[0]+360:rs[q+1])-gw; ringSeg(rr-2.1,rr+2.1,a0,a1,0.07,0x86b862,'green'); }
       const n=Math.round(2*Math.PI*rr/11); for(let i=0;i<n;i++){ const a=i/n*360; if(nearRad(rr,a,7)||Math.abs(((a-127.8)%360+540)%360-180)*D*rr<8) continue; const [x,z]=P(rr,a); tree(x,z,1.9); } } }
+  // ---------- DETTAGLI (come a Borgo Karma): marciapiede della circonvallazione, alberi nelle aiuole, cestini, edicole, campagna con cascine e pioppi ----------
+  { const rs=RAD.map(a=>(a+360)%360).sort((a,b)=>a-b);
+    // marciapiede lungo la circonvallazione (lato città), aperto agli incroci
+    for(let q=0;q<rs.length;q++){ const a0=rs[q]+3.5/248.6/D, a1=(q===rs.length-1?rs[0]+360:rs[q+1])-3.5/248.6/D; parts.side.push(paintGeo(sectorGeo(248.6,251,a0,a1,0.15),0xd9d2c4,true)); curb(248.6,251,a0,a1); MIL.side.push({r0:248.6,r1:251,a0,a1}); }
+    const planter=(x,z)=>{ box(1.2,0.1,1.2,x,0.2,z,0x6b4a32,0,'furn'); };
+    const stree=(x,z)=>{ if(milHit(x,z,1.1)||!milSector(MIL.side,x,z)) return false; planter(x,z); tree(x,z,1.25+rnd2()*0.4); return true; };
+    // viali alberati: alberi sui marciapiedi dei viali, tra un lampione e l'altro
+    for(const ra of RAD) for(let r=96;r<(ra===-152.1?250:250);r+=13){ if(RINGS.some(([R,w])=>Math.abs(r-R)<w/2+4)) continue; for(const sg of [-1,1]){ const off=sg*4.7, x=CX+Math.cos(T(ra))*r-Math.sin(T(ra))*off, z=CZ+Math.sin(T(ra))*r+Math.cos(T(ra))*off; stree(x,z); } }
+    // alberi sui marciapiedi degli anelli (zona di mezzo e fuori), cestini ogni tanto
+    let nb=0; for(const [R,w] of RINGS){ if(R<100||R===162||R===258) continue; for(const sg of [-1,1]){ const rr=R+sg*(w/2+1.2), n=Math.round(2*Math.PI*rr/15); for(let i=0;i<n;i++){ const a=(i+0.25)/n*360; if(nearRad(rr,a,7)) continue; const [x,z]=P(rr,a); if(stree(x,z)&&(++nb)%4===0){ const [bx,bz]=P(rr,a+2.2/rr/D); if(!milHit(bx,bz,0.6)&&milSector(MIL.side,bx,bz)){ cyl(0.25,0.22,0.8,bx,0.55,bz,0x3f7a52,10,'furn'); MIL.solids.push({x:bx,z:bz,r:0.28}); } } } } }
+    // edicole verdi nelle piazze
+    const kiosk=(x,z,yaw)=>{ box(2.4,2.4,1.8,x,1.35,z,0x2f6b4f,yaw); box(2.8,0.25,2.2,x,2.7,z,0x24533d,yaw); box(2.2,0.9,0.1,x+Math.sin(yaw)*0.95,1.2,z+Math.cos(yaw)*0.95,0xf4efe6,yaw,'furn'); MIL.solids.push({x,z,r:1.5}); };
+    { const [x,z]=P(17,150); kiosk(x,z,-T(150)+Math.PI/2); const [x2,z2]=P(17,30); kiosk(x2,z2,-T(30)-Math.PI/2); }
+    for(const k of ['stazione','nuova','bocconi','scala']){ const s2=S(k), r=s2.r0+4.2, a=s2.a0+(s2.a1-s2.a0)*0.2, [x,z]=P(r,a); if(!milHit(x,z,2)) kiosk(x,z,-T(a)+Math.PI); }
+    // campagna: campi coltivati a strisce, filari di pioppi, cascine con il tetto di coppi, alberi sparsi
+    const farm=(x,z,yaw)=>{ const c=0xf1e3c4, rf=0xbf5f3e; box(16,5,7,x,2.5,z,c,yaw); box(7,5,12,x+Math.cos(yaw)*-4.5-Math.sin(yaw)*-9.5,2.5,z+Math.sin(yaw)*4.5+Math.cos(yaw)*-9.5,c,yaw);
+      const rg=new THREE.CylinderGeometry(0.01,5.2,2.6,4,1); rg.rotateY(Math.PI/4); rg.scale(1.6,1,0.72); rg.rotateY(yaw); rg.translate(x,6.3,z); parts.b.push(paintGeo(rg,rf,true)); MIL.solids.push({x,z,r:8}); };
+    const inCountry=(x,z,m)=>{ const [r,a]=milPolar(x,z); if(r<285+m||r>455-m) return false; if(x<CX&&Math.abs(z-CZ)<18+m) return false; if(MIL.stadium&&Math.hypot(x-MIL.stadium[0],z-MIL.stadium[1])<62+m) return false;
+      for(const c of [105,127.8]){ if(Math.abs(Math.sin((((a-c)%360+540)%360-180)*D)*r)<12+m && Math.cos((a-c)*D)>0) return false; } if(Math.abs(Math.sin((((a+152.1)%360+540)%360-180)*D)*r)<10+m && Math.cos((a+152.1)*D)>0 && r<300) return false; return true; };
+    const FC=[[0x9cc56a,0x8ab85a],[0xd9c46a,0xcbb45a],[0xa8cf72,0x7fae55],[0xc9b77a,0xb7a566]];
+    for(let i=0;i<70;i++){ const a=rnd2()*360, r=300+rnd2()*140, [x,z]=P(r,a), w=24+rnd2()*30, d=18+rnd2()*26, yaw=rnd2()*Math.PI; if(!inCountry(x,z,Math.max(w,d)/2)) continue; const fc=pick(FC), n=Math.round(w/3);
+      for(let k=0;k<n;k++){ const g=new THREE.PlaneGeometry(w/n,d); g.rotateX(-Math.PI/2); g.translate(-w/2+(k+0.5)*w/n,0,0); g.rotateY(yaw); g.translate(x,0.03,z); parts.green.push(paintGeo(g,fc[k%2],false)); }
+      if(rnd2()<0.5){ for(let k=0;k<Math.round(w/4);k++){ const lx=-w/2+k*4, px=x+Math.cos(yaw)*lx+Math.sin(yaw)*(d/2+1.5), pz=z-Math.sin(yaw)*lx+Math.cos(yaw)*(d/2+1.5); cyl(0.18,0.22,2,px,1,pz,0x7a5034,5,'furn'); const g=new THREE.CylinderGeometry(0.2,1.1,6.5,6); g.translate(px,5,pz); parts.green.push(paintGeo(g,0x5e9a48,true)); } } }
+    for(let i=0;i<14;i++){ const a=rnd2()*360, r=310+rnd2()*120, [x,z]=P(r,a); if(inCountry(x,z,14)) farm(x,z,rnd2()*Math.PI); }
+    for(let i=0;i<160;i++){ const a=rnd2()*360, r=275+rnd2()*185, [x,z]=P(r,a); if(inCountry(x,z,3)) tree(x,z,1.6+rnd2()*0.9); }
+    // l'autostrada: pioppi ai lati
+    for(let x=CX-275;x>CX-460;x-=14) for(const sg of [-1,1]){ const z=CZ+sg*11; cyl(0.18,0.22,2,x,1,z,0x7a5034,5,'furn'); const g=new THREE.CylinderGeometry(0.2,1.1,6.5,6); g.translate(x,5,z); parts.green.push(paintGeo(g,0x5e9a48,true)); } }
   // ---------- SEMAFORI agli incroci viale/anello (gruppo A = chi va sul viale, gruppo B = chi gira sull'anello) ----------
   { const lens={A:{r:[],y:[],g:[]},B:{r:[],y:[],g:[]}}; MIL.lights=[];
     const head=(x,z,fx,fz,grp2)=>{ const yaw=Math.atan2(fx,fz); box(0.42,1.15,0.34,x,4.3,z,0x2a2d33,yaw,'furn'); ['r','y','g'].forEach((c,i)=>{ const g=new THREE.BoxGeometry(0.24,0.24,0.06); g.rotateY(yaw); g.translate(x+fx*0.19,4.66-i*0.36,z+fz*0.19); lens[grp2][c].push(g); }); };
@@ -854,9 +891,9 @@ function mEdgePos(e,u){ const D=Math.PI/180; let x,z,hx,hz; if(e.kind==='ring'){
   const lane=Math.min(2.2,e.w/4); return {x:x-hz*lane, z:z+hx*lane, hx, hz}; }
 function mBez(a,b,c,u){ const k=1-u; return {x:k*k*a.x+2*k*u*b.x+u*u*c.x, z:k*k*a.z+2*k*u*b.z+u*u*c.z}; }
 function milSpawnLife(){ if(MLIFE.ready) return; MLIFE.ready=true; milGraph(); const E=MLIFE.edges;
-  const NC=ECO?22:36; for(let i=0;i<NC;i++){ const e=E[(i*37+11)%E.length]; const MF=['berlina','taxi','suv','wagon','citycar','sportiva','furgone','moto','berlina','taxi','camion','wagon','suv','citycar','bus','moto']; const V=makeTrafficVehicle(MF[i%MF.length],i+40);
+  const NC=ECO?45:70; for(let i=0;i<NC;i++){ const e=E[(i*37+11)%E.length]; const MF=['berlina','taxi','suv','wagon','citycar','sportiva','furgone','moto','berlina','taxi','camion','wagon','suv','citycar','bus','moto']; const V=makeTrafficVehicle(MF[i%MF.length],i+40);
     MLIFE.cars.push({...V,e,u:0.1+((i*0.37)%0.8),mode:'lane',speed:0,x:0,z:0,yaw:0,lean:0,vmax:Math.min(V.vmax||8.5,9.5)}); }
-  const B=MIL.bside||[], NP=ECO?14:26; for(let i=0;i<NP&&B.length;i++){ const b=B[(i*13+5)%B.length]; const av=avRandom(i+301); const h=makeHuman({av},null); h.A.walk.time=Math.random()*1.5;
+  const B=MIL.bside||[], NP=ECO?20:34; for(let i=0;i<NP&&B.length;i++){ const b=B[(i*13+5)%B.length]; const av=avRandom(i+301); const h=makeHuman({av},null); h.A.walk.time=Math.random()*1.5;
     const rI=b.r0+1.2, rO=b.r1-1.2, D=Math.PI/180, aI0=b.a0+1.2/rI/D, aI1=b.a1-1.2/rI/D, aO0=b.a0+1.2/rO/D, aO1=b.a1-1.2/rO/D;
     const seg=[(aO1-aO0)*D*rO, rO-rI, (aI1-aI0)*D*rI, rO-rI]; const per=seg.reduce((a,b)=>a+b,0);
     MLIFE.peds.push({...h,b,rI,rO,aI0,aI1,aO0,aO1,seg,per,t:Math.random()*per,dir:i%2?1:-1,speed:1.1+Math.random()*0.35,x:0,z:0,yaw:0}); } }
@@ -874,6 +911,7 @@ function milLife(dt){ if(!MLIFE.ready) return; mFrame++; const cars=MLIFE.cars, 
     const look=7.5+(c.len||4.2)/2;
     for(const o of cars){ if(o===c) continue; const dx=o.x-c.x, dz=o.z-c.z; if(dx*dx+dz*dz>look*look+40) continue; const f=dx*fx+dz*fz, l=Math.abs(dx*fz-dz*fx); if(f>0.5&&f<look&&l<1.7){ const same=Math.sin(o.yaw)*fx+Math.cos(o.yaw)*fz>0.3; if(same||o.mode==='turn'||c.mode==='turn'){ block=true; break; } } }
     { const tx=me?me.x:PX, tz=me?me.z:PZ, dx=tx-c.x, dz=tz-c.z, f=dx*fx+dz*fz, l=Math.abs(dx*fz-dz*fx); if(f>0.3&&f<look&&l<(me?2.1:1.4)){ block=true; meBlock=true; } }
+    if(!block&&TRANSIT.ready) for(const t of TRANSIT.list){ if(t.kind!=='tram') continue; for(const sg of t.segs){ const dx=sg.position.x-c.x, dz=sg.position.z-c.z, f=dx*fx+dz*fz, l=Math.abs(dx*fz-dz*fx); if(f>0.5&&f<look+3&&l<1.9){ block=true; break; } } if(block) break; }
     if(block) target=0;
     if(meBlock && c.speed<0.5){ c.meWait=(c.meWait||0)+dt; if(c.meWait>1.2 && !(c.honkT>0)){ try{ if(AUD.ready&&soundOn) horn(Math.random()-0.5); }catch(e){} c.honkT=3; } } else c.meWait=0; if(c.honkT>0) c.honkT-=dt;
     if(c.mode==='lane'){ const e=c.e, remain=(1-c.u)*e.L, node=MLIFE.nodes[e.to];
@@ -901,12 +939,74 @@ function milLife(dt){ if(!MLIFE.ready) return; mFrame++; const cars=MLIFE.cars, 
     if(!p.g.visible) continue; p.g.position.set(x,0.15,z); p.g.rotation.set(0,p.yaw,0); if(near||mFrame%3===0) animHuman(p,p.cur,near?dt:dt*3,true); } }
 // la tua auto non passa attraverso le auto del traffico e i passanti
 function milLifeHit(px,pz,r){ if(!MLIFE.ready) return false; for(const c of MLIFE.cars) if(inVeh(c,px,pz,r)) return true; for(const p of MLIFE.peds) if((p.x-px)**2+(p.z-pz)**2<(r+0.35)**2) return true; return false; }
+// ======================= 🚋⛵ TRAM SUI BASTIONI E BARCHE SULLA CERCHIA (Teo, 28/11/2026) =======================
+// Tram arancioni (come i "Ventotto" di Milano) a giro sui Bastioni nei due sensi, sui binari in mezzo alle auto; fermate con la pensilina.
+// Barche sulla Cerchia dei Navigli (più bassa della strada: passano sotto i ponti), con i pontili. Si sale a piedi vicino alla fermata.
+const TRANSIT={list:[],ready:false}, RIDE={on:null,next:false};
+const TRAM_PRICE=5, BOAT_PRICE=8;
+function milTransitBuild(){ if(TRANSIT.ready) return; TRANSIT.ready=true; const D=Math.PI/180, P=mPolarP;
+  const RAD=MIL_RAD.map(a=>(a+360)%360).sort((a,b)=>a-b); const stopsT=[]; for(let i=0;i<RAD.length;i++){ const a0=RAD[i], a1=i===RAD.length-1?RAD[0]+360:RAD[i+1]; let m=((a0+a1)/2)%360; if(Math.abs(((m-127.8)%360+540)%360-180)<5) m+=7; stopsT.push(m); }
+  const parts=[], add=(g,c)=>parts.push(paintGeo(g,c,true));
+  // binari (due per senso) e pensiline
+  for(const lr of [159.8,164.2]) for(const o of [-0.72,0.72]){ const g=new THREE.RingGeometry(lr+o-0.07,lr+o+0.07,256); g.rotateX(-Math.PI/2); g.translate(MIL.X,0.06,MIL.Z); parts.push(paintGeo(g,0xb9bcc4,false)); }
+  const shelters=[];
+  for(const a of stopsT) for(const [rr,lr] of [[156.4,159.8],[167.6,164.2]]){ const [x,z]=P(rr,a), yaw=-a*D+Math.PI/2, f=rr<162?1:-1;
+    const g1=new THREE.BoxGeometry(5,0.12,1.6); g1.rotateY(yaw); g1.translate(x,2.5,z); add(g1,0x2f6b4f); for(const s of [-2.2,2.2]){ const g=new THREE.BoxGeometry(0.12,2.4,0.12); g.translate(s,0,0.5*f); g.rotateY(yaw); g.translate(x,1.3,z); add(g,0x3a3d44); }
+    const gb=new THREE.BoxGeometry(4.6,1.5,0.06); gb.translate(0,0,-0.7*f); gb.rotateY(yaw); gb.translate(x,1.3,z); add(gb,0xbfe0ee); const gs=new THREE.BoxGeometry(3,0.1,0.5); gs.translate(0,0,-0.45*f); gs.rotateY(yaw); gs.translate(x,0.6,z); add(gs,0x6b4a32);
+    const gp=new THREE.BoxGeometry(0.5,0.5,0.06); gp.translate(2.4,0.4,0); gp.rotateY(yaw); gp.translate(x,2.4,z); add(gp,0xf0a030); MIL.solids.push({x,z,r:0.9}); shelters.push({a,x,z,lr}); }
+  // pontili sulla Cerchia
+  const stopsB=[150,-120,-35,70].map(a=>(a+360)%360), piers=[];
+  for(const a of stopsB) for(const [rb,lr] of [[76.4,79],[85.6,83]]){ const [x,z]=P(rb,a), yaw=-a*D+Math.PI/2, inward=rb<81?1:-1;
+    for(let k=0;k<4;k++){ const g=new THREE.BoxGeometry(3.2,0.18,0.55); g.translate(0,0,0); g.rotateY(yaw); const [sx,sz]=P(rb+inward*(0.2+k*0.5),a); g.translate(sx,0.02-k*0.42,sz); add(g,0x8a6a48); }
+    const [px,pz]=P(rb+inward*2.3,a); const gp=new THREE.BoxGeometry(3.4,0.2,1.6); gp.rotateY(yaw); gp.translate(px,-1.42,pz); add(gp,0x8a6a48); const [ix,iz]=P(rb-inward*0.6,a); const gi=new THREE.BoxGeometry(0.15,1.6,0.15); gi.translate(ix,0.95,iz); add(gi,0x3a3d44); const gt=new THREE.BoxGeometry(0.7,0.5,0.06); gt.rotateY(yaw); gt.translate(ix,1.9,iz); add(gt,0x2f7de1);
+    const [bx,bz]=P(rb-inward*1.0,a); piers.push({a,x:bx,z:bz,lr}); }
+  const m=new THREE.Mesh(mergeGeometries(parts),VC); m.receiveShadow=true; MIL.group.add(m);
+  // veicoli
+  const tramGeo=()=>{ const p=[], c=0xf0802a, cr=0xf6efe2; const a=(g,col)=>p.push(paintGeo(g,col,true));
+    let g=new THREE.BoxGeometry(2.3,1.5,8.6); g.translate(0,1.15,0); a(g,c); g=new THREE.BoxGeometry(2.32,0.9,8.2); g.translate(0,2.25,0); a(g,0x2d3440); g=new THREE.BoxGeometry(2.3,0.35,8.6); g.translate(0,2.85,0); a(g,cr);
+    g=new THREE.BoxGeometry(2.2,0.3,8.4); g.translate(0,3.15,0); a(g,0x9aa0a8); g=new THREE.BoxGeometry(0.05,0.9,1.6); g.translate(0,3.75,0); g.rotateZ(0.5); a(g,0x3a3d44); g=new THREE.BoxGeometry(2.35,0.25,8.7); g.translate(0,0.4,0); a(g,0x3a3d44);
+    for(const z of [-3.2,3.2]){ g=new THREE.BoxGeometry(2.0,0.35,1.2); g.translate(0,0.2,z); a(g,0x24242a); } return mergeGeometries(p); };
+  const boatGeo=()=>{ const p=[], a=(g,col)=>p.push(paintGeo(g,col,true));
+    let g=new THREE.BoxGeometry(2.4,0.6,7); g.translate(0,0.3,0); a(g,0x2f5f8a); g=new THREE.CylinderGeometry(1.2,1.2,0.6,3,1); g.rotateY(Math.PI/2); g.scale(1,1,1.3); g.translate(0,0.3,4.2); a(g,0x2f5f8a);
+    g=new THREE.BoxGeometry(2.45,0.12,7.1); g.translate(0,0.62,0); a(g,0xf6efe2); g=new THREE.BoxGeometry(2.1,0.42,4.2); g.translate(0,0.9,-0.6); a(g,0xdfe8f0); g=new THREE.BoxGeometry(2.2,0.08,4.4); g.translate(0,1.14,-0.6); a(g,0x2f7de1); return mergeGeometries(p); };
+  const TG=tramGeo(), BG=boatGeo(), TM=toon({vertexColors:true}), BM=toon({vertexColors:true});
+  const mk=(kind,dir,a)=>{ const n=kind==='tram'?3:1, segs=[]; for(let i=0;i<n;i++){ const s=new THREE.Mesh(kind==='tram'?TG:BG,kind==='tram'?TM:BM); s.castShadow=true; if(!ECO) withOutline(s,0.03); scene.add(s); segs.push(s); }
+    const lr=kind==='tram'?(dir>0?159.8:164.2):(dir>0?79:83); const t={kind,dir,a,lr,segs,speed:0,vmax:kind==='tram'?8.5:4.2,dwell:0,stops:kind==='tram'?stopsT:stopsB,y:kind==='tram'?0.05:-1.66,len:kind==='tram'?8.6:7.2,w:2.4,x:0,z:0,yaw:0,lastStop:null};
+    TRANSIT.list.push(t); return t; };
+  for(const [d,a] of [[1,10],[1,190],[-1,100],[-1,280]]) mk('tram',d,a); mk('boat',1,40); mk('boat',-1,220);
+  TRANSIT.shelters=shelters; TRANSIT.piers=piers; }
+function transitPlace(t){ const D=Math.PI/180; for(let i=0;i<t.segs.length;i++){ const a=t.a-t.dir*(i*9.2)/t.lr/D, [x,z]=mPolarP(t.lr,a), hx=-Math.sin(a*D)*t.dir, hz=Math.cos(a*D)*t.dir, s=t.segs[i]; s.position.set(x,t.y,z); s.rotation.set(0,Math.atan2(hx,hz),0); if(i===0){ t.x=x; t.z=z; t.yaw=Math.atan2(hx,hz); } } }
+function milTransit(dt){ if(!TRANSIT.ready) return; const D=Math.PI/180, PX=player.pos.x, PZ=player.pos.z, me=player.veh;
+  for(const t of TRANSIT.list){ const vis=(t.x-PX)**2+(t.z-PZ)**2<200*200||RIDE.on===t; for(const s of t.segs) s.visible=vis;
+    if(t.dwell>0){ t.dwell-=dt; t.speed=0; if(t.dwell<=0) t.lastStop=t.atStop; }
+    else { // prossima fermata davanti
+      let best=1e9, st=null; for(const a of t.stops){ if(a===t.lastStop) continue; let d=((a-t.a)*t.dir%360+360)%360; if(d<best){ best=d; st=a; } } const dist=best*D*t.lr;
+      let target=t.vmax; if(dist<16) target=Math.min(target,Math.max(0.6,dist*0.55));
+      if(t.kind==='tram'){ const fx=Math.sin(t.yaw), fz=Math.cos(t.yaw); const chk=(x,z,w)=>{ const dx=x-t.x, dz=z-t.z, f=dx*fx+dz*fz, l=Math.abs(dx*fz-dz*fx); return f>0.5&&f<11&&l<w; };
+        for(const c of MLIFE.cars) if(chk(c.x,c.z,1.6)){ target=0; break; } for(const o of TRANSIT.list) if(o!==t&&o.kind==='tram'&&chk(o.x,o.z,1.6)) target=0; if(chk(me?me.x:PX,me?me.z:PZ,me?2:1.3)&&RIDE.on!==t){ target=0; if(!(t.bellT>0)){ t.bellT=3; try{ if(AUD.ready&&soundOn) horn(0); }catch(e){} } } }
+      if(t.bellT>0) t.bellT-=dt;
+      t.speed=THREE.MathUtils.damp(t.speed,target,target<t.speed?5:1.2,dt); const da=t.speed*dt/t.lr/D; if(dist<0.4||da*D*t.lr>dist){ t.a=st; t.dwell=t.kind==='tram'?7:9; t.atStop=st; } else t.a=(t.a+t.dir*da+360)%360; }
+    transitPlace(t); }
+  // salire / scendere
+  const rb=document.getElementById('rideBtn'), rc=document.getElementById('rideCard'); let label='';
+  if(RIDE.on){ const t=RIDE.on; player.pos.set(t.x,t.y+0.6,t.z); holder.position.copy(player.pos); holder.visible=false; label=t.dwell>0?'🚪 Scendi qui':RIDE.next?(t.kind==='tram'?'🚋 Scendo alla prossima…':'⛵ Scendo al prossimo pontile…'):(t.kind==='tram'?'🚪 Scendi alla prossima fermata':'🚪 Scendi al prossimo pontile');
+    if(t.dwell>0 && RIDE.next) rideOff(); }
+  else if(player.mode==='foot' && !player.veh){ const nearT=TRANSIT.list.find(t=>t.dwell>1.2 && Math.hypot(t.x-PX,t.z-PZ)<(t.kind==='tram'?7:6.5) && (t.kind!=='boat'||TRANSIT.piers.some(p=>Math.hypot(p.x-PX,p.z-PZ)<4.5))); if(nearT){ RIDE.cand=nearT; label=nearT.kind==='tram'?'🚋 Sali sul tram · '+TRAM_PRICE+' karma':'⛵ Sali sulla barca · '+BOAT_PRICE+' karma'; } else RIDE.cand=null; }
+  rc.hidden=!label; if(rb.textContent!==label) rb.textContent=label; }
+function rideOff(){ const t=RIDE.on; if(!t) return; RIDE.on=null; RIDE.next=false; let best=null, bd=1e9; for(const p of (t.kind==='tram'?TRANSIT.shelters:TRANSIT.piers)){ const d=Math.hypot(p.x-t.x,p.z-t.z); if(d<bd){ bd=d; best=p; } }
+  const D=Math.PI/180, [r]=milPolar(best.x,best.z); const [x,z]=t.kind==='tram'?mPolarP(r+(r<162?-1.4:1.4),best.a):[best.x,best.z]; player.pos.set(x,0.15,z); holder.position.copy(player.pos); holder.visible=true; player.yaw=t.yaw; try{ sfx('door'); }catch(e){}
+  copMsgT=3; msg.innerHTML=t.kind==='tram'?'🚋 Sei sceso dal tram.':'⛵ Sei sceso dalla barca.'; }
+function rideClick(){ if(RIDE.on){ if(RIDE.on.dwell>0) rideOff(); else RIDE.next=true; return; } const t=RIDE.cand; if(!t) return; const pr=t.kind==='tram'?TRAM_PRICE:BOAT_PRICE;
+  if(G.karma<pr){ copMsgT=3; msg.innerHTML=(t.kind==='tram'?'🚋 Il biglietto del tram costa ':'⛵ La barca costa ')+'<b>'+pr+' karma</b> (ne hai '+Math.round(G.karma)+').'; return; }
+  G.karma-=pr; RIDE.on=t; RIDE.next=false; player.moveTo=null; holder.visible=false; try{ sfx('door'); }catch(e){} copMsgT=4; msg.innerHTML=t.kind==='tram'?'🚋 <b>Sei sul tram</b> dei Bastioni. Premi «Scendi» e scendi alla fermata dopo.':'⛵ <b>Sei in barca</b> sulla Cerchia dei Navigli. Premi «Scendi» e scendi al pontile dopo.'; }
+function transitVisible(on){ for(const t of TRANSIT.list) for(const s of t.segs) s.visible=on; if(!on){ if(RIDE.on){ holder.visible=true; } RIDE.on=null; RIDE.next=false; const rc=document.getElementById('rideCard'); if(rc) rc.hidden=true; } }
+function transitHit(px,pz,r){ for(const t of TRANSIT.list){ if(t.kind!=='tram') continue; for(const s of t.segs){ const o={x:s.position.x,z:s.position.z,yaw:s.rotation.y,len:8.6,w:2.4}; if(inVeh(o,px,pz,r)) return true; } } return false; }
 // 🚗 il viaggio: scenetta durante il caricamento, poi sei all'ingresso di Milanopolis in auto
 function travelTo(dest){ const f=document.getElementById('fade'); HOME.busy=true;
   f.firstElementChild.innerHTML='<div class="trip"><div class="tsky"></div><div class="troad"><div class="tcar"><i></i></div></div><div class="ttxt">🚗 In viaggio verso <b>'+(dest==='milano'?'Milanopolis':'Borgo Karma')+'</b>…</div></div>'; f.hidden=false; f.style.opacity=1;
   setTimeout(()=>{ try{ if(dest==='milano') buildMilanopolis(); }catch(e){ console.warn('Milanopolis',e); }
     setTimeout(()=>{ enterMilano(); f.style.opacity=0; setTimeout(()=>{ f.hidden=true; f.firstElementChild.textContent='💤 Zzz…'; },700); },1600); },400); }
-function enterMilano(){ MIL.on=true; MIL.group.visible=true; try{ milSpawnLife(); milLifeVisible(true); }catch(e){ console.warn('Milanopolis vita',e); } HOME.active=false; HOME.busy=false; HOME.carOut=true; townVisible(false); for(const el of homeTopEls()) el.hidden=!['actCard','radioCard'].includes(el.id); homeCard.hidden=true;
+function enterMilano(){ FPSG.grace=6; MIL.on=true; MIL.group.visible=true; try{ milSpawnLife(); milLifeVisible(true); milTransitBuild(); transitVisible(true); }catch(e){ console.warn('Milanopolis vita',e); } HOME.active=false; HOME.busy=false; HOME.carOut=true; townVisible(false); for(const el of homeTopEls()) el.hidden=!['actCard','radioCard'].includes(el.id); homeCard.hidden=true;
   document.getElementById('homeTown').hidden=false; compassEl.hidden=true; document.getElementById('greyHud').hidden=true; if(HOWTO_TOWN!==null) document.getElementById('howto').innerHTML=HOWTO_TOWN;
   controls.ready=false; controls.zoom=Math.min(0.74,ZOOM_DEF); syncCar(); const c=carV(); if(c){ c.x=MIL.X-330; c.z=MIL.Z+4; c.yaw=Math.PI/2; c.speed=0; c.lastG=null; c.group.position.set(c.x,0,c.z); c.group.rotation.set(0,c.yaw,0); c.group.visible=true; player.pos.set(c.x,0.15,c.z+1.6); holder.position.copy(player.pos); enter(c); }
   else { player.pos.set(MIL.X-330,0.15,MIL.Z+4); holder.position.copy(player.pos); }
@@ -915,7 +1015,7 @@ const MIL_FUEL=10, MIL_LV=15; // Milanopolis si sblocca al livello 15 (Teo, 27/1
 function milLights(dt){ if(!MIL.lens) return; MIL.lightT=(MIL.lightT+dt)%24; const t=MIL.lightT, ph=t<10?'Ag':t<12?'Ay':t<22?'Bg':'By'; MIL.phase=ph; // 10 s verde, 2 s giallo per gruppo
   const on={Ar:ph[0]!=='A',Ay:ph==='Ay',Ag:ph==='Ag',Br:ph[0]!=='B',By:ph==='By',Bg:ph==='Bg'}, COL={r:0xff3b30,y:0xffc400,g:0x34d158};
   for(const k in MIL.lens) MIL.lens[k].color.setHex(on[k]?COL[k[1]]:0x2b2b2b); }
-function updateMilano(dt){ milLights(dt); try{ milLife(dt); }catch(e){ console.warn('Milanopolis vita',e); } if(player.mode!=='foot') updateStamina(dt,'ride'); if(player.mode==='foot') updatePlayer(dt); else updateRider(dt); TT+=dt;
+function updateMilano(dt){ milLights(dt); try{ milLife(dt); }catch(e){ console.warn('Milanopolis vita',e); } try{ milTransit(dt); }catch(e){ console.warn('Milanopolis tram',e); } if(RIDE.on){ updateStamina(dt,'ride'); } else { if(player.mode!=='foot') updateStamina(dt,'ride'); if(player.mode==='foot') updatePlayer(dt); else updateRider(dt); } TT+=dt;
   try{ updateDayCycle(dt); }catch(e){} try{ updateActionUI(); updateFuelUI(); }catch(e){} talkCard.hidden=true; try{ updateDust(dt); }catch(e){} }
 // ⛽ benzinai: a Borgo Karma e a Milanopolis. In auto, fermo sotto la pensilina → "Fai il pieno" (3 karma per ogni 1%)
 const fuelCard=document.getElementById('fuelCard'), fuelBtn=document.getElementById('fuelBtn'); let fuelLbl='-';
@@ -925,7 +1025,7 @@ function updateFuelUI(){ let t=''; if(atFuel()){ const need=Math.ceil(100-HOME.f
 fuelBtn.onclick=()=>{ if(!atFuel()) return; const need=Math.ceil(100-HOME.fuel); if(need<=0) return; const n=Math.min(need,Math.floor(G.karma/FUEL_PRICE));
   if(n<=0){ copMsgT=3; msg.innerHTML='⛽ Ti servono almeno <b>'+FUEL_PRICE+' karma</b> per 1% di benzina (ne hai '+Math.round(G.karma)+').'; return; }
   G.karma-=n*FUEL_PRICE; HOME.fuel=Math.min(100,HOME.fuel+n); saveHome(); try{ sfx('coin'); }catch(e){} fuelLbl='-'; copMsgT=4; msg.innerHTML='⛽ <b>+'+n+'% di benzina</b> per '+(n*FUEL_PRICE)+' karma. Serbatoio: '+Math.round(HOME.fuel)+'%'+(HOME.fuel<100?' (il karma non bastava per il pieno)':'')+'.'; };
-function leaveMilano(){ if(!MIL.on) return false; MIL.on=false; if(MIL.group) MIL.group.visible=false; try{ milLifeVisible(false); }catch(e){} return true; }
+function leaveMilano(){ if(!MIL.on) return false; MIL.on=false; if(MIL.group) MIL.group.visible=false; try{ milLifeVisible(false); transitVisible(false); }catch(e){} return true; }
 
 const boxDist=(b,x,z)=>Math.hypot(Math.max(b.x0-x,0,x-b.x1),Math.max(b.z0-z,0,z-b.z1));
 
@@ -1355,7 +1455,7 @@ function makeVehicle(cfg){ const v=Object.assign({group:new THREE.Group(),leanG:
 function addWheel(v,obj,parent,front,steerG){ const piv=new THREE.Group(); parent.add(piv); v.group.updateMatrixWorld(true);
   piv.position.copy(parent.worldToLocal(obj.getWorldPosition(new V3()))); piv.attach(obj); v.wheels.push({piv,obj,front,base:obj.quaternion.clone(),steerG}); }
 function vehCircles(v,x,z,yaw){ const s=Math.sin(yaw), c=Math.cos(yaw); return v.circles.map(([cx,cz,r])=>[x+cx*c+cz*s, z-cx*s+cz*c, r]); }
-function vehFree(v,x,z,yaw){ if(MIL.on){ for(const [px,pz,r] of vehCircles(v,x,z,yaw)) if(!inMap(px,pz)||milHit(px,pz,r)||(v===player.veh&&milLifeHit(px,pz,r))) return false; return true; } for(const [px,pz,r] of vehCircles(v,x,z,yaw)){
+function vehFree(v,x,z,yaw){ if(MIL.on){ for(const [px,pz,r] of vehCircles(v,x,z,yaw)) if(!inMap(px,pz)||milHit(px,pz,r)||(v===player.veh&&(milLifeHit(px,pz,r)||transitHit(px,pz,r)))) return false; return true; } for(const [px,pz,r] of vehCircles(v,x,z,yaw)){
     if(height(px,pz)<-0.05 || !inMap(px,pz)) return false; for(const b of BOXES) if(boxDist(b,px,pz)<r) return false; for(const c of TRAFFIC) if(inVeh(c,px,pz,r) && (c.x-x)**2+(c.z-z)**2 <= (c.x-v.x)**2+(c.z-v.z)**2+1e-4) return false; for(const c of POLICE) if((c.x-px)**2+(c.z-pz)**2<(r+1.2)**2) return false;
     for(const o of OBST) if((o.x-px)**2+(o.z-pz)**2<(o.r+r)**2) return false;
     for(const w of veh) if(w!==v) for(const [qx,qz,qr] of vehCircles(w,w.group.position.x,w.group.position.z,w.yaw)) if((qx-px)**2+(qz-pz)**2<(qr+r)**2) return false; }
@@ -3683,14 +3783,14 @@ function updateDoor(dt){ if(HOME.doorT===undefined) return; HOME.doorT+=dt; cons
 homeBtn.onclick=()=>{ const s=HOME.spot; if(!s||HOME.busy) return; ({tv:openTV,tread:startTread,wardrobe:()=>openEditor('wardrobe'),mirror:()=>openEditor('mirror'),shower:takeShower,bed:sleepBed,car:goFuel,door:()=>{ HOME.viaGarage=false; askExit(); },gdoor:()=>{ HOME.viaGarage=true; askExit(); },pc:openPC,doni:()=>openDoni(-1)})[s.id](); };
 addEventListener('keydown',e=>{ if(HOME.active && (e.code==='KeyE'||e.code==='Enter') && !e.repeat && !HOME.busy) homeBtn.onclick(); });
 // --- entrare / uscire
-const homeTopEls=()=>['compass','greyHud','buyCard','taxiCard','useCard','talkCard','actCard','radioCard','fuelCard'].map(id=>document.getElementById(id)).filter(Boolean);
+const homeTopEls=()=>['compass','greyHud','buyCard','taxiCard','useCard','talkCard','actCard','radioCard','fuelCard','rideCard'].map(id=>document.getElementById(id)).filter(Boolean);
 const HOWTO_HOME='🏠 <b>Casa:</b> muoviti come in paese (levetta, frecce o clic). Avvicinati agli oggetti e premi il pulsante che compare (o <b>E</b>): 📺 TV tutorial · 💻 PC col blog · 🏃 tapis roulant · 👕 armadio · 🚿 doccia · 🛏️ letto · ⛽ garage · 🚪 porta = esci a giocare.'; let HOWTO_TOWN=null;
 function townVisible(on){ for(const p of PEDS){ if(!on){ p.g.visible=false; if(p.icon) p.icon.visible=false; if(p.stars) p.stars.visible=false; } } for(const c of TRAFFIC) c.m.visible=on; for(const c of POLICE){ c.g.visible=on; } for(const v of veh) v.group.visible=on&&(v.name!=='auto'||HOME.carOut); }
 function goHome(first){ if(TR.on) trainStop(); const wasMil=leaveMilano(); SHOP.auto=null; if(!first&&HOME.carOut){ if(HOME.fuel<=0) callTow(true); else { if(player.veh&&player.veh.name==='auto'){ player.veh.speed=0; exit(); } HOME.carOut=false; } } townVisible(false); syncCar(); const hw=document.getElementById('howto'); if(HOWTO_TOWN===null) HOWTO_TOWN=hw.innerHTML; hw.innerHTML=HOWTO_HOME; if(player.taxi) leaveTaxi(); if(player.veh){ player.veh.speed=0; exit(); } if(player.ko>0){ player.ko=0; player.fly=null; meStars.visible=false; holder.rotation.set(0,player.yaw,0); }
   musicTense(0); if(!first&&!wasMil) HOME.townPos=player.pos.clone(); HOME.active=true; player.moveTo=null; player.focusPed=null; HOLD.active=false; const [x,z]=HP(0,3.6); player.pos.set(x,0,z); player.yaw=Math.PI; holder.position.copy(player.pos); holder.rotation.set(0,player.yaw,0);
   controls.ready=false; HOME.zoomTown=controls.zoom; controls.zoom=0.35; controls.az=controls.azT=player.yaw+Math.PI; controls.userT=0; for(const el of homeTopEls()) el.hidden=true; document.getElementById('homeTown').hidden=true; timerSpr.visible=beam.visible=beamRing.visible=beamIcon.visible=false;
   msg.innerHTML=first?'🏠 <b>Sei a casa!</b> Gira per le stanze: ogni oggetto fa qualcosa. Quando sei pronto, esci dalla <b>porta</b> per giocare.':'🏠 <b>Di nuovo a casa.</b> La partita è in pausa: riposati, allenati o fai il pieno.'; copMsgT=5; lastHomeLbl='-'; }
-function goTown(){ if(TVHINT.el) TVHINT.el.style.display='none'; const goCar=HOME.carOut; if(HOME.readerBonus){ HOME.readerBonus=false; G.candies=Math.min(CANDY_MAX+1,G.candies+1); } HOME.active=false; townVisible(true); if(HOWTO_TOWN!==null) document.getElementById('howto').innerHTML=HOWTO_TOWN; homeCard.hidden=true; document.getElementById('homeTown').hidden=false; const p=HOME.townPos; if(p) player.pos.copy(p); else player.pos.set(0,0.15,5.4);
+function goTown(){ FPSG.grace=5; if(TVHINT.el) TVHINT.el.style.display='none'; const goCar=HOME.carOut; if(HOME.readerBonus){ HOME.readerBonus=false; G.candies=Math.min(CANDY_MAX+1,G.candies+1); } HOME.active=false; townVisible(true); if(HOWTO_TOWN!==null) document.getElementById('howto').innerHTML=HOWTO_TOWN; homeCard.hidden=true; document.getElementById('homeTown').hidden=false; const p=HOME.townPos; if(p) player.pos.copy(p); else player.pos.set(0,0.15,5.4);
   holder.position.copy(player.pos); controls.ready=false; controls.zoom=Math.min(0.74,HOME.zoomTown||ZOOM_DEF); compassEl.hidden=false; document.getElementById('greyHud').hidden=false; syncCar(); saveHome(); if(HOME.pendingLevel){ HOME.pendingLevel=false; setTimeout(()=>document.getElementById('restart').click(),0); }
   if(goCar){ const c=carV(); c.x=PARK[0]; c.z=PARK[1]; c.yaw=0; c.speed=0; c.lastG=null; c.group.position.set(c.x,0,c.z); c.group.rotation.set(0,0,0); c.group.visible=true; player.pos.set(c.x+1.6,0.15,c.z); enter(c); }
   msg.innerHTML=goCar?'🚗 <b>Si parte in auto</b> dal parcheggio a nord. Occhio alla benzina: ⛽ '+Math.round(HOME.fuel)+'%':p?'🚪 Si riparte da dove eri rimasto. Forza!':'🚪 <b>Si gioca!</b> Il grigio sta già nascendo da qualche parte: guarda la bussola in alto.'; copMsgT=4; }
@@ -3798,6 +3898,7 @@ function askExit(){ HOME.busy=true; const f=Math.round(HOME.fuel), b=document.ge
   document.getElementById('exHead').innerHTML='🚪 Come esci?<small>L\'auto è un vantaggio raro: la benzina costa '+FUEL_PRICE+' karma per ogni 1% e se resti a secco il carro attrezzi ne costa '+TOW_PRICE+'. Hai 🪃 '+G.karma+' karma.</small>'; const mb=document.getElementById('exMil'), lk=LV.best<MIL_LV; mb.disabled=lk||f<MIL_FUEL; mb.innerHTML=(lk?'🔒':'🏙️')+' Milanopolis <small>'+(lk?'si sblocca al livello '+MIL_LV+' (sei al '+LV.best+')':'anteprima · il viaggio costa ⛽ '+MIL_FUEL+'%'+(f<MIL_FUEL?' · non basta la benzina':''))+'</small>'; exitMenu.hidden=false; }
 document.getElementById('exWalk').onclick=()=>{ exitMenu.hidden=true; HOME.carOut=false; openDoor(); };
 document.getElementById('exCar').onclick=()=>{ if(HOME.fuel<=0) return; exitMenu.hidden=true; HOME.carOut=true; openDoor(); };
+document.getElementById('rideBtn').onclick=()=>rideClick();
 document.getElementById('exMil').onclick=()=>{ if(HOME.fuel<MIL_FUEL||LV.best<MIL_LV) return; exitMenu.hidden=true; HOME.fuel=Math.max(0,HOME.fuel-MIL_FUEL); saveHome(); travelTo('milano'); };
 document.getElementById('exNo').onclick=()=>{ exitMenu.hidden=true; HOME.busy=false; };
 
@@ -4169,7 +4270,7 @@ function loop(ts){ if(ts!==undefined && !window.__pause && ts-lastTs<1000/FPS_CA
   if(ECO && ((++frameN)%2===0 || (player.veh?Math.abs(player.veh.speed)>3:player.speed>2.2))) renderer.shadowMap.needsUpdate=true; // sul telefono le ombre si ridisegnano a fotogrammi alterni, ma se corri o guidi ogni fotogramma: altrimenti l'ombra del corpo "salta" sulle gambe (le gambe che vibravano)
   adaptRes(dt); controls.dt=dt; controls.update(); try{ phCam(dt); }catch(e){} try{ fitShadow(); }catch(e){} renderer.render(scene,camera); if(!window.__pause) requestAnimationFrame(loop); }
 // modalità leggera automatica: se il computer fatica (sotto i 45 fps per due controlli di fila) alleggerisce ombre, risoluzione e animazioni lontane
-let slowN=0; const fpsEl=document.getElementById('fps');
+let slowN=0; const fpsEl=document.getElementById('fps'); const FPSG={grace:8,t:0,every:40,trial:false,told:false};
 let GFX_MIN=false, minN=0;
 function setGfxMin(on){ GFX_MIN=on; try{ localStorage.setItem('karmapolis_gfxmin',on?'1':'0'); }catch(e){} if(on){ if(!ECO) goEco(); FPS_CAP=30; PR_MIN=0.6; PR=Math.min(PR,0.85); renderer.setPixelRatio(PR); resize(); }
   sun.castShadow=!on; for(const k in olCache) olCache[k].visible=!on; fpsEl.textContent=''; }
@@ -4177,14 +4278,18 @@ function goEco(){ ECO=true; PR_MIN=0.75; renderer.shadowMap.autoUpdate=false; su
 function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; fN++; if(fAcc<1.5) return; const fps=fN/fAcc; fAcc=0; fN=0;
   fpsEl.textContent=Math.round(fps)+' fps'+(FPS_CAP===30?' fissi':'')+(ECO?' · leggera':'');
   // 1) sotto i 52 fps: modalità leggera · 2) se anche così non tiene i 60 (o parte già sotto i 40): 30 fps FISSI
-  if(FPS_CAP===60){ const lim=ECO?50:52; if(fps<40) slowN+=2; else slowN=fps<lim?slowN+1:0;
-    if(slowN>=2){ slowN=0; if(!ECO) goEco(); else { FPS_CAP=30; settle=2; copMsgT=3; msg.innerHTML='⚙️ Questo dispositivo è un po\' affaticato: gioco a <b>30 fps fissi</b> per restare fluido.'; } } }
+  // 28/11 (Teo: "il mio S22 parte a 60 e poi si mette a 30"): niente controlli nei secondi dopo un caricamento (viaggio, casa, paese), 3 controlli lenti di fila invece di 2, e da 30 fissi si RIPROVA ogni tanto a tornare a 60
+  if(FPSG.grace>0){ FPSG.grace-=1.5; slowN=0; }
+  else if(FPS_CAP===60){ const lim=ECO?50:52; if(FPSG.trial){ FPSG.trial=false; if(fps<54){ FPS_CAP=30; FPSG.every=Math.min(240,FPSG.every*2); FPSG.t=0; settle=1; } else { FPSG.every=45; copMsgT=2; msg.innerHTML='⚙️ Torno a <b>60 fps</b>.'; } }
+    else { if(fps<38) slowN+=2; else slowN=fps<lim?slowN+1:0;
+    if(slowN>=3){ slowN=0; if(!ECO) goEco(); else { FPS_CAP=30; settle=2; FPSG.t=0; if(!FPSG.told){ FPSG.told=true; copMsgT=3; msg.innerHTML='⚙️ Questo dispositivo è un po\' affaticato: gioco a <b>30 fps fissi</b> per restare fluido (ogni tanto riprovo i 60).'; } } } } }
+  else if(FPS_CAP===30 && !GFX_MIN && fps>=29){ FPSG.t+=1.5; if(FPSG.t>=FPSG.every){ FPSG.t=0; FPS_CAP=60; FPSG.trial=true; return; } }
   // 3) telefoni deboli (es. Xiaomi di fascia bassa): se anche a 30 fps fissi non ce la fa, grafica MINIMA: niente ombre, niente contorni, risoluzione più bassa
   if(FPS_CAP===30 && !GFX_MIN){ if(fps<25) minN++; else minN=0; if(minN>=3){ setGfxMin(true); copMsgT=3; msg.innerHTML='⚙️ Telefono in affanno: passo alla <b>grafica minima</b> (niente ombre e contorni) per restare fluido.'; } }
   if(settle-->0) return;
   let np=PR; if(fps<FPS_CAP*0.93 && PR>PR_MIN) np=Math.max(PR_MIN,PR-0.1); else if(fps>FPS_CAP*0.99 && PR<PR_MAX) np=Math.min(PR_MAX,PR+0.05);
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
-window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={MIL,MLIFE,milHit,renderer,scene,buildMilanopolis,travelTo,askExit,camera,matchScore,BOARD,staRefillFx,openDoni,DONI_MESH,staCap,get hurt(){return G.hurt;},greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
+window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={MIL,MLIFE,TRANSIT,RIDE,rideClick,milHit,renderer,scene,buildMilanopolis,travelTo,askExit,camera,matchScore,BOARD,staRefillFx,openDoni,DONI_MESH,staCap,get hurt(){return G.hurt;},greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
 window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…');
 Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e)),umLoad('gente/').catch(e=>{ console.warn('gente non caricata, uso i corpi disegnati',e); window.__umErr=String(e&&e.message||e); }),carsLoad('auto/').catch(e=>console.warn('auto nuove non caricate, uso quelle di prima',e))]).then(()=>{
   if(!UM.ready) setTimeout(()=>{ try{ msg.innerHTML='⚠️ <b>Persone nuove non caricate</b> ('+(window.__umErr||'?')+'): mandami uno screenshot di questo messaggio.'; }catch(e){} },4000);
