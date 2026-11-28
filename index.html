@@ -365,7 +365,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.106.4</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.106.5</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -393,6 +393,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.106.5',d:'28/11/2026',t:['😵 Quando ti investono resti stordito a terra con le stelline per 5 secondi, poi ti rialzi.']},
  {v:'0.106.4',d:'28/11/2026',t:['💪 Da Antony ora scegli: si apre una finestra con prezzo, karma che hai e i pulsanti «Compra» e «No, grazie» (anche col joypad: croce e A, B per dire no).']},
  {v:'0.106.3',d:'28/11/2026',t:['📱 HUD del telefono: la barra del livello (tempo, colori e stelle, karma, malati, portatori) è in alto a sinistra, in colonna, e non copre più la levetta. «Sei in piazza» e i messaggi stanno sotto la bussola.']},
  {v:'0.106.2',d:'28/11/2026',t:['📳 Vibrazione anche sul telefono (Android): quando ti investono, negli urti, sull\'aquaplaning, col taser, al focolaio, quando squilla il telefono, con le cure. Si spegne da 📱 → Opzioni → Vibrazione (vale anche per il joypad).']},
@@ -2935,7 +2936,7 @@ function trafficHits(c){ if(veh.length) trafficVsMine(c); if(player.mode==='foot
   if(hit) c.speed*=0.6; }
 // il giocatore a terra
 const meStars=new THREE.Sprite(new THREE.SpriteMaterial({map:starTex,transparent:true,depthTest:false})); meStars.scale.setScalar(0.9); meStars.visible=false; meStars.renderOrder=11; scene.add(meStars);
-const KO_TIME=4.5;
+const KO_TIME=7.7 /* 28/11 Teo: 5 secondi di stordimento a terra con le stelline, poi 2,7 s per rialzarsi (prima a terra solo 1,8 s) */;
 function knockPlayer(vx,vy,vz,car){ rumble(1,1,500); player.ko=KO_TIME; player.fly={vx,vy,vz,y:player.pos.y,t:0,spin:5+Math.random()*3}; player.moveTo=null; player.listen=null; HOLD.active=false; player.speed=0; sfx('hit');
   if(car.kind==='kick'){ camFocus(player.pos.x,player.pos.z,KO_TIME,0.2); copMsgT=KO_TIME; msg.innerHTML='🛴💥 <b>Sei caduto dal monopattino!</b> Hai preso in pieno un passante e siete finiti a terra tutti e due. Il noleggio è finito: per risalire si ripagano '+KICK_PRICE+' karma.'; return; }
   if(AUD.ready && soundOn) horn(0); camFocus(player.pos.x,player.pos.z,KO_TIME,0.2); copMsgT=KO_TIME;
