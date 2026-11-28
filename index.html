@@ -66,10 +66,16 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 #pcUI h3{margin:8px 0 4px;font:700 22px var(--display)}#pcUI p{color:var(--ink);font-size:14px}.abil{display:grid;gap:5px;margin:8px 0}.abil div{display:flex;gap:8px;align-items:baseline;font-size:13.5px}.abil span{flex:0 0 108px;font:600 14px var(--display)}.abil a{color:#d2402a}.pcbar{display:flex;gap:6px;align-items:center;font-size:12px;background:#ece4d6;border-radius:8px;padding:4px 8px}.pcbar span{color:#e0483e}.pcbar span+span{color:#ffd84d}.pcbar span+span+span{color:#3fa66b}.pcbar b{margin-left:6px;font-weight:600}
 .btnlink{flex:1;text-align:center;text-decoration:none;font:600 15px var(--display);background:var(--accent);color:#fff;border:2.5px solid var(--line);border-radius:999px;padding:7px 15px;box-shadow:2px 2px 0 var(--line)}
 /* 💬 abilità nella nuvoletta a fumetto sopra la persona (Teo 28/11) */
-#talkCard.bubble{position:fixed;z-index:24;pointer-events:auto;display:flex!important;flex-wrap:nowrap;gap:10px;padding:14px 16px 16px;background:#fffaf0;border:3px solid #2a2233;border-radius:26px;box-shadow:4px 5px 0 rgba(42,34,51,.85);transform-origin:var(--tx,50%) 100%;margin:0}
+#talkCard.bubble{position:fixed;z-index:24;pointer-events:auto;display:grid!important;grid-template-columns:repeat(2,auto)!important;gap:10px;padding:16px;background:#fffaf0;border:3px solid #2a2233;border-radius:26px;box-shadow:4px 5px 0 rgba(42,34,51,.85);transform-origin:var(--ox,0%) var(--oy,50%);margin:0}
 #talkCard.bubble[hidden]{display:none!important}
-#talkCard.bubble:after{content:'';position:absolute;left:var(--tx,50%);bottom:-17px;width:0;height:0;margin-left:-13px;border:13px solid transparent;border-top:17px solid #2a2233;border-bottom:0}
-#talkCard.bubble:before{content:'';position:absolute;left:var(--tx,50%);bottom:-11px;width:0;height:0;margin-left:-9px;border:9px solid transparent;border-top:12px solid #fffaf0;border-bottom:0;z-index:1}
+#talkCard.bubble:after,#talkCard.bubble:before{content:'';position:absolute;width:0;height:0;border-style:solid;border-color:transparent}
+#talkCard.bubble.sr:after{left:-19px;top:var(--ty,50%);margin-top:-13px;border-width:13px 19px 13px 0;border-right-color:#2a2233}#talkCard.bubble.sr:before{left:-12px;top:var(--ty,50%);margin-top:-9px;border-width:9px 13px 9px 0;border-right-color:#fffaf0;z-index:1}
+#talkCard.bubble.sl:after{right:-19px;top:var(--ty,50%);margin-top:-13px;border-width:13px 0 13px 19px;border-left-color:#2a2233}#talkCard.bubble.sl:before{right:-12px;top:var(--ty,50%);margin-top:-9px;border-width:9px 0 9px 13px;border-left-color:#fffaf0;z-index:1}
+#talkCard.bubble.st:after{bottom:-19px;left:var(--tx,50%);margin-left:-13px;border-width:19px 13px 0 13px;border-top-color:#2a2233}#talkCard.bubble.st:before{bottom:-12px;left:var(--tx,50%);margin-left:-9px;border-width:13px 9px 0 9px;border-top-color:#fffaf0;z-index:1}
+#talkCard.bubble.sb:after{top:-19px;left:var(--tx,50%);margin-left:-13px;border-width:0 13px 19px 13px;border-bottom-color:#2a2233}#talkCard.bubble.sb:before{top:-12px;left:var(--tx,50%);margin-left:-9px;border-width:0 9px 13px 9px;border-bottom-color:#fffaf0;z-index:1}
+#talkCard.bubble #candy{position:absolute;right:-20px;top:-22px;min-width:0;width:62px;height:62px;border-radius:50%;padding:6px 0 0;font-size:28px;z-index:2}
+#talkCard.bubble.sl #candy{right:auto;left:-20px}
+#talkCard.bubble #candy .n{font-size:13px}
 #talkCard.bubble button{font-size:38px;line-height:1;padding:11px 12px 8px;min-width:82px;border-radius:16px;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative;background:#fff;color:#2a2233;border:2.5px solid #2a2233;box-shadow:0 3px 0 #2a2233}
 #talkCard.bubble button[hidden]{display:none}
 #talkCard.bubble button .n{font:800 16px var(--display,sans-serif);opacity:.85}
@@ -80,7 +86,7 @@ button:focus-visible{outline:3px solid #4aa8ff;outline-offset:2px}
 @keyframes bubPop{0%{transform:scale(.35);opacity:0}100%{transform:scale(1);opacity:1}}
 #chMini{position:fixed;left:0;top:0;z-index:9;pointer-events:none;background:rgba(255,250,240,.92);border:2px solid #2a2233;border-radius:12px;padding:2px 7px;font:700 12px sans-serif;color:#2a2233;white-space:nowrap}
 #chMini b{font-weight:800;margin-right:5px}#chMini .z{opacity:.4}
-@media (max-width:900px){ #talkCard.bubble button{font-size:31px;min-width:66px;padding:9px 9px 6px} #talkCard.bubble button .n{font-size:14px} #talkCard.bubble{gap:7px;padding:10px 11px 12px} }
+@media (max-width:900px){ #talkCard.bubble button{font-size:31px;min-width:66px;padding:9px 9px 6px} #talkCard.bubble button .n{font-size:14px} #talkCard.bubble{gap:7px;padding:12px} #talkCard.bubble #candy{width:54px;height:54px;font-size:24px} }
 #fade .trip{width:min(560px,92vw);text-align:center}
 #fade .tsky{height:70px;background:linear-gradient(#2a3d6b,#c9653f);border-radius:14px 14px 0 0;position:relative;overflow:hidden}
 #fade .tsky:before{content:'🏢🏙️🏛️🏢🌳🏙️🏢🏛️🏢🌳🏙️🏢🏛️';position:absolute;bottom:-6px;left:0;font-size:30px;white-space:nowrap;animation:tscroll 3s linear infinite}
@@ -333,7 +339,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.102.1</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.102.2</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -361,6 +367,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.102.2',d:'28/11/2026',t:['💬 Nuvoletta <b>quadrata</b>: 2 cure sopra e 2 sotto, la caramella tonda sull\'angolo.','🧭 La nuvoletta si mette <b>a destra</b> della persona; se lì non c\'è posto (bordo dello schermo, vicoletto, sopra di te, sulla levetta o sui pulsanti) si sposta a sinistra, sopra o sotto, con la codina sempre verso la persona.']},
  {v:'0.102.1',d:'28/11/2026',t:['💬 Nuvoletta più grande, e ci sono sempre tutte le cure + la caramella: la caramella si illumina se la persona sta bene, le cure sono piene se sta male.','👥 Se vicino a te ci sono più persone, la nuvoletta va su chi sta male (prima andava sul più vicino, spesso uno sano, e mostrava solo la caramella).']},
  {v:'0.102.0',d:'28/11/2026',t:['💬 Le abilità non stanno più in basso: quando ti avvicini a qualcuno compare una <b>nuvoletta a fumetto</b> sopra di lui, con le 4 cure (i pallini sotto sono le cariche). Se sta già bene, nella nuvoletta c\'è la 🍬 caramella. Si chiude quando ti allontani.','⌨️ Sul PC nella nuvoletta c\'è anche il tasto di ogni cura (1-4, C).','🔢 In basso a sinistra un riassunto piccolino delle cariche e delle caramelle, per sapere cosa hai mentre corri.']},
  {v:'0.101.0',d:'28/11/2026',t:['🎨 Prova di <b>grafica dipinta</b> a Borgo Karma: case di mattoni rossi con le fughe, intonaco vissuto con lo sporco in basso, tetti di coppi, tetti piani scuri con il bordo, i condizionatori e le bocchette.','🛣️ Strade più vissute: caditoie lungo i marciapiedi, segni di frenata vicino agli incroci, cassonetti e scatoloni all\'imbocco dei vicoletti.','☀️ Luce di giorno più contrastata, ombre più profonde.','📱 Telefono: un po\' meno punti da disegnare e meno pezzi separati, per tenere più facilmente i 60 fps.']},
@@ -3071,9 +3078,20 @@ for(const id of Object.keys(CURE)) document.getElementById('c_'+id).onclick=()=>
 addEventListener('keydown',e=>{ if(e.repeat) return; const K={KeyC:giveCandy,Digit1:()=>cure('joke'),Digit2:()=>cure('listen'),Digit3:()=>cure('breathe'),Digit4:()=>cure('truth'),KeyR:useThing}; if(K[e.code]) K[e.code](); });
 const candyBtn=document.getElementById('candy');
 const chMini=document.getElementById('chMini'), _bv=new THREE.Vector3(); let bubP=null; document.body.appendChild(talkCard);
-function placeBubble(p){ _bv.set(p.x,(p.g?p.g.position.y:0)+2.45,p.z).project(camera); const sx=(_bv.x*0.5+0.5)*innerWidth, sy=(-_bv.y*0.5+0.5)*innerHeight, w=talkCard.offsetWidth||260, h=talkCard.offsetHeight||90;
-  const L=Math.max(8,Math.min(innerWidth-w-8,sx-w/2)), T=Math.max(56,Math.min(innerHeight-h-80,sy-h-18)); talkCard.style.left=L+'px'; talkCard.style.top=T+'px'; talkCard.style.setProperty('--tx',Math.max(26,Math.min(w-26,sx-L))+'px'); }
-function updateTalkUI(dt){ candyCD-=dt; const p=nearPed(); const show=!!p && !(_bv.z>1); talkCard.hidden=!show; chMini.hidden=!(G.started&&!HOME.active&&!MIL.on); if(!chMini.hidden){ const sr=document.getElementById('sta').getBoundingClientRect(); const cw=chMini.offsetWidth; chMini.style.left=Math.max(6,Math.min(innerWidth-cw-6,sr.right-cw))+'px'; chMini.style.top=(sr.bottom+5)+'px'; }
+let bubSide='r'; const _pv=new THREE.Vector3();
+function placeBubble(p){ const W=innerWidth, H=innerHeight; _bv.set(p.x,(p.g?p.g.position.y:0)+1.55,p.z).project(camera); const sx=(_bv.x*0.5+0.5)*W, sy=(-_bv.y*0.5+0.5)*H;
+  _pv.set(player.pos.x,player.pos.y+1.0,player.pos.z).project(camera); const px=(_pv.x*0.5+0.5)*W, py=(-_pv.y*0.5+0.5)*H;
+  const w=talkCard.offsetWidth||200, h=talkCard.offsetHeight||190, gap=44, touch=matchMedia('(pointer:coarse)').matches;
+  const C={r:[sx+gap,sy-h/2],l:[sx-gap-w,sy-h/2],t:[sx-w/2,sy-h-gap-30],b:[sx-w/2,sy+gap+10]}, PREF={r:0,l:40,t:70,b:110};
+  const bad=[[px-34,py-70,68,120],[sx-26,sy-60,52,110],[0,0,W,52]]; if(touch) bad.push([0,H-170,190,170]); bad.push([W-400,H-84,400,84]);
+  const ov=(x,y,R)=>Math.max(0,Math.min(x+w,R[0]+R[2])-Math.max(x,R[0]))*Math.max(0,Math.min(y+h,R[1]+R[3])-Math.max(y,R[1]));
+  const score=k=>{ const [x,y]=C[k]; let sc=PREF[k]; const out=Math.max(0,8-x)+Math.max(0,x+w-(W-8))+Math.max(0,56-y)+Math.max(0,y+h-(H-8)); sc+=out*6; for(const R of bad) sc+=ov(x,y,R)/40; return sc; };
+  let best=bubSide, bs=score(bubSide)-45; for(const k of ['r','l','t','b']){ const v=score(k); if(v<bs){ bs=v; best=k; } } bubSide=best;
+  let [L,T]=C[best]; L=Math.max(8,Math.min(W-w-8,L)); T=Math.max(56,Math.min(H-h-8,T)); talkCard.style.left=L+'px'; talkCard.style.top=T+'px';
+  for(const k of ['r','l','t','b']) talkCard.classList.toggle('s'+k,k===best);
+  talkCard.style.setProperty('--ty',Math.max(22,Math.min(h-22,sy-T))+'px'); talkCard.style.setProperty('--tx',Math.max(26,Math.min(w-26,sx-L))+'px');
+  talkCard.style.setProperty('--ox',best==='r'?'0%':best==='l'?'100%':'50%'); talkCard.style.setProperty('--oy',best==='t'?'100%':best==='b'?'0%':'50%'); }
+function updateTalkUI(dt){ candyCD-=dt; const p=nearPed(); const show=!!p && !(_bv.z>1); if(p&&p!==bubP) bubSide='r'; talkCard.hidden=!show; chMini.hidden=!(G.started&&!HOME.active&&!MIL.on); if(!chMini.hidden){ const sr=document.getElementById('sta').getBoundingClientRect(); const cw=chMini.offsetWidth; chMini.style.left=Math.max(6,Math.min(innerWidth-cw-6,sr.right-cw))+'px'; chMini.style.top=(sr.bottom+5)+'px'; }
   if(p){ if(p!==bubP){ talkCard.classList.remove('pop'); void talkCard.offsetWidth; talkCard.classList.add('pop'); } const sick=!!p.kind; candyBtn.hidden=false; candyBtn.classList.toggle('dim',sick); candyBtn.classList.toggle('hl',!sick); for(const k in CUREBTN){ CUREBTN[k].hidden=false; CUREBTN[k].classList.toggle('dim2',!sick); } placeBubble(p); }
   bubP=p; candyBtn.querySelector('.n').textContent=G.candies;
   // ascoltare: devi restare fermo vicino alla persona
