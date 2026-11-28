@@ -353,7 +353,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <div id="copMenu" class="menuov" hidden><div class="card"><h3>👮 Fermato dalla polizia!<small id="copWhy">"Documenti, prego. Può pagare la multa… oppure viene con noi."</small></h3><div class="exl"><button id="copFine" type="button">💸 Paga la multa <small id="copFineTxt"></small></button><button id="copJail" type="button" style="background:#5d5468">🔒 Vado in prigione <small>da solo nessuno può pagarti la cauzione: livello perso</small></button></div></div></div>
 <div id="over" hidden><div class="card"><h2 id="goTitle">Game over</h2><p id="goStars" style="font-size:34px;margin:0 0 6px;letter-spacing:4px"></p><p id="goText"></p><p id="goScore"></p><div class="tbtn"><button id="restart" type="button">Ricomincia</button><button id="goNext" type="button" hidden style="background:#3fa66b">Livello successivo ▶</button></div><button id="goHomeBtn" class="ghost" type="button" style="margin-top:8px">🏠 Torna a casa</button></div></div>
 <div class="hud top"><div class="row">
-  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.105.3</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
+  <div class="card" id="titleCard"><h1 id='devTitle'>Karmapolis 0.105.4</h1><button id='helpBtn' class='ghost' type='button' hidden>❔ Comandi</button><button id='devReset' type='button' hidden style='background:#e0483e;color:#fff;font-weight:700;margin:4px 0'>🛠️ RESET TOTALE (sviluppatore)</button>
     <p id='howto'>Joystick (o frecce/WASD) per muoverti. Vicino all'auto o allo scooter premi <b>Sali</b> (tasto E): in guida spingi il joystick dove vuoi andare (da vicino: su = gas, lati = sterzo). Trascina per ruotare la città, pizzica per lo zoom. Vicino ai passanti: la cura giusta (😄 nervosi, 👂 solitari, 🌬️ ansiosi, 🗣️ pettegoli); a chi sta già bene dai la 🍬 caramella e diventa un portatore di bene ✨. Prova anche campane, fontana e panchine in piazza. Tocca per andare, <b>doppio tocco o levetta tutta in fondo per lo scatto</b>.</p></div>
   <div class="card" id="msg">Benvenuto in paese!</div>
 </div></div>
@@ -381,6 +381,7 @@ body.training #msg,body.training #cinfo,body.training #fsHint{display:none!impor
 <script>/* 📋 Novità della versione (Teo, 26/11/2026: "come fanno tutti quando un programma è in beta") — la prima voce è la versione attuale */
 (function(){
 var NEWS=[
+ {v:'0.105.4',d:'28/11/2026',t:['💡 A casa di notte i lampadari sono accesi: luce calda nelle stanze e aloni sotto le lampade.','🚗 In garage di notte la tua auto ha i fari spenti.','📳 Il joypad vibra: quando vieni investito, negli urti in auto, sull\'aquaplaning, con il taser, quando suona l\'allarme del focolaio, quando squilla il telefono, con le proteine di Antony e quando compri; un colpetto leggero con la cura giusta, uno più forte con quella sbagliata.']},
  {v:'0.105.3',d:'28/11/2026',t:['🎮 Joypad: nel telefono, nella finestra dell\'addestramento e nella scelta finale (Gioca / Casa) ora scegli con la croce e confermi con A; nel telefono B torna indietro.','🎮 Con il joypad collegato spariscono i pulsanti ↻ ＋ － (visuale e zoom si fanno con la levetta destra o con la croce); sotto 📱 e 🏠 compare il tasto da premere: View apre il telefono, Start ti porta a casa.','💪 Antony a inizio partita si mette vicino alla piazza, così lo trovi subito (poi gira per il paese come prima).']},
  {v:'0.105.1',d:'28/11/2026',t:['🖥️ Su PC la barra della stamina, i poteri sotto e la barra del livello con le stelline sono molto più grandi.','📱 Sul telefono i nomi sopra Leo e Antony sono più grandi e si leggono bene.']},
  {v:'0.105.0',d:'28/11/2026',t:['🤕 Quando vieni investito ora ti <b>rialzi davvero</b>: dopo il volo resti a terra con le stelline, poi ti tiri su seduto, in ginocchio e in piedi (animazione «Getting Up» di Mixamo scaricata da Teo). Anche i passanti investiti si rialzano così.']},
@@ -1496,6 +1497,8 @@ addEventListener('keyup',e=>{ keys[e.code]=false; });
 // levetta sinistra = muoversi (tutta in fondo = scatto) · levetta destra = gira la visuale (su/giù = zoom) · croce su/giù = zoom; con la nuvoletta aperta la croce sceglie la cura e A la usa · A = azione (sali, usa, compra…) · X 😄 · Y 👂 · B 🌬️ · RB 🗣️ · LB 🍬
 // in auto: RT gas, LT freno/retromarcia, levetta sinistra sterzo · Start = 🏠 casa · nei menu: croce per scegliere, A conferma, B chiude
 const PAD={on:false,x:0,y:0,drive:null,prev:[],sel:-1};
+/* 📳 vibrazione del joypad (Teo, 28/11): investito, urti in auto, cure, focolaio, taser, aquaplaning, telefono che squilla */
+function rumble(st,wk,ms){ if(!PAD.on) return; try{ const gp=[...(navigator.getGamepads?navigator.getGamepads():[])].find(p=>p&&p.connected); if(!gp) return; const va=gp.vibrationActuator; if(va&&va.playEffect) va.playEffect('dual-rumble',{startDelay:0,duration:ms,strongMagnitude:Math.min(1,st),weakMagnitude:Math.min(1,wk)}).catch(()=>{}); else if(gp.hapticActuators&&gp.hapticActuators[0]) gp.hapticActuators[0].pulse(Math.min(1,Math.max(st,wk)),ms); }catch(e){} }
 const DZ=v=>Math.abs(v)<0.18?0:(v-Math.sign(v)*0.18)/0.82;
 const OVERLAYS=['avEd','copMenu','over','exitMenu','shopMenu','taxiMenu','tvUI','pcUI','treadUI'];
 function padMenuButtons(){ const vis=b=>!b.disabled && !b.hidden && b.offsetParent!==null;
@@ -1574,7 +1577,7 @@ function updateVehicle(v,dt,inp){
   const smax=v.steerMax/(1+Math.abs(v.speed)*v.steerFade); const pull=inp&&Math.abs(v.speed)>1?(v.pull||0)*0.4*dmg/100:0; v.steer=THREE.MathUtils.damp(v.steer,THREE.MathUtils.clamp(st+pull,-1,1)*smax,7,dt);
   v.yawRate=v.speed*Math.tan(v.steer)/v.wb;
   if(v===player.veh && W.wet>0.05){ const g=1-0.45*W.wet; v.yawRate*=g; if(thr<-0.05 && v.speed>0.3) v.speed+=v.brake*0.35*W.wet*(-thr)*dt; /* sul bagnato si sterza e si frena peggio */
-    if(!(v.aqua>0) && Math.abs(v.speed)>(v.bike?6.5:10) && onPuddle(v.x,v.z)){ v.aqua=0.4+Math.random()*0.25; v.aquaYaw=(Math.random()<0.5?-1:1)*(0.35+Math.random()*0.35); /* 26/11 Teo: era troppo esagerato */ sfx('hit'); copMsgT=2; msg.innerHTML='💦 <b>Aquaplaning!</b> Sulle pozzanghere l\'auto galleggia: rallenta quando piove.'; }
+    if(!(v.aqua>0) && Math.abs(v.speed)>(v.bike?6.5:10) && onPuddle(v.x,v.z)){ v.aqua=0.4+Math.random()*0.25; if(v===player.veh) rumble(0.45,0.9,450); v.aquaYaw=(Math.random()<0.5?-1:1)*(0.35+Math.random()*0.35); /* 26/11 Teo: era troppo esagerato */ sfx('hit'); copMsgT=2; msg.innerHTML='💦 <b>Aquaplaning!</b> Sulle pozzanghere l\'auto galleggia: rallenta quando piove.'; }
     if(v.aqua>0){ v.aqua-=dt; v.yawRate=v.aquaYaw*Math.min(1,Math.abs(v.speed)/10); } }
   const ny=v.yaw+v.yawRate*dt, nx=v.x+Math.sin(ny)*v.speed*dt, nz=v.z+Math.cos(ny)*v.speed*dt;
   if(Math.abs(v.speed)>0.001){ let ok=vehFree(v,nx,nz,ny); if(!ok && v===player.veh){ const p0=vehPen(v,v.x,v.z,v.yaw); if(p0>0.01 && vehPen(v,nx,nz,ny)<=p0+0.0005 && !TRAFFIC.some(c=>vehCircles(v,nx,nz,ny).some(([px,pz,r])=>inVeh(c,px,pz,r)))) ok=true; } /* incastrato: si può uscire */ if(ok){ v.x=nx; v.z=nz; v.yaw=ny; } else { const imp=Math.abs(v.speed), dir=Math.sign(v.speed); v.pv+=dir*Math.min(3,imp)*0.6; v.speed*=-0.25; crash(v,imp,dir); if(v===player.veh) copRam(v,nx,nz,ny,imp); } }
@@ -2638,7 +2641,7 @@ const tracers=[]; for(let i=0;i<14;i++){ const g=new THREE.BufferGeometry().setF
 let trI=0; function tracer(a,b,col=0xfff2a0){ const t=tracers[trI++%tracers.length]; t.l.geometry.setFromPoints([a,b]); t.l.material.color.set(col); t.life=0.09; t.l.material.opacity=1; }
 const bolt=new THREE.Line(new THREE.BufferGeometry().setFromPoints(Array.from({length:9},()=>new THREE.Vector3())),new THREE.LineBasicMaterial({color:0x9fe8ff})); bolt.visible=false; bolt.frustumCulled=false; scene.add(bolt);
 function drawBolt(a,b){ const pts=[]; for(let i=0;i<=8;i++){ const k=i/8; const p=a.clone().lerp(b,k); if(i>0&&i<8){ p.x+=(Math.random()-0.5)*0.35; p.y+=(Math.random()-0.5)*0.35; p.z+=(Math.random()-0.5)*0.35; } pts.push(p); } bolt.geometry.setFromPoints(pts); bolt.visible=true; }
-function sfx(kind){ if(!soundOn) return; try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); AC.resume(); const dur=kind==='shot'?0.18:kind==='tase'?0.6:0.08;
+function sfx(kind){ if(kind==='tase') rumble(1,0.7,650); else if(kind==='shot') rumble(0.8,0.4,120); else if(kind==='coin') rumble(0,0.3,70); if(!soundOn) return; try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); AC.resume(); const dur=kind==='shot'?0.18:kind==='tase'?0.6:0.08;
   const buf=AC.createBuffer(1,Math.floor(AC.sampleRate*dur),AC.sampleRate), d=buf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,kind==='tase'?0.5:3);
   const s=AC.createBufferSource(); s.buffer=buf; const f=AC.createBiquadFilter(); f.type=kind==='tase'?'bandpass':'lowpass'; f.frequency.value=kind==='tase'?3200:kind==='shot'?1400:2500; const g=AC.createGain(); g.gain.value=kind==='shot'?0.22:0.12;
   s.connect(f); f.connect(g); g.connect(AC.destination); s.start(); }catch(e){} }
@@ -2770,7 +2773,7 @@ function updatePolice(dt,t){ if(gameOver) return; shootCD=Math.max(0,shootCD-dt)
 
 // ---------- DANNI: carrozzeria che si ammacca, vernice che si sporca, motore che perde colpi ----------
 const _dP=new THREE.Vector3(), _dD=new THREE.Vector3(), _dT=new THREE.Vector3(), _dI=new THREE.Matrix4();
-function crash(v,imp,dir){ if(imp<2.5) return; const add=Math.min(45,imp*1.7); v.damage=Math.min(100,(v.damage||0)+add); if(!v.pull) v.pull=Math.random()<0.5?-1:1;
+function crash(v,imp,dir){ if(imp<2.5) return; if(v===player.veh) rumble(imp/12,imp/7,140+Math.min(300,imp*18)); const add=Math.min(45,imp*1.7); v.damage=Math.min(100,(v.damage||0)+add); if(!v.pull) v.pull=Math.random()<0.5?-1:1;
   if(v.deform){ v.body.updateMatrixWorld(true); _dP.set((Math.random()-0.5)*1.1,0.65,2.0*dir); v.body.localToWorld(_dP); // punto d'urto: muso o coda
     _dD.set(-Math.sin(v.yaw)*dir,-0.25,-Math.cos(v.yaw)*dir).normalize(); const amt=Math.min(0.6,imp*0.022), R=1.0+Math.min(0.9,imp*0.03);
     for(const d of v.deform){ const m=d.m, pa=m.geometry.attributes.position; m.updateMatrixWorld(true); _dI.copy(m.matrixWorld).invert();
@@ -2878,7 +2881,7 @@ function trafficHits(c){ if(veh.length) trafficVsMine(c); if(player.mode==='foot
 // il giocatore a terra
 const meStars=new THREE.Sprite(new THREE.SpriteMaterial({map:starTex,transparent:true,depthTest:false})); meStars.scale.setScalar(0.9); meStars.visible=false; meStars.renderOrder=11; scene.add(meStars);
 const KO_TIME=4.5;
-function knockPlayer(vx,vy,vz,car){ player.ko=KO_TIME; player.fly={vx,vy,vz,y:player.pos.y,t:0,spin:5+Math.random()*3}; player.moveTo=null; player.listen=null; HOLD.active=false; player.speed=0; sfx('hit');
+function knockPlayer(vx,vy,vz,car){ rumble(1,1,500); player.ko=KO_TIME; player.fly={vx,vy,vz,y:player.pos.y,t:0,spin:5+Math.random()*3}; player.moveTo=null; player.listen=null; HOLD.active=false; player.speed=0; sfx('hit');
   if(car.kind==='kick'){ camFocus(player.pos.x,player.pos.z,KO_TIME,0.2); copMsgT=KO_TIME; msg.innerHTML='🛴💥 <b>Sei caduto dal monopattino!</b> Hai preso in pieno un passante e siete finiti a terra tutti e due. Il noleggio è finito: per risalire si ripagano '+KICK_PRICE+' karma.'; return; }
   if(AUD.ready && soundOn) horn(0); camFocus(player.pos.x,player.pos.z,KO_TIME,0.2); copMsgT=KO_TIME;
   const what=car.kind==='bus'?"dall'autobus":car.kind==='camion'?'da un camion':car.bike?'da una moto':car.kind==='taxi'?'da un taxi':"da un'auto";
@@ -3122,7 +3125,7 @@ function cure(id){ const p=nearPed(); if(!p||candyCD>0||gameOver) return; const 
   applyCure(p,C); }
 function applyCure(p,C){ candyCD=0.8; copMsgT=3; if(C.id && G.ch[C.id]>0) G.ch[C.id]--; /* la carica si consuma solo quando la cura arriva davvero (ascoltare interrotto non costa) */
   if(!p.kind){ startAct(p,'wave',1.6,player); addKarma(1,p.x,p.z); msg.innerHTML=C.e+' Stava già bene: un sorriso e via.'; return; }
-  const right=p.kind===C.k, k=KINDS[KI[p.kind]];
+  const right=p.kind===C.k, k=KINDS[KI[p.kind]]; rumble(right?0:0.7,right?0.45:0.35,right?90:240);
   if(right){ const left=getNeed(p); if(left>1){ p.cured=(p.cured||0)+1; p.lvl=Math.max(0.35,p.lvl-0.2); startAct(p,'talk',1.3,player); addKarma(3,p.x,p.z); if(G.sc) G.sc.cure++; const K2=KINDS[KI[p.kind]];
       msg.innerHTML='✔️ Funziona, ma è <b>ostinato</b>: serve ancora '+(left-1)+'× '+C.e+' '+K2.icon.repeat(left-1); if(TR.on) trainCure(p,'partial'); return; }
     healOnly(p); p.owner='me'; startAct(p,'wave',2,player); addKarma(8,p.x,p.z); if(G.sc) G.sc.cure++; msg.innerHTML='✔️ <b>'+C.verb+'!</b> Gli è passato il '+k.name.toLowerCase()+'.'+(G.candies>0&&!TR.on?' Dagli una 🍬 <b>caramella</b> e porterà il bene agli altri ✨':''); if(TR.on) trainCure(p,true); }
@@ -3646,7 +3649,7 @@ function nextBanner(){ const B=BANQ.shift(); if(!B){ banBusy=false; return; } ba
   if(!alarmEl.animate){ alarmEl.style.opacity=1; setTimeout(end,1500); return; }
   const an=alarmEl.animate([{opacity:0,transform:'translate(-50%,-50%) scale(.5)'},{opacity:1,transform:'translate(-50%,-50%) scale(1.15)',offset:0.12},{opacity:1,transform:'translate(-50%,-50%) scale(1)',offset:0.2},{opacity:1,transform:'translate(-50%,-50%) scale(1)',offset:0.62},
     {opacity:0.15,transform:'translate(calc(-50% + '+dx+'px),calc(-50% + '+dy+'px)) scale(.22)'}],{duration:1700,easing:'ease-in-out'}); an.onfinish=end; }
-function focusAlarm(q,k){ const K=KINDS[k]; const col='rgb('+K.col.map(v=>Math.round(v*200)).join(',')+')';
+function focusAlarm(q,k){ [0,420,840].forEach(t=>setTimeout(()=>rumble(0.8,0.5,220),t)); const K=KINDS[k]; const col='rgb('+K.col.map(v=>Math.round(v*200)).join(',')+')';
   banner(K.dot+' FOCOLAIO!<small>'+K.name+' '+q.at+'</small>','compass',col,bellsAlarm); }
 function announceLevel(){ if(G.announced) return; G.announced=true; banner('🎯 Livello '+LC.n+'<small>'+levelLabel().split(' · ').slice(1).join(' · ')+' · ⏳ '+fmtT(LC.time)+'</small>','greyHud',null,null); }
 const musBtn=document.getElementById('mus'); musBtn.onclick=()=>{ audioInit(); AUD.music=!AUD.music; musBtn.textContent=AUD.music?'🎵':'🎵̸'; musBtn.setAttribute('aria-pressed',String(AUD.music)); musBtn.style.opacity=AUD.music?1:0.5; };
@@ -3744,7 +3747,7 @@ function updateWeather(dt){ if(!G.started||gameOver||TR.on) return; W.t+=dt;
   W.wet=W.rain>0.3?Math.min(1,W.wet+dt/18):Math.max(0,W.wet-dt/45);
   rainLines.visible=W.rain>0.02; if(rainLines.visible){ rainMat.uniforms.uT.value=W.t; rainMat.uniforms.uA.value=0.38*W.rain; rainMat.uniforms.uC.value.set(controls.look.x,controls.look.y,controls.look.z); }
   W.acc=(W.acc||0)+dt; if(W.acc>0.25){ W.acc=0; updatePuddles(); dayAcc=1; } rainSound(W.rain>0.02&&soundOn); }
-function updateWorld(dt){ wFrame++; if(HOME.active){ updateHome(dt); return; } if(gameOver) return; const raw=readInput();
+function updateWorld(dt){ wFrame++; if(HOME.active){ if(!HOME._lit){ HOME._lit=true; dayAcc=9; updateDayCycle(0); } /* entrando in casa: lampadari e fari subito giusti */ updateHome(dt); return; } HOME._lit=false; if(gameOver) return; const raw=readInput();
   // PC (tastiera): guida classica, su = gas, giù = freno/retro, destra/sinistra = sterzo · telefono (joystick): guida "a direzione"
   for(const v of veh){ let inp=null; if(player.veh===v && SHOP.auto){ autoGarage(v,dt); updateVehicle(v,dt,null); continue; } if(player.veh===v){ const cd=(raw.kb||raw.m>=0.12)?(player.moveTo=null):clickDrive(v); if(cd){ inp=cd; } else if(raw.kb){ v.thr=-raw.ky; inp={x:raw.kx,y:raw.ky,m:1}; } else if(raw.m<0.12){ v.thr=0; inp={x:0,y:0,m:0}; } else if(controls.z>0.35 && !SHOP.G) inp=isoDriveInput(v,raw); else { v.thr=-raw.y; inp={x:raw.x,y:raw.y,m:raw.m}; } } updateVehicle(v,dt,inp); }
   updateCarSpot();
@@ -3769,6 +3772,10 @@ const woodTex=canvasTex(128,128,(g,w,h)=>{ g.fillStyle='#c99a66'; g.fillRect(0,0
 const concTex=canvasTex(64,64,(g,w,h)=>{ g.fillStyle='#a6a3a0'; g.fillRect(0,0,w,h); speck(g,w,h,'rgba(60,60,60,.18)',160,2); speck(g,w,h,'rgba(255,255,255,.15)',80,2); });
 const tileTex=canvasTex(64,64,(g,w,h)=>{ g.fillStyle='#dfe9ee'; g.fillRect(0,0,w,h); g.strokeStyle='#b9c8cf'; g.lineWidth=2; for(let i=0;i<=w;i+=16){ g.beginPath(); g.moveTo(i,0); g.lineTo(i,h); g.stroke(); g.beginPath(); g.moveTo(0,i); g.lineTo(w,i); g.stroke(); } });
 const HP=(x,z)=>[HX+x,HZ0+z];
+/* 💡 casa di notte (Teo, 28/11): lampadari accesi = alone intorno alla lampada + pozza di luce calda sul pavimento (finti, leggerissimi) */
+const HOMEGLOW=[], GLOWTEX=canvasTex(128,128,(g)=>{ const r=g.createRadialGradient(64,64,0,64,64,64); r.addColorStop(0,'rgba(255,226,160,1)'); r.addColorStop(0.35,'rgba(255,210,140,.45)'); r.addColorStop(1,'rgba(255,200,120,0)'); g.fillStyle=r; g.fillRect(0,0,128,128); });
+function homeGlow(x,y,z,big){ const s=new THREE.Sprite(new THREE.SpriteMaterial({map:GLOWTEX,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0})); s.scale.setScalar(big?2.4:1.6); s.position.set(x,y-0.25,z); s.renderOrder=4; scene.add(s); HOMEGLOW.push(s.material);
+  const f=new THREE.Mesh(new THREE.PlaneGeometry(big?6:4.5,big?6:4.5),new THREE.MeshBasicMaterial({map:GLOWTEX,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0})); f.rotation.x=-Math.PI/2; f.position.set(x,0.06,z); f.renderOrder=2; scene.add(f); HOMEGLOW.push(f.material); }
 { // ---------- LA CASA, ARREDATA NEI DETTAGLI (visuale da dietro le spalle: muri alti e soffitto) ----------
   const fl=(x0,x1,z0,z1,tex,tile,y=0.03)=>{ const [cx,cz]=HP((x0+x1)/2,(z0+z1)/2); flat(x1-x0,z1-z0,tex,cx,y,cz,[(x1-x0)/tile,(z1-z0)/tile]); };
   fl(-12,18,-9,10,grassTex,3,0.004); // giardino (più in basso: niente sfarfallio coi pavimenti)
@@ -3791,8 +3798,8 @@ const HP=(x,z)=>[HX+x,HZ0+z];
   // soffitto (non fa ombra: la luce resta morbida) e plafoniere
   { const [cx,cz]=HP(3,0); const c=new THREE.Mesh(new THREE.PlaneGeometry(24.4,12.4),new THREE.MeshBasicMaterial({color:0xece4d6,side:THREE.DoubleSide})); c.rotation.x=Math.PI/2; c.position.set(cx,H,cz); scene.add(c); HOME.ceil=c; }
   const lampMat=new THREE.MeshBasicMaterial({color:0xfff2c8});
-  for(const [x,z] of [[2,-2.5],[5.4,-4],[-6,-3],[-6,3],[2,3]]){ const [ax,az]=HP(x,z); const l=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,8,0,Math.PI*2,0,Math.PI/2),lampMat); l.rotation.x=Math.PI; l.position.set(ax,H-0.02,az); scene.add(l); }
-  { const [ax,az]=HP(11,0); const l=new THREE.Mesh(box(0.2,0.08,3),lampMat); l.position.set(ax,H-0.05,az); scene.add(l); }
+  for(const [x,z] of [[2,-2.5],[5.4,-4],[-6,-3],[-6,3],[2,3]]){ const [ax,az]=HP(x,z); const l=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,8,0,Math.PI*2,0,Math.PI/2),lampMat); l.rotation.x=Math.PI; l.position.set(ax,H-0.02,az); scene.add(l); homeGlow(ax,H,az,false); }
+  { const [ax,az]=HP(11,0); const l=new THREE.Mesh(box(0.2,0.08,3),lampMat); l.position.set(ax,H-0.05,az); scene.add(l); homeGlow(ax,H,az,true); }
   // finestre finte con tende (dentro) e vetro chiaro
   const win=(x,z,alongX,w=1.4,h=1.3,y=1.55,curt=0xff8f7a)=>{ const fx=alongX?w:0.06, fz=alongX?0.06:w;
     A(box(alongX?w:0.24,h,alongX?0.24:w),x,y,z,0xcde9f7,0,'hwall'); // vetro
@@ -4178,7 +4185,8 @@ function applyPreset(p){ scene.background=new THREE.Color(p.bg); scene.fog.color
   hemi.color.set(p.hs); hemi.groundColor.set(p.hg); hemi.intensity=p.hi; RIM.uRimCol.value.set(p.sc).multiplyScalar(p.night>0.9?0.35:0.6);
   winMat.color.set(p.night>0.5?0xffc96b:p.night>0.2?0xffb070:0x9ccfe8); bulbMat.color.set(p.night>0.2?0xfff0c0:0xe8e4da); glowMat.opacity=p.night>0.2?0.55*p.night+0.1:0;
   LEAFMAT.emissive.setRGB(0.07,0.15,0.13).multiplyScalar(p.night); /* luce lunare sulle chiome */
-  updateHeadlights(p.night);
+  updateHeadlights(HOME.active?0:p.night); if(HOME.active && p.night>0.2) HL.bulb.color.setRGB(0.42,0.42,0.4); /* in garage di notte l'auto è spenta (Teo, 28/11) */
+  { const hn=HOME.active?p.night:0; if(hn>0.02){ sun.color.lerp(_ca.set(0xffd49a),hn); sun.intensity+=(1.5-sun.intensity)*hn; hemi.color.lerp(_cb.set(0xffe4bc),hn); hemi.groundColor.lerp(_ca.set(0x7a5c40),hn); hemi.intensity+=(1.0-hemi.intensity)*hn; RIM.uRimCol.value.set(0xffd49a).multiplyScalar(0.35); } for(const m of HOMEGLOW) m.opacity=0.75*THREE.MathUtils.smoothstep(hn,0.15,0.6); }
   if(W.rain>0.01){ const rk=W.rain; sun.intensity*=1-0.55*rk; hemi.intensity*=1-0.18*rk; const gc=new THREE.Color(0x7d8592); scene.fog.color.lerp(gc,0.6*rk); wU.uFog.value.lerp(gc,0.6*rk); scene.background=scene.background.clone().lerp(gc,0.65*rk); }
   night=p.night; document.body.style.background='#'+new THREE.Color(p.bg).getHexString(); }
 function setTime(name){ applyPreset(PRESET[name]); }
@@ -4232,7 +4240,7 @@ document.getElementById('anthBtn').onclick=()=>{ copMsgT=4; if(ANTH.boost>0){ ms
   if(G.karma<ANTH.price){ msg.innerHTML='💪 Antony: "Le proteine costano <b>'+ANTH.price+' karma</b>, torna quando hai fatto del bene."'; return; }
   G.karma-=ANTH.price; floatText('-'+ANTH.price,player.pos.x,player.pos.z); ANTH.boost=60; player.tired=false; player.sta=staCap(); powerUpSfx(); staEl.classList.add('boost','boostIn'); setTimeout(()=>staEl.classList.remove('boostIn'),900);
   msg.innerHTML='💪 <b>Proteine!</b> Per 1 minuto puoi scattare quanto vuoi: la barra brilla.'; };
-function powerUpSfx(){ if(!soundOn) return; try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); AC.resume(); const t=AC.currentTime;
+function powerUpSfx(){ rumble(0.3,0.8,450); if(!soundOn) return; try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); AC.resume(); const t=AC.currentTime;
   [523,659,784,1047,1319].forEach((f,i)=>{ const o=AC.createOscillator(), g=AC.createGain(); o.type='square'; o.frequency.setValueAtTime(f,t+i*0.07); o.frequency.exponentialRampToValueAtTime(f*1.5,t+i*0.07+0.12); g.gain.setValueAtTime(0.0001,t+i*0.07); g.gain.exponentialRampToValueAtTime(0.09,t+i*0.07+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+i*0.07+0.22); o.connect(g); g.connect(AC.destination); o.start(t+i*0.07); o.stop(t+i*0.07+0.25); });
   const o=AC.createOscillator(), g=AC.createGain(); o.type='sawtooth'; o.frequency.setValueAtTime(110,t); o.frequency.exponentialRampToValueAtTime(880,t+0.6); g.gain.setValueAtTime(0.06,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.7); o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t+0.72); }catch(e){} }
 // 🚗 suoni del traffico (v0.75.1): un brusio di motori che cresce con le auto vicine, e ogni tanto un clacson
@@ -4358,7 +4366,7 @@ function phoneClose(){ if(!PH.on) return; PH.on=false; document.body.classList.r
 function phWhoosh(){ if(!AC||!soundOn||!AUD.white) return; try{ const t=AC.currentTime, n=AC.createBufferSource(); n.buffer=AUD.white; const f=AC.createBiquadFilter(); f.type='bandpass'; f.frequency.setValueAtTime(600,t); f.frequency.exponentialRampToValueAtTime(2600,t+0.18); const g=AC.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.25,t+0.05); g.gain.exponentialRampToValueAtTime(0.0001,t+0.22); n.connect(f); f.connect(g); g.connect(AUD.master); n.start(t); n.stop(t+0.25); }catch(e){} }
 function phRingSound(){ if(!AC||!soundOn||!AUD.master) return; try{ for(let k=0;k<2;k++){ const t0=AC.currentTime+k*1.2; for(let i=0;i<8;i++){ const t=t0+i*0.07, o=AC.createOscillator(), g=AC.createGain(); o.type='triangle'; o.frequency.value=i%2?1320:1760; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.12,t+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t+0.065); o.connect(g); g.connect(AUD.master); o.start(t); o.stop(t+0.07); } } }catch(e){} }
 function hideToast(){ PH.toast.classList.remove('show'); }
-function phoneRing(who,txt){ PH.btn.classList.add('ring'); PH.toast.textContent='📱 '+who+' '+txt; PH.toast.classList.add('show'); phRingSound(); clearTimeout(PH.ringT); PH.ringT=setTimeout(()=>{ hideToast(); PH.btn.classList.remove('ring'); },9000); }
+function phoneRing(who,txt){ [0,600].forEach(t=>setTimeout(()=>rumble(0,0.7,350),t)); PH.btn.classList.add('ring'); PH.toast.textContent='📱 '+who+' '+txt; PH.toast.classList.add('show'); phRingSound(); clearTimeout(PH.ringT); PH.ringT=setTimeout(()=>{ hideToast(); PH.btn.classList.remove('ring'); },9000); }
 PH.btn.addEventListener('click',()=>{ if(PH.on) phoneClose(); else phoneOpen(PH.btn.classList.contains('ring')?(carloAvail()?'carlo':'friends'):'home'); });
 PH.toast.addEventListener('click',()=>phoneOpen(carloAvail()?'carlo':'friends'));
 document.getElementById('phBack').addEventListener('click',()=>{ if(PH.app==='home'){ phoneClose(); return; } PH.app='home'; phRender(); });
@@ -4423,7 +4431,7 @@ function adaptRes(dt){ if(!window.__ready || window.__pause) return; fAcc+=dt; f
   if(settle-->0) return;
   let np=PR; if(fps<FPS_CAP*0.93 && PR>PR_MIN) np=Math.max(PR_MIN,PR-0.1); else if(fps>FPS_CAP*0.99 && PR<PR_MAX) np=Math.min(PR_MAX,PR+0.05);
   if(np!==PR){ PR=np; renderer.setPixelRatio(PR); resize(); settle=1; } }
-window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={knockPlayer,get AUD(){return AUD;},get AC(){return AC;},get soundOn(){return soundOn;},MIL,MLIFE,TRANSIT,RIDE,rideClick,milHit,renderer,scene,buildMilanopolis,travelTo,askExit,camera,matchScore,BOARD,staRefillFx,openDoni,DONI_MESH,staCap,get hurt(){return G.hurt;},greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
+window.__frame=()=>{ window.__pause=true; loop(); }; window.__dbg={knockPlayer,get AUD(){return AUD;},get AC(){return AC;},get soundOn(){return soundOn;},MIL,MLIFE,TRANSIT,RIDE,rideClick,milHit,renderer,scene,buildMilanopolis,travelTo,askExit,camera,matchScore,BOARD,staRefillFx,openDoni,DONI_MESH,staCap,get hurt(){return G.hurt;},greyInfo:(x,z)=>{ const c=gCell(x,z); return {c,act:ACT[c],v:GF.map(f=>+f[c].toFixed(2)),pct:colorPct(),started:G.started,emit:LC.emit}; },TR,TRS,trainStart,trainStop,trGo,cure,giveCandy,openShop,setDay:t=>{ dayT=t; dayAcc=9; updateDayCycle(0); },antH:()=>ANTH.h?ANTH.h.g.position:{x:0,z:0},get LEOVOX(){return LEOVOX;},TRAFFIC,player,controls,holder,G,LEO,CARLO,LV,PEDS,openEditor,OBST,hitBox,callTow,askExit,carV,HOME,goHome,goTown,startTread,treadSpeed,T,goFuel,openTV,sleepBed,takeShower,HSPOTS,HP,vehCircles,openShop,staCap,CANDY_STALLS,arrestPlayer,get POLICE2(){return POLICE;},carProfile,CARTYPES,walkPath,VICTIMS,knockPlayer,whistle,boardTaxi,startRide,askStop,leaveTaxi,tlState,TLN,ZONES,get taxiHailed(){return taxiHailed;},roadRoute,zoneEdge,clickAt,pickAt,get TGT(){return TGT;},occluded,cure,useThing,THINGS,BENCHES,setRadio,EXA,startAct,THREE,G,GF,KINDS,giveCandy,provoke,updateGrigio,shoot,bones,get gameOver(){return gameOver;},knockPed,GARAGES,WANT,crash,repair,vehFree,OBST,BOXES,inBlock,POLICE,renderer,scene,player,chars,camera,controls,holder,veh,enter,exit,TRAFFIC,PEDS,step:(n,dt)=>{ for(let i=0;i<n;i++) updateWorld(dt); },lock};
 window.__stage&&window.__stage('scarico i personaggi','Scarico i personaggi…');
 Promise.all([loadChar('xbot','xbot.json',{idle:'idle',walk:'walk',run:'run'},{yes:'agree',no:'headShake'}),loadChar('xlo','xbot_vlo.json',{idle:'idle',walk:'walk',run:'run'}),qhLoad('teste/').catch(e=>console.warn('teste vere non caricate, uso quelle disegnate',e)),umLoad('gente/').catch(e=>{ console.warn('gente non caricata, uso i corpi disegnati',e); window.__umErr=String(e&&e.message||e); }),carsLoad('auto/').catch(e=>console.warn('auto nuove non caricate, uso quelle di prima',e))]).then(()=>{
   if(!UM.ready) setTimeout(()=>{ try{ msg.innerHTML='⚠️ <b>Persone nuove non caricate</b> ('+(window.__umErr||'?')+'): mandami uno screenshot di questo messaggio.'; }catch(e){} },4000);
